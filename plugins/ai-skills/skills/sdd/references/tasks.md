@@ -17,7 +17,7 @@ Uma tarefa tem um resultado integrável: por exemplo, operação com validação
 | Campo | Conteúdo |
 | --- | --- |
 | What | Resultado concreto da tarefa |
-| Where | Caminhos reais, distinguindo criação e alteração |
+| Where | Caminhos já determinados, distinguindo criação e alteração; colocação ainda em aberto fica com o executor |
 | Depends on | IDs das dependências ou `none` |
 | Requirement | Requisitos satisfeitos ou preservados |
 | Interfaces | Contratos consumidos e produzidos, com tipos e erros pertinentes |
@@ -26,6 +26,8 @@ Uma tarefa tem um resultado integrável: por exemplo, operação com validação
 | Gate | Comando ou referência inequívoca aos checks aplicáveis |
 
 Preserve esses campos quando usar o formato da skill. O texto de Interfaces deve ser suficiente para entender a tarefa, e os links para spec e design permitem conferir o contrato completo. Não invente uma interface ausente nem use "similar à tarefa anterior" como especificação.
+
+O critério de conclusão aponta o teste que decide o requisito, não a suíte que passou: uma suíte verde não resolve nenhuma obrigação individual. Quando um requisito quantifica sobre um conjunto, cada membro nomeado na spec precisa de caso, ou de um caso que percorra o conjunto inteiro com o tamanho declarado.
 
 ## Ordem e rastreabilidade
 

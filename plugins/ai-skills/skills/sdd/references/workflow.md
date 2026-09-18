@@ -38,7 +38,7 @@ O pedido da sessão prevalece sobre as convenções do repositório, e ambos pre
 
 ## Fatos, hipóteses e correções
 
-Use `[ASSUMPTION]` para inferência com origem, escolha provisória e consequência; use `[GAP]` para informação ou decisão ausente. Um fato deve apontar para evidência no pedido, PRD, código ou documentação. Verifique informações técnicas atuais nas fontes oficiais quando necessário; não invente APIs, ferramentas ou comportamento.
+Use `[ASSUMPTION]` para inferência com origem, escolha provisória e consequência; use `[GAP]` para informação ou decisão ausente. Marque quem decidiu no campo `Confirmed?`: `y` quando o usuário respondeu, inclusive ao delegar a escolha, e `n` para o default que ninguém viu. Sem essa marca, um default silencioso fica indistinguível de uma decisão tomada. Um fato deve apontar para evidência no pedido, PRD, código ou documentação. Verifique informações técnicas atuais nas fontes oficiais quando necessário; não invente APIs, ferramentas ou comportamento.
 
 Corrija a origem de uma inconsistência: regra de negócio no PRD, comportamento técnico na spec, decisão estrutural no design. Atualize os consumidores afetados. Não altere o contrato para fazer um teste passar nem refaça todo o fluxo por causa de um defeito local.
 

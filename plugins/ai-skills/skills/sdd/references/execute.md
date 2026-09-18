@@ -23,6 +23,8 @@ Sem `tasks.md`, comece com um plano curto na resposta, com requisitos, estrutura
 
 Uma restrição descoberta pode exigir corrigir spec, design ou tarefas. Registre o efeito material e continue o escopo autorizado. Se a mudança implicar novo comportamento de produto, obtenha a decisão correspondente e mantenha o restante em andamento.
 
+Corrija o artefato no commit que muda o comportamento descrito, não ao final. Um caminho, um componente ou um impacto descrito depois vira justificativa do que já foi feito, e um mapa que não corresponde ao código engana mais que a ausência dele. Uma decisão irreversível descoberta durante a implementação entra no design antes do código que a fecha, com a forma literal e a alternativa rejeitada: a alternativa só é conhecível enquanto a escolha ainda está aberta.
+
 Uma divergência estrutural justificada pode ficar em Deviations ou na descrição da tarefa. Arquivos indispensáveis de registro ou configuração entram no escopo explicado da tarefa.
 
 Valide a existência e a procedência de um pacote antes de adicioná-lo. Respeite as permissões de instalação e acesso externo. Segredos e dados de produção não entram em respostas, exemplos, commits ou logs de teste.
@@ -35,6 +37,12 @@ Confronte a versão atual dos artefatos e do código; não teste uma versão ant
 
 Leia o plano, requisitos, evidências e estado atual. Checkboxes indicam o que foi registrado, mas não provam que mudanças posteriores continuam válidas. Reutilize evidência para o mesmo conteúdo e repita apenas os checks afetados por diferenças relevantes.
 
+Reconstrua o estado a partir dos artefatos e do diff do que já foi entregue, não de um resumo narrativo do trabalho. O diff carrega as escolhas reversíveis que nenhum documento registra — nomes, formato de erro, onde o helper ficou — e é justamente o que um resumo perde. Onde os dois discordarem, o diff decide e o registro desatualizado é corrigido.
+
+Depois de uma compactação de contexto, releia os artefatos da mudança e o diff antes de continuar. Não dá para perceber o limite se aproximando, mas dá para perceber que a compactação ocorreu, e é esse o sinal disponível.
+
 Sem plano disponível, reconstrua o próximo passo com o que for comprovável; não invente decisões, hashes ou testes já executados. Se a base do diff for desconhecida, informe a limitação da comparação e procure recuperá-la. Ainda é possível avaliar o comportamento atual; não declare demonstrada uma ausência de regressão sem base.
 
 Resuma resultado, evidência e pendências reais. Um pedido de continuação mantém o objetivo e a autorização anteriores, salvo mudança explícita do usuário.
+
+Quando outro executor ou outra sessão continuar o trabalho, registre no `tasks.md` ou no plano a fronteira alcançada, o que o usuário decidiu durante a implementação e o que foi tentado e descartado. Escrito apenas no pedido de continuação, esse contexto sobrevive a uma troca e desaparece na seguinte.

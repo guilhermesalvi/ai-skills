@@ -32,7 +32,27 @@ Um pedido técnico delimitado dispensa PRD. Se faltar uma decisão real de produ
 
 Inspecione contratos e uma implementação pertinente antes de perguntar. Resolva escolhas técnicas reversíveis dentro da autorização; uma dúvida que exige decisão de negócio ou muda materialmente o escopo precisa da resposta do usuário. Registre a resposta no artefato correspondente.
 
-Considere as dimensões aplicáveis: validação, falha parcial, idempotência, duplicação, autorização, concorrência, ordenação, retenção, observabilidade, dependências externas, integridade de estados e consistência entre contextos. Inclua apenas requisitos justificados pela mudança, sem ampliar o produto preventivamente.
+## Superfícies expostas
+
+Cada tipo de superfície carrega as mesmas decisões toda vez que aparece, e por isso elas se encontram percorrendo a linha em vez de lembrando. Percorra as superfícies que a mudança expõe e registre onde cada decisão aterrissou: em um requisito, em comportamento que o código já garante, ou em `n/a` com o motivo. O motivo é obrigatório porque é ele que separa uma decisão inaplicável de uma que ninguém tomou.
+
+| Superfície | Decisões que ela sempre carrega |
+| --- | --- |
+| Tela ou visão | estados vazio, de carregamento, de erro e de não autorizado; ordenação e densidade; o que uma ação destrutiva confirma antes de executar |
+| API ou webhook consumido de fora | formato da resposta, formato do erro e seus códigos, quem pode chamar, versionamento, comportamento no limite de taxa |
+| Comando ou tarefa agendada | formato e verbosidade da saída, cada flag e seu default, exit codes, o que registra ao falhar no meio |
+| Documento ou texto lido por alguém | estrutura, profundidade e a ação esperada do leitor |
+| Coleção organizada | critério de agrupamento, nomeação, ordenação, tratamento de duplicatas e a exceção que não se encaixa |
+
+Duas dessas se escondem melhor que as outras: o formato de erro é decidido por quem escreve o primeiro handler e depois copiado, e o estado vazio só aparece para quem tem conta nova. Uma mudança sem superfície exposta registra isso em uma linha.
+
+## Dimensões do sistema
+
+Percorra validação e limites, falha e falha parcial, idempotência e duplicação, autorização e limite de taxa, concorrência e ordenação, ciclo de vida dos dados, falha de dependência externa, transições de estado, observabilidade e consistência entre contextos. Cada uma aterrissa em requisito, em garantia que o código já oferece com a citação correspondente, ou em `n/a` com o motivo. Registre a aterrissagem: uma lista sem registro não distingue a dimensão coberta da esquecida.
+
+A aterrissagem precisa observar aquela dimensão. Reaproveitar o requisito de outra linha é o sinal de que a dimensão continua descoberta: uma duplicata rejeitada porque a linha já existe não diz nada sobre duas requisições chegando ao mesmo tempo. Ao perceber o empréstimo, as respostas honestas são `n/a` com o motivo ou uma pergunta.
+
+Inclua apenas requisitos justificados pela mudança, sem ampliar o produto preventivamente. Uma dimensão que depende de decisão de produto vira pergunta, não requisito inventado. O registro das duas enumerações vive na seção `Observable` da spec.
 
 ## Requisitos EARS
 
@@ -49,6 +69,12 @@ Use EARS para tornar claras as condições de requisitos técnicos novos quando 
 
 Um requisito tem ID estável e uma unidade verificável. Obrigações independentes são separadas; uma condição conjunta com efeito indivisível permanece junta. Descreva estado, mensagem, valor, evento ou limite observável. Não invente HTTP status, prazo ou mecanismo para preencher a forma. Uma revisão editorial preserva comparadores, negações e permissões.
 
+Uma única execução precisa decidir o requisito. Percentil, média, taxa de erro e disponibilidade são alvos de serviço, que nenhuma execução isolada satisfaz ou reprova; separe a linha, com o comportamento no requisito e o alvo na dimensão de observabilidade. Fundidas, a metade verificável se esconde atrás da outra e um teste que nunca tocou o número marca a linha inteira como coberta.
+
+Um requisito que quantifica sobre um conjunto nomeia os membros ou aponta a fonte que os enumera. "Cada status do provedor mapeia para exatamente um status local" só é verificável quando se sabe quais são os status e quem tem autoridade sobre a lista; sem isso, uma prova sobre dois membros satisfaz a frase inteira.
+
+Uma garantia de que algo não acontece precisa de mecanismo. Nada impede por si só uma duplicata, uma segunda cobrança ou uma escrita fora de ordem, então "uma repetição não cria uma segunda solicitação" é afirmação sobre maquinário: aponte a restrição, o índice ou a transação que a sustenta, ou registre a decisão que vai criá-la. Percorra a falha que produziria o resultado proibido, porque é o caminho que ninguém imagina.
+
 Cada resultado de aceitação deve derivar de um requisito ou decisão identificável. Um cenário tem nome, entrada, condições e resultado esperado, e cita os requisitos que verifica. Se o contrato não determina o resultado de um caso limite, registre a lacuna em vez de escolher um valor por analogia com outro caso.
 
 ## Spec viva
@@ -63,9 +89,10 @@ Uma refatoração sem mudança observável preserva os requisitos e usa os teste
 | --- | --- |
 | Context | Origem, consumidor, comportamento e código pertinente |
 | Scope / Out of Scope | O que entra e exclusões necessárias |
-| Assumptions | Hipóteses técnicas com origem e consequência |
+| Assumptions | Hipóteses técnicas com origem, consequência e `Confirmed?` |
 | Open Questions | Decisão, responsável e requisitos bloqueados |
 | Requirements | IDs e comportamento observável |
+| Observable | Decisões de cada superfície e dimensão, com a aterrissagem de cada uma |
 | Domain Events | Produtor, consumidores, significado e gatilho |
 | Glossary | Termos técnicos; termos de negócio apontam ao PRD |
 | Traceability | IDs de produto e cenários relacionados aos requisitos técnicos |
