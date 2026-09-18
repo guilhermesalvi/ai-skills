@@ -1,0 +1,33 @@
+# Decisão arquitetural
+
+Use ADR para uma escolha que define convenção, restrição ou padrão para outras capabilities: estilo arquitetural, transporte de eventos ou política de versionamento, por exemplo. Uma decisão local permanece no design da mudança. O pedido explícito de registrar uma decisão também define o escopo do artefato.
+
+## Conteúdo e destino
+
+Preserve o motivo, as alternativas realmente avaliadas, os benefícios e os custos aceitos. Registre participantes conhecidos, sem inventar nomes. Um custo genérico que se aplica a qualquer solução não explica a escolha.
+
+Use `docs/adr/NNNN-<decisão>.md` e o próximo número livre. Preserve o formato dos ADRs existentes; sem ADR anterior, use a estrutura abaixo.
+
+## Estrutura sugerida
+
+| Seção ou campo | Conteúdo |
+| --- | --- |
+| Título | `ADR NNNN: decisão` |
+| Participants | Quem decidiu ou foi consultado, quando conhecido |
+| Context | Problema, restrições e critérios |
+| Decision | Escolha e seu alcance |
+| Alternatives considered | Alternativas reais avaliadas pelos mesmos critérios e motivo da rejeição |
+| Consequences | Benefícios e custos concretos aceitos |
+| Derived rules | Regras criadas ou alteradas, com caminho do arquivo onde são mantidas |
+
+Se uma decisão indispensável faltar, registre um `[GAP]`.
+
+## Cumprir ou substituir uma decisão
+
+Leia os ADRs pertinentes antes de projetar. Quando uma escolha conflitar com um ADR vigente, explicite se a solução seguirá a restrição ou se é necessária sua substituição, dentro da autorização do pedido.
+
+Ao substituir, crie o novo ADR com `Supersedes: NNNN` e acrescente `Superseded by: NNNN` ao anterior. Preserve o conteúdo histórico do documento antigo. Confira que as referências são recíprocas e apontam para arquivos existentes.
+
+Derived rules só existe quando a decisão cria ou altera uma regra; contém links para suas definições. Mantenha cada regra no arquivo responsável pelo objeto que ela governa e acrescente a ela o vínculo com o ADR que a justifica.
+
+Registrar uma decisão não amplia o escopo: aplicá-la ao restante do projeto exige pedido próprio.
