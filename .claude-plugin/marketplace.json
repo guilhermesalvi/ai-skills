@@ -1,0 +1,20 @@
+{
+  "name": "ai-skills",
+  "owner": {
+    "name": "Guilherme Salvi",
+    "url": "https://github.com/guilhermesalvi"
+  },
+  "metadata": {
+    "description": "Skills de requisitos de produto, desenvolvimento orientado por especificações e correção de transcrições técnicas em português.",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "ai-skills",
+      "source": "./plugins/ai-skills",
+      "description": "Requisitos de produto, desenvolvimento orientado por especificações e correção de transcrições técnicas em português.",
+      "category": "productivity",
+      "keywords": ["prd", "sdd", "spec-driven-development", "transcript", "whisper"]
+    }
+  ]
+}
