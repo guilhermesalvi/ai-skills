@@ -25,14 +25,20 @@ Ao concluir as unidades, execute a [verificação](verify.md).
 
 Uma restrição descoberta pode exigir corrigir spec, design ou tarefas. Registre o efeito material e continue o escopo autorizado. Se a mudança implicar novo comportamento de produto, obtenha a decisão correspondente e mantenha o restante em andamento.
 
+Atualize o artefato no mesmo commit que muda o comportamento descrito, não ao final: escrito depois, ele vira justificativa do que já foi feito. Uma decisão irreversível descoberta na implementação entra no design antes do código que a fecha, com a forma literal e a alternativa rejeitada.
+
 Uma divergência estrutural justificada pode ficar em Deviations ou na descrição da tarefa.
 
 Valide a existência e a procedência de um pacote antes de adicioná-lo, e respeite as permissões de instalação e de acesso externo. Segredos e dados de produção não entram em respostas, exemplos, commits ou logs de teste.
 
 ## Retomar uma mudança
 
-Leia o plano, os requisitos, as evidências e o estado atual. Checkboxes indicam o que foi registrado, mas não provam que mudanças posteriores continuam válidas. Reutilize a evidência para o mesmo conteúdo e repita apenas os checks afetados por diferenças relevantes.
+Reconstrua o estado pelo plano, pelos requisitos, pelas evidências e pelo diff já entregue, não por um resumo narrativo: o diff carrega escolhas que nenhum documento registra, e onde os dois discordarem o diff decide e o registro é corrigido. Checkboxes indicam o que foi registrado, mas não provam que mudanças posteriores continuam válidas. Reutilize a evidência para o mesmo conteúdo e repita apenas os checks afetados por diferenças relevantes.
+
+Depois de uma compactação de contexto, releia os artefatos da mudança e o diff antes de continuar.
 
 Sem plano disponível, reconstrua o próximo passo com o que for comprovável. Não invente decisões, hashes ou testes já executados.
 
 Resuma resultado, evidência e pendências reais. Um pedido de continuação mantém o objetivo e a autorização anteriores, salvo mudança explícita do usuário.
+
+Quando outro executor ou outra sessão for continuar, registre no `tasks.md` ou no plano a fronteira alcançada, as decisões do usuário durante a implementação e o que foi tentado e descartado.

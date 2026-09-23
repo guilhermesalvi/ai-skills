@@ -45,6 +45,8 @@ Marque o que ainda não é fato:
 - `[ASSUMPTION]` para inferência, com origem, escolha provisória e consequência.
 - `[GAP]` para informação ou decisão ausente.
 
+Marque cada hipótese com `Confirmed?`: `y` quando o usuário decidiu, inclusive ao delegar a escolha, e `n` para o default que ninguém viu. Sem a marca, um default silencioso parece decisão tomada.
+
 Um fato deve apontar para evidência no pedido, no PRD, no código ou na documentação. Verifique informações técnicas atuais nas fontes oficiais quando necessário; não invente APIs, ferramentas ou comportamento.
 
 Corrija a inconsistência na origem dela: regra de negócio no PRD, comportamento técnico na spec, decisão estrutural no design. Depois atualize os consumidores afetados. Uma mudança de comportamento encontrada na verificação segue o mesmo caminho; ela não sobrevive apenas como observação de revisão.

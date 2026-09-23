@@ -25,7 +25,23 @@ Um pedido técnico delimitado dispensa PRD. Se faltar uma decisão real de produ
 
 Leia a spec existente, os ADRs pertinentes, os contratos e o código atingido antes de perguntar. Resolva as escolhas técnicas reversíveis dentro da autorização; uma dúvida que exige decisão de negócio ou muda materialmente o escopo precisa da resposta do usuário. Registre a resposta no artefato correspondente.
 
-Considere as dimensões aplicáveis: validação, falha parcial, idempotência, duplicação, autorização, concorrência, ordenação, retenção, observabilidade, dependências externas, integridade de estados e consistência entre contextos.
+## Superfícies e dimensões
+
+Percorra as superfícies que a mudança expõe e as dimensões do sistema, e registre em Observable onde cada decisão aterrissou: num requisito, numa garantia que o código já oferece, com a citação, ou em `n/a` com o motivo. O motivo separa a decisão inaplicável da que ninguém tomou. Uma mudança trivial ou sem superfície exposta registra isso numa linha.
+
+| Superfície | Decisões que ela sempre carrega |
+| --- | --- |
+| Tela ou visão | Estados vazio, de carregamento, de erro e de não autorizado; ordenação e densidade; o que uma ação destrutiva confirma antes de executar |
+| API ou webhook consumido de fora | Formato da resposta, formato do erro e seus códigos, quem pode chamar, versionamento, comportamento no limite de taxa |
+| Comando ou tarefa agendada | Formato e verbosidade da saída, cada flag e seu default, exit codes, o que registra ao falhar no meio |
+| Documento ou texto lido por alguém | Estrutura, profundidade e a ação esperada do leitor |
+| Coleção organizada | Critério de agrupamento, nomeação, ordenação, tratamento de duplicatas e a exceção que não se encaixa |
+
+O formato de erro e o estado vazio são as decisões que mais escapam: o primeiro handler define o formato que os outros copiam, e o estado vazio só aparece para conta nova.
+
+As dimensões são validação e limites, falha e falha parcial, idempotência e duplicação, autorização e limite de taxa, concorrência e ordenação, ciclo de vida dos dados, falha de dependência externa, transições de estado, observabilidade e consistência entre contextos.
+
+A aterrissagem precisa observar a própria dimensão: reaproveitar o requisito de outra linha a deixa descoberta, e nesse caso a resposta é `n/a` com o motivo ou uma pergunta. Uma dimensão que depende de decisão de produto vira pergunta, não requisito inventado.
 
 Inclua apenas os requisitos justificados pela mudança, sem ampliar o produto preventivamente.
 
@@ -47,6 +63,10 @@ As palavras-chave seguem o idioma da spec: em inglês, use a coluna Forma; em po
 Um requisito tem ID estável e representa uma unidade verificável. Obrigações independentes ficam separadas; uma condição conjunta com efeito indivisível permanece junta.
 
 Descreva estado, mensagem, valor, evento ou limite observável. Não invente HTTP status, prazo ou mecanismo para preencher a forma.
+
+- **Uma execução decide o requisito.** Percentil, média, taxa de erro e disponibilidade são alvos de serviço, que nenhuma execução isolada satisfaz ou reprova. Mantenha o comportamento no requisito e registre o alvo na dimensão de observabilidade.
+- **Conjunto nomeado.** Um requisito que quantifica sobre um conjunto nomeia os membros ou a fonte que os enumera; sem isso, uma prova sobre dois membros satisfaz a frase inteira.
+- **Garantia negativa com mecanismo.** Um requisito de que algo não acontece, como uma duplicata ou uma segunda cobrança, aponta a restrição, o índice ou a transação que o sustenta, ou a decisão que vai criá-lo.
 
 ## Cenários de aceitação
 
@@ -74,9 +94,10 @@ Context e Requirements são a base; Traceability entra quando houver PRD, e as d
 | --- | --- |
 | Context | Origem, consumidor, comportamento e código pertinente |
 | Scope / Out of Scope | O que entra e exclusões necessárias |
-| Assumptions | Hipóteses técnicas com origem e consequência |
+| Assumptions | Hipóteses técnicas com origem, consequência e `Confirmed?` |
 | Open Questions | Decisão, responsável e requisitos bloqueados |
 | Requirements | IDs e comportamento observável |
+| Observable | Decisões de cada superfície e dimensão, com a aterrissagem de cada uma |
 | Domain Events | Produtor, consumidores, significado e gatilho |
 | Glossary | Termos técnicos; termos de negócio apontam ao PRD |
 | Traceability | IDs de produto e cenários relacionados aos requisitos técnicos |

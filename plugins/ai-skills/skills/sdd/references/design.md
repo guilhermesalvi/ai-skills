@@ -20,6 +20,8 @@ Defina os critérios a partir dos requisitos, ADRs, restrições, custo e prazo.
 
 Compare alternativas reais pelo mesmo escopo e pelos mesmos critérios. Recomende a opção que atende ao contrato com custo e risco justificáveis, explicando o custo aceito. Se não houver alternativa materialmente viável, registre o motivo em vez de inventar opções.
 
+Rejeite uma alternativa pela propriedade que a desqualifica, como “não expressa o próximo estado”, e não por preferência, como “mais limpo”, que ninguém consegue contestar.
+
 Confira cada decisão relevante contra o negócio, os atributos de qualidade e as restrições, e verifique se existe uma solução mais simples ou menos arriscada que também satisfaça o contrato.
 
 ## Riscos e técnicas
@@ -40,13 +42,17 @@ Use a arquitetura do projeto quando ela atende ao problema. Introduzir um novo e
 
 ## Componentes, contratos e dados
 
-Para cada componente, descreva responsabilidade, caminho, interfaces com tipos, dependências e reutilização. Os contratos consumidos pelas tarefas precisam estar claros antes da implementação.
+Para cada componente, descreva responsabilidade, interfaces com tipos e o que reutiliza. Os contratos consumidos pelas tarefas precisam estar claros antes da implementação.
+
+Pasta, nome de arquivo e divisão em classes ficam com a convenção do repositório e com o diff. Um catálogo de caminhos e dependências por componente envelhece e engana o próximo leitor.
 
 Os eventos definem produtor, consumidores conhecidos, significado do payload, ordenação necessária, garantia de entrega e evolução de versão. A garantia vem do design e do transporte escolhido: não presuma entrega exatamente uma vez. Descreva como duplicações e falhas são tratadas quando forem possíveis.
 
 Se houver persistência, explicite entidades, relações, invariantes e migração.
 
 Para cada cenário de erro da spec em escopo, mostre tratamento e efeito observável. Não introduza um novo resultado para facilitar a solução.
+
+Antes de apresentar o design, confira que cada requisito em escopo aterrissa num componente, contrato, fluxo ou estrutura de dados. O que não aterrissa está fora do escopo declarado ou é lacuna da solução, e precisa de resposta antes da decomposição.
 
 ## Módulo, publicação e implantação
 
@@ -70,17 +76,19 @@ Use as seções pertinentes, nesta ordem. Diagramas entram quando tornam as rela
 | Approaches | Alternativas comparadas pelos mesmos critérios e recomendação |
 | Architecture Overview | Estrutura da solução e relações entre as partes |
 | Deployment Unit | Serviço existente, módulo interno ou nova unidade, com justificativa |
-| Components | Responsabilidade, caminho, interfaces, dependências e reutilização |
+| Components | Responsabilidade, interfaces e reutilização |
 | Domain Events | Contrato de cada evento produzido ou consumido |
 | Data Model | Entidades, relações, invariantes e migração |
 | Error Handling | Tratamento e efeito observável de cada cenário de erro da spec |
-| Technical Decisions | Decisão, escolha, motivo, custo e natureza do contrato, público ou interno |
-| Files to Create or Modify | Caminhos reais, distinguindo criação e alteração |
+| Technical Decisions | Decisão, escolha com sua forma literal, alternativa rejeitada, custo aceito, natureza do contrato, público ou interno, e reversibilidade |
+| Files to Create or Modify | Caminhos já determinados, distinguindo criação e alteração |
 
 Regras que passam a valer para outras capabilities vão para ADR; decisões locais permanecem em Technical Decisions.
 
+Marque como irreversível a decisão cujo desfazer custa mais que uma refatoração: esquema persistido, contrato que outro consome, dependência nova, migração sobre dados existentes ou precedente que o repositório ainda não tem. Registre nela a forma literal que o próximo leitor vai copiar, como a definição do índice, o valor do enum ou a versão do pacote. Escopo adiado e regra sem mecanismo se desfazem sem esse custo e não entram.
+
 Exemplo de linha de Technical Decisions:
 
-| Decisão | Escolha | Motivo | Custo | Contrato |
-| --- | --- | --- | --- | --- |
-| Ordenação de solicitações | Sequência por livro | O requisito exige ordem total com instantes iguais | Concorrência sobre a geração da sequência | Interno |
+| Decisão | Escolha e forma literal | Alternativa rejeitada | Custo | Contrato | Reversível |
+| --- | --- | --- | --- | --- | --- |
+| Ordenação de solicitações | Sequência por livro, com unicidade em `(book_id, sequence)` | Instante informado pelo cliente: não distingue registros com o mesmo horário | Concorrência sobre a geração da sequência | Interno | Não |

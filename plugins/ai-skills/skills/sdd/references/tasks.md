@@ -19,7 +19,7 @@ Uma tarefa tem um resultado integrável: por exemplo, operação com validação
 | Campo | Conteúdo |
 | --- | --- |
 | What | Resultado concreto da tarefa |
-| Where | Caminhos reais, distinguindo criação e alteração |
+| Where | Caminhos já determinados, distinguindo criação e alteração; colocação ainda em aberto fica com o executor |
 | Depends on | IDs das dependências ou `none` |
 | Requirement | Requisitos satisfeitos ou preservados |
 | Interfaces | Contratos consumidos e produzidos, com tipos e erros pertinentes |
@@ -28,6 +28,8 @@ Uma tarefa tem um resultado integrável: por exemplo, operação com validação
 | Gate | Comando confirmado na configuração real do projeto, ou referência inequívoca aos checks aplicáveis |
 
 O texto de Interfaces precisa ser suficiente para entender a tarefa, e os links para spec e design permitem conferir o contrato completo. Não invente uma interface ausente nem use “similar à tarefa anterior” como especificação.
+
+Done when aponta o teste que decide cada requisito, não a suíte verde. Um requisito sobre um conjunto tem um caso por membro nomeado na spec, ou um caso que percorre o conjunto inteiro com o tamanho declarado.
 
 ## Ordem e rastreabilidade
 
