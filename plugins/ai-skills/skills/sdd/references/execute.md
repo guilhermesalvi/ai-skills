@@ -27,7 +27,7 @@ Uma restrição descoberta pode exigir corrigir spec, design ou tarefas. Registr
 
 Atualize o artefato no mesmo commit que muda o comportamento descrito, não ao final: escrito depois, ele vira justificativa do que já foi feito. Uma decisão irreversível descoberta na implementação entra no design antes do código que a fecha, com a forma literal e a alternativa rejeitada.
 
-Uma divergência estrutural justificada pode ficar em Deviations ou na descrição da tarefa.
+Uma divergência estrutural justificada pode ficar em Desvios ou na descrição da tarefa.
 
 Valide a existência e a procedência de um pacote antes de adicioná-lo, e respeite as permissões de instalação e de acesso externo. Segredos e dados de produção não entram em respostas, exemplos, commits ou logs de teste.
 

@@ -13,17 +13,17 @@ Use `docs/adr/NNNN-<decisão>.md` e o próximo número livre. Preserve o formato
 | Seção ou campo | Conteúdo |
 | --- | --- |
 | Título | `ADR NNNN: decisão` |
-| Participants | Quem decidiu ou foi consultado, quando conhecido |
-| Context | Problema, restrições e critérios |
-| Decision | Escolha e seu alcance |
-| Alternatives considered | Alternativas reais avaliadas pelos mesmos critérios e motivo da rejeição |
-| Consequences | Benefícios e custos concretos aceitos |
-| Derived rules | Regras criadas ou alteradas, com link para o arquivo onde cada uma é mantida |
+| Participantes | Quem decidiu ou foi consultado, quando conhecido |
+| Contexto | Problema, restrições e critérios |
+| Decisão | Escolha e seu alcance |
+| Alternativas consideradas | Alternativas reais avaliadas pelos mesmos critérios e motivo da rejeição |
+| Consequências | Benefícios e custos concretos aceitos |
+| Regras derivadas | Regras criadas ou alteradas, com link para o arquivo onde cada uma é mantida |
 
-Derived rules só existe quando a decisão cria ou altera uma regra. Mantenha cada regra no arquivo responsável pelo objeto que ela governa, e acrescente a essa regra o vínculo com o ADR que a justifica.
+Regras derivadas só existe quando a decisão cria ou altera uma regra. Mantenha cada regra no arquivo responsável pelo objeto que ela governa, e acrescente a essa regra o vínculo com o ADR que a justifica.
 
 ## Cumprir ou substituir uma decisão
 
 Leia os ADRs pertinentes antes de projetar. Quando uma escolha conflitar com um ADR vigente, explicite se a solução seguirá a restrição ou se é necessária sua substituição, dentro da autorização do pedido.
 
-Ao substituir, crie o novo ADR com `Supersedes: NNNN` e acrescente `Superseded by: NNNN` ao anterior. Preserve o conteúdo histórico do documento antigo e confira que as referências são recíprocas e apontam para arquivos existentes.
+Ao substituir, crie o novo ADR com `Substitui: NNNN` e acrescente `Substituído por: NNNN` ao anterior. Preserve o conteúdo histórico do documento antigo e confira que as referências são recíprocas e apontam para arquivos existentes.

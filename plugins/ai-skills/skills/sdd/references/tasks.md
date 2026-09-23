@@ -18,18 +18,18 @@ Uma tarefa tem um resultado integrável: por exemplo, operação com validação
 
 | Campo | Conteúdo |
 | --- | --- |
-| What | Resultado concreto da tarefa |
-| Where | Caminhos já determinados, distinguindo criação e alteração; colocação ainda em aberto fica com o executor |
-| Depends on | IDs das dependências ou `none` |
-| Requirement | Requisitos satisfeitos ou preservados |
+| O quê | Resultado concreto da tarefa |
+| Onde | Caminhos já determinados, distinguindo criação e alteração; colocação ainda em aberto fica com o executor |
+| Depende de | IDs das dependências ou `nenhuma` |
+| Requisitos | Requisitos satisfeitos ou preservados |
 | Interfaces | Contratos consumidos e produzidos, com tipos e erros pertinentes |
-| Done when | Critérios observáveis e binários, derivados do resultado dos requisitos, incluindo a verificação a executar |
-| Tests | Casos e nível necessário, ou motivo para não adicionar testes |
+| Pronto quando | Critérios observáveis e binários, derivados do resultado dos requisitos, incluindo a verificação a executar |
+| Testes | Casos e nível necessário, ou motivo para não adicionar testes |
 | Gate | Comando confirmado na configuração real do projeto, ou referência inequívoca aos checks aplicáveis |
 
 O texto de Interfaces precisa ser suficiente para entender a tarefa, e os links para spec e design permitem conferir o contrato completo. Não invente uma interface ausente nem use “similar à tarefa anterior” como especificação.
 
-Done when aponta o teste que decide cada requisito, não a suíte verde. Um requisito sobre um conjunto tem um caso por membro nomeado na spec, ou um caso que percorre o conjunto inteiro com o tamanho declarado.
+Pronto quando aponta o teste que decide cada requisito, não a suíte verde. Um requisito sobre um conjunto tem um caso por membro nomeado na spec, ou um caso que percorre o conjunto inteiro com o tamanho declarado.
 
 ## Ordem e rastreabilidade
 
@@ -45,27 +45,27 @@ Se não houver design separado, explique a estrutura necessária no início das 
 
 | Seção | Conteúdo |
 | --- | --- |
-| Gate Commands | Checks pertinentes, como `quick`, `full` e `build`, se esses nomes ajudarem |
-| Execution Plan | Ordem das tarefas por dependência |
-| Tasks | Tarefas com os campos da unidade de trabalho |
-| Traceability | Requisito, tarefa e evidência |
-| Deviations | Divergências justificadas do design, quando houver |
-| Correction Tasks | Tarefas de correção vindas da verificação, quando houver |
+| Comandos de gate | Checks pertinentes, como `quick`, `full` e `build`, se esses nomes ajudarem |
+| Plano de execução | Ordem das tarefas por dependência |
+| Tarefas | Tarefas com os campos da unidade de trabalho |
+| Rastreabilidade | Requisito, tarefa e evidência |
+| Desvios | Divergências justificadas do design, quando houver |
+| Tarefas de correção | Tarefas de correção vindas da verificação, quando houver |
 
 ## Exemplo parcial
 
 ```markdown
 ### T1: Implementar criação idempotente de solicitações
 
-- **What:** criar solicitação uma única vez para uma chave e conteúdo iguais
-- **Where:** criar `src/Example/Requests/RequestService.cs` e os testes correspondentes
-- **Depends on:** none
-- **Requirement:** EXM-01, EXM-02
+- **O quê:** criar solicitação uma única vez para uma chave e conteúdo iguais
+- **Onde:** criar `src/Example/Requests/RequestService.cs` e os testes correspondentes
+- **Depende de:** nenhuma
+- **Requisitos:** EXM-01, EXM-02
 - **Interfaces:** consome `CreateRequest` e armazenamento por chave; produz `CreateResult` com solicitação ou conflito
-- **Done when:**
+- **Pronto quando:**
   - [ ] Repetir chave e conteúdo retorna o resultado original sem duplicar (EXM-01)
   - [ ] Repetir a chave com outro conteúdo informa conflito e preserva a primeira solicitação (EXM-02)
   - [ ] Os testes pertinentes passam
-- **Tests:** casos de criação, repetição equivalente e conflito
+- **Testes:** casos de criação, repetição equivalente e conflito
 - **Gate:** comando de testes confirmado na configuração da mudança
 ```

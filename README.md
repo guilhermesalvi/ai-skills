@@ -4,7 +4,7 @@ Skills do Claude Code para requisitos de produto, desenvolvimento orientado por 
 
 | Skill | Finalidade |
 |---|---|
-| `prd` | Criar e revisar PRDs com requisitos de negócio rastreáveis, métricas e trade-offs declarados. Inclui um verificador determinístico de estrutura. |
+| `prd` | Criar e revisar PRDs com requisitos de negócio rastreáveis, métricas e trade-offs declarados. |
 | `sdd` | Especificar, projetar, planejar, implementar e verificar mudanças técnicas com requisitos EARS rastreáveis e ADRs. |
 | `transcript-fix` | Corrigir transcrições Whisper (`.txt`, `.srt`, `.vtt`) com glossário persistente e subagentes coordenados. Produz texto simples com marcações de tempo, não arquivos de legenda. |
 
@@ -51,7 +51,7 @@ Para uma origem local, incremente a versão e repita apenas `claude plugin insta
 ## Convenções
 
 - O pedido do usuário prevalece sobre os defaults das skills. As instruções aplicáveis do repositório consumidor, em `CLAUDE.md` ou `CLAUDE.local.md`, vêm em seguida.
-- As instruções das skills estão em português. A estrutura dos artefatos gerados (títulos de seção, rótulos, tags e campos) fica em inglês, na forma documentada; a prosa segue o pedido, a convenção do repositório e o material de origem, nessa ordem.
+- As instruções das skills estão em português. A prosa dos artefatos gerados segue o pedido, a convenção do repositório e o material de origem, nessa ordem; títulos de seção, rótulos, tags e campos acompanham o idioma da prosa, e termos canônicos em inglês não se traduzem.
 - As skills continuam o trabalho autorizado até a validação e perguntam apenas sobre decisões ausentes que afetem escopo ou correção. Commit e push seguem a autorização do usuário.
 - Os scripts exigem Python 3.10+ e não usam pacotes de terceiros. Nos comandos das skills, substitua `<skill-dir>` pela pasta absoluta do `SKILL.md` carregado; execute a partir do projeto consumidor.
 
@@ -100,7 +100,7 @@ CLAUDE.md                            orientações para editar o repositório
 plugins/ai-skills/
   .claude-plugin/plugin.json         manifesto do plugin
   skills/
-    prd/                             SKILL.md, references/, scripts/check_prd.py
+    prd/                             SKILL.md, references/
     sdd/                             SKILL.md, references/
     transcript-fix/                  SKILL.md, references/, scripts/
 tests/                               testes dos scripts

@@ -70,24 +70,24 @@ Use as seções pertinentes, nesta ordem. Diagramas entram quando tornam as rela
 
 | Seção | Conteúdo |
 | --- | --- |
-| Design Context | Fontes lidas, código inspecionado e limitações |
-| Evaluation Criteria | Critérios e sua origem |
-| Risks and Techniques | Riscos concretos e sua mitigação, evidência ou aceitação |
-| Approaches | Alternativas comparadas pelos mesmos critérios e recomendação |
-| Architecture Overview | Estrutura da solução e relações entre as partes |
-| Deployment Unit | Serviço existente, módulo interno ou nova unidade, com justificativa |
-| Components | Responsabilidade, interfaces e reutilização |
-| Domain Events | Contrato de cada evento produzido ou consumido |
-| Data Model | Entidades, relações, invariantes e migração |
-| Error Handling | Tratamento e efeito observável de cada cenário de erro da spec |
-| Technical Decisions | Decisão, escolha com sua forma literal, alternativa rejeitada, custo aceito, natureza do contrato, público ou interno, e reversibilidade |
-| Files to Create or Modify | Caminhos já determinados, distinguindo criação e alteração |
+| Contexto do design | Fontes lidas, código inspecionado e limitações |
+| Critérios de avaliação | Critérios e sua origem |
+| Riscos e técnicas | Riscos concretos e sua mitigação, evidência ou aceitação |
+| Abordagens | Alternativas comparadas pelos mesmos critérios e recomendação |
+| Visão da arquitetura | Estrutura da solução e relações entre as partes |
+| Unidade de implantação | Serviço existente, módulo interno ou nova unidade, com justificativa |
+| Componentes | Responsabilidade, interfaces e reutilização |
+| Eventos de domínio | Contrato de cada evento produzido ou consumido |
+| Modelo de dados | Entidades, relações, invariantes e migração |
+| Tratamento de erros | Tratamento e efeito observável de cada cenário de erro da spec |
+| Decisões técnicas | Decisão, escolha com sua forma literal, alternativa rejeitada, custo aceito, natureza do contrato, público ou interno, e reversibilidade |
+| Arquivos a criar ou alterar | Caminhos já determinados, distinguindo criação e alteração |
 
-Regras que passam a valer para outras capabilities vão para ADR; decisões locais permanecem em Technical Decisions.
+Regras que passam a valer para outras capabilities vão para ADR; decisões locais permanecem em Decisões técnicas.
 
 Marque como irreversível a decisão cujo desfazer custa mais que uma refatoração: esquema persistido, contrato que outro consome, dependência nova, migração sobre dados existentes ou precedente que o repositório ainda não tem. Registre nela a forma literal que o próximo leitor vai copiar, como a definição do índice, o valor do enum ou a versão do pacote. Escopo adiado e regra sem mecanismo se desfazem sem esse custo e não entram.
 
-Exemplo de linha de Technical Decisions:
+Exemplo de linha de Decisões técnicas:
 
 | Decisão | Escolha e forma literal | Alternativa rejeitada | Custo | Contrato | Reversível |
 | --- | --- | --- | --- | --- | --- |

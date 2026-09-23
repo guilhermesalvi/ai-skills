@@ -27,13 +27,13 @@ Uma capability apresenta título, contexto de origem e prefixo:
 
 | | |
 | --- | --- |
-| **Originating Context** | RequestManagement |
+| **Contexto de origem** | RequestManagement |
 
-Requirement prefix: `REQ`. Visão geral: [PRD 0000](0000-platform-overview.md).
+Prefixo dos requisitos: `REQ`. Visão geral: [PRD 0000](0000-platform-overview.md).
 ```
 
-- O contexto dono da decisão é `Originating Context`. Consumidores afetados podem aparecer como `; affects <contextos>`, com o impacto explicado em Dependencies and Risks.
-- Sem vocabulário de domínio explícito, use `Module` ou `Area` no lugar de `Originating Context`.
+- O contexto de origem é o dono da decisão. Consumidores afetados podem aparecer como `; afeta <contextos>`, com o impacto explicado em Dependências e riscos.
+- Sem vocabulário de domínio explícito, use Módulo ou Área no lugar de Contexto de origem.
 - Quando houver visão geral, a linha do prefixo traz um link para ela.
 
 Escolha o prefixo conferindo os documentos existentes.
@@ -51,16 +51,46 @@ Os requisitos funcionais levam prioridade MoSCoW (Must, Should, Could, Won't); o
 
 Um ID retirado não volta a ser usado. Como ele some do arquivo, confira com `git log -S "<ID>"` que o número nunca existiu antes de atribuí-lo. Não renumere lacunas existentes por estética.
 
-Estados, motivos e outras enumerações usadas no código mantêm uma coluna `Identifier` com o nome canônico, para diferenciar o nome de exibição da identidade do conceito.
-
-## Rótulos de contrato
-
-Estes rótulos mantêm a forma em inglês seja qual for o idioma da prosa, porque o verificador os compara literalmente:
-
-`Requirement prefix:`, `Originating Context`, `Module`, `Area`, `Scope`, os títulos de seção, `[ASSUMPTION]`, `[GAP]`, `*Cost:*` e `*Reason:*`.
+Estados, motivos e outras enumerações usadas no código mantêm uma coluna Identificador com o nome canônico, para diferenciar o nome de exibição da identidade do conceito.
 
 ## Idioma
 
-A prosa segue o idioma fixado pelo pedido ou pela convenção do repositório. Sem essa definição, use o idioma do material de origem ou, sem material, o do pedido. Mantenha a escolha nas revisões seguintes.
+A prosa segue o idioma fixado pelo pedido ou pela convenção do repositório. Sem essa definição, use o idioma do material de origem ou, sem material, o do pedido. Mantenha a escolha nas revisões seguintes; um PRD existente conserva o idioma dos seus títulos.
 
-Termos técnicos estabelecidos podem permanecer em inglês quando a tradução perder precisão. Isso não autoriza impor frases em inglês como `if false` à prosa em português: explique diretamente a condição e seu impacto.
+Títulos de seção, rótulos e tags acompanham o idioma da prosa, sem misturar idiomas no mesmo documento. Esta skill os nomeia em português; num PRD em inglês, use a coluna English da tabela abaixo, para que PRDs diferentes usem os mesmos nomes.
+
+Termos canônicos em inglês não se traduzem em nenhum idioma: JTBD, MoSCoW (Must, Should, Could, Won't), NFR, trade-off, Leading, Lagging e Guardrails. Fora deles, termos técnicos estabelecidos podem permanecer em inglês quando a tradução perder precisão, mas isso não autoriza impor frases em inglês como `if false` à prosa em português: explique diretamente a condição e seu impacto.
+
+| Português | English |
+| --- | --- |
+| Resumo executivo | Executive Summary |
+| Alinhamento estratégico | Strategic Alignment |
+| Contexto e problema | Context and Problem |
+| Usuário-alvo / JTBD | Target User / JTBD |
+| Oportunidade / hipótese | Opportunity / Hypothesis |
+| Solução proposta | Proposed Solution |
+| Glossário do domínio | Domain Glossary |
+| Requisitos funcionais | Functional Requirements |
+| Eventos de domínio | Domain Events |
+| Requisitos não funcionais | Non-functional Requirements |
+| Considerações regulatórias | Regulatory Considerations |
+| Fora do escopo | Non-goals |
+| Trade-offs declarados | Declared Trade-offs |
+| Métricas de sucesso | Success Metrics |
+| Critérios de aceitação | Acceptance Criteria |
+| Dependências e riscos | Dependencies and Risks |
+| Questões em aberto | Open Questions |
+| Ponto mais frágil | Weakest Point |
+| Referências | References |
+| Propósito | Purpose |
+| Contextos | Contexts |
+| Catálogo de eventos | Event Catalog |
+| Fluxos entre contextos | Flows Between Contexts |
+| Termos por contexto | Terms per Context |
+| Decisões delegadas a ADR | Decisions Delegated to ADR |
+| Contexto de origem, Módulo, Área, Escopo | Originating Context, Module, Area, Scope |
+| `; afeta <contextos>` | `; affects <contexts>` |
+| `Prefixo dos requisitos:` | `Requirement prefix:` |
+| Identificador | Identifier |
+| `[PREMISSA]`, `[LACUNA]` | `[ASSUMPTION]`, `[GAP]` |
+| `*Custo:*`, `*Motivo:*` | `*Cost:*`, `*Reason:*` |

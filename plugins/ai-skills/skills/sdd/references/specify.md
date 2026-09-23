@@ -27,7 +27,7 @@ Leia a spec existente, os ADRs pertinentes, os contratos e o código atingido an
 
 ## Superfícies e dimensões
 
-Percorra as superfícies que a mudança expõe e as dimensões do sistema, e registre em Observable onde cada decisão aterrissou: num requisito, numa garantia que o código já oferece, com a citação, ou em `n/a` com o motivo. O motivo separa a decisão inaplicável da que ninguém tomou. Uma mudança trivial ou sem superfície exposta registra isso numa linha.
+Percorra as superfícies que a mudança expõe e as dimensões do sistema, e registre em Decisões observáveis onde cada decisão aterrissou: num requisito, numa garantia que o código já oferece, com a citação, ou em `n/a` com o motivo. O motivo separa a decisão inaplicável da que ninguém tomou. Uma mudança trivial ou sem superfície exposta registra isso numa linha.
 
 | Superfície | Decisões que ela sempre carrega |
 | --- | --- |
@@ -78,9 +78,9 @@ Se o contrato não determinar o resultado de um caso limite, registre a lacuna e
 
 Edite a spec no mesmo arquivo, sem campos de status, aprovação ou notas de ferramentas: o Git já guarda evolução e autoria.
 
-Logo abaixo do título, declare o prefixo na linha ``Requirement prefix: `EXM`.`` e cite o PRD usado como origem. O prefixo técnico é distinto dos prefixos de produto e das outras specs. Preserve prefixos existentes; semelhança de letras, por si só, não exige renomeação.
+Logo abaixo do título, declare o prefixo na linha ``Prefixo dos requisitos: `EXM`.`` e cite o PRD usado como origem. O prefixo técnico é distinto dos prefixos de produto e das outras specs. Preserve prefixos existentes; semelhança de letras, por si só, não exige renomeação.
 
-Ao ajustar o mesmo comportamento, preserve o ID dele. Ao substituir o conceito, retire o ID e crie outro. Liste os IDs retirados na linha `Retired:` ao fim da spec, para que não sejam reutilizados, e não elimine lacunas históricas por estética.
+Ao ajustar o mesmo comportamento, preserve o ID dele. Ao substituir o conceito, retire o ID e crie outro. Liste os IDs retirados na linha `Retirados:` ao fim da spec, para que não sejam reutilizados, e não elimine lacunas históricas por estética.
 
 Quando o PRD mudar, revise os requisitos da spec que citam os IDs alterados.
 
@@ -88,32 +88,32 @@ Uma refatoração sem mudança observável preserva os requisitos e usa os teste
 
 ## Organização sugerida
 
-Context e Requirements são a base; Traceability entra quando houver PRD, e as demais seções dependem do conteúdo.
+Contexto e Requisitos são a base; Rastreabilidade entra quando houver PRD, e as demais seções dependem do conteúdo.
 
 | Seção | Conteúdo |
 | --- | --- |
-| Context | Origem, consumidor, comportamento e código pertinente |
-| Scope / Out of Scope | O que entra e exclusões necessárias |
-| Assumptions | Hipóteses técnicas com origem, consequência e `Confirmed?` |
-| Open Questions | Decisão, responsável e requisitos bloqueados |
-| Requirements | IDs e comportamento observável |
-| Observable | Decisões de cada superfície e dimensão, com a aterrissagem de cada uma |
-| Domain Events | Produtor, consumidores, significado e gatilho |
-| Glossary | Termos técnicos; termos de negócio apontam ao PRD |
-| Traceability | IDs de produto e cenários relacionados aos requisitos técnicos |
-| Divergences | Na origem código, diferença entre implementação e intenção documentada |
+| Contexto | Origem, consumidor, comportamento e código pertinente |
+| Escopo / Fora do escopo | O que entra e exclusões necessárias |
+| Premissas | Hipóteses técnicas com origem, consequência e `Confirmada?` |
+| Questões em aberto | Decisão, responsável e requisitos bloqueados |
+| Requisitos | IDs e comportamento observável |
+| Decisões observáveis | Decisões de cada superfície e dimensão, com a aterrissagem de cada uma |
+| Eventos de domínio | Produtor, consumidores, significado e gatilho |
+| Glossário | Termos técnicos; termos de negócio apontam ao PRD |
+| Rastreabilidade | IDs de produto e cenários relacionados aos requisitos técnicos |
+| Divergências | Na origem código, diferença entre implementação e intenção documentada |
 
 ## Exemplo parcial
 
 ```markdown
-Requirement prefix: `EXM`.
+Prefixo dos requisitos: `EXM`.
 
-## Requirements
+## Requisitos
 
 - **EXM-01** — QUANDO o consumidor repetir uma solicitação com a mesma chave e o mesmo conteúdo, ENTÃO o sistema DEVE retornar o resultado original sem criar uma segunda solicitação [PRX-01]
 - **EXM-02** — SE a chave já estiver associada a outro conteúdo, ENTÃO o sistema DEVE informar conflito e preservar a solicitação original [PRX-02]
 
-## Traceability
+## Rastreabilidade
 
 | ID do PRD | Requisitos |
 | --- | --- |

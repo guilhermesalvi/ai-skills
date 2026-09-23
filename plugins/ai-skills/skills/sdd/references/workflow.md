@@ -42,10 +42,10 @@ Se uma regra local parecer impedir o trabalho, informe o arquivo, a regra e a a�
 
 Marque o que ainda não é fato:
 
-- `[ASSUMPTION]` para inferência, com origem, escolha provisória e consequência.
-- `[GAP]` para informação ou decisão ausente.
+- `[PREMISSA]` para inferência, com origem, escolha provisória e consequência.
+- `[LACUNA]` para informação ou decisão ausente.
 
-Marque cada hipótese com `Confirmed?`: `y` quando o usuário decidiu, inclusive ao delegar a escolha, e `n` para o default que ninguém viu. Sem a marca, um default silencioso parece decisão tomada.
+Marque cada hipótese com `Confirmada?`: `s` quando o usuário decidiu, inclusive ao delegar a escolha, e `n` para o default que ninguém viu. Sem a marca, um default silencioso parece decisão tomada.
 
 Um fato deve apontar para evidência no pedido, no PRD, no código ou na documentação. Verifique informações técnicas atuais nas fontes oficiais quando necessário; não invente APIs, ferramentas ou comportamento.
 
@@ -66,4 +66,14 @@ Revise spec, design, tarefas ou ADR contra a referência da etapa, com profundid
 
 A prosa segue o idioma fixado pelo pedido ou pela convenção do repositório; sem essa definição, o do PRD ou do material de origem.
 
-Títulos de seção, campos de tarefa, tags e rótulos de linha mantêm a forma em inglês documentada nas referências. Nomes de APIs, tipos, paths e identificadores não se traduzem.
+Títulos de seção, campos de tarefa, tags e rótulos acompanham o idioma da prosa, sem misturar idiomas no mesmo artefato; um artefato existente conserva o idioma dos seus títulos. Esta skill os nomeia em português; num artefato em inglês, use a coluna English da tabela abaixo.
+
+Nomes de APIs, tipos, paths e identificadores não se traduzem, nem termos canônicos como EARS, NFR, trade-off e Gate.
+
+| Artefato | Português | English |
+| --- | --- | --- |
+| Marcações | `[PREMISSA]`, `[LACUNA]`, `Confirmada?` com `s` ou `n` | `[ASSUMPTION]`, `[GAP]`, `Confirmed?` with `y` or `n` |
+| Spec | `Prefixo dos requisitos:`, Contexto, Escopo / Fora do escopo, Premissas, Questões em aberto, Requisitos, Decisões observáveis, Eventos de domínio, Glossário, Rastreabilidade, Divergências, `Retirados:` | `Requirement prefix:`, Context, Scope / Out of Scope, Assumptions, Open Questions, Requirements, Observable, Domain Events, Glossary, Traceability, Divergences, `Retired:` |
+| Design | Contexto do design, Critérios de avaliação, Riscos e técnicas, Abordagens, Visão da arquitetura, Unidade de implantação, Componentes, Eventos de domínio, Modelo de dados, Tratamento de erros, Decisões técnicas, Arquivos a criar ou alterar | Design Context, Evaluation Criteria, Risks and Techniques, Approaches, Architecture Overview, Deployment Unit, Components, Domain Events, Data Model, Error Handling, Technical Decisions, Files to Create or Modify |
+| Tarefas | Comandos de gate, Plano de execução, Tarefas, Rastreabilidade, Desvios, Tarefas de correção; campos O quê, Onde, Depende de (`nenhuma`), Requisitos, Interfaces, Pronto quando, Testes, Gate | Gate Commands, Execution Plan, Tasks, Traceability, Deviations, Correction Tasks; fields What, Where, Depends on (`none`), Requirement, Interfaces, Done when, Tests, Gate |
+| ADR | `ADR NNNN: decisão`, Participantes, Contexto, Decisão, Alternativas consideradas, Consequências, Regras derivadas, `Substitui: NNNN`, `Substituído por: NNNN` | `ADR NNNN: decision`, Participants, Context, Decision, Alternatives considered, Consequences, Derived rules, `Supersedes: NNNN`, `Superseded by: NNNN` |

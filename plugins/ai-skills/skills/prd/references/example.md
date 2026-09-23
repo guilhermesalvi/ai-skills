@@ -1,31 +1,31 @@
 # Exemplo de PRD
 
-Um PRD de um único contexto, sem PRD 0000. Ele não tem Regulatory Considerations, para não apresentar alegações regulatórias como fatos verificados.
+Um PRD de um único contexto, sem PRD 0000. Ele não tem Considerações regulatórias, para não apresentar alegações regulatórias como fatos verificados.
 
 ````markdown
 # Verificação assíncrona de documentos
 
 | | |
 | --- | --- |
-| **Originating Context** | CustomerOnboarding; affects AccountActivation |
+| **Contexto de origem** | CustomerOnboarding; afeta AccountActivation |
 
-Requirement prefix: `ONB`.
+Prefixo dos requisitos: `ONB`.
 
-## Executive Summary
+## Resumo executivo
 
-A operação precisa acompanhar documentos enviados para análise sem coordenar cada envio por e-mail. A proposta mantém um caso de verificação por cliente, com estado explícito e critérios para cada item. A elegibilidade para ativação depende do resultado do caso. [ASSUMPTION] O tempo de espera entre envios e análises é o principal componente do prazo atual; a medição ainda precisa confirmar essa hipótese.
+A operação precisa acompanhar documentos enviados para análise sem coordenar cada envio por e-mail. A proposta mantém um caso de verificação por cliente, com estado explícito e critérios para cada item. A elegibilidade para ativação depende do resultado do caso. [PREMISSA] O tempo de espera entre envios e análises é o principal componente do prazo atual; a medição ainda precisa confirmar essa hipótese.
 
-## Context and Problem
+## Contexto e problema
 
 Neste cenário fictício, a operação envia documentos em nome do cliente e acompanha a análise por mensagens. A aprovação não tem um registro único que os consumidores possam consultar. Não há baseline medido para estabelecer a meta de prazo.
 
-## Target User / JTBD
+## Usuário-alvo / JTBD
 
 - Analista de conformidade: validar cada documento contra um critério identificável e registrar o resultado.
 - Operador de cadastro: saber o estado do caso e quais itens exigem reenvio.
 - AccountActivation: consultar a elegibilidade do cliente sem interpretar mensagens.
 
-## Proposed Solution
+## Solução proposta
 
 Um caso reúne os itens exigidos para o cliente e informa o resultado da verificação. A operação envia documentos; a análise aprova itens ou informa o motivo de rejeição. Os requisitos abaixo definem as transições.
 
@@ -40,7 +40,7 @@ stateDiagram-v2
     PendingResubmission --> Declined: prazo excedido (ONB-10)
 ```
 
-| Estado | Identifier | Significado |
+| Estado | Identificador | Significado |
 | --- | --- | --- |
 | Aguardando documentos | `AwaitingDocuments` | Convite ativo com envio incompleto |
 | Em análise | `UnderReview` | Caso disponível para análise |
@@ -50,7 +50,7 @@ stateDiagram-v2
 
 Armazenamento, notificações e desenho da interface serão definidos no trabalho técnico.
 
-## Domain Glossary
+## Glossário do domínio
 
 | Termo | Definição |
 | --- | --- |
@@ -60,7 +60,7 @@ Armazenamento, notificações e desenho da interface serão definidos no trabalh
 | Envio completo | Todos os itens do checklist têm documento anexado (ONB-03) |
 | Elegibilidade | Resultado derivado do estado do caso (ONB-11) |
 
-## Functional Requirements
+## Requisitos funcionais
 
 - **ONB-01 (Must)** O caso começa em `AwaitingDocuments` a partir de um convite ativo.
 - **ONB-02 (Must)** O operador pode enviar documentos em nome do cliente enquanto o convite estiver ativo, independentemente da disponibilidade do analista.
@@ -75,39 +75,39 @@ Armazenamento, notificações e desenho da interface serão definidos no trabalh
 - **ONB-11 (Must)** A elegibilidade para ativação é verdadeira se, e somente se, o caso estiver em `Approved`.
 - **ONB-12 (Must)** Cada envio, validação e transição registra responsável, instante e motivo, consultáveis por caso e cliente.
 
-## Non-functional Requirements
+## Requisitos não funcionais
 
 - **ONB-NFR-01** Um envio completo deve ser refletido em `UnderReview` em até 1 minuto.
-- **ONB-NFR-02** [GAP] A retenção dos documentos depende da política e das obrigações aplicáveis, ainda não identificadas neste exemplo.
+- **ONB-NFR-02** [LACUNA] A retenção dos documentos depende da política e das obrigações aplicáveis, ainda não identificadas neste exemplo.
 - **ONB-NFR-03** Traces não contêm documentos nem dados pessoais; identificadores técnicos de caso e item são suficientes.
 
-## Non-goals
+## Fora do escopo
 
 - Envio direto pelo cliente nesta versão.
 - Assinatura de contratos.
 - Revisão do mérito dos critérios de conformidade.
 
-## Declared Trade-offs
+## Trade-offs declarados
 
 ### Operação intermediando o envio (ONB-02)
 
-*Cost:* mantém parte da carga manual.
+*Custo:* mantém parte da carga manual.
 
-*Reason:* permite avaliar o fluxo interno antes de abrir o envio ao cliente.
+*Motivo:* permite avaliar o fluxo interno antes de abrir o envio ao cliente.
 
 ### Checklist atual preservado (ONB-05)
 
-*Cost:* critérios legados de pouco valor podem continuar no processo.
+*Custo:* critérios legados de pouco valor podem continuar no processo.
 
-*Reason:* rever seu mérito exige uma decisão de produto distinta.
+*Motivo:* rever seu mérito exige uma decisão de produto distinta.
 
 ### Prazo de reenvio de 10 dias úteis (ONB-10)
 
-*Cost:* clientes mais lentos precisam de novo convite.
+*Custo:* clientes mais lentos precisam de novo convite.
 
-*Reason:* limita casos pendentes por tempo indefinido.
+*Motivo:* limita casos pendentes por tempo indefinido.
 
-## Success Metrics
+## Métricas de sucesso
 
 ### Leading
 
@@ -119,9 +119,9 @@ Armazenamento, notificações e desenho da interface serão definidos no trabalh
 
 ### Guardrails
 
-- Taxa de erros encontrados após a aprovação: a redução de prazo não pode comprometer a análise. [GAP] Limite ainda não definido.
+- Taxa de erros encontrados após a aprovação: a redução de prazo não pode comprometer a análise. [LACUNA] Limite ainda não definido.
 
-## Acceptance Criteria
+## Critérios de aceitação
 
 | Caso | Entrada | Condição intermediária | Requisito | Resultado |
 | --- | --- | --- | --- | --- |
@@ -132,7 +132,7 @@ Armazenamento, notificações e desenho da interface serão definidos no trabalh
 | Aprovação | Três itens aprovados | Nenhum item pendente | ONB-07, ONB-11 | `Approved`; elegibilidade verdadeira |
 | Prazo excedido | Caso pendente por 11 dias úteis | Sem reenvio | ONB-10, ONB-11 | `Declined`; elegibilidade falsa |
 
-## Dependencies and Risks
+## Dependências e riscos
 
 | Item | Tipo | Impacto |
 | --- | --- | --- |
@@ -140,9 +140,9 @@ Armazenamento, notificações e desenho da interface serão definidos no trabalh
 | AccountActivation | Contexto consumidor | Precisa interpretar a elegibilidade conforme ONB-11 |
 | Calendário de dias úteis | Definição pendente | Altera a expiração em ONB-10 |
 
-## Open Questions
+## Questões em aberto
 
-### [ASSUMPTION] O principal atraso está na espera entre envios e análise
+### [PREMISSA] O principal atraso está na espera entre envios e análise
 
 **Premissa:** o tempo de espera, e não o de análise, domina o prazo atual.
 
@@ -152,7 +152,7 @@ Armazenamento, notificações e desenho da interface serão definidos no trabalh
 
 **Evidência necessária:** medição dos tempos de espera e de análise em casos reais antes de aprovar.
 
-### [GAP] Calendário de dias úteis (ONB-10)
+### [LACUNA] Calendário de dias úteis (ONB-10)
 
 **Decisão pendente:** qual calendário define os dias úteis da expiração.
 
@@ -160,7 +160,7 @@ Armazenamento, notificações e desenho da interface serão definidos no trabalh
 
 **Responsável:** autor do produto.
 
-### [GAP] Retenção de documentos (ONB-NFR-02)
+### [LACUNA] Retenção de documentos (ONB-NFR-02)
 
 **Decisão pendente:** quais política e obrigações definem a retenção.
 
@@ -168,7 +168,7 @@ Armazenamento, notificações e desenho da interface serão definidos no trabalh
 
 **Responsável:** conformidade.
 
-## Weakest Point
+## Ponto mais frágil
 
 **Decisão:** preservar o checklist atual sem revisar o mérito dos critérios (ONB-05).
 

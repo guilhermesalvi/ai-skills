@@ -6,12 +6,12 @@ Descreva comportamento observável do produto.
 
 Toda afirmação factual precisa de origem: decisão do usuário, regra formalizada, observação ou fonte pertinente. Sem origem, marque o texto:
 
-- `[ASSUMPTION]` para inferência ainda não verificada, com a origem ou evidência que a motivou.
-- `[GAP]` para informação ou decisão ausente.
+- `[PREMISSA]` para inferência ainda não verificada, com a origem ou evidência que a motivou.
+- `[LACUNA]` para informação ou decisão ausente.
 
 Não preencha uma lacuna com especulação sem tag. Usuário, métrica, limite ou regra ausente continua lacuna: não invente um valor para tornar a frase aparentemente verificável.
 
-Quando regras, fontes ou paráfrases se contradisserem, ou quando uma correção depender de decisão de negócio, registre um `[GAP]` com os IDs afetados e conclua o restante. Não escolha uma das versões em silêncio.
+Quando regras, fontes ou paráfrases se contradisserem, ou quando uma correção depender de decisão de negócio, registre um `[LACUNA]` com os IDs afetados e conclua o restante. Não escolha uma das versões em silêncio.
 
 ## Capacidade de produto
 
@@ -42,7 +42,7 @@ Para capacidades genéricas, avalie reutilização ou contratação quando a dec
 
 ### Eventos
 
-Domain Events, no PRD produtor, define conteúdo, gatilho e consequência de cada evento, e nomeia os contextos consumidores. Estados, transições, requisitos e eventos devem concordar entre si.
+A seção Eventos de domínio, no PRD produtor, define conteúdo, gatilho e consequência de cada evento, e nomeia os contextos consumidores. Estados, transições, requisitos e eventos devem concordar entre si.
 
 Um evento sem consumidor identificado permanece candidato, condicionado à identificação de quem usará a mudança; não o apresente como integração decidida.
 
@@ -50,7 +50,7 @@ Um evento sem consumidor identificado permanece candidato, condicionado à ident
 
 Cada regra tem definição principal no PRD dono dela. Resumos e diagramas citam o ID e explicam o contexto necessário: a referência não pode obrigar o leitor a adivinhar o comportamento local.
 
-Um PRD cita IDs de outro PRD só quando depende deles, isto é, quando consome a definição, a entrada ou o evento. Não descreva como outro contexto reage ao seu comportamento: nomeie o contexto afetado e deixe as relações entre capabilities na visão geral. Em Regulatory Considerations, cada norma aponta para requisitos do próprio PRD.
+Um PRD cita IDs de outro PRD só quando depende deles, isto é, quando consome a definição, a entrada ou o evento. Não descreva como outro contexto reage ao seu comportamento: nomeie o contexto afetado e deixe as relações entre capabilities na visão geral. Em Considerações regulatórias, cada norma aponta para requisitos do próprio PRD.
 
 Cada requisito representa uma unidade verificável. Separe obrigações que podem falhar independentemente e mantenha juntas as condições cujo efeito é indivisível.
 
@@ -66,43 +66,43 @@ Inspeção textual não comprova renderização. Renderize quando a alteração 
 
 ## Seções
 
-Use `#` para o título, `##` para as seções e `###` para agrupamentos úteis. Os títulos seguem a ordem da tabela, e só References pode vir depois de Weakest Point.
+Use `#` para o título, `##` para as seções e `###` para agrupamentos úteis. Os títulos seguem a ordem da tabela, e só Referências pode vir depois de Ponto mais frágil.
 
 As seções marcadas como base são obrigatórias numa nova capability. As demais entram quando há conteúdo pertinente, sem frases vazias. Não altere documentos existentes só para introduzir seções opcionais. Se o pedido exigir outra seção, preserve-a e explique sua finalidade.
 
 | Seção | Base | Conteúdo |
 | --- | --- | --- |
-| Executive Summary | Sim | Problema, capacidade proposta e resultado ou métrica conhecida |
-| Strategic Alignment | | Objetivo de negócio que o material cita e a que a proposta responde |
-| Context and Problem | Sim | Situação observada, impacto, evidências e hipóteses |
-| Target User / JTBD | Sim | Atores e o trabalho ou resultado de que precisam |
-| Opportunity / Hypothesis | | Hipótese ainda em validação e como validá-la |
-| Proposed Solution | Sim | Comportamento proposto, limites e relações, referenciando os requisitos |
-| Domain Glossary | | Termos necessários, ambiguidades e conceitos do contexto dono |
-| Functional Requirements | Sim | Requisitos com condição, resultado, ID e prioridade |
-| Domain Events | | Eventos produzidos ou consumidos e requisitos que os governam |
-| Non-functional Requirements | | Atributos de qualidade, limites e restrições que orientam o design |
-| Regulatory Considerations | | Norma realmente consultada, interpretação adotada, IDs deste PRD afetados e lacunas |
-| Non-goals | | Funcionalidades adjacentes explicitamente excluídas |
-| Declared Trade-offs | | Decisões tomadas que custam algo |
-| Success Metrics | | Indicadores de resultado e proteções contra degradação |
-| Acceptance Criteria | | Cenários que discriminam resultados e limites dos requisitos |
-| Dependencies and Risks | | Dependência ou risco, origem, impacto e tratamento; contextos afetados |
-| Open Questions | | Decisões e premissas materiais ainda abertas |
-| Weakest Point | | Decisão frágil, risco, mitigação e condição de reavaliação |
-| References | | Fontes externas usadas, escopo e datas reais de consulta |
+| Resumo executivo | Sim | Problema, capacidade proposta e resultado ou métrica conhecida |
+| Alinhamento estratégico | | Objetivo de negócio que o material cita e a que a proposta responde |
+| Contexto e problema | Sim | Situação observada, impacto, evidências e hipóteses |
+| Usuário-alvo / JTBD | Sim | Atores e o trabalho ou resultado de que precisam |
+| Oportunidade / hipótese | | Hipótese ainda em validação e como validá-la |
+| Solução proposta | Sim | Comportamento proposto, limites e relações, referenciando os requisitos |
+| Glossário do domínio | | Termos necessários, ambiguidades e conceitos do contexto dono |
+| Requisitos funcionais | Sim | Requisitos com condição, resultado, ID e prioridade |
+| Eventos de domínio | | Eventos produzidos ou consumidos e requisitos que os governam |
+| Requisitos não funcionais | | Atributos de qualidade, limites e restrições que orientam o design |
+| Considerações regulatórias | | Norma realmente consultada, interpretação adotada, IDs deste PRD afetados e lacunas |
+| Fora do escopo | | Funcionalidades adjacentes explicitamente excluídas |
+| Trade-offs declarados | | Decisões tomadas que custam algo |
+| Métricas de sucesso | | Indicadores de resultado e proteções contra degradação |
+| Critérios de aceitação | | Cenários que discriminam resultados e limites dos requisitos |
+| Dependências e riscos | | Dependência ou risco, origem, impacto e tratamento; contextos afetados |
+| Questões em aberto | | Decisões e premissas materiais ainda abertas |
+| Ponto mais frágil | | Decisão frágil, risco, mitigação e condição de reavaliação |
+| Referências | | Fontes externas usadas, escopo e datas reais de consulta |
 
-### Declared Trade-offs
+### Trade-offs declarados
 
-Apresente cada decisão sob um subtítulo `###`, com `*Cost:*` concreto e `*Reason:*` em parágrafos separados. Escolhas técnicas podem pertencer a um ADR.
+Apresente cada decisão sob um subtítulo `###`, com `*Custo:*` concreto e `*Motivo:*` em parágrafos separados. Escolhas técnicas podem pertencer a um ADR.
 
-### Success Metrics
+### Métricas de sucesso
 
 Mantenha Leading, Lagging e Guardrails como grupos distintos, com um item por critério e a origem de cada métrica ou proteção. Registre resultado, indicador, unidade, fonte e limite decidido.
 
 Em produto sem operação real, como uma plataforma demonstrativa, use condições verificáveis do comportamento em vez de indicadores de uso ou de negócio.
 
-### Acceptance Criteria
+### Critérios de aceitação
 
 Um caso de aceitação precisa de nome, entrada, condições e resultado esperado. “O usuário consegue usar a função” não discrimina um resultado.
 
@@ -110,7 +110,7 @@ Para cálculos ou ramificações, prefira uma tabela com valores intermediários
 
 Use Dado/Quando/Então quando a tabela não expressar o cenário, e cite os requisitos verificados. Os marcadores seguem o idioma da prosa; em português, flexione Dado conforme o sujeito (Dada, Dados ou Dadas).
 
-### Open Questions
+### Questões em aberto
 
 Dê um subtítulo a cada questão e separe em parágrafos próprios, quando conhecidos, a decisão ou premissa, a origem, o impacto, o responsável e a resolução ou evidência necessária.
 

@@ -1,28 +1,19 @@
 # Produzir e revisar o PRD
 
-Depois de criar ou alterar um PRD, execute a verificação de estrutura, corrija as falhas que a mudança introduziu e revise o conteúdo antes de entregar.
+Depois de criar ou alterar um PRD, confira a estrutura, corrija as falhas que a mudança introduziu e revise o conteúdo antes de entregar.
 
 Uma correção localizada não exige regenerar o PRD inteiro. Revise as seções dependentes quando a mudança afetar regras, exemplos, métricas, estados ou decisões; amplie a leitura pelo impacto, não pela quantidade de seções tocadas.
 
-## Verificação de estrutura
+## Conferência de estrutura
 
-Execute o verificador a partir da raiz do projeto consumidor:
+Confira nos PRDs tocados e nos que citam seus IDs:
 
-```bash
-python "<skill-dir>/scripts/check_prd.py" docs/prd
-```
-
-`<skill-dir>` é o caminho absoluto da pasta que contém o `SKILL.md` carregado, não uma variável de ambiente fornecida pela ferramenta. `docs/prd` é o default; use a pasta que a convenção do repositório fixar, relativa à raiz do projeto.
-
-O script lê apenas os arquivos `NNNN-*.md` da pasta, então instruções como `CLAUDE.md` podem conviver ali. Ele confere numeração, cabeçalhos, prefixos, IDs e citações, links locais, seções básicas e integridade textual dos diagramas. Ele não comprova semântica, norma nem renderização; consulte a implementação para o alcance exato.
-
-| Saída | Significado |
-| --- | --- |
-| `0` | Nenhum achado |
-| `1` | Há achados |
-| `2` | Erro de entrada |
-
-Corrija os achados e execute de novo. Se um achado corresponder a um formato autorizado pela precedência da skill, preserve o formato e informe a limitação: não altere o produto para satisfazer uma expressão regular. Se Python não estiver disponível, faça a conferência manual e declare que o script não foi executado.
+- Cada número de arquivo pertence a um só documento, e cada prefixo, a um só PRD.
+- Cada ID é definido uma única vez, e toda citação resolve para uma definição existente. Use `git grep -n` para procurar os IDs.
+- Requisitos funcionais têm prioridade MoSCoW; NFRs não têm.
+- As seções base existem, nenhuma seção está vazia, e só Referências vem depois de Ponto mais frágil.
+- Cada trade-off declarado tem custo e motivo.
+- Links locais apontam para arquivos existentes, e cada diagrama Mermaid declara um tipo suportado.
 
 ## Revisão de conteúdo
 
