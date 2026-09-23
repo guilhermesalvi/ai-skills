@@ -4,7 +4,7 @@ Skills do Claude Code para requisitos de produto, desenvolvimento orientado por 
 
 | Skill | Finalidade |
 |---|---|
-| `prd` | Criar e revisar PRDs com requisitos de negócio rastreáveis, métricas e trade-offs declarados. |
+| `prd` | Criar e revisar PRDs com requisitos de negócio rastreáveis, métricas e trade-offs declarados. Inclui um verificador de IDs, numeração e links que independe do idioma dos títulos. |
 | `sdd` | Especificar, projetar, planejar, implementar e verificar mudanças técnicas com requisitos EARS rastreáveis e ADRs. |
 | `transcript-fix` | Corrigir transcrições Whisper (`.txt`, `.srt`, `.vtt`) com glossário persistente e subagentes coordenados. Produz texto simples com marcações de tempo, não arquivos de legenda. |
 
@@ -100,7 +100,7 @@ CLAUDE.md                            orientações para editar o repositório
 plugins/ai-skills/
   .claude-plugin/plugin.json         manifesto do plugin
   skills/
-    prd/                             SKILL.md, references/
+    prd/                             SKILL.md, references/, scripts/check_prd.py
     sdd/                             SKILL.md, references/
     transcript-fix/                  SKILL.md, references/, scripts/
 tests/                               testes dos scripts

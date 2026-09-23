@@ -32,6 +32,6 @@ Quando as fontes conflitarem, vale esta ordem:
 
 1. O pedido da sessão.
 2. A convenção do repositório, isto é, a regra escrita no `CLAUDE.md` ou em outra instrução do repositório.
-3. Os defaults desta skill.
+3. Os defaults desta skill e do verificador.
 
 Um padrão apenas observado em documentos existentes não obriga nada, mas preserve-o ao editar esses documentos.
