@@ -7,9 +7,9 @@ Um PRD de um único contexto, sem PRD 0000. Ele não tem Considerações regulat
 
 | | |
 | --- | --- |
-| **Contexto de origem** | CustomerOnboarding; afeta AccountActivation |
-
-Prefixo dos requisitos: `ONB`.
+| **Contexto de origem** | CustomerOnboarding |
+| **Contextos afetados** | AccountActivation |
+| **Prefixo dos requisitos** | `ONB` |
 
 ## Resumo executivo
 

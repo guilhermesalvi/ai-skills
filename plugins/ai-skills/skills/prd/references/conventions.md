@@ -27,7 +27,7 @@ Antes de alterar ou retirar um requisito ou um caso de aceitação, procure seus
 
 ## Cabeçalho
 
-O PRD de uma capability começa pelo título, pela tabela com o contexto de origem e pela linha do prefixo:
+O PRD de uma capability começa pelo título e por uma tabela de cabeçalho:
 
 ```markdown
 # Ciclo de uma solicitação
@@ -35,13 +35,14 @@ O PRD de uma capability começa pelo título, pela tabela com o contexto de orig
 | | |
 | --- | --- |
 | **Contexto de origem** | RequestManagement |
-
-Prefixo dos requisitos: `REQ`. Visão geral: [PRD 0000](0000-platform-overview.md).
+| **Contextos afetados** | Billing, Notification |
+| **Prefixo dos requisitos** | `REQ` |
+| **Visão geral** | [PRD 0000](0000-platform-overview.md) |
 ```
 
-- Em Contexto de origem, informe o contexto dono das regras deste PRD. Para indicar outros contextos afetados, acrescente ao valor `; afeta <contextos>`, como em `CustomerOnboarding; afeta AccountActivation`, e explique o impacto em Dependências e riscos.
-- Se o projeto não divide o produto em contextos de domínio, troque o rótulo Contexto de origem por Módulo ou Área, conforme o termo que o projeto usa.
-- Se a pasta tiver a visão geral 0000, a linha do prefixo termina com um link para ela, como no exemplo.
+- Em Contexto de origem, informe o contexto dono das regras deste PRD. Se o projeto não divide o produto em contextos de domínio, troque o rótulo por Módulo ou Área, conforme o termo que o projeto usa, e troque Contextos afetados pelo plural correspondente.
+- Inclua Contextos afetados quando o PRD muda o que outros contextos recebem ou observam, e explique o impacto em Dependências e riscos. Sem contexto afetado, omita a linha.
+- Inclua Visão geral quando a pasta tiver o PRD 0000; sem ele, omita a linha.
 
 ## IDs
 
@@ -100,8 +101,9 @@ Termos canônicos em inglês não se traduzem em nenhum idioma: JTBD, MoSCoW (Mu
 | Termos por contexto | Terms per Context |
 | Decisões delegadas a ADR | Decisions Delegated to ADR |
 | Contexto de origem, Módulo, Área, Escopo | Originating Context, Module, Area, Scope |
-| `; afeta <contextos>` | `; affects <contexts>` |
-| `Prefixo dos requisitos:` | `Requirement prefix:` |
+| Contextos afetados, Módulos afetados, Áreas afetadas | Affected Contexts, Affected Modules, Affected Areas |
+| Prefixo dos requisitos | Requirement Prefix |
+| Visão geral | Overview |
 | Identificador | Identifier |
 | `[PREMISSA]`, `[LACUNA]` | `[ASSUMPTION]`, `[GAP]` |
 | `*Custo:*`, `*Motivo:*` | `*Cost:*`, `*Reason:*` |
