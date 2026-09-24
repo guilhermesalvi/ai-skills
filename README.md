@@ -4,7 +4,7 @@ Skills do Claude Code para requisitos de produto, desenvolvimento orientado por 
 
 | Skill | Finalidade |
 |---|---|
-| `sdd` | Escrever PRDs e especificar, projetar, planejar, implementar e verificar mudanças técnicas, com requisitos rastreáveis do produto ao código, EARS e ADRs. Inclui um verificador de IDs, numeração e links dos PRDs que independe do idioma dos títulos. |
+| `sdd` | Escrever PRDs e especificar, projetar, planejar, implementar e verificar mudanças técnicas, com requisitos rastreáveis do produto ao código, EARS e ADRs. Inclui um verificador de IDs, prefixos e links dos PRDs que independe do idioma dos títulos. |
 | `transcript-fix` | Corrigir transcrições Whisper (`.txt`, `.srt`, `.vtt`) com glossário persistente e subagentes coordenados. Produz texto simples com marcações de tempo, não arquivos de legenda. |
 
 ## Instalação

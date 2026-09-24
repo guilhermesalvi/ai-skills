@@ -47,19 +47,25 @@ def run_cli(folder):
     )
 
 
+def write_prd(folder, capability, text):
+    path = Path(folder) / capability / "prd.md"
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(text, encoding="utf-8")
+    return path
+
+
 class PrdChecks(unittest.TestCase):
     def setUp(self):
         self.temp = TemporaryDirectory()
         self.addCleanup(self.temp.cleanup)
         self.folder = Path(self.temp.name)
-        self.document = self.folder / "0001-requests-lifecycle.md"
-        self.document.write_text(DOCUMENT, encoding="utf-8")
+        self.document = write_prd(self.folder, "requests-lifecycle", DOCUMENT)
 
     def test_valid_document_has_no_findings(self):
         self.assertEqual([], check(self.folder))
 
     def test_titles_in_any_language_are_accepted(self):
-        (self.folder / "0002-requests-en.md").write_text(ENGLISH, encoding="utf-8")
+        write_prd(self.folder, "requests-en", ENGLISH)
         self.assertEqual([], check(self.folder))
 
     def test_skill_example_has_no_findings(self):
@@ -67,21 +73,26 @@ class PrdChecks(unittest.TestCase):
         self.document.write_text(example[1], encoding="utf-8")
         self.assertEqual([], check(self.folder))
 
-    def test_instructions_are_not_treated_as_prds(self):
+    def test_specs_and_instructions_are_not_read(self):
         (self.folder / "CLAUDE.md").write_text("# Instruções\nReferência: REQ-99\n", encoding="utf-8")
+        (self.document.parent / "spec.md").write_text("- **REQ-100 (Must)** Cópia.\n[Ausente](missing.md)\n", encoding="utf-8")
         self.assertEqual([], check(self.folder))
 
     def test_three_digit_citation_is_not_truncated(self):
         self.document.write_text(DOCUMENT + "\nConsultar REQ-101.\n", encoding="utf-8")
-        self.assertIn("0001-requests-lifecycle.md: citation REQ-101 has no definition", check(self.folder))
+        self.assertIn("requests-lifecycle/prd.md: citation REQ-101 has no definition", check(self.folder))
 
     def test_undefined_prefix_is_not_a_citation(self):
         self.document.write_text(DOCUMENT + "\nAssinatura com SHA-256 conforme ISO-27001.\n", encoding="utf-8")
         self.assertEqual([], check(self.folder))
 
     def test_citation_of_another_prd_resolves(self):
-        (self.folder / "0002-requests-en.md").write_text(ENGLISH + "\nDepends on REQ-100.\n", encoding="utf-8")
+        write_prd(self.folder, "requests-en", ENGLISH + "\nDepends on REQ-100.\n")
         self.assertEqual([], check(self.folder))
+
+    def test_overview_citations_are_checked(self):
+        (self.folder / "overview.md").write_text("# Visão geral\n\nREQ-100 e REQ-102.\n", encoding="utf-8")
+        self.assertEqual(["overview.md: citation REQ-102 has no definition"], check(self.folder))
 
     def test_unprefixed_id_is_reported(self):
         self.document.write_text(DOCUMENT + "\nVer FR-12.\n", encoding="utf-8")
@@ -93,14 +104,14 @@ class PrdChecks(unittest.TestCase):
 
     def test_invalid_priority_is_reported(self):
         self.document.write_text(DOCUMENT.replace("(Must)", "(Urgente)"), encoding="utf-8")
-        self.assertIn("0001-requests-lifecycle.md: REQ-100 has no valid MoSCoW priority", check(self.folder))
+        self.assertIn("requests-lifecycle/prd.md: REQ-100 has no valid MoSCoW priority", check(self.folder))
 
     def test_missing_priority_is_reported(self):
         self.document.write_text(DOCUMENT + "\n## Requisitos não funcionais\n- **REQ-101** Limite definido.\n", encoding="utf-8")
-        self.assertIn("0001-requests-lifecycle.md: REQ-101 has no valid MoSCoW priority", check(self.folder))
+        self.assertIn("requests-lifecycle/prd.md: REQ-101 has no valid MoSCoW priority", check(self.folder))
 
     def test_prefix_shared_by_two_prds_is_reported(self):
-        (self.folder / "0002-other.md").write_text(DOCUMENT.replace("REQ-100", "REQ-101"), encoding="utf-8")
+        write_prd(self.folder, "other", DOCUMENT.replace("REQ-100", "REQ-101"))
         self.assertTrue(any("prefix: REQ belongs to several PRDs" in f for f in check(self.folder)))
 
     def test_several_prefixes_in_one_prd_are_reported(self):
@@ -115,6 +126,12 @@ class PrdChecks(unittest.TestCase):
         self.document.write_text(DOCUMENT + "\n[Definição](missing.md)\n", encoding="utf-8")
         self.assertTrue(any("local link does not resolve" in f for f in check(self.folder)))
 
+    def test_links_resolve_from_the_document_folder(self):
+        (self.document.parent / "spec.md").write_text("# Spec\n", encoding="utf-8")
+        (self.folder / "overview.md").write_text("[PRD](requests-lifecycle/prd.md)\n", encoding="utf-8")
+        self.document.write_text(DOCUMENT + "\n[Spec](spec.md) [Visão geral](../overview.md)\n", encoding="utf-8")
+        self.assertEqual([], check(self.folder))
+
     def test_anchor_and_external_links_are_not_local_files(self):
         self.document.write_text(DOCUMENT + "\n[Topo](#solicitações) [Fonte](https://example.com)\n", encoding="utf-8")
         self.assertEqual([], check(self.folder))
@@ -123,13 +140,10 @@ class PrdChecks(unittest.TestCase):
         self.document.write_text(DOCUMENT + "\n```mermaid\nflowchart LR\n", encoding="utf-8")
         self.assertTrue(any("unclosed code fence" in f for f in check(self.folder)))
 
-    def test_duplicate_number_is_reported(self):
-        (self.folder / "0001-other.md").write_text(DOCUMENT.replace("REQ", "ALT"), encoding="utf-8")
-        self.assertIn("numbering: 0001 used by 2 files", check(self.folder))
-
     def test_empty_input_is_an_error(self):
         with TemporaryDirectory() as empty:
-            with self.assertRaisesRegex(ValueError, "no numbered PRDs"):
+            (Path(empty) / "overview.md").write_text("# Visão geral\n", encoding="utf-8")
+            with self.assertRaisesRegex(ValueError, "no PRDs"):
                 check(empty)
 
 
@@ -138,12 +152,12 @@ class PrdCommandLine(unittest.TestCase):
         with TemporaryDirectory() as temp:
             folder = Path(temp)
             self.assertEqual(2, run_cli(folder).returncode)
-            (folder / "0001-requests.md").write_text(DOCUMENT, encoding="utf-8")
+            write_prd(folder, "requests", DOCUMENT)
             self.assertEqual(0, run_cli(folder).returncode)
-            (folder / "0001-other.md").write_text(DOCUMENT.replace("REQ", "ALT"), encoding="utf-8")
+            write_prd(folder, "other", DOCUMENT.replace("REQ-100", "REQ-101"))
             result = run_cli(folder)
             self.assertEqual(1, result.returncode)
-            self.assertIn("numbering: 0001", result.stdout)
+            self.assertIn("prefix: REQ", result.stdout)
 
 
 if __name__ == "__main__":

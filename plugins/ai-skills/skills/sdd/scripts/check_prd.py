@@ -1,19 +1,20 @@
-"""Check requirement IDs, numbering and local links of numbered PRDs.
+"""Check requirement IDs and local links of the PRDs in a specs folder.
 
-Usage: python check_prd.py [<prd folder>]   (default: docs/prd)
+Usage: python check_prd.py [<specs folder>]   (default: docs/specs)
 
-Reads only numbered PRDs (NNNN-*.md), so instruction files such as CLAUDE.md
-can live in the same folder. The check ignores section titles and labels, so
-it works in any prose language. A requirement is defined by a list item that
-starts with a bold ID, such as "- **ONB-01 (Must)** ...". A prefix belongs to
-the PRD that defines it, and tokens whose prefix no PRD defines, such as
-SHA-256, are not citations. This read-only check does not validate business
-meaning, document structure or Mermaid rendering.
+Reads only <capability>/prd.md and the product overview overview.md, so specs,
+designs, tasks and instruction files such as CLAUDE.md can live in the same
+tree. The check ignores section titles and labels, so it works in any prose
+language. A requirement is defined by a list item that starts with a bold ID,
+such as "- **DOC-01 (Must)** ...". A prefix belongs to the PRD that defines it,
+and tokens whose prefix no PRD defines, such as SHA-256, are not citations.
+This read-only check does not validate business meaning, document structure or
+Mermaid rendering.
 Exit codes: 0 = no findings, 1 = findings, 2 = invalid input or read error.
 """
 
 import argparse
-from collections import Counter, defaultdict
+from collections import defaultdict
 from pathlib import Path
 import re
 import sys
@@ -57,16 +58,15 @@ def check(folder):
     folder = Path(folder).resolve()
     if not folder.is_dir():
         raise ValueError(f"not a folder: {folder}")
-    paths = sorted(p for p in folder.glob("*.md") if re.fullmatch(r"[0-9]{4}-.+\.md", p.name))
-    if not paths:
-        raise ValueError(f"no numbered PRDs in {folder}")
-    texts = {p.name: p.read_text(encoding="utf-8-sig") for p in paths}
+    prds = sorted(folder.glob("*/prd.md"))
+    if not prds:
+        raise ValueError(f"no PRDs in {folder}")
+    overview = folder / "overview.md"
+    paths = prds + ([overview] if overview.is_file() else [])
+    names = {p.relative_to(folder).as_posix(): p for p in paths}
+    texts = {name: p.read_text(encoding="utf-8-sig") for name, p in names.items()}
     parsed = {name: strip_fences(text) for name, text in texts.items()}
     findings = []
-
-    for number, count in Counter(p.name[:4] for p in paths).items():
-        if count > 1:
-            findings.append(f"numbering: {number} used by {count} files")
 
     definitions, prefix_owners = defaultdict(list), defaultdict(set)
     for name, (prose, _) in parsed.items():
@@ -103,7 +103,7 @@ def check(folder):
             if url.scheme or url.netloc or not url.path:
                 continue
             target = unquote(url.path)
-            resolved = root / target.lstrip("/") if target.startswith("/") else folder / target
+            resolved = root / target.lstrip("/") if target.startswith("/") else names[name].parent / target
             if not resolved.exists():
                 findings.append(f"{name}: local link does not resolve: {href}")
     return findings
@@ -111,7 +111,7 @@ def check(folder):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument("folder", nargs="?", default="docs/prd")
+    parser.add_argument("folder", nargs="?", default="docs/specs")
     args = parser.parse_args()
     try:
         findings = check(args.folder)

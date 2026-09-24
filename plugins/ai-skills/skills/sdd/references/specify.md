@@ -107,7 +107,7 @@ Contexto e Requisitos são a base; Rastreabilidade entra quando houver PRD, e as
 | | |
 | --- | --- |
 | **Prefixo dos requisitos** | `EXM` |
-| **PRD de origem** | [PRD 0003](../../prd/0003-idempotent-submission.md) |
+| **PRD de origem** | [Envio idempotente](prd.md) |
 
 ## Requisitos
 

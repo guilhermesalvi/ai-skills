@@ -11,7 +11,7 @@ Leia as referências cujo gatilho o pedido aciona; um pedido pode acionar vária
 | [Entrada e pesquisa](prd/intake.md) | Ao criar um PRD, ou ao incorporar material de descoberta ou fato externo | Recorte do pedido, suficiência da informação, peso das fontes e regras de pesquisa |
 | [Requisitos e seções](prd/writing.md) | Ao criar um PRD; ao editar, nas regras que a mudança toca | Comportamento observável, capabilities e eventos, forma dos requisitos, diagramas, seções, premissas e lacunas |
 | [Convenções](prd/conventions.md) | Ao criar ou editar um PRD | Cabeçalho, IDs e nomes de seção por idioma |
-| [Modos](prd/modes.md) | Quando o PRD documenta produto existente, atende outros times ou sistemas (plataforma, infraestrutura, SDK, API) ou é a visão geral 0000 | Ajustes de evidência, seções e estrutura de cada modo |
+| [Modos](prd/modes.md) | Quando o PRD documenta produto existente, atende outros times ou sistemas (plataforma, infraestrutura, SDK, API) ou é a visão geral de produto | Ajustes de evidência, seções e estrutura de cada modo |
 | [Exemplo](prd/example.md) | Quando a forma de um PRD não estiver clara; leia só o trecho pertinente | PRD de capability e exemplo de edição |
 
 ## Produzir e revisar
@@ -25,12 +25,12 @@ Uma correção localizada não exige regenerar o PRD inteiro. Revise as seções
 Execute o verificador a partir da raiz do projeto consumidor:
 
 ```bash
-python "<skill-dir>/scripts/check_prd.py" docs/prd
+python "<skill-dir>/scripts/check_prd.py" docs/specs
 ```
 
-`<skill-dir>` é o caminho absoluto da pasta que contém o `SKILL.md` carregado, não uma variável de ambiente fornecida pela ferramenta. `docs/prd` é o default; use a pasta que a convenção do repositório fixar, relativa à raiz do projeto.
+`<skill-dir>` é o caminho absoluto da pasta que contém o `SKILL.md` carregado, não uma variável de ambiente fornecida pela ferramenta. `docs/specs` é o default; use a pasta que a convenção do repositório fixar, relativa à raiz do projeto.
 
-O script lê só os arquivos `NNNN-*.md` e ignora títulos e rótulos, então funciona em qualquer idioma. Ele confere numeração, definição única de cada ID, prefixo exclusivo por PRD, prioridade MoSCoW, citações sem definição, links locais e cercas de código abertas. Um requisito conta como definição quando o item de lista começa pelo ID em negrito, como no exemplo de IDs das convenções.
+O script lê só o `prd.md` de cada pasta de capability e a visão geral `overview.md`, e ignora títulos e rótulos, então funciona em qualquer idioma. Ele confere definição única de cada ID, prefixo exclusivo por PRD, prioridade MoSCoW, citações sem definição, links locais e cercas de código abertas. Um requisito conta como definição quando o item de lista começa pelo ID em negrito, como no exemplo de IDs das convenções.
 
 | Saída | Significado |
 | --- | --- |

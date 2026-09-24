@@ -24,7 +24,7 @@ Em plataformas, infraestrutura, SDKs e APIs como produto, o usuário é o time o
 
 ## Visão geral
 
-Crie o PRD 0000 quando a pasta tiver mais de um PRD de capability. Ele explica propósito, responsabilidades e interações entre capabilities, com apenas o detalhe necessário para entendê-las. Invariantes, cálculos, critérios de sucesso, decisões de produto e suas fontes ficam no PRD da capability responsável.
+Crie a visão geral quando o projeto tiver mais de um PRD. Ele explica propósito, responsabilidades e interações entre capabilities, com apenas o detalhe necessário para entendê-las. Invariantes, cálculos, critérios de sucesso, decisões de produto e suas fontes ficam no PRD da capability responsável.
 
 A tabela de cabeçalho da visão geral tem só a linha Escopo, e o documento não tem requisitos.
 

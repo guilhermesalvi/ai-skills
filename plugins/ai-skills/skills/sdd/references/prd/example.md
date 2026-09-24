@@ -1,6 +1,6 @@
 # Exemplo de PRD
 
-Um PRD de capability, sem PRD 0000. Ele não tem Considerações regulatórias, para não apresentar alegações regulatórias como fatos verificados.
+Um PRD de capability, sem visão geral. Ele não tem Considerações regulatórias, para não apresentar alegações regulatórias como fatos verificados.
 
 ````markdown
 # Verificação assíncrona de documentos

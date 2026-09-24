@@ -29,7 +29,7 @@ Mantenha um termo canônico por conceito e registre os sinônimos no glossário.
 
 ### Responsabilidade entre capabilities
 
-O PRD da capability é dono das regras dela. Registre o impacto nas outras capabilities sem redefinir suas regras, e siga as relações descritas no PRD 0000 quando ele existir.
+O PRD da capability é dono das regras dela. Registre o impacto nas outras capabilities sem redefinir suas regras, e siga as relações descritas na visão geral quando ela existir.
 
 Para capabilities genéricas, avalie reutilização ou contratação quando a decisão estiver em escopo. No core, preserve os diferenciais e dê precisão aos critérios.
 

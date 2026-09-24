@@ -4,21 +4,23 @@
 
 Defina o comportamento antes de implementá-lo. Reutilize um PRD ou uma spec existente ou registre o contrato necessário para a mudança; não crie arquivos vazios.
 
-Sem convenção do repositório, use este layout, com slugs em inglês e em kebab-case; o slug da capability na spec repete o do PRD dela, quando houver:
+Sem convenção do repositório, use este layout, com slugs em inglês e em kebab-case. A pasta de uma capability reúne o PRD, a spec e as mudanças dela:
 
 ```text
-docs/prd/
-  0000-<slug>-overview.md   visão geral de produto
-  NNNN-<capability>.md      PRD da capability, editado no lugar
-docs/specs/<capability>/
-  spec.md                   spec viva da capability, editada no lugar
-  NNNN-<change>/            só quando a mudança tem design ou tarefas
-    design.md
-    tasks.md
+docs/specs/
+  overview.md               visão geral de produto
+  <capability>/
+    prd.md                  PRD da capability, editado no lugar
+    spec.md                 spec viva da capability, editada no lugar
+    NNNN-<change>/          só quando a mudança tem design ou tarefas
+      design.md
+      tasks.md
 docs/adr/NNNN-<decision>.md
 ```
 
-`NNNN` tem quatro dígitos e é o número seguinte ao maior da pasta; em `docs/prd`, `0000` é reservado à visão geral e a numeração começa em `0001`. Cada número pertence a um só item e não muda quando ele é revisado. Se branches paralelos chegarem ao mesmo número, mantenha o do item que já estava na branch de destino, dê ao outro o número seguinte ao maior da pasta e atualize quem o cita. Preserve outra organização já estabelecida no repositório. Planos técnicos duráveis ficam com os artefatos da mudança, não numa pasta de planos independente.
+O ADR fica fora das pastas de capability porque registra uma decisão que vale para outras capabilities.
+
+`NNNN` tem quatro dígitos e é o número seguinte ao maior da pasta. Cada número pertence a um só item e não muda quando ele é revisado. Se branches paralelos chegarem ao mesmo número, mantenha o do item que já estava na branch de destino, dê ao outro o número seguinte ao maior da pasta e atualize quem o cita. Preserve outra organização já estabelecida no repositório. Planos técnicos duráveis ficam com os artefatos da mudança, não numa pasta de planos independente.
 
 A quantidade de arquivos ou de exemplos encontrados não decide sozinha o tamanho do processo. Se o trabalho revelar depois a necessidade de um desses artefatos, produza-o e ajuste os dependentes.
 
