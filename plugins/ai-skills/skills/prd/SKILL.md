@@ -11,20 +11,17 @@ Uma iniciativa técnica precisa de PRD quando muda o resultado, a informação o
 
 ## Escolher a leitura
 
-Leia apenas as referências que o pedido exige. Os caminhos partem da pasta desta skill.
+Leia as referências cujo gatilho o pedido aciona; um pedido pode acionar várias. Os caminhos partem da pasta desta skill.
 
-| Pedido | Referências | Entrega |
+| Referência | Quando ler | O que entrega |
 | --- | --- | --- |
-| Criar PRD | [Entrada e pesquisa](references/intake.md), [requisitos e seções](references/writing.md), [convenções](references/conventions.md), [produção e revisão](references/workflow.md) | PRD e decisões pendentes identificadas |
-| Editar PRD | Documento atual, regras pertinentes de [requisitos e seções](references/writing.md), seção Editar no mesmo arquivo de [convenções](references/conventions.md) e [produção e revisão](references/workflow.md) | Mesmo arquivo e IDs, com o escopo pedido |
-| Documentar produto existente | Referências de criação e seção PRD reverso de [modos](references/modes.md) | Comportamento observado separado de intenção inferida |
-| Plataforma, infraestrutura, SDK ou API como produto | Referências de criação e seção Produto para outros times ou sistemas de [modos](references/modes.md) | Consumidor, contrato e métricas apropriados |
-| Visão geral de várias capabilities (PRD 0000) | Referências de criação e seção Visão geral de [modos](references/modes.md) | Contextos, eventos e fluxos entre capabilities |
-| Revisar PRD sem editar | Documento atual, [prosa](references/prose.md) e [produção e revisão](references/workflow.md) | Achados com IDs afetados e decisões pendentes |
-
-Consulte [prosa](references/prose.md) sempre que escrever ou revisar texto.
-
-O [exemplo](references/example.md) mostra a forma dos artefatos. Leia o trecho pertinente quando a forma não estiver clara. Seus números, atores e decisões são fictícios: não os importe para o produto real.
+| [Entrada e pesquisa](references/intake.md) | Ao criar um PRD, ou ao incorporar material de descoberta ou fato externo | Recorte do pedido, suficiência da informação, peso das fontes e regras de pesquisa |
+| [Requisitos e seções](references/writing.md) | Ao criar um PRD; ao editar, nas regras que a mudança toca | Marcação de fatos e incertezas, capacidade de produto, fronteiras e eventos, forma dos requisitos, diagramas e seções |
+| [Convenções](references/conventions.md) | Ao criar ou editar um PRD | Caminho e numeração, conteúdo admitido, edição no mesmo arquivo, cabeçalho, IDs e nomes de seção por idioma |
+| [Prosa](references/prose.md) | Ao escrever ou revisar texto | Regras de redação e o que uma revisão editorial preserva |
+| [Produção e revisão](references/workflow.md) | Ao criar, editar ou revisar um PRD | Verificador, conferência de estrutura, revisão de conteúdo e conteúdo da entrega |
+| [Modos](references/modes.md) | Quando o PRD documenta produto existente, atende outros times ou sistemas (plataforma, infraestrutura, SDK, API) ou é a visão geral 0000 | Ajustes de evidência, seções e estrutura de cada modo |
+| [Exemplo](references/example.md) | Quando a forma de um artefato não estiver clara; leia só o trecho pertinente | PRD de capability e exemplo de edição. Números, atores e decisões são fictícios: não os importe para o produto real |
 
 ## Precedência
 
