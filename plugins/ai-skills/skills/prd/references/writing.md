@@ -75,7 +75,7 @@ As seções marcadas como base são obrigatórias numa nova capability. As demai
 | Alinhamento estratégico | | Objetivo de negócio que o material cita e a que a proposta responde |
 | Contexto e problema | Sim | Situação observada, impacto, evidências e hipóteses |
 | Usuário-alvo / JTBD | Sim | Atores e o trabalho ou resultado de que precisam |
-| Oportunidade / hipótese | | Hipótese ainda em validação e como validá-la |
+| Oportunidade / hipótese | | Resultado que a entrega pretende causar e como validá-lo |
 | Solução proposta | Sim | Comportamento proposto, limites e relações, referenciando os requisitos |
 | Glossário do domínio | | Termos necessários, ambiguidades e conceitos do contexto dono |
 | Requisitos funcionais | Sim | Requisitos com condição, resultado, ID e prioridade |
@@ -87,7 +87,7 @@ As seções marcadas como base são obrigatórias numa nova capability. As demai
 | Métricas de sucesso | | Indicadores de resultado e proteções contra degradação |
 | Critérios de aceitação | | Cenários que discriminam resultados e limites dos requisitos |
 | Dependências e riscos | | Dependência ou risco, origem, impacto e tratamento; contextos afetados |
-| Premissas | | Inferências não verificadas que a proposta usa |
+| Premissas | | Condições sobre o problema, o usuário ou o contexto atual que a proposta toma como verdadeiras sem ter verificado |
 | Lacunas | | Informações e decisões ausentes e os IDs que elas afetam |
 | Ponto mais frágil | | Decisão frágil, risco, mitigação e condição de reavaliação |
 | Referências | | Fontes externas usadas, escopo e datas reais de consulta |
@@ -113,5 +113,7 @@ Use Dado/Quando/Então quando a tabela não expressar o cenário, e cite os requ
 ### Premissas e lacunas
 
 Dê um subtítulo a cada entrada e separe os campos em parágrafos próprios, quando conhecidos. Em Premissas: a premissa, a evidência que a motivou, o impacto se for falsa, o responsável e a forma de verificá-la. Em Lacunas: a informação ou decisão que falta, os IDs afetados, o impacto, o responsável e o que a resolve.
+
+Uma premissa não é a hipótese de Oportunidade / hipótese. A hipótese é a aposta do produto: o resultado que a entrega deve causar, como reduzir o prazo de análise, confirmado pelas métricas depois da entrega ou num experimento. A premissa é uma condição do presente em que a proposta se apoia, como a espera dominar o prazo atual, e pode ser verificada antes de construir. Se a hipótese falhar, o produto foi entregue e não causou o resultado; se a premissa falhar, a proposta foi escrita sobre um fato errado e precisa ser revista. Registre cada afirmação numa só das duas seções.
 
 Comece Premissas pela premissa cuja falsidade inviabilizaria a proposta. Uma premissa aceita para o trabalho continuar não vira fato por ter sido aprovada; ela sai da seção só quando for verificada, e aí o corpo passa a afirmá-la com a origem.
