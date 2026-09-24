@@ -30,6 +30,8 @@ O arquivo se chama `0000-<slug>-overview.md`. A tabela de cabeçalho tem só a l
 
 As seções, nesta ordem e conforme o conteúdo pertinente, são Propósito, Contextos, Catálogo de eventos, Fluxos entre contextos, Termos por contexto e Decisões delegadas a ADR.
 
+Contextos apresenta cada contexto com sua responsabilidade e os PRDs de capability dele, com o link e o prefixo dos requisitos de cada um, para que um ID citado em qualquer artefato leve ao PRD que o define.
+
 Catálogo de eventos identifica produtores, consumidores, requisitos de recepção e links para os contratos em Eventos de domínio dos PRDs produtores. É o único lugar que liga um evento aos requisitos dos consumidores.
 
 Cada decisão delegada a ADR indica o requisito que precisa satisfazer. Uma decisão arquitetural ainda ausente não vira regra de produto por aparecer na visão geral.

@@ -77,9 +77,9 @@ Armazenamento, notificações e desenho da interface serão definidos no trabalh
 
 ## Requisitos não funcionais
 
-- **ONB-NFR-01** Um envio completo deve ser refletido em `UnderReview` em até 1 minuto.
-- **ONB-NFR-02** [LACUNA] A retenção dos documentos depende da política e das obrigações aplicáveis, ainda não identificadas neste exemplo.
-- **ONB-NFR-03** Traces não contêm documentos nem dados pessoais; identificadores técnicos de caso e item são suficientes.
+- **ONB-13 (Must)** Um envio completo deve ser refletido em `UnderReview` em até 1 minuto.
+- **ONB-14 (Must)** [LACUNA] A retenção dos documentos depende da política e das obrigações aplicáveis, ainda não identificadas neste exemplo.
+- **ONB-15 (Must)** Traces não contêm documentos nem dados pessoais; identificadores técnicos de caso e item são suficientes.
 
 ## Fora do escopo
 
@@ -125,7 +125,7 @@ Armazenamento, notificações e desenho da interface serão definidos no trabalh
 
 | Caso | Entrada | Condição intermediária | Requisito | Resultado |
 | --- | --- | --- | --- | --- |
-| Envio completo | Três itens válidos anexados às 10h | Checklist completo | ONB-03, ONB-NFR-01 | `UnderReview` até 10h01 |
+| Envio completo | Três itens válidos anexados às 10h | Checklist completo | ONB-03, ONB-13 | `UnderReview` até 10h01 |
 | Formato inválido | Item 2 em formato não aceito | Critério de formato violado | ONB-04 | Item rejeitado com motivo; sem completar o checklist |
 | Rejeição parcial | Itens 1 e 3 aprovados, item 2 rejeitado | Motivo registrado | ONB-06, ONB-08 | `PendingResubmission`; somente item 2 pode ser reenviado |
 | Reenvio parcial | Itens 2 e 3 rejeitados; somente 2 reenviado | Item 3 ainda rejeitado | ONB-08 | `UnderReview`, preservando a rejeição do item 3 |
@@ -160,7 +160,7 @@ Armazenamento, notificações e desenho da interface serão definidos no trabalh
 
 **Responsável:** autor do produto.
 
-### [LACUNA] Retenção de documentos (ONB-NFR-02)
+### [LACUNA] Retenção de documentos (ONB-14)
 
 **Decisão pendente:** quais política e obrigações definem a retenção.
 

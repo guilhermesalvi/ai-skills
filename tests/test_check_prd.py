@@ -34,7 +34,9 @@ Requirement prefix: `ENG`.
 
 ## Functional Requirements
 - **ENG-01 (Should)** Return the original result for a repeated key.
-- **ENG-NFR-01** Answer within 2 seconds at the 95th percentile.
+
+## Non-functional Requirements
+- **ENG-02 (Must)** Answer within 2 seconds at the 95th percentile.
 """
 
 
@@ -89,11 +91,13 @@ class PrdChecks(unittest.TestCase):
         self.document.write_text(DOCUMENT + "\n- **REQ-100 (Must)** Outro resultado.\n", encoding="utf-8")
         self.assertIn("ids: REQ-100 defined 2 times", check(self.folder))
 
-    def test_invalid_priority_and_nfr_priority_are_reported(self):
-        self.document.write_text(DOCUMENT.replace("(Must)", "(Urgente)") + "\n- **REQ-NFR-01 (Must)** Limite definido.\n", encoding="utf-8")
-        findings = check(self.folder)
-        self.assertTrue(any("no valid MoSCoW" in f for f in findings))
-        self.assertTrue(any("NFR REQ-NFR-01 carries" in f for f in findings))
+    def test_invalid_priority_is_reported(self):
+        self.document.write_text(DOCUMENT.replace("(Must)", "(Urgente)"), encoding="utf-8")
+        self.assertIn("0001-requests-lifecycle.md: REQ-100 has no valid MoSCoW priority", check(self.folder))
+
+    def test_missing_priority_is_reported(self):
+        self.document.write_text(DOCUMENT + "\n## Requisitos não funcionais\n- **REQ-101** Limite definido.\n", encoding="utf-8")
+        self.assertIn("0001-requests-lifecycle.md: REQ-101 has no valid MoSCoW priority", check(self.folder))
 
     def test_prefix_shared_by_two_prds_is_reported(self):
         (self.folder / "0002-other.md").write_text(DOCUMENT.replace("REQ-100", "REQ-101"), encoding="utf-8")

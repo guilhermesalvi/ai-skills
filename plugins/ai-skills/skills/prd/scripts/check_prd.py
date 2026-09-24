@@ -5,7 +5,7 @@ Usage: python check_prd.py [<prd folder>]   (default: docs/prd)
 Reads only numbered PRDs (NNNN-*.md), so instruction files such as CLAUDE.md
 can live in the same folder. The check ignores section titles and labels, so
 it works in any prose language. A requirement is defined by a list item that
-starts with a bold ID, such as "- **REQ-01 (Must)** ...". A prefix belongs to
+starts with a bold ID, such as "- **ONB-01 (Must)** ...". A prefix belongs to
 the PRD that defines it, and tokens whose prefix no PRD defines, such as
 SHA-256, are not citations. This read-only check does not validate business
 meaning, document structure or Mermaid rendering.
@@ -20,7 +20,7 @@ import sys
 from urllib.parse import unquote, urlsplit
 
 
-ID = r"[A-Z][A-Z0-9]*-(?:NFR-)?[0-9]{2,}"
+ID = r"[A-Z][A-Z0-9]*-[0-9]{2,}"
 ID_TOKEN = re.compile(r"(?<![A-Za-z0-9_-])(" + ID + r")(?![A-Za-z0-9_-])")
 DEFINITION = re.compile(r"^-\s+\*\*(" + ID + r")(?:\s+\(([^)]+)\))?\*\*", re.M)
 LINK = re.compile(r"\[[^\]]*\]\(([^)]+)\)")
@@ -74,10 +74,7 @@ def check(folder):
         for identifier, priority in DEFINITION.findall(prose):
             definitions[identifier].append(name)
             prefixes.add(prefix_of(identifier))
-            if "-NFR-" in identifier:
-                if priority:
-                    findings.append(f"{name}: NFR {identifier} carries a priority")
-            elif priority not in PRIORITIES:
+            if priority not in PRIORITIES:
                 findings.append(f"{name}: {identifier} has no valid MoSCoW priority")
         for prefix in prefixes:
             prefix_owners[prefix].add(name)

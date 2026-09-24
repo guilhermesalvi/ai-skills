@@ -81,7 +81,7 @@ As seções marcadas como base são obrigatórias numa nova capability. As demai
 | Glossário do domínio | | Termos necessários, ambiguidades e conceitos do contexto dono |
 | Requisitos funcionais | Sim | Requisitos com condição, resultado, ID e prioridade |
 | Eventos de domínio | | Eventos produzidos ou consumidos e requisitos que os governam |
-| Requisitos não funcionais | | Atributos de qualidade, limites e restrições que orientam o design |
+| Requisitos não funcionais | | Atributos de qualidade, limites e restrições que orientam o design, com ID e prioridade |
 | Considerações regulatórias | | Norma realmente consultada, interpretação adotada, IDs deste PRD afetados e lacunas |
 | Fora do escopo | | Funcionalidades adjacentes explicitamente excluídas |
 | Trade-offs declarados | | Decisões tomadas que custam algo |

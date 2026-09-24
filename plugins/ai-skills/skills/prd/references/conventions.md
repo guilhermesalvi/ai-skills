@@ -30,13 +30,13 @@ Antes de alterar ou retirar um requisito ou um caso de aceitação, procure seus
 O PRD de uma capability começa pelo título e por uma tabela de cabeçalho:
 
 ```markdown
-# Ciclo de uma solicitação
+# Emissão de fatura
 
 | | |
 | --- | --- |
-| **Contexto de origem** | RequestManagement |
-| **Contextos afetados** | Billing, Notification |
-| **Prefixo dos requisitos** | `REQ` |
+| **Contexto de origem** | Invoicing |
+| **Contextos afetados** | Notification, Accounting |
+| **Prefixo dos requisitos** | `INV` |
 | **Visão geral** | [PRD 0000](0000-platform-overview.md) |
 ```
 
@@ -46,20 +46,25 @@ O PRD de uma capability começa pelo título e por uma tabela de cabeçalho:
 
 ## IDs
 
-Cada PRD tem um prefixo exclusivo, em maiúsculas e começando por letra, como `REQ` ou `ONB`. Num PRD novo, escolha um prefixo que nenhum PRD da pasta use; ao editar, mantenha o existente.
+O ID de um requisito começa pelo prefixo do PRD que o define, para que uma citação em outro PRD, numa spec ou num teste indique onde está a definição. O prefixo é uma abreviação do contexto de origem ou da capability, em letras maiúsculas e dígitos, começando por letra, como `INV` para Invoicing ou `ONB` para CustomerOnboarding. Evite nomes genéricos como `REQ`, que não indicam o dono, e não use `FR` nem `NFR`, que o verificador trata como ID sem prefixo. Num PRD novo, escolha um prefixo que nenhum PRD da pasta use e, se a pasta tiver o PRD 0000, registre o PRD e o prefixo na seção Contextos dele; ao editar, mantenha o prefixo existente.
 
-Requisitos funcionais usam `<PREFIX>-nn`, e não funcionais, `<PREFIX>-NFR-nn`. Numere com pelo menos dois dígitos (`01`, `02`) e, depois de `99`, siga para `100`.
+O ID tem a forma `<PREFIX>-nn`, com uma única sequência por PRD para requisitos funcionais e não funcionais. O tipo é dado pela seção onde o requisito é definido, Requisitos funcionais ou Requisitos não funcionais, e não pelo ID; assim, reclassificar um requisito muda a seção sem mudar o ID. Numere com pelo menos dois dígitos (`01`, `02`) e, depois de `99`, siga para `100`.
 
-Defina cada requisito num item de lista que começa pelo ID em negrito. Nos funcionais, a prioridade MoSCoW (Must, Should, Could, Won't) fica entre parênteses dentro do negrito; os NFRs não têm prioridade.
+Defina cada requisito num item de lista que começa pelo ID em negrito, com a prioridade MoSCoW (Must, Should, Could, Won't) entre parênteses dentro do negrito:
 
 ```markdown
-- **REQ-01 (Must)** Quando a solicitação for aceita, o sistema informa seu identificador ao solicitante.
-- **REQ-NFR-01** O identificador é informado em até 2 segundos após a aceitação, no percentil 95.
+## Requisitos funcionais
+
+- **INV-01 (Must)** Quando a fatura for emitida, o sistema informa seu número ao cliente.
+
+## Requisitos não funcionais
+
+- **INV-02 (Should)** O número é informado em até 2 segundos após a emissão, no percentil 95.
 ```
 
 Todo ID citado precisa estar definido num PRD da pasta e corresponder ao requisito que o texto pretende citar.
 
-Um requisito novo recebe o número seguinte ao maior já usado com o mesmo prefixo e tipo. Um ID retirado some do arquivo, então confira com `git log -S "<ID>"` que o número nunca existiu antes de atribuí-lo. Um ID retirado não volta a ser usado, e os demais não são renumerados para fechar buracos na sequência.
+Um requisito novo recebe o número seguinte ao maior já usado com o mesmo prefixo. Um ID retirado some do arquivo, então confira com `git log -S "<ID>"` que o número nunca existiu antes de atribuí-lo. Um ID retirado não volta a ser usado, e os demais não são renumerados para fechar buracos na sequência.
 
 Quando estados, motivos ou outras enumerações tiverem valores referenciados pelo código ou pelos contratos, liste-os numa tabela com a coluna Identificador ao lado do nome de exibição. O Identificador traz o nome estável do valor, como `UnderReview`, e permite mudar o nome de exibição sem mudar a identidade do conceito.
 
