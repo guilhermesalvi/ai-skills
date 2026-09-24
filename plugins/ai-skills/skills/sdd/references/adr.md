@@ -8,7 +8,7 @@ Registrar uma decisão não amplia o escopo: aplicá-la ao restante do projeto e
 
 Preserve o motivo, as alternativas realmente avaliadas, os benefícios e os custos aceitos. Registre os participantes conhecidos, sem inventar nomes. Um custo genérico que se aplica a qualquer solução não explica a escolha.
 
-Use `docs/adr/NNNN-<decisão>.md` e o próximo número livre. Preserve o formato dos ADRs existentes; sem ADR anterior, use a estrutura abaixo.
+Use `docs/adr/NNNN-<decisão>.md`. Preserve o formato dos ADRs existentes; sem ADR anterior, use a estrutura abaixo.
 
 | Seção ou campo | Conteúdo |
 | --- | --- |

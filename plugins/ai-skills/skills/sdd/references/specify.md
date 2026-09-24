@@ -74,9 +74,7 @@ Cada resultado de aceitação deriva de um requisito ou decisão identificável.
 
 Se o contrato não determinar o resultado de um caso limite, registre-o em Lacunas em vez de escolher um valor por analogia com outro caso.
 
-## Arquivo, prefixo e IDs
-
-Edite a spec no mesmo arquivo, sem campos de status, aprovação ou notas de ferramentas: o Git já guarda evolução e autoria.
+## Prefixo e IDs
 
 Logo abaixo do título, a tabela de cabeçalho traz Prefixo dos requisitos e, quando a origem for um PRD, PRD de origem com o link para ele, como no exemplo parcial. O prefixo técnico é distinto dos prefixos de produto e das outras specs. Preserve prefixos existentes; semelhança de letras, por si só, não exige renomeação.
 

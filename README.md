@@ -4,8 +4,7 @@ Skills do Claude Code para requisitos de produto, desenvolvimento orientado por 
 
 | Skill | Finalidade |
 |---|---|
-| `prd` | Criar e revisar PRDs com requisitos de negócio rastreáveis, métricas e trade-offs declarados. Inclui um verificador de IDs, numeração e links que independe do idioma dos títulos. |
-| `sdd` | Especificar, projetar, planejar, implementar e verificar mudanças técnicas com requisitos EARS rastreáveis e ADRs. |
+| `sdd` | Escrever PRDs e especificar, projetar, planejar, implementar e verificar mudanças técnicas, com requisitos rastreáveis do produto ao código, EARS e ADRs. Inclui um verificador de IDs, numeração e links dos PRDs que independe do idioma dos títulos. |
 | `transcript-fix` | Corrigir transcrições Whisper (`.txt`, `.srt`, `.vtt`) com glossário persistente e subagentes coordenados. Produz texto simples com marcações de tempo, não arquivos de legenda. |
 
 ## Instalação
@@ -24,7 +23,7 @@ claude plugin marketplace add ./
 claude plugin install ai-skills@ai-skills
 ```
 
-O caminho local precisa começar por `./` ou ser absoluto. Se a instalação pedir, rode `/reload-plugins` ou abra uma nova sessão para carregar o plugin. Invoque `/ai-skills:prd`, `/ai-skills:sdd` e `/ai-skills:transcript-fix`; o Claude Code também pode selecioná-las quando o pedido corresponde à descrição. Não é necessário configurar MCP, chaves de API ou um modelo fixo.
+O caminho local precisa começar por `./` ou ser absoluto. Se a instalação pedir, rode `/reload-plugins` ou abra uma nova sessão para carregar o plugin. Invoque `/ai-skills:sdd` e `/ai-skills:transcript-fix`; o Claude Code também pode selecioná-las quando o pedido corresponde à descrição. Não é necessário configurar MCP, chaves de API ou um modelo fixo.
 
 Para instalar a versão publicada pelo Git, registre o repositório em vez do checkout local:
 
@@ -35,7 +34,7 @@ claude plugin install ai-skills@ai-skills
 
 O repositório Git, o plugin e o marketplace se chamam `ai-skills`. O catálogo usa caminhos relativos à raiz do repositório. Escolha uma origem por instalação; se já houver um marketplace `ai-skills` registrado de outra origem, remova seu registro com `claude plugin marketplace remove ai-skills` antes de registrar a nova.
 
-Para usar só uma skill, copie `plugins/ai-skills/skills/<nome>` para `~/.claude/skills/<nome>` (todos os projetos) ou `.claude/skills/<nome>` de um projeto. Ela pode ser invocada como `/prd`, `/sdd` ou `/transcript-fix`. Escolha entre o plugin e as cópias para não carregar a mesma skill duas vezes.
+Para usar só uma skill, copie `plugins/ai-skills/skills/<nome>` para `~/.claude/skills/<nome>` (todos os projetos) ou `.claude/skills/<nome>` de um projeto. Ela pode ser invocada como `/sdd` ou `/transcript-fix`. Escolha entre o plugin e as cópias para não carregar a mesma skill duas vezes.
 
 ## Atualização
 
@@ -92,7 +91,7 @@ try {
 }
 ```
 
-O inventário deve mostrar `ai-skills` habilitado com as três skills `prd`, `sdd` e `transcript-fix`. Esse teste verifica empacotamento e instalação; a qualidade das skills exige uso e revisão dos artefatos. Para testar o seletor na sessão, instale pelo procedimento normal e abra uma nova sessão.
+O inventário deve mostrar `ai-skills` habilitado com as skills `sdd` e `transcript-fix`. Esse teste verifica empacotamento e instalação; a qualidade das skills exige uso e revisão dos artefatos. Para testar o seletor na sessão, instale pelo procedimento normal e abra uma nova sessão.
 
 ```text
 .claude-plugin/marketplace.json      catálogo deste repositório
@@ -100,8 +99,7 @@ CLAUDE.md                            orientações para editar o repositório
 plugins/ai-skills/
   .claude-plugin/plugin.json         manifesto do plugin
   skills/
-    prd/                             SKILL.md, references/, scripts/check_prd.py
-    sdd/                             SKILL.md, references/
+    sdd/                             SKILL.md, references/, scripts/check_prd.py
     transcript-fix/                  SKILL.md, references/, scripts/
 tests/                               testes dos scripts
 ```

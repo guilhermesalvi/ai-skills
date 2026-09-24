@@ -26,7 +26,7 @@ Em plataformas, infraestrutura, SDKs e APIs como produto, o usuário é o time o
 
 Crie o PRD 0000 quando a pasta tiver mais de um PRD de capability. Ele explica propósito, responsabilidades e interações entre capabilities, com apenas o detalhe necessário para entendê-las. Invariantes, cálculos, critérios de sucesso, decisões de produto e suas fontes ficam no PRD da capability responsável.
 
-O arquivo se chama `0000-<slug>-overview.md`. A tabela de cabeçalho tem só a linha Escopo, e o documento não tem requisitos.
+A tabela de cabeçalho da visão geral tem só a linha Escopo, e o documento não tem requisitos.
 
 As seções, nesta ordem e conforme o conteúdo pertinente, são Propósito, Capabilities, Catálogo de eventos, Fluxos entre capabilities, Termos com mais de um significado e Decisões delegadas a ADR.
 

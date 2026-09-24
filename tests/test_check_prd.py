@@ -8,8 +8,8 @@ from pathlib import Path
 from tempfile import TemporaryDirectory
 
 
-SCRIPT = Path(__file__).resolve().parents[1] / "plugins" / "ai-skills" / "skills" / "prd" / "scripts" / "check_prd.py"
-EXAMPLE = SCRIPT.parents[1] / "references" / "example.md"
+SCRIPT = Path(__file__).resolve().parents[1] / "plugins" / "ai-skills" / "skills" / "sdd" / "scripts" / "check_prd.py"
+EXAMPLE = SCRIPT.parents[1] / "references" / "prd" / "example.md"
 
 _spec = importlib.util.spec_from_file_location("check_prd", SCRIPT)
 check_prd = importlib.util.module_from_spec(_spec)

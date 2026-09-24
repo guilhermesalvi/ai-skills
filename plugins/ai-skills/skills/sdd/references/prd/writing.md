@@ -2,16 +2,6 @@
 
 Descreva comportamento observável do produto.
 
-## Fatos e incertezas
-
-Toda afirmação factual precisa de origem: decisão do usuário, regra formalizada, observação ou fonte pertinente. O que não tem origem vai para a seção Premissas ou para a seção Lacunas.
-
-Uma premissa é uma inferência ainda não verificada que a proposta usa. No corpo do documento, a frase que depende dela a apresenta como hipótese, não como fato, e a entrada em Premissas registra a evidência que a motivou.
-
-Uma lacuna é uma informação ou decisão ausente. O corpo afirma só o que está decidido, e a entrada em Lacunas nomeia o que falta e os IDs afetados. Um requisito que depende inteiramente de uma lacuna só é escrito quando ela for resolvida. Não preencha uma lacuna com especulação: usuário, métrica, limite ou regra ausente continua lacuna, e inventar um valor só torna a frase aparentemente verificável.
-
-Quando regras, fontes ou paráfrases se contradisserem, ou quando uma correção depender de decisão de negócio, registre a lacuna com os IDs afetados e conclua o restante. Não escolha uma das versões em silêncio.
-
 ## Comportamento observável
 
 Na solução, no resumo e nos requisitos, identifique a mudança que o consumidor observa. Cite uma implementação específica apenas quando ela fizer parte do produto solicitado ou de uma restrição real; o restante pertence ao design técnico.

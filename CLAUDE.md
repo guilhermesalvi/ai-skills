@@ -1,6 +1,6 @@
 # Orientações do repositório
 
-Este repositório distribui as skills `prd`, `sdd` e `transcript-fix` no plugin `ai-skills` do Claude Code. O pacote fica em `plugins/ai-skills/`, com o manifesto em `plugins/ai-skills/.claude-plugin/plugin.json`, e o marketplace em `.claude-plugin/marketplace.json`. Instruções, referências e textos de interface das skills ficam em português. Código, identificadores, comentários, mensagens dos scripts e commits ficam em inglês. Títulos de seção, rótulos, tags e campos dos artefatos que as skills geram acompanham o idioma da prosa do artefato; cada skill documenta os nomes em português e mantém uma única tabela de equivalência com o inglês. Termos canônicos em inglês, como JTBD, MoSCoW, NFR, trade-off, Leading, Lagging e Guardrails, não se traduzem.
+Este repositório distribui as skills `sdd` e `transcript-fix` no plugin `ai-skills` do Claude Code. O pacote fica em `plugins/ai-skills/`, com o manifesto em `plugins/ai-skills/.claude-plugin/plugin.json`, e o marketplace em `.claude-plugin/marketplace.json`. Instruções, referências e textos de interface das skills ficam em português. Código, identificadores, comentários, mensagens dos scripts e commits ficam em inglês. Títulos de seção, rótulos, tags e campos dos artefatos que as skills geram acompanham o idioma da prosa do artefato; cada skill documenta os nomes em português e mantém uma única tabela de equivalência com o inglês. Termos canônicos em inglês, como JTBD, MoSCoW, NFR, trade-off, Leading, Lagging e Guardrails, não se traduzem.
 
 ## Editar as skills
 
