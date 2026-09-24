@@ -78,7 +78,7 @@ Se o contrato não determinar o resultado de um caso limite, registre a lacuna e
 
 Edite a spec no mesmo arquivo, sem campos de status, aprovação ou notas de ferramentas: o Git já guarda evolução e autoria.
 
-Logo abaixo do título, declare o prefixo na linha ``Prefixo dos requisitos: `EXM`.`` e cite o PRD usado como origem. O prefixo técnico é distinto dos prefixos de produto e das outras specs. Preserve prefixos existentes; semelhança de letras, por si só, não exige renomeação.
+Logo abaixo do título, a tabela de cabeçalho traz Prefixo dos requisitos e, quando a origem for um PRD, PRD de origem com o link para ele, como no exemplo parcial. O prefixo técnico é distinto dos prefixos de produto e das outras specs. Preserve prefixos existentes; semelhança de letras, por si só, não exige renomeação.
 
 Ao ajustar o mesmo comportamento, preserve o ID dele. Ao substituir o conceito, retire o ID e crie outro. Liste os IDs retirados na linha `Retirados:` ao fim da spec, para que não sejam reutilizados, e não elimine lacunas históricas por estética.
 
@@ -106,7 +106,10 @@ Contexto e Requisitos são a base; Rastreabilidade entra quando houver PRD, e as
 ## Exemplo parcial
 
 ```markdown
-Prefixo dos requisitos: `EXM`.
+| | |
+| --- | --- |
+| **Prefixo dos requisitos** | `EXM` |
+| **PRD de origem** | [PRD 0003](../../../prd/0003-requests-idempotent-submission.md) |
 
 ## Requisitos
 
