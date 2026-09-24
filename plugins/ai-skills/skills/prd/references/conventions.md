@@ -70,11 +70,11 @@ Quando estados, motivos ou outras enumerações tiverem valores referenciados pe
 
 ## Idioma
 
-Num PRD novo, a prosa segue o idioma fixado pelo pedido ou pela convenção do repositório. Sem essa definição, use o idioma do material de origem ou, sem material, o idioma em que o pedido foi escrito. Títulos de seção, rótulos e tags seguem o idioma da prosa.
+Num PRD novo, a prosa segue o idioma fixado pelo pedido ou pela convenção do repositório. Sem essa definição, use o idioma do material de origem ou, sem material, o idioma em que o pedido foi escrito. Títulos de seção e rótulos seguem o idioma da prosa.
 
 Ao editar um PRD existente, mantenha o idioma da prosa e o dos títulos que ele já usa, mesmo que um difira do outro: não traduza um documento existente sem pedido.
 
-Esta skill nomeia títulos, rótulos e tags em português. Num PRD em inglês, use a coluna English da tabela abaixo; em outro idioma, traduza a coluna Português e use a mesma tradução em todos os PRDs da pasta. Assim, PRDs diferentes usam os mesmos nomes.
+Esta skill nomeia títulos e rótulos em português. Num PRD em inglês, use a coluna English da tabela abaixo; em outro idioma, traduza a coluna Português e use a mesma tradução em todos os PRDs da pasta. Assim, PRDs diferentes usam os mesmos nomes.
 
 Termos canônicos em inglês não se traduzem em nenhum idioma: JTBD, MoSCoW (Must, Should, Could, Won't), NFR, trade-off, Leading, Lagging e Guardrails. Outros termos técnicos estabelecidos podem ficar em inglês quando a tradução perder precisão. A permissão vale para termos, não para expressões: em vez de escrever `if false` no meio da prosa, descreva a condição e o seu impacto.
 
@@ -96,7 +96,8 @@ Termos canônicos em inglês não se traduzem em nenhum idioma: JTBD, MoSCoW (Mu
 | Métricas de sucesso | Success Metrics |
 | Critérios de aceitação | Acceptance Criteria |
 | Dependências e riscos | Dependencies and Risks |
-| Questões em aberto | Open Questions |
+| Premissas | Assumptions |
+| Lacunas | Gaps |
 | Ponto mais frágil | Weakest Point |
 | Referências | References |
 | Propósito | Purpose |
@@ -110,5 +111,4 @@ Termos canônicos em inglês não se traduzem em nenhum idioma: JTBD, MoSCoW (Mu
 | Prefixo dos requisitos | Requirement Prefix |
 | Visão geral | Overview |
 | Identificador | Identifier |
-| `[PREMISSA]`, `[LACUNA]` | `[ASSUMPTION]`, `[GAP]` |
 | `*Custo:*`, `*Motivo:*` | `*Cost:*`, `*Reason:*` |

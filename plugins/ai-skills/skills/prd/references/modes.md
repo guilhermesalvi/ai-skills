@@ -6,9 +6,9 @@ Ao documentar um produto que já existe, derive o comportamento de código, test
 
 Distinga comportamento observado de intenção planejada, e relate as divergências na entrega da revisão. Descreva o resultado para o consumidor em todo o documento, mesmo quando a evidência vier de detalhes de implementação.
 
-- **Intenção não registrada.** Marque `[PREMISSA]` e registre a evidência que motivou a inferência.
-- **Comportamento sem justificativa identificável.** É uma lacuna de explicação, não prova de que deve ser removido.
-- **Várias intenções plausíveis.** Registre-as em Questões em aberto em vez de inventar coerência.
+- **Intenção não registrada.** Registre a intenção inferida em Premissas, com a evidência que motivou a inferência.
+- **Comportamento sem justificativa identificável.** Registre a justificativa ausente em Lacunas; a ausência não prova que o comportamento deve ser removido.
+- **Várias intenções plausíveis.** Registre-as em Lacunas em vez de inventar coerência.
 
 Não reescreva o produto para fazê-lo concordar com uma justificativa inferida.
 

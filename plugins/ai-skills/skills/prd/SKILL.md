@@ -16,7 +16,7 @@ Leia as referências cujo gatilho o pedido aciona; um pedido pode acionar vária
 | Referência | Quando ler | O que entrega |
 | --- | --- | --- |
 | [Entrada e pesquisa](references/intake.md) | Ao criar um PRD, ou ao incorporar material de descoberta ou fato externo | Recorte do pedido, suficiência da informação, peso das fontes e regras de pesquisa |
-| [Requisitos e seções](references/writing.md) | Ao criar um PRD; ao editar, nas regras que a mudança toca | Marcação de fatos e incertezas, capacidade de produto, fronteiras e eventos, forma dos requisitos, diagramas e seções |
+| [Requisitos e seções](references/writing.md) | Ao criar um PRD; ao editar, nas regras que a mudança toca | Origem dos fatos, premissas e lacunas, capacidade de produto, fronteiras e eventos, forma dos requisitos, diagramas e seções |
 | [Convenções](references/conventions.md) | Ao criar ou editar um PRD | Caminho e numeração, conteúdo admitido, edição no mesmo arquivo, cabeçalho, IDs e nomes de seção por idioma |
 | [Prosa](references/prose.md) | Ao escrever ou revisar texto | Regras de redação e o que uma revisão editorial preserva |
 | [Produção e revisão](references/workflow.md) | Ao criar, editar ou revisar um PRD | Verificador, conferência de estrutura, revisão de conteúdo e conteúdo da entrega |

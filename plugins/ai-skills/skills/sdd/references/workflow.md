@@ -40,14 +40,13 @@ Se uma regra local parecer impedir o trabalho, informe o arquivo, a regra e a a�
 
 ## Fatos, hipóteses e correções
 
-Marque o que ainda não é fato:
-
-- `[PREMISSA]` para inferência, com origem, escolha provisória e consequência.
-- `[LACUNA]` para informação ou decisão ausente.
-
-Marque cada hipótese com `Confirmada?`: `s` quando o usuário decidiu, inclusive ao delegar a escolha, e `n` para o default que ninguém viu. Sem a marca, um default silencioso parece decisão tomada.
-
 Um fato deve apontar para evidência no pedido, no PRD, no código ou na documentação. Verifique informações técnicas atuais nas fontes oficiais quando necessário; não invente APIs, ferramentas ou comportamento.
+
+O que ainda não é fato vai para a seção Premissas ou para a seção Lacunas do artefato onde a questão surge: a spec, para comportamento, e o design, para a solução.
+
+Uma premissa é uma inferência ou uma escolha provisória que o trabalho usa. A entrada registra a origem, a escolha, a consequência se ela for falsa e o campo `Confirmada?`: `s` quando o usuário decidiu, inclusive ao delegar a escolha, e `n` para o default que ninguém viu. Sem esse campo, um default silencioso parece decisão tomada. O texto que depende da premissa a apresenta como hipótese, não como fato.
+
+Uma lacuna é uma informação ou decisão ausente. A entrada registra o que falta, os requisitos bloqueados e quem decide. O corpo do artefato afirma só o que está decidido, e um requisito que depende inteiramente de uma lacuna só é escrito quando ela for resolvida.
 
 Corrija a inconsistência na origem dela: regra de negócio no PRD, comportamento técnico na spec, decisão estrutural no design. Depois atualize os consumidores afetados. Uma mudança de comportamento encontrada na verificação segue o mesmo caminho; ela não sobrevive apenas como observação de revisão.
 
@@ -66,14 +65,14 @@ Revise spec, design, tarefas ou ADR contra a referência da etapa, com profundid
 
 A prosa segue o idioma fixado pelo pedido ou pela convenção do repositório; sem essa definição, o do PRD ou do material de origem.
 
-Títulos de seção, campos de tarefa, tags e rótulos acompanham o idioma da prosa, sem misturar idiomas no mesmo artefato; um artefato existente conserva o idioma dos seus títulos. Esta skill os nomeia em português; num artefato em inglês, use a coluna English da tabela abaixo.
+Títulos de seção, campos de tarefa e rótulos acompanham o idioma da prosa, sem misturar idiomas no mesmo artefato; um artefato existente conserva o idioma dos seus títulos. Esta skill os nomeia em português; num artefato em inglês, use a coluna English da tabela abaixo.
 
 Nomes de APIs, tipos, paths e identificadores não se traduzem, nem termos canônicos como EARS, NFR, trade-off e Gate.
 
 | Artefato | Português | English |
 | --- | --- | --- |
-| Marcações | `[PREMISSA]`, `[LACUNA]`, `Confirmada?` com `s` ou `n` | `[ASSUMPTION]`, `[GAP]`, `Confirmed?` with `y` or `n` |
-| Spec | Prefixo dos requisitos, PRD de origem, Contexto, Escopo / Fora do escopo, Premissas, Questões em aberto, Requisitos, Decisões observáveis, Eventos de domínio, Glossário, Rastreabilidade, Divergências, `Retirados:` | Requirement Prefix, Source PRD, Context, Scope / Out of Scope, Assumptions, Open Questions, Requirements, Observable, Domain Events, Glossary, Traceability, Divergences, `Retired:` |
+| Spec e design | Premissas, Lacunas, campo `Confirmada?` com `s` ou `n` | Assumptions, Gaps, field `Confirmed?` with `y` or `n` |
+| Spec | Prefixo dos requisitos, PRD de origem, Contexto, Escopo / Fora do escopo, Requisitos, Decisões observáveis, Eventos de domínio, Glossário, Rastreabilidade, Divergências, `Retirados:` | Requirement Prefix, Source PRD, Context, Scope / Out of Scope, Requirements, Observable, Domain Events, Glossary, Traceability, Divergences, `Retired:` |
 | Design | Contexto do design, Critérios de avaliação, Riscos e técnicas, Abordagens, Visão da arquitetura, Unidade de implantação, Componentes, Eventos de domínio, Modelo de dados, Tratamento de erros, Decisões técnicas, Arquivos a criar ou alterar | Design Context, Evaluation Criteria, Risks and Techniques, Approaches, Architecture Overview, Deployment Unit, Components, Domain Events, Data Model, Error Handling, Technical Decisions, Files to Create or Modify |
 | Tarefas | Comandos de gate, Plano de execução, Tarefas, Rastreabilidade, Desvios, Tarefas de correção; campos O quê, Onde, Depende de (`nenhuma`), Requisitos, Interfaces, Pronto quando, Testes, Gate | Gate Commands, Execution Plan, Tasks, Traceability, Deviations, Correction Tasks; fields What, Where, Depends on (`none`), Requirement, Interfaces, Done when, Tests, Gate |
 | ADR | `ADR NNNN: decisão`, Participantes, Contexto, Decisão, Alternativas consideradas, Consequências, Regras derivadas, `Substitui: NNNN`, `Substituído por: NNNN` | `ADR NNNN: decision`, Participants, Context, Decision, Alternatives considered, Consequences, Derived rules, `Supersedes: NNNN`, `Superseded by: NNNN` |

@@ -13,7 +13,7 @@ Um PRD de um único contexto, sem PRD 0000. Ele não tem Considerações regulat
 
 ## Resumo executivo
 
-A operação precisa acompanhar documentos enviados para análise sem coordenar cada envio por e-mail. A proposta mantém um caso de verificação por cliente, com estado explícito e critérios para cada item. A elegibilidade para ativação depende do resultado do caso. [PREMISSA] O tempo de espera entre envios e análises é o principal componente do prazo atual; a medição ainda precisa confirmar essa hipótese.
+A operação precisa acompanhar documentos enviados para análise sem coordenar cada envio por e-mail. A proposta mantém um caso de verificação por cliente, com estado explícito e critérios para cada item. A elegibilidade para ativação depende do resultado do caso. A proposta parte da hipótese, ainda não medida, de que a espera entre envios e análises é o principal componente do prazo atual.
 
 ## Contexto e problema
 
@@ -78,8 +78,7 @@ Armazenamento, notificações e desenho da interface serão definidos no trabalh
 ## Requisitos não funcionais
 
 - **ONB-13 (Must)** Um envio completo deve ser refletido em `UnderReview` em até 1 minuto.
-- **ONB-14 (Must)** [LACUNA] A retenção dos documentos depende da política e das obrigações aplicáveis, ainda não identificadas neste exemplo.
-- **ONB-15 (Must)** Traces não contêm documentos nem dados pessoais; identificadores técnicos de caso e item são suficientes.
+- **ONB-14 (Must)** Traces não contêm documentos nem dados pessoais; identificadores técnicos de caso e item são suficientes.
 
 ## Fora do escopo
 
@@ -119,7 +118,7 @@ Armazenamento, notificações e desenho da interface serão definidos no trabalh
 
 ### Guardrails
 
-- Taxa de erros encontrados após a aprovação: a redução de prazo não pode comprometer a análise. [LACUNA] Limite ainda não definido.
+- Taxa de erros encontrados após a aprovação: a redução de prazo não pode comprometer a análise.
 
 ## Critérios de aceitação
 
@@ -138,33 +137,46 @@ Armazenamento, notificações e desenho da interface serão definidos no trabalh
 | --- | --- | --- |
 | Definição e versão do checklist | Dependência de produto | Sem critérios, a análise não pode começar |
 | AccountActivation | Contexto consumidor | Precisa interpretar a elegibilidade conforme ONB-11 |
-| Calendário de dias úteis | Definição pendente | Altera a expiração em ONB-10 |
 
-## Questões em aberto
+## Premissas
 
-### [PREMISSA] O principal atraso está na espera entre envios e análise
+### O principal atraso está na espera entre envios e análise
 
 **Premissa:** o tempo de espera, e não o de análise, domina o prazo atual.
+
+**Evidência:** relatos da operação sobre documentos parados à espera de análise; não há medição.
 
 **Impacto:** se a premissa for falsa, digitalizar o fluxo reduz pouco o prazo e a proposta perde sua justificativa.
 
 **Responsável:** operação.
 
-**Evidência necessária:** medição dos tempos de espera e de análise em casos reais antes de aprovar.
+**Verificação:** medir os tempos de espera e de análise em casos reais antes de aprovar.
 
-### [LACUNA] Calendário de dias úteis (ONB-10)
+## Lacunas
+
+### Calendário de dias úteis
 
 **Decisão pendente:** qual calendário define os dias úteis da expiração.
+
+**IDs afetados:** ONB-10.
 
 **Impacto:** determina quando um caso pendente passa a `Declined`.
 
 **Responsável:** autor do produto.
 
-### [LACUNA] Retenção de documentos (ONB-14)
+### Retenção de documentos
 
 **Decisão pendente:** quais política e obrigações definem a retenção.
 
-**Impacto:** sem ela, o descarte de documentos não pode ser definido.
+**Impacto:** sem ela, o PRD não define por quanto tempo os documentos são mantidos nem quando são descartados; o requisito será escrito quando a decisão existir.
+
+**Responsável:** conformidade.
+
+### Limite do guardrail de erros
+
+**Decisão pendente:** a taxa máxima de erros encontrados após a aprovação.
+
+**Impacto:** sem limite, o guardrail não indica quando a redução de prazo passa a comprometer a análise.
 
 **Responsável:** conformidade.
 

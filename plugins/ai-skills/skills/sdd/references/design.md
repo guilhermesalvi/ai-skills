@@ -71,6 +71,8 @@ Use as seções pertinentes, nesta ordem. Diagramas entram quando tornam as rela
 | Seção | Conteúdo |
 | --- | --- |
 | Contexto do design | Fontes lidas, código inspecionado e limitações |
+| Premissas | Inferências e escolhas provisórias da solução, com os campos de premissa |
+| Lacunas | Informações e decisões ausentes que a solução precisa, com os campos de lacuna |
 | Critérios de avaliação | Critérios e sua origem |
 | Riscos e técnicas | Riscos concretos e sua mitigação, evidência ou aceitação |
 | Abordagens | Alternativas comparadas pelos mesmos critérios e recomendação |

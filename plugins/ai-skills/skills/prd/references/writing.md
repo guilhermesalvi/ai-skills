@@ -4,14 +4,13 @@ Descreva comportamento observável do produto.
 
 ## Fatos e incertezas
 
-Toda afirmação factual precisa de origem: decisão do usuário, regra formalizada, observação ou fonte pertinente. Sem origem, marque o texto:
+Toda afirmação factual precisa de origem: decisão do usuário, regra formalizada, observação ou fonte pertinente. O que não tem origem vai para a seção Premissas ou para a seção Lacunas.
 
-- `[PREMISSA]` para inferência ainda não verificada, com a origem ou evidência que a motivou.
-- `[LACUNA]` para informação ou decisão ausente.
+Uma premissa é uma inferência ainda não verificada que a proposta usa. No corpo do documento, a frase que depende dela a apresenta como hipótese, não como fato, e a entrada em Premissas registra a evidência que a motivou.
 
-Não preencha uma lacuna com especulação sem tag. Usuário, métrica, limite ou regra ausente continua lacuna: não invente um valor para tornar a frase aparentemente verificável.
+Uma lacuna é uma informação ou decisão ausente. O corpo afirma só o que está decidido, e a entrada em Lacunas nomeia o que falta e os IDs afetados. Um requisito que depende inteiramente de uma lacuna só é escrito quando ela for resolvida. Não preencha uma lacuna com especulação: usuário, métrica, limite ou regra ausente continua lacuna, e inventar um valor só torna a frase aparentemente verificável.
 
-Quando regras, fontes ou paráfrases se contradisserem, ou quando uma correção depender de decisão de negócio, registre um `[LACUNA]` com os IDs afetados e conclua o restante. Não escolha uma das versões em silêncio.
+Quando regras, fontes ou paráfrases se contradisserem, ou quando uma correção depender de decisão de negócio, registre a lacuna com os IDs afetados e conclua o restante. Não escolha uma das versões em silêncio.
 
 ## Capacidade de produto
 
@@ -30,7 +29,7 @@ Na solução, no resumo e nos requisitos, identifique a mudança que o consumido
 
 Fixe conceitos, relações, atributos e restrições antes de escolher os nomes.
 
-Use os termos da comunidade de especialistas no idioma do PRD. Quando o código usar outro idioma, registre no glossário o equivalente estabelecido nesse idioma como identificador. Fundamente nomes novos em fontes primárias; sem equivalente estabelecido, use um nome descritivo e registre a lacuna.
+Use os termos da comunidade de especialistas no idioma do PRD. Quando o código usar outro idioma, registre no glossário o equivalente estabelecido nesse idioma como identificador. Fundamente nomes novos em fontes primárias; sem equivalente estabelecido, use um nome descritivo e registre a ausência em Lacunas.
 
 Mantenha um termo canônico por contexto e registre os sinônimos no glossário. Termos iguais com regras e motivos de mudança diferentes exigem análise antes de unificar contextos: vocabulário sozinho não prova uma fronteira.
 
@@ -82,13 +81,14 @@ As seções marcadas como base são obrigatórias numa nova capability. As demai
 | Requisitos funcionais | Sim | Requisitos com condição, resultado, ID e prioridade |
 | Eventos de domínio | | Eventos produzidos ou consumidos e requisitos que os governam |
 | Requisitos não funcionais | | Atributos de qualidade, limites e restrições que orientam o design, com ID e prioridade |
-| Considerações regulatórias | | Norma realmente consultada, interpretação adotada, IDs deste PRD afetados e lacunas |
+| Considerações regulatórias | | Norma realmente consultada, interpretação adotada e IDs deste PRD afetados |
 | Fora do escopo | | Funcionalidades adjacentes explicitamente excluídas |
 | Trade-offs declarados | | Decisões tomadas que custam algo |
 | Métricas de sucesso | | Indicadores de resultado e proteções contra degradação |
 | Critérios de aceitação | | Cenários que discriminam resultados e limites dos requisitos |
 | Dependências e riscos | | Dependência ou risco, origem, impacto e tratamento; contextos afetados |
-| Questões em aberto | | Decisões e premissas materiais ainda abertas |
+| Premissas | | Inferências não verificadas que a proposta usa |
+| Lacunas | | Informações e decisões ausentes e os IDs que elas afetam |
 | Ponto mais frágil | | Decisão frágil, risco, mitigação e condição de reavaliação |
 | Referências | | Fontes externas usadas, escopo e datas reais de consulta |
 
@@ -110,8 +110,8 @@ Para cálculos ou ramificações, prefira uma tabela com valores intermediários
 
 Use Dado/Quando/Então quando a tabela não expressar o cenário, e cite os requisitos verificados. Os marcadores seguem o idioma da prosa; em português, flexione Dado conforme o sujeito (Dada, Dados ou Dadas).
 
-### Questões em aberto
+### Premissas e lacunas
 
-Dê um subtítulo a cada questão e separe em parágrafos próprios, quando conhecidos, a decisão ou premissa, a origem, o impacto, o responsável e a resolução ou evidência necessária.
+Dê um subtítulo a cada entrada e separe os campos em parágrafos próprios, quando conhecidos. Em Premissas: a premissa, a evidência que a motivou, o impacto se for falsa, o responsável e a forma de verificá-la. Em Lacunas: a informação ou decisão que falta, os IDs afetados, o impacto, o responsável e o que a resolve.
 
-Priorize a premissa cuja falsidade inviabilizaria a proposta: explique a consequência e a forma de verificá-la. Uma premissa aceita para o trabalho continuar não vira fato por ter sido aprovada.
+Comece Premissas pela premissa cuja falsidade inviabilizaria a proposta. Uma premissa aceita para o trabalho continuar não vira fato por ter sido aprovada; ela sai da seção só quando for verificada, e aí o corpo passa a afirmá-la com a origem.

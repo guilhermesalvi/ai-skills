@@ -16,12 +16,12 @@ Reformular o problema não é recusar um produto que o usuário já definiu. Uma
 | O que você já tem | Como começar |
 | --- | --- |
 | Usuário identificado e, além dele, o problema ou a direção da solução | Escreva e refine o PRD |
-| Contexto parcial | Conclua o que for possível e marque as lacunas materiais |
+| Contexto parcial | Conclua o que for possível e registre as ausências materiais em Lacunas |
 | Apenas um nome ou uma ideia genérica | Reúna as perguntas indispensáveis: problema real, usuário e resultado esperado |
 
 Não repita perguntas que o material já responde. Pergunte quando a resposta mudar uma decisão indispensável; escolhas editoriais e técnicas reversíveis dentro do escopo não exigem confirmação.
 
-Se o usuário pedir para seguir sem descoberta, produza a parte que o contexto sustenta e marque o restante como lacuna.
+Se o usuário pedir para seguir sem descoberta, produza a parte que o contexto sustenta e registre o restante em Lacunas.
 
 ## Material de descoberta
 

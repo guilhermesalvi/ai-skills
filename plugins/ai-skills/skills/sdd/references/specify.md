@@ -6,7 +6,7 @@ Defina comportamento técnico testável e rastreável. A spec é o contrato que 
 
 | Origem | Evidência e cuidado |
 | --- | --- |
-| PRD | Cite os IDs pertinentes e preserve hipóteses e lacunas herdadas |
+| PRD | Cite os IDs pertinentes e não resolva em silêncio as premissas e lacunas do PRD que os afetam |
 | Pedido direto | Registre o comportamento, consumidor e resultado informados; esclareça apenas lacunas indispensáveis |
 | Código existente | Descreva comportamento observado; identifique intenção inferida e divergências com `arquivo:linha` |
 
@@ -16,7 +16,7 @@ Um pedido técnico delimitado dispensa PRD. Se faltar uma decisão real de produ
 
 - **Explique, não apenas cite.** Descreva o comportamento técnico necessário para entender e testar a regra, sem criar uma definição de negócio concorrente, e cite o ID de produto entre colchetes ao fim do requisito.
 - **Preserve identificadores** de estados, eventos e enumerações do domínio.
-- **Não converta lacuna de negócio em hipótese técnica** para liberar a implementação. Mantenha a origem explícita e bloqueie somente os requisitos dependentes.
+- **Não converta lacuna de negócio em premissa técnica** para liberar a implementação. Registre-a em Lacunas com a origem no PRD e bloqueie somente os requisitos dependentes.
 - **Consulte a visão geral de produto**, quando existir, para produtores, consumidores, direção dos contratos e decisões delegadas a ADR.
 - **Trate os NFRs pelo que eles permitem verificar.** NFR com resultado verificável gera requisito técnico ou critério de aceitação; atributo usado para comparar soluções entra como critério de design, com origem registrada.
 - **Traga pelo nome os casos de aceitação** do PRD atingidos pela mudança, e marque os de outra capability com seu responsável. Casos de aceitação e de rejeição são cenários distintos.
@@ -72,7 +72,7 @@ Descreva estado, mensagem, valor, evento ou limite observável. Não invente HTT
 
 Cada resultado de aceitação deriva de um requisito ou decisão identificável. Um cenário tem nome, entrada, condições e resultado esperado, e cita os requisitos que verifica.
 
-Se o contrato não determinar o resultado de um caso limite, registre a lacuna em vez de escolher um valor por analogia com outro caso.
+Se o contrato não determinar o resultado de um caso limite, registre-o em Lacunas em vez de escolher um valor por analogia com outro caso.
 
 ## Arquivo, prefixo e IDs
 
@@ -80,7 +80,7 @@ Edite a spec no mesmo arquivo, sem campos de status, aprovação ou notas de fer
 
 Logo abaixo do título, a tabela de cabeçalho traz Prefixo dos requisitos e, quando a origem for um PRD, PRD de origem com o link para ele, como no exemplo parcial. O prefixo técnico é distinto dos prefixos de produto e das outras specs. Preserve prefixos existentes; semelhança de letras, por si só, não exige renomeação.
 
-Ao ajustar o mesmo comportamento, preserve o ID dele. Ao substituir o conceito, retire o ID e crie outro. Liste os IDs retirados na linha `Retirados:` ao fim da spec, para que não sejam reutilizados, e não elimine lacunas históricas por estética.
+Ao ajustar o mesmo comportamento, preserve o ID dele. Ao substituir o conceito, retire o ID e crie outro. Liste os IDs retirados na linha `Retirados:` ao fim da spec, para que não sejam reutilizados, e não renumere os demais para fechar buracos na sequência.
 
 Quando o PRD mudar, revise os requisitos da spec que citam os IDs alterados.
 
@@ -94,8 +94,8 @@ Contexto e Requisitos são a base; Rastreabilidade entra quando houver PRD, e as
 | --- | --- |
 | Contexto | Origem, consumidor, comportamento e código pertinente |
 | Escopo / Fora do escopo | O que entra e exclusões necessárias |
-| Premissas | Hipóteses técnicas com origem, consequência e `Confirmada?` |
-| Questões em aberto | Decisão, responsável e requisitos bloqueados |
+| Premissas | Inferências e escolhas provisórias de comportamento, com os campos de premissa |
+| Lacunas | Informações e decisões ausentes, com os campos de lacuna |
 | Requisitos | IDs e comportamento observável |
 | Decisões observáveis | Decisões de cada superfície e dimensão, com a aterrissagem de cada uma |
 | Eventos de domínio | Produtor, consumidores, significado e gatilho |
