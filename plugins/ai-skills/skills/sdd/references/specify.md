@@ -39,7 +39,7 @@ Percorra as superfícies que a mudança expõe e as dimensões do sistema, e reg
 
 O formato de erro e o estado vazio são as decisões que mais escapam: o primeiro handler define o formato que os outros copiam, e o estado vazio só aparece para conta nova.
 
-As dimensões são validação e limites, falha e falha parcial, idempotência e duplicação, autorização e limite de taxa, concorrência e ordenação, ciclo de vida dos dados, falha de dependência externa, transições de estado, observabilidade e consistência entre contextos.
+As dimensões são validação e limites, falha e falha parcial, idempotência e duplicação, autorização e limite de taxa, concorrência e ordenação, ciclo de vida dos dados, falha de dependência externa, transições de estado, observabilidade e consistência entre capabilities.
 
 A aterrissagem precisa observar a própria dimensão: reaproveitar o requisito de outra linha a deixa descoberta, e nesse caso a resposta é `n/a` com o motivo ou uma pergunta. Uma dimensão que depende de decisão de produto vira pergunta, não requisito inventado.
 
@@ -109,7 +109,7 @@ Contexto e Requisitos são a base; Rastreabilidade entra quando houver PRD, e as
 | | |
 | --- | --- |
 | **Prefixo dos requisitos** | `EXM` |
-| **PRD de origem** | [PRD 0003](../../../prd/0003-requests-idempotent-submission.md) |
+| **PRD de origem** | [PRD 0003](../../prd/0003-idempotent-submission.md) |
 
 ## Requisitos
 

@@ -2,7 +2,7 @@
 
 ## Caminho e numeração
 
-Salve em `docs/prd/NNNN-<contexto>-<capability>.md`. `NNNN` é o número do documento, com quatro dígitos; `<contexto>` e `<capability>` são slugs em inglês e em kebab-case. Num PRD novo, use o número seguinte ao maior da pasta; numa pasta vazia, comece em `0001`, porque `0000` é reservado à visão geral.
+Salve em `docs/prd/NNNN-<capability>.md`. `NNNN` é o número do documento, com quatro dígitos; `<capability>` é um slug em inglês e em kebab-case. Num PRD novo, use o número seguinte ao maior da pasta; numa pasta vazia, comece em `0001`, porque `0000` é reservado à visão geral.
 
 Cada número pertence a um só documento e não muda quando o documento é revisado. Se dois documentos chegarem ao mesmo número, como ao integrar branches paralelas, mantenha o número do que já estava na branch de destino, dê ao outro o número seguinte ao maior da pasta e atualize os links que apontavam para o nome antigo.
 
@@ -27,26 +27,24 @@ Antes de alterar ou retirar um requisito ou um caso de aceitação, procure seus
 
 ## Cabeçalho
 
-O PRD de uma capability começa pelo título e por uma tabela de cabeçalho:
+O PRD de uma capability começa pelo título, que é o nome da capability, e por uma tabela de cabeçalho:
 
 ```markdown
 # Emissão de fatura
 
 | | |
 | --- | --- |
-| **Contexto de origem** | Invoicing |
-| **Contextos afetados** | Notification, Accounting |
 | **Prefixo dos requisitos** | `INV` |
+| **Capabilities afetadas** | Notificação ao cliente, Contabilização |
 | **Visão geral** | [PRD 0000](0000-platform-overview.md) |
 ```
 
-- Em Contexto de origem, informe o contexto dono das regras deste PRD. Se o projeto não divide o produto em contextos de domínio, troque o rótulo por Módulo ou Área, conforme o termo que o projeto usa, e troque Contextos afetados pelo plural correspondente.
-- Inclua Contextos afetados quando o PRD muda o que outros contextos recebem ou observam, e explique o impacto em Dependências e riscos. Sem contexto afetado, omita a linha.
+- Inclua Capabilities afetadas quando o PRD muda o que outras capabilities recebem ou observam, e explique o impacto em Dependências e riscos. Cite cada uma pelo título do PRD dela. Sem capability afetada, omita a linha.
 - Inclua Visão geral quando a pasta tiver o PRD 0000; sem ele, omita a linha.
 
 ## IDs
 
-O ID de um requisito começa pelo prefixo do PRD que o define, para que uma citação em outro PRD, numa spec ou num teste indique onde está a definição. O prefixo é uma abreviação do contexto de origem ou da capability, em letras maiúsculas e dígitos, começando por letra, como `INV` para Invoicing ou `ONB` para CustomerOnboarding. Evite nomes genéricos como `REQ`, que não indicam o dono, e não use `FR` nem `NFR`, que o verificador trata como ID sem prefixo. Num PRD novo, escolha um prefixo que nenhum PRD da pasta use e, se a pasta tiver o PRD 0000, registre o PRD e o prefixo na seção Contextos dele; ao editar, mantenha o prefixo existente.
+O ID de um requisito começa pelo prefixo do PRD que o define, para que uma citação em outro PRD, numa spec ou num teste indique onde está a definição. O prefixo abrevia a capability, em letras maiúsculas e dígitos, começando por letra, como `INV` para Emissão de fatura ou `DOC` para Verificação de documentos. Não abrevie a área a que a capability pertence: o prefixo se repetiria quando a área ganhasse o segundo PRD. Evite nomes genéricos como `REQ`, que não indicam o dono, e não use `FR` nem `NFR`, que o verificador trata como ID sem prefixo. Num PRD novo, escolha um prefixo que nenhum PRD da pasta use e, se a pasta tiver o PRD 0000, registre o PRD e o prefixo na seção Capabilities dele; ao editar, mantenha o prefixo existente.
 
 O ID tem a forma `<PREFIX>-nn`, com uma única sequência por PRD para requisitos funcionais e não funcionais. O tipo é dado pela seção onde o requisito é definido, Requisitos funcionais ou Requisitos não funcionais, e não pelo ID; assim, reclassificar um requisito muda a seção sem mudar o ID. Numere com pelo menos dois dígitos (`01`, `02`) e, depois de `99`, siga para `100`.
 
@@ -76,7 +74,7 @@ Ao editar um PRD existente, mantenha o idioma da prosa e o dos títulos que ele 
 
 Esta skill nomeia títulos e rótulos em português. Num PRD em inglês, use a coluna English da tabela abaixo; em outro idioma, traduza a coluna Português e use a mesma tradução em todos os PRDs da pasta. Assim, PRDs diferentes usam os mesmos nomes.
 
-Termos canônicos em inglês não se traduzem em nenhum idioma: JTBD, MoSCoW (Must, Should, Could, Won't), NFR, trade-off, Leading, Lagging e Guardrails. Outros termos técnicos estabelecidos podem ficar em inglês quando a tradução perder precisão. A permissão vale para termos, não para expressões: em vez de escrever `if false` no meio da prosa, descreva a condição e o seu impacto.
+Termos canônicos em inglês não se traduzem em nenhum idioma: capability, JTBD, MoSCoW (Must, Should, Could, Won't), NFR, trade-off, Leading, Lagging e Guardrails. Outros termos técnicos estabelecidos podem ficar em inglês quando a tradução perder precisão. A permissão vale para termos, não para expressões: em vez de escrever `if false` no meio da prosa, descreva a condição e o seu impacto.
 
 | Português | English |
 | --- | --- |
@@ -101,13 +99,13 @@ Termos canônicos em inglês não se traduzem em nenhum idioma: JTBD, MoSCoW (Mu
 | Ponto mais frágil | Weakest Point |
 | Referências | References |
 | Propósito | Purpose |
-| Contextos | Contexts |
+| Capabilities | Capabilities |
 | Catálogo de eventos | Event Catalog |
-| Fluxos entre contextos | Flows Between Contexts |
-| Termos por contexto | Terms per Context |
+| Fluxos entre capabilities | Flows Between Capabilities |
+| Termos com mais de um significado | Terms with Multiple Meanings |
 | Decisões delegadas a ADR | Decisions Delegated to ADR |
-| Contexto de origem, Módulo, Área, Escopo | Originating Context, Module, Area, Scope |
-| Contextos afetados, Módulos afetados, Áreas afetadas | Affected Contexts, Affected Modules, Affected Areas |
+| Escopo | Scope |
+| Capabilities afetadas | Affected Capabilities |
 | Prefixo dos requisitos | Requirement Prefix |
 | Visão geral | Overview |
 | Identificador | Identifier |

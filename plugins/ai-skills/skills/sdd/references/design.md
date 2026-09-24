@@ -4,7 +4,7 @@ Defina como cumprir a spec, com profundidade proporcional ao risco. O design esc
 
 ## Contexto pertinente
 
-Leia a spec, os ADRs que restringem a mudança, os trade-offs e NFRs do PRD e o mapa de contextos quando houver integração. No código, siga do contrato público para as implementações necessárias: módulos, interfaces, domínio, casos de uso e infraestrutura.
+Leia a spec, os ADRs que restringem a mudança, os trade-offs e NFRs do PRD e a visão geral de produto quando houver integração. No código, siga do contrato público para as implementações necessárias: módulos, interfaces, domínio, casos de uso e infraestrutura.
 
 Leia o código que a mudança atinge, não o repositório inteiro. Registre o que foi inspecionado e as limitações relevantes. Nunca exponha segredos ou dados pessoais ao citar evidência.
 

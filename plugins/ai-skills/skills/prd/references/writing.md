@@ -12,7 +12,7 @@ Uma lacuna é uma informação ou decisão ausente. O corpo afirma só o que est
 
 Quando regras, fontes ou paráfrases se contradisserem, ou quando uma correção depender de decisão de negócio, registre a lacuna com os IDs afetados e conclua o restante. Não escolha uma das versões em silêncio.
 
-## Capacidade de produto
+## Comportamento observável
 
 Na solução, no resumo e nos requisitos, identifique a mudança que o consumidor observa. Cite uma implementação específica apenas quando ela fizer parte do produto solicitado ou de uma restrição real; o restante pertence ao design técnico.
 
@@ -21,9 +21,13 @@ Na solução, no resumo e nos requisitos, identifique a mudança que o consumido
 | Fila de auditoria | Toda mudança registra quem a realizou e quando |
 | Modal de confirmação | Excluir um registro ativo exige confirmação explícita |
 | Portal de upload | Enviar documentos e acompanhar o resultado sem depender da disponibilidade do analista |
-| Evento em um broker | Outros contextos recebem a mudança de estado conforme o contrato |
+| Evento em um broker | Outras capabilities recebem a mudança de estado conforme o contrato |
 
 ## Domínio e fronteiras
+
+### Capability
+
+Cada PRD descreve uma capability: algo que o produto faz ou oferece, com um resultado que o consumidor observa, e cujo nome continua válido quando a solução muda. Emissão de fatura é uma capability; reenviar a fatura é uma funcionalidade dela e entra no mesmo PRD. Uma mudança que não cria um resultado novo para o consumidor edita o PRD da capability existente em vez de abrir outro.
 
 ### Conceitos antes de nomes
 
@@ -31,17 +35,17 @@ Fixe conceitos, relações, atributos e restrições antes de escolher os nomes.
 
 Use os termos da comunidade de especialistas no idioma do PRD. Quando o código usar outro idioma, registre no glossário o equivalente estabelecido nesse idioma como identificador. Fundamente nomes novos em fontes primárias; sem equivalente estabelecido, use um nome descritivo e registre a ausência em Lacunas.
 
-Mantenha um termo canônico por contexto e registre os sinônimos no glossário. Termos iguais com regras e motivos de mudança diferentes exigem análise antes de unificar contextos: vocabulário sozinho não prova uma fronteira.
+Mantenha um termo canônico por conceito e registre os sinônimos no glossário. Quando o mesmo termo tiver regras diferentes em capabilities distintas, cada PRD define o seu significado e a visão geral registra a divergência. Vocabulário comum, sozinho, não prova que duas capabilities são uma.
 
-### Responsabilidade entre contextos
+### Responsabilidade entre capabilities
 
-O contexto de origem é dono da decisão. Registre o impacto nos outros contextos sem compartilhar implicitamente seus modelos, e siga o mapa de contextos do PRD 0000 quando ele existir.
+O PRD da capability é dono das regras dela. Registre o impacto nas outras capabilities sem redefinir suas regras, e siga as relações descritas no PRD 0000 quando ele existir.
 
-Para capacidades genéricas, avalie reutilização ou contratação quando a decisão estiver em escopo. No core, preserve os diferenciais e dê precisão aos critérios.
+Para capabilities genéricas, avalie reutilização ou contratação quando a decisão estiver em escopo. No core, preserve os diferenciais e dê precisão aos critérios.
 
 ### Eventos
 
-A seção Eventos de domínio, no PRD produtor, define conteúdo, gatilho e consequência de cada evento, e nomeia os contextos consumidores. Estados, transições, requisitos e eventos devem concordar entre si.
+A seção Eventos de domínio, no PRD produtor, define conteúdo, gatilho e consequência de cada evento, e nomeia as capabilities consumidoras. Estados, transições, requisitos e eventos devem concordar entre si.
 
 Um evento sem consumidor identificado permanece candidato, condicionado à identificação de quem usará a mudança; não o apresente como integração decidida.
 
@@ -49,7 +53,7 @@ Um evento sem consumidor identificado permanece candidato, condicionado à ident
 
 Cada regra tem definição principal no PRD dono dela. Resumos e diagramas citam o ID e explicam o contexto necessário: a referência não pode obrigar o leitor a adivinhar o comportamento local.
 
-Um PRD cita IDs de outro PRD só quando depende deles, isto é, quando consome a definição, a entrada ou o evento. Não descreva como outro contexto reage ao seu comportamento: nomeie o contexto afetado e deixe as relações entre capabilities na visão geral. Em Considerações regulatórias, cada norma aponta para requisitos do próprio PRD.
+Um PRD cita IDs de outro PRD só quando depende deles, isto é, quando consome a definição, a entrada ou o evento. Não descreva como outra capability reage ao seu comportamento: nomeie-a em Capabilities afetadas e deixe as relações entre capabilities na visão geral. Em Considerações regulatórias, cada norma aponta para requisitos do próprio PRD.
 
 Cada requisito representa uma unidade verificável. Separe obrigações que podem falhar independentemente e mantenha juntas as condições cujo efeito é indivisível.
 
@@ -77,7 +81,7 @@ As seções marcadas como base são obrigatórias numa nova capability. As demai
 | Usuário-alvo / JTBD | Sim | Atores e o trabalho ou resultado de que precisam |
 | Oportunidade / hipótese | | Resultado que a entrega pretende causar e como validá-lo |
 | Solução proposta | Sim | Comportamento proposto, limites e relações, referenciando os requisitos |
-| Glossário do domínio | | Termos necessários, ambiguidades e conceitos do contexto dono |
+| Glossário do domínio | | Termos necessários, ambiguidades e conceitos da capability |
 | Requisitos funcionais | Sim | Requisitos com condição, resultado, ID e prioridade |
 | Eventos de domínio | | Eventos produzidos ou consumidos e requisitos que os governam |
 | Requisitos não funcionais | | Atributos de qualidade, limites e restrições que orientam o design, com ID e prioridade |
@@ -86,7 +90,7 @@ As seções marcadas como base são obrigatórias numa nova capability. As demai
 | Trade-offs declarados | | Decisões tomadas que custam algo |
 | Métricas de sucesso | | Indicadores de resultado e proteções contra degradação |
 | Critérios de aceitação | | Cenários que discriminam resultados e limites dos requisitos |
-| Dependências e riscos | | Dependência ou risco, origem, impacto e tratamento; contextos afetados |
+| Dependências e riscos | | Dependência ou risco, origem, impacto e tratamento; capabilities afetadas |
 | Premissas | | Condições sobre o problema, o usuário ou o contexto atual que a proposta toma como verdadeiras sem ter verificado |
 | Lacunas | | Informações e decisões ausentes e os IDs que elas afetam |
 | Ponto mais frágil | | Decisão frágil, risco, mitigação e condição de reavaliação |

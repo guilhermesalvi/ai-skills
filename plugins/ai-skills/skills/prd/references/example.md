@@ -1,15 +1,14 @@
 # Exemplo de PRD
 
-Um PRD de um único contexto, sem PRD 0000. Ele não tem Considerações regulatórias, para não apresentar alegações regulatórias como fatos verificados.
+Um PRD de capability, sem PRD 0000. Ele não tem Considerações regulatórias, para não apresentar alegações regulatórias como fatos verificados.
 
 ````markdown
 # Verificação assíncrona de documentos
 
 | | |
 | --- | --- |
-| **Contexto de origem** | CustomerOnboarding |
-| **Contextos afetados** | AccountActivation |
-| **Prefixo dos requisitos** | `ONB` |
+| **Prefixo dos requisitos** | `DOC` |
+| **Capabilities afetadas** | Ativação de conta |
 
 ## Resumo executivo
 
@@ -23,7 +22,7 @@ Neste cenário fictício, a operação envia documentos em nome do cliente e aco
 
 - Analista de conformidade: validar cada documento contra um critério identificável e registrar o resultado.
 - Operador de cadastro: saber o estado do caso e quais itens exigem reenvio.
-- AccountActivation: consultar a elegibilidade do cliente sem interpretar mensagens.
+- Ativação de conta: consultar a elegibilidade do cliente sem interpretar mensagens.
 
 ## Solução proposta
 
@@ -31,13 +30,13 @@ Um caso reúne os itens exigidos para o cliente e informa o resultado da verific
 
 ```mermaid
 stateDiagram-v2
-    [*] --> AwaitingDocuments: convite (ONB-01)
-    AwaitingDocuments --> UnderReview: envio completo (ONB-03)
-    UnderReview --> Approved: aprovação (ONB-07)
-    UnderReview --> PendingResubmission: rejeição de item (ONB-06)
-    PendingResubmission --> UnderReview: reenvio (ONB-08)
-    UnderReview --> Declined: recusa (ONB-09)
-    PendingResubmission --> Declined: prazo excedido (ONB-10)
+    [*] --> AwaitingDocuments: convite (DOC-01)
+    AwaitingDocuments --> UnderReview: envio completo (DOC-03)
+    UnderReview --> Approved: aprovação (DOC-07)
+    UnderReview --> PendingResubmission: rejeição de item (DOC-06)
+    PendingResubmission --> UnderReview: reenvio (DOC-08)
+    UnderReview --> Declined: recusa (DOC-09)
+    PendingResubmission --> Declined: prazo excedido (DOC-10)
 ```
 
 | Estado | Identificador | Significado |
@@ -56,29 +55,29 @@ Armazenamento, notificações e desenho da interface serão definidos no trabalh
 | --- | --- |
 | Caso de verificação | Itens exigidos de um cliente e seu estado de análise |
 | Item | Documento com resultado próprio: pendente, aprovado ou rejeitado |
-| Checklist | Critérios por tipo de cliente, com versão escolhida no convite (ONB-05) |
-| Envio completo | Todos os itens do checklist têm documento anexado (ONB-03) |
-| Elegibilidade | Resultado derivado do estado do caso (ONB-11) |
+| Checklist | Critérios por tipo de cliente, com versão escolhida no convite (DOC-05) |
+| Envio completo | Todos os itens do checklist têm documento anexado (DOC-03) |
+| Elegibilidade | Resultado derivado do estado do caso (DOC-11) |
 
 ## Requisitos funcionais
 
-- **ONB-01 (Must)** O caso começa em `AwaitingDocuments` a partir de um convite ativo.
-- **ONB-02 (Must)** O operador pode enviar documentos em nome do cliente enquanto o convite estiver ativo, independentemente da disponibilidade do analista.
-- **ONB-03 (Must)** O caso passa a `UnderReview` quando todos os itens exigidos têm documento anexado.
-- **ONB-04 (Must)** O sistema rejeita imediatamente um item com formato ou tamanho incompatível com o checklist e informa o critério violado.
-- **ONB-05 (Must)** A conformidade define e versiona o checklist por tipo de cliente; o caso usa a versão vigente no convite.
-- **ONB-06 (Must)** Rejeitar um item exige um motivo previsto no checklist e leva o caso a `PendingResubmission`.
-- **ONB-07 (Must)** Aprovar todos os itens leva o caso a `Approved`, que é terminal.
-- **ONB-08 (Must)** Em `PendingResubmission`, somente itens rejeitados aceitam reenvio; um reenvio leva o caso a `UnderReview`, preservando os resultados dos demais itens.
-- **ONB-09 (Must)** A conformidade pode recusar um caso em `UnderReview` com motivo registrado; `Declined` é terminal.
-- **ONB-10 (Must)** Um caso em `PendingResubmission` há mais de 10 dias úteis passa a `Declined` com motivo de prazo excedido.
-- **ONB-11 (Must)** A elegibilidade para ativação é verdadeira se, e somente se, o caso estiver em `Approved`.
-- **ONB-12 (Must)** Cada envio, validação e transição registra responsável, instante e motivo, consultáveis por caso e cliente.
+- **DOC-01 (Must)** O caso começa em `AwaitingDocuments` a partir de um convite ativo.
+- **DOC-02 (Must)** O operador pode enviar documentos em nome do cliente enquanto o convite estiver ativo, independentemente da disponibilidade do analista.
+- **DOC-03 (Must)** O caso passa a `UnderReview` quando todos os itens exigidos têm documento anexado.
+- **DOC-04 (Must)** O sistema rejeita imediatamente um item com formato ou tamanho incompatível com o checklist e informa o critério violado.
+- **DOC-05 (Must)** A conformidade define e versiona o checklist por tipo de cliente; o caso usa a versão vigente no convite.
+- **DOC-06 (Must)** Rejeitar um item exige um motivo previsto no checklist e leva o caso a `PendingResubmission`.
+- **DOC-07 (Must)** Aprovar todos os itens leva o caso a `Approved`, que é terminal.
+- **DOC-08 (Must)** Em `PendingResubmission`, somente itens rejeitados aceitam reenvio; um reenvio leva o caso a `UnderReview`, preservando os resultados dos demais itens.
+- **DOC-09 (Must)** A conformidade pode recusar um caso em `UnderReview` com motivo registrado; `Declined` é terminal.
+- **DOC-10 (Must)** Um caso em `PendingResubmission` há mais de 10 dias úteis passa a `Declined` com motivo de prazo excedido.
+- **DOC-11 (Must)** A elegibilidade para ativação é verdadeira se, e somente se, o caso estiver em `Approved`.
+- **DOC-12 (Must)** Cada envio, validação e transição registra responsável, instante e motivo, consultáveis por caso e cliente.
 
 ## Requisitos não funcionais
 
-- **ONB-13 (Must)** Um envio completo deve ser refletido em `UnderReview` em até 1 minuto.
-- **ONB-14 (Must)** Traces não contêm documentos nem dados pessoais; identificadores técnicos de caso e item são suficientes.
+- **DOC-13 (Must)** Um envio completo deve ser refletido em `UnderReview` em até 1 minuto.
+- **DOC-14 (Must)** Traces não contêm documentos nem dados pessoais; identificadores técnicos de caso e item são suficientes.
 
 ## Fora do escopo
 
@@ -88,19 +87,19 @@ Armazenamento, notificações e desenho da interface serão definidos no trabalh
 
 ## Trade-offs declarados
 
-### Operação intermediando o envio (ONB-02)
+### Operação intermediando o envio (DOC-02)
 
 *Custo:* mantém parte da carga manual.
 
 *Motivo:* permite avaliar o fluxo interno antes de abrir o envio ao cliente.
 
-### Checklist atual preservado (ONB-05)
+### Checklist atual preservado (DOC-05)
 
 *Custo:* critérios legados de pouco valor podem continuar no processo.
 
 *Motivo:* rever seu mérito exige uma decisão de produto distinta.
 
-### Prazo de reenvio de 10 dias úteis (ONB-10)
+### Prazo de reenvio de 10 dias úteis (DOC-10)
 
 *Custo:* clientes mais lentos precisam de novo convite.
 
@@ -110,7 +109,7 @@ Armazenamento, notificações e desenho da interface serão definidos no trabalh
 
 ### Leading
 
-- Taxa de reenvio por formato ou tamanho inválido (ONB-04): medir se o feedback no envio reduz retrabalho.
+- Taxa de reenvio por formato ou tamanho inválido (DOC-04): medir se o feedback no envio reduz retrabalho.
 
 ### Lagging
 
@@ -124,19 +123,19 @@ Armazenamento, notificações e desenho da interface serão definidos no trabalh
 
 | Caso | Entrada | Condição intermediária | Requisito | Resultado |
 | --- | --- | --- | --- | --- |
-| Envio completo | Três itens válidos anexados às 10h | Checklist completo | ONB-03, ONB-13 | `UnderReview` até 10h01 |
-| Formato inválido | Item 2 em formato não aceito | Critério de formato violado | ONB-04 | Item rejeitado com motivo; sem completar o checklist |
-| Rejeição parcial | Itens 1 e 3 aprovados, item 2 rejeitado | Motivo registrado | ONB-06, ONB-08 | `PendingResubmission`; somente item 2 pode ser reenviado |
-| Reenvio parcial | Itens 2 e 3 rejeitados; somente 2 reenviado | Item 3 ainda rejeitado | ONB-08 | `UnderReview`, preservando a rejeição do item 3 |
-| Aprovação | Três itens aprovados | Nenhum item pendente | ONB-07, ONB-11 | `Approved`; elegibilidade verdadeira |
-| Prazo excedido | Caso pendente por 11 dias úteis | Sem reenvio | ONB-10, ONB-11 | `Declined`; elegibilidade falsa |
+| Envio completo | Três itens válidos anexados às 10h | Checklist completo | DOC-03, DOC-13 | `UnderReview` até 10h01 |
+| Formato inválido | Item 2 em formato não aceito | Critério de formato violado | DOC-04 | Item rejeitado com motivo; sem completar o checklist |
+| Rejeição parcial | Itens 1 e 3 aprovados, item 2 rejeitado | Motivo registrado | DOC-06, DOC-08 | `PendingResubmission`; somente item 2 pode ser reenviado |
+| Reenvio parcial | Itens 2 e 3 rejeitados; somente 2 reenviado | Item 3 ainda rejeitado | DOC-08 | `UnderReview`, preservando a rejeição do item 3 |
+| Aprovação | Três itens aprovados | Nenhum item pendente | DOC-07, DOC-11 | `Approved`; elegibilidade verdadeira |
+| Prazo excedido | Caso pendente por 11 dias úteis | Sem reenvio | DOC-10, DOC-11 | `Declined`; elegibilidade falsa |
 
 ## Dependências e riscos
 
 | Item | Tipo | Impacto |
 | --- | --- | --- |
 | Definição e versão do checklist | Dependência de produto | Sem critérios, a análise não pode começar |
-| AccountActivation | Contexto consumidor | Precisa interpretar a elegibilidade conforme ONB-11 |
+| Ativação de conta | Capability consumidora | Precisa interpretar a elegibilidade conforme DOC-11 |
 
 ## Premissas
 
@@ -158,7 +157,7 @@ Armazenamento, notificações e desenho da interface serão definidos no trabalh
 
 **Decisão pendente:** qual calendário define os dias úteis da expiração.
 
-**IDs afetados:** ONB-10.
+**IDs afetados:** DOC-10.
 
 **Impacto:** determina quando um caso pendente passa a `Declined`.
 
@@ -182,7 +181,7 @@ Armazenamento, notificações e desenho da interface serão definidos no trabalh
 
 ## Ponto mais frágil
 
-**Decisão:** preservar o checklist atual sem revisar o mérito dos critérios (ONB-05).
+**Decisão:** preservar o checklist atual sem revisar o mérito dos critérios (DOC-05).
 
 **Risco:** exigências legadas podem continuar causando retrabalho sem melhorar a análise.
 

@@ -24,13 +24,15 @@ Em plataformas, infraestrutura, SDKs e APIs como produto, o usuário é o time o
 
 ## Visão geral
 
-Crie o PRD 0000 quando a pasta tiver mais de um PRD de capability. Ele explica propósito, responsabilidades e interações entre contextos, com apenas o detalhe necessário para entendê-las. Invariantes, cálculos, critérios de sucesso, decisões de produto e suas fontes ficam no PRD da capability responsável.
+Crie o PRD 0000 quando a pasta tiver mais de um PRD de capability. Ele explica propósito, responsabilidades e interações entre capabilities, com apenas o detalhe necessário para entendê-las. Invariantes, cálculos, critérios de sucesso, decisões de produto e suas fontes ficam no PRD da capability responsável.
 
 O arquivo se chama `0000-<slug>-overview.md`. A tabela de cabeçalho tem só a linha Escopo, e o documento não tem requisitos.
 
-As seções, nesta ordem e conforme o conteúdo pertinente, são Propósito, Contextos, Catálogo de eventos, Fluxos entre contextos, Termos por contexto e Decisões delegadas a ADR.
+As seções, nesta ordem e conforme o conteúdo pertinente, são Propósito, Capabilities, Catálogo de eventos, Fluxos entre capabilities, Termos com mais de um significado e Decisões delegadas a ADR.
 
-Contextos apresenta cada contexto com sua responsabilidade e os PRDs de capability dele, com o link e o prefixo dos requisitos de cada um, para que um ID citado em qualquer artefato leve ao PRD que o define.
+Capabilities lista cada capability com sua responsabilidade, o link para o PRD e o prefixo dos requisitos, para que um ID citado em qualquer artefato leve ao PRD que o define. Agrupe a lista sob subtítulos por área só quando o produto já se organiza assim; a área não entra no cabeçalho nem no caminho dos PRDs.
+
+Termos com mais de um significado lista cada termo, seus significados e a capability em que cada um vale.
 
 Catálogo de eventos identifica produtores, consumidores, requisitos de recepção e links para os contratos em Eventos de domínio dos PRDs produtores. É o único lugar que liga um evento aos requisitos dos consumidores.
 

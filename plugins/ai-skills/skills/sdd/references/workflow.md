@@ -4,10 +4,10 @@
 
 Defina o comportamento antes de implementá-lo. Reutilize uma spec existente ou registre o contrato necessário para a mudança; não crie arquivos vazios.
 
-Sem convenção do repositório, use este layout, com slugs em inglês e em kebab-case:
+Sem convenção do repositório, use este layout, com slugs em inglês e em kebab-case; o slug da capability repete o do PRD dela, quando houver:
 
 ```text
-docs/specs/<context>/<capability>/
+docs/specs/<capability>/
   spec.md              spec viva da capability, editada no lugar
   NNNN-<change>/       só quando a mudança tem design ou tarefas
     design.md
