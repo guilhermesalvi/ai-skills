@@ -37,8 +37,4 @@ Defina cada requisito num item de lista que começa pelo ID em negrito, com a pr
 
 Todo ID citado precisa estar definido num PRD do projeto e corresponder ao requisito que o texto pretende citar.
 
-Antes de alterar ou retirar um requisito ou um caso de aceitação, procure seus IDs e o nome do caso com `git grep -n` para encontrar os PRDs, specs e testes que dependem deles.
-
-Um requisito novo recebe o número seguinte ao maior já usado com o mesmo prefixo. Um ID retirado some do arquivo, então confira com `git log -S "<ID>"` que o número nunca existiu antes de atribuí-lo. Um ID retirado não volta a ser usado, e os demais não são renumerados para fechar buracos na sequência.
-
 Quando estados, motivos ou outras enumerações tiverem valores referenciados pelo código ou pelos contratos, liste-os numa tabela com a coluna Identificador ao lado do nome de exibição. O Identificador traz o nome estável do valor, como `UnderReview`, e permite mudar o nome de exibição sem mudar a identidade do conceito.

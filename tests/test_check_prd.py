@@ -73,10 +73,21 @@ class PrdChecks(unittest.TestCase):
         self.document.write_text(example[1], encoding="utf-8")
         self.assertEqual([], check(self.folder))
 
-    def test_specs_and_instructions_are_not_read(self):
+    def test_instructions_and_spec_links_are_not_read(self):
         (self.folder / "CLAUDE.md").write_text("# Instruções\nReferência: REQ-99\n", encoding="utf-8")
         (self.document.parent / "spec.md").write_text("- **REQ-100 (Must)** Cópia.\n[Ausente](missing.md)\n", encoding="utf-8")
         self.assertEqual([], check(self.folder))
+
+    def test_spec_design_and_tasks_citations_are_checked(self):
+        change = self.document.parent / "0001-retry"
+        change.mkdir()
+        (self.document.parent / "spec.md").write_text("- **API-01** Repetir a chave [REQ-100] [REQ-101].\n", encoding="utf-8")
+        (change / "design.md").write_text("Atende REQ-102.\n", encoding="utf-8")
+        (change / "tasks.md").write_text("- [ ] API-01 [REQ-100]\n", encoding="utf-8")
+        self.assertEqual([
+            "requests-lifecycle/0001-retry/design.md: citation REQ-102 has no definition",
+            "requests-lifecycle/spec.md: citation REQ-101 has no definition",
+        ], check(self.folder))
 
     def test_three_digit_citation_is_not_truncated(self):
         self.document.write_text(DOCUMENT + "\nConsultar REQ-101.\n", encoding="utf-8")

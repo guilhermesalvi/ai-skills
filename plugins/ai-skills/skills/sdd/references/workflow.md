@@ -37,6 +37,14 @@ O andamento da implementação pertence às tarefas e à entrega; não o registr
 - notas sobre a ferramenta que gerou ou editou o texto;
 - exemplos que ilustram o método de escrita em vez do comportamento. Exemplos que especificam o comportamento, como tabelas de cálculo e casos de aceitação, continuam no documento.
 
+## IDs de requisito
+
+As regras valem para os requisitos do PRD e da spec. Ao ajustar o mesmo comportamento, preserve o ID dele; ao substituir o conceito, retire o ID e crie outro.
+
+Antes de alterar ou retirar um requisito ou um caso de aceitação, procure o ID ou o nome do caso com `git grep -n` para encontrar os PRDs, specs, designs, tarefas e testes que dependem dele. Um ID retirado sai do arquivo, e quem o citava passa a citar o substituto ou deixa de citá-lo. O documento não guarda lista de retirados: o histórico do Git registra o que o ID significava.
+
+Um ID novo recebe o número seguinte ao maior já usado com o mesmo prefixo. Como o maior número pode ter sido retirado, confira com `git log -S "<ID>"` que o candidato nunca existiu; sem o histórico completo, como num clone raso, informe na entrega que a conferência não foi feita. Um ID retirado não volta a ser usado, e os demais não são renumerados para fechar buracos na sequência.
+
 ## Escopo e autorização
 
 O pedido define as etapas autorizadas:
@@ -97,7 +105,7 @@ Nomes de APIs, tipos, paths e identificadores não se traduzem, nem termos canô
 | Spec e design | Campo `Confirmada?` com `s` ou `n` | Field `Confirmed?` with `y` or `n` |
 | PRD | Resumo executivo, Alinhamento estratégico, Contexto e problema, Usuário-alvo / JTBD, Oportunidade / hipótese, Solução proposta, Glossário do domínio, Requisitos funcionais, Eventos de domínio, Requisitos não funcionais, Considerações regulatórias, Fora do escopo, Trade-offs declarados, Métricas de sucesso, Critérios de aceitação, Dependências e riscos, Referências; Prefixo dos requisitos, Capabilities afetadas, Visão geral, Identificador; colunas Decisão, Custo, Motivo | Executive Summary, Strategic Alignment, Context and Problem, Target User / JTBD, Opportunity / Hypothesis, Proposed Solution, Domain Glossary, Functional Requirements, Domain Events, Non-functional Requirements, Regulatory Considerations, Non-goals, Declared Trade-offs, Success Metrics, Acceptance Criteria, Dependencies and Risks, References; Requirement Prefix, Affected Capabilities, Overview, Identifier; columns Decision, Cost, Reason |
 | Visão geral de produto | Escopo, Propósito, Capabilities, Catálogo de eventos, Fluxos entre capabilities, Termos com mais de um significado, Decisões delegadas a ADR | Scope, Purpose, Capabilities, Event Catalog, Flows Between Capabilities, Terms with Multiple Meanings, Decisions Delegated to ADR |
-| Spec | Prefixo dos requisitos, PRD de origem, Contexto, Escopo / Fora do escopo, Requisitos, Decisões observáveis, Eventos de domínio, Glossário, Rastreabilidade, Divergências, `Retirados:` | Requirement Prefix, Source PRD, Context, Scope / Out of Scope, Requirements, Observable, Domain Events, Glossary, Traceability, Divergences, `Retired:` |
+| Spec | Prefixo dos requisitos, PRD de origem, Contexto, Escopo / Fora do escopo, Requisitos, Decisões observáveis, Eventos de domínio, Glossário, Rastreabilidade, Divergências | Requirement Prefix, Source PRD, Context, Scope / Out of Scope, Requirements, Observable, Domain Events, Glossary, Traceability, Divergences |
 | Design | Contexto do design, Abordagens, Unidade de implantação, Componentes, Eventos de domínio, Modelo de dados, Tratamento de erros, Decisões técnicas, Riscos e técnicas; colunas Decisão, Escolha, Alternativa rejeitada, Custo, Reversível | Design Context, Approaches, Deployment Unit, Components, Domain Events, Data Model, Error Handling, Technical Decisions, Risks and Techniques; columns Decision, Choice, Rejected alternative, Cost, Reversible |
 | Tarefas | Comandos de gate, Plano de execução, Tarefas, Rastreabilidade, Desvios, Tarefas de correção; campos Onde, Depende de (`nenhuma`), Interfaces, Pronto quando | Gate Commands, Execution Plan, Tasks, Traceability, Deviations, Correction Tasks; fields Where, Depends on (`none`), Interfaces, Done when |
 | ADR | `ADR NNNN: decisão`, Participantes, Contexto, Decisão, Alternativas consideradas, Consequências, Regras derivadas, `Substitui: NNNN`, `Substituído por: NNNN` | `ADR NNNN: decision`, Participants, Context, Decision, Alternatives considered, Consequences, Derived rules, `Supersedes: NNNN`, `Superseded by: NNNN` |

@@ -2,9 +2,10 @@
 
 Usage: python check_prd.py [<specs folder>]   (default: docs/specs)
 
-Reads only <capability>/prd.md and the product overview overview.md, so specs,
-designs, tasks and instruction files such as CLAUDE.md can live in the same
-tree. The check ignores section titles and labels, so it works in any prose
+Fully checks <capability>/prd.md and the product overview overview.md. In
+<capability>/spec.md and in the design.md and tasks.md of each change folder,
+it checks only that cited PRD IDs are defined. Other files, such as CLAUDE.md,
+are not read. The check ignores section titles and labels, so it works in any prose
 language. A requirement is defined by a list item that starts with a bold ID,
 such as "- **DOC-01 (Must)** ...". A prefix belongs to the PRD that defines it,
 and tokens whose prefix no PRD defines, such as SHA-256, are not citations.
@@ -66,6 +67,7 @@ def check(folder):
     names = {p.relative_to(folder).as_posix(): p for p in paths}
     texts = {name: p.read_text(encoding="utf-8-sig") for name, p in names.items()}
     parsed = {name: strip_fences(text) for name, text in texts.items()}
+    consumers = sorted([*folder.glob("*/spec.md"), *folder.glob("*/*/design.md"), *folder.glob("*/*/tasks.md")])
     findings = []
 
     definitions, prefix_owners = defaultdict(list), defaultdict(set)
@@ -106,6 +108,12 @@ def check(folder):
             resolved = root / target.lstrip("/") if target.startswith("/") else names[name].parent / target
             if not resolved.exists():
                 findings.append(f"{name}: local link does not resolve: {href}")
+
+    for path in consumers:
+        name = path.relative_to(folder).as_posix()
+        for identifier in sorted(set(ID_TOKEN.findall(path.read_text(encoding="utf-8-sig")))):
+            if prefix_of(identifier) in prefix_owners and identifier not in definitions:
+                findings.append(f"{name}: citation {identifier} has no definition")
     return findings
 
 

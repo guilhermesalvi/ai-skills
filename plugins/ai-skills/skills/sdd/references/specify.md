@@ -19,6 +19,7 @@ Um pedido técnico delimitado dispensa PRD. Se faltar uma decisão real de produ
 - **Não converta lacuna de negócio em premissa técnica** para liberar a implementação. Registre-a em Lacunas com a origem no PRD e bloqueie somente os requisitos dependentes.
 - **Consulte a visão geral de produto**, quando existir, para produtores, consumidores, direção dos contratos e decisões delegadas a ADR.
 - **Trate os NFRs pelo que eles permitem verificar.** NFR com resultado verificável gera requisito técnico ou critério de aceitação; atributo usado para comparar soluções entra como critério de design, com origem registrada.
+- **Confira as citações** com o verificador descrito em Verificação de IDs e links da etapa [PRD](prd.md): ele aponta os IDs de produto citados pela spec, pelo design ou pelas tarefas que nenhum PRD define.
 - **Traga pelo nome os casos de aceitação** do PRD atingidos pela mudança, e marque os de outra capability com seu responsável. Casos de aceitação e de rejeição são cenários distintos.
 
 ## Esclarecer o comportamento
@@ -77,8 +78,6 @@ Se o contrato não determinar o resultado de um caso limite, registre-o em Lacun
 ## Prefixo e IDs
 
 Logo abaixo do título, a tabela de cabeçalho traz Prefixo dos requisitos e, quando a origem for um PRD, PRD de origem com o link para ele, como no exemplo parcial. O prefixo técnico é distinto dos prefixos de produto e das outras specs. Preserve prefixos existentes; semelhança de letras, por si só, não exige renomeação.
-
-Ao ajustar o mesmo comportamento, preserve o ID dele. Ao substituir o conceito, retire o ID e crie outro. Liste os IDs retirados na linha `Retirados:` ao fim da spec, para que não sejam reutilizados, e não renumere os demais para fechar buracos na sequência.
 
 Quando o PRD mudar, revise os requisitos da spec que citam os IDs alterados.
 
