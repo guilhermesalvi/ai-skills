@@ -1,6 +1,6 @@
 ---
 name: sdd
-description: Escreve PRDs e especifica, projeta, decompõe, implementa, verifica ou retoma mudanças técnicas com requisitos rastreáveis do produto ao código. Use para PRD de produto ou funcionalidade, inclusive de produto existente e de plataforma, SDK ou API como produto, mesmo quando o pedido chega como tela ou CRUD; para tech spec ou spec de comportamento do sistema, design de solução, plano de tarefas, implementação não trivial a partir de uma spec e verificação contra ela. Não use para ADR avulso, code review sem spec, documentação geral ou ajuste mecânico.
+description: Escreve PRDs e ADRs e especifica, projeta, decompõe, implementa, verifica ou retoma mudanças técnicas com requisitos rastreáveis do produto ao código. Use para PRD de produto ou funcionalidade, inclusive de produto existente e de plataforma, SDK ou API como produto, mesmo quando o pedido chega como tela ou CRUD; para ADR de decisão arquitetural nova ou já adotada no código; para tech spec ou spec de comportamento do sistema, design de solução, plano de tarefas, implementação não trivial a partir de uma spec e verificação contra ela. Não use para code review sem spec, documentação geral ou ajuste mecânico.
 ---
 
 # Desenvolvimento por especificação
@@ -15,6 +15,7 @@ flowchart TD
     Spec --> NeedDesign{Há decisão de arquitetura, contrato público,<br/>persistência, integração ou migração,<br/>ou risco que exija comparar soluções?}
     NeedDesign -- sim --> Design[Design: solução]
     Design -. regra para outras capabilities .-> ADR[ADR]
+    Decision[Decisão arquitetural avulsa] --> ADR
     Design --> NeedTasks
     NeedDesign -- não --> NeedTasks{A decomposição e as dependências<br/>precisam de registro durável?}
     NeedTasks -- sim --> Tasks[Tarefas]
@@ -25,7 +26,7 @@ flowchart TD
     Verify -- defeito de contrato --> Fix[Corrigir na origem:<br/>PRD, spec ou design]
 ```
 
-Uma mudança precisa de PRD quando muda o resultado, a informação ou o prazo que o consumidor observa. Refatoração interna, decisão arquitetural e contrato de API sem contexto de produto começam pela spec.
+Uma mudança precisa de PRD quando muda o resultado, a informação ou o prazo que o consumidor observa. Refatoração interna, decisão arquitetural local e contrato de API sem contexto de produto começam pela spec. Uma decisão que vale para outras capabilities pode ir direto para o ADR.
 
 ## Escolher a etapa
 
@@ -40,7 +41,7 @@ Leia o [fluxo comum](references/workflow.md) e a referência da etapa solicitada
 | Implementar spec ou funcionalidade não trivial | [Execução](references/execute.md) | Mudança implementada e verificada |
 | Verificar implementação | [Verificação](references/verify.md) | Evidências de conformidade e lacunas |
 | Retomar mudança | Seção Retomar uma mudança de [execução](references/execute.md) | Próxima etapa sustentada pelo estado atual |
-| Registrar decisão que afeta outras capabilities durante o design | [ADR](references/adr.md) | Decisão e consequências rastreáveis |
+| Registrar decisão arquitetural, avulsa ou durante o design | [ADR](references/adr.md) | Decisão e consequências rastreáveis |
 | Revisar spec, design, tarefas ou ADR | Referência da etapa do artefato | Achados com a regra violada |
 
 Consulte [prosa](references/prose.md) sempre que escrever.

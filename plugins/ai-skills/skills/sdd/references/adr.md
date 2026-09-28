@@ -1,6 +1,6 @@
 # Decisão arquitetural
 
-Use ADR para uma escolha que define convenção, restrição ou padrão para outras capabilities: estilo arquitetural, transporte de eventos ou política de versionamento, por exemplo. Uma decisão local permanece no design da mudança.
+Use ADR para uma escolha que define convenção, restrição ou padrão para outras capabilities: estilo arquitetural, transporte de eventos ou política de versionamento, por exemplo. Uma decisão local permanece no design da mudança; se o pedido for um ADR para ela, diga em uma linha que ela caberia no design e escreva o ADR.
 
 Registrar uma decisão não amplia o escopo: aplicá-la ao restante do projeto exige pedido próprio.
 
@@ -21,6 +21,14 @@ Use `docs/adr/NNNN-<decisão>.md`. Preserve o formato dos ADRs existentes; sem A
 | Regras derivadas | Regras criadas ou alteradas, com link para o arquivo onde cada uma é mantida |
 
 Regras derivadas só existe quando a decisão cria ou altera uma regra. Mantenha cada regra no arquivo responsável pelo objeto que ela governa, e acrescente a essa regra o vínculo com o ADR que a justifica.
+
+## ADR avulso
+
+Sem design, leia os ADRs vigentes, a visão geral de produto e as specs e o código que a decisão atinge, para achar conflitos e as capabilities afetadas.
+
+Se o pedido não indicar a escolha, compare as alternativas pelos mesmos critérios, recomende uma e peça a escolha ao usuário antes de escrever: o ADR registra a decisão, não a recomendação.
+
+Ao registrar uma decisão já adotada no código, derive contexto e decisão do código, dos commits e da documentação, e marque como inferência o motivo que a evidência não mostra. Quando ninguém registrou as alternativas avaliadas ou os participantes, diga isso nas seções correspondentes em vez de reconstruí-los.
 
 ## Cumprir ou substituir uma decisão
 
