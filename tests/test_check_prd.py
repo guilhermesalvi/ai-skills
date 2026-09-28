@@ -1,5 +1,6 @@
 """Regression cases for the PRD ID and link check, using only temporary documents."""
 import importlib.util
+import os
 import re
 import subprocess
 import sys
@@ -10,6 +11,9 @@ from tempfile import TemporaryDirectory
 
 SCRIPT = Path(__file__).resolve().parents[1] / "plugins" / "ai-skills" / "skills" / "sdd" / "scripts" / "check_prd.py"
 EXAMPLE = SCRIPT.parents[1] / "references" / "prd" / "example.md"
+# Keep bytecode out of the skill folder, which a local plugin install copies as is.
+ENV = {**os.environ, "PYTHONDONTWRITEBYTECODE": "1"}
+sys.dont_write_bytecode = True
 
 _spec = importlib.util.spec_from_file_location("check_prd", SCRIPT)
 check_prd = importlib.util.module_from_spec(_spec)
@@ -43,7 +47,7 @@ Requirement prefix: `ENG`.
 def run_cli(folder):
     return subprocess.run(
         [sys.executable, "-X", "utf8", str(SCRIPT), str(folder)],
-        capture_output=True, text=True, encoding="utf-8",
+        capture_output=True, text=True, encoding="utf-8", env=ENV,
     )
 
 

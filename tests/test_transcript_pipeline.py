@@ -1,5 +1,6 @@
 """Exercise file contracts at the split/worker/merge boundary."""
 import json
+import os
 import subprocess
 import sys
 import tempfile
@@ -8,6 +9,8 @@ from pathlib import Path
 
 
 SCRIPTS = Path(__file__).resolve().parents[1] / "plugins" / "ai-skills" / "skills" / "transcript-fix" / "scripts"
+# Keep bytecode out of the skill folder, which a local plugin install copies as is.
+ENV = {**os.environ, "PYTHONDONTWRITEBYTECODE": "1"}
 
 
 class TranscriptPipelineTests(unittest.TestCase):
@@ -21,7 +24,7 @@ class TranscriptPipelineTests(unittest.TestCase):
     def run_script(self, script, *args):
         return subprocess.run(
             [sys.executable, "-X", "utf8", str(SCRIPTS / script), *map(str, args)],
-            cwd=self.root, capture_output=True, text=True, encoding="utf-8",
+            cwd=self.root, capture_output=True, text=True, encoding="utf-8", env=ENV,
         )
 
     def split(self, text, suffix="txt", *options):
