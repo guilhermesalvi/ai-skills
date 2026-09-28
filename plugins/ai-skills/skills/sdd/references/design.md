@@ -70,27 +70,24 @@ Use as seções pertinentes, nesta ordem. Diagramas entram quando tornam as rela
 
 | Seção | Conteúdo |
 | --- | --- |
-| Contexto do design | Fontes lidas, código inspecionado e limitações |
-| Premissas | Inferências e escolhas provisórias da solução, com os campos de premissa |
-| Lacunas | Informações e decisões ausentes que a solução precisa, com os campos de lacuna |
-| Critérios de avaliação | Critérios e sua origem |
-| Riscos e técnicas | Riscos concretos e sua mitigação, evidência ou aceitação |
-| Abordagens | Alternativas comparadas pelos mesmos critérios e recomendação |
-| Visão da arquitetura | Estrutura da solução e relações entre as partes |
+| Contexto do design | Código inspecionado e limitações que afetam a solução |
+| Abordagens | Critérios e sua origem, alternativas comparadas por eles e recomendação |
 | Unidade de implantação | Serviço existente, módulo interno ou nova unidade, com justificativa |
-| Componentes | Responsabilidade, interfaces e reutilização |
+| Componentes | Responsabilidade, interfaces, reutilização e relações entre os componentes |
 | Eventos de domínio | Contrato de cada evento produzido ou consumido |
 | Modelo de dados | Entidades, relações, invariantes e migração |
 | Tratamento de erros | Tratamento e efeito observável de cada cenário de erro da spec |
-| Decisões técnicas | Decisão, escolha com sua forma literal, alternativa rejeitada, custo aceito, natureza do contrato, público ou interno, e reversibilidade |
-| Arquivos a criar ou alterar | Caminhos já determinados, distinguindo criação e alteração |
+| Decisões técnicas | Decisão, escolha, alternativa rejeitada, custo aceito e reversibilidade |
+| Riscos e técnicas | Riscos concretos e sua mitigação, evidência ou aceitação |
+| Premissas | Inferências e escolhas provisórias da solução |
+| Lacunas | Informações e decisões ausentes que a solução precisa |
 
 Regras que passam a valer para outras capabilities vão para ADR; decisões locais permanecem em Decisões técnicas.
 
-Marque como irreversível a decisão cujo desfazer custa mais que uma refatoração: esquema persistido, contrato que outro consome, dependência nova, migração sobre dados existentes ou precedente que o repositório ainda não tem. Registre nela a forma literal que o próximo leitor vai copiar, como a definição do índice, o valor do enum ou a versão do pacote. Escopo adiado e regra sem mecanismo se desfazem sem esse custo e não entram.
+Marque como irreversível, com o motivo, a decisão cujo desfazer custa mais que uma refatoração: esquema persistido, contrato que outro consome, dependência nova, migração sobre dados existentes ou precedente que o repositório ainda não tem. Registre nela a forma literal que o próximo leitor vai copiar, como a definição do índice, o valor do enum ou a versão do pacote. Escopo adiado e regra sem mecanismo se desfazem sem esse custo e não entram.
 
 Exemplo de linha de Decisões técnicas:
 
-| Decisão | Escolha e forma literal | Alternativa rejeitada | Custo | Contrato | Reversível |
-| --- | --- | --- | --- | --- | --- |
-| Ordenação de solicitações | Sequência por livro, com unicidade em `(book_id, sequence)` | Instante informado pelo cliente: não distingue registros com o mesmo horário | Concorrência sobre a geração da sequência | Interno | Não |
+| Decisão | Escolha | Alternativa rejeitada | Custo | Reversível |
+| --- | --- | --- | --- | --- |
+| Ordenação de solicitações | Sequência por livro, com unicidade em `(book_id, sequence)` | Instante informado pelo cliente: não distingue registros com o mesmo horário | Concorrência sobre a geração da sequência | Não: esquema persistido |

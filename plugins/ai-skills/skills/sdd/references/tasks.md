@@ -16,20 +16,20 @@ Escolha a verificação que observa o requisito. Testes de domínio, integraçã
 
 Uma tarefa tem um resultado integrável: por exemplo, operação com validação, registro no módulo e testes correspondentes. Divida resultados independentes. Se os testes só puderem executar depois de uma dependência, ajuste o agrupamento para entregar algo verificável.
 
+O título da tarefa diz o resultado, e os campos completam o que ele não diz:
+
 | Campo | Conteúdo |
 | --- | --- |
-| O quê | Resultado concreto da tarefa |
-| Onde | Caminhos já determinados, distinguindo criação e alteração; colocação ainda em aberto fica com o executor |
+| Onde | Caminhos já determinados, distinguindo criação e alteração; omita o campo quando a colocação ficar com o executor |
 | Depende de | IDs das dependências ou `nenhuma` |
-| Requisitos | Requisitos satisfeitos ou preservados |
 | Interfaces | Contratos consumidos e produzidos, com tipos e erros pertinentes |
-| Pronto quando | Critérios observáveis e binários, derivados do resultado dos requisitos, incluindo a verificação a executar |
-| Testes | Casos e nível necessário, ou motivo para não adicionar testes |
-| Gate | Comando confirmado na configuração real do projeto, ou referência inequívoca aos checks aplicáveis |
+| Pronto quando | Um critério observável e binário por resultado, com o ID do requisito e o teste que o decide, e por último o comando de gate |
 
 O texto de Interfaces precisa ser suficiente para entender a tarefa, e os links para spec e design permitem conferir o contrato completo. Não invente uma interface ausente nem use “similar à tarefa anterior” como especificação.
 
-Pronto quando aponta o teste que decide cada requisito, não a suíte verde. Um requisito sobre um conjunto tem um caso por membro nomeado na spec, ou um caso que percorre o conjunto inteiro com o tamanho declarado.
+Pronto quando aponta o teste que decide cada requisito, não a suíte verde. Um requisito sobre um conjunto tem um caso por membro nomeado na spec, ou um caso que percorre o conjunto inteiro com o tamanho declarado. Quando a tarefa não precisar de teste novo, o critério nomeia a verificação existente que a cobre.
+
+O comando de gate está confirmado na configuração real do projeto ou nomeia um check de Comandos de gate.
 
 ## Ordem e rastreabilidade
 
@@ -46,7 +46,7 @@ Se não houver design separado, explique a estrutura necessária no início das 
 | Seção | Conteúdo |
 | --- | --- |
 | Comandos de gate | Checks pertinentes, como `quick`, `full` e `build`, se esses nomes ajudarem |
-| Plano de execução | Ordem das tarefas por dependência |
+| Plano de execução | Ordem e paralelismo das tarefas, quando as dependências não os deixarem claros |
 | Tarefas | Tarefas com os campos da unidade de trabalho |
 | Rastreabilidade | Requisito, tarefa e evidência |
 | Desvios | Divergências justificadas do design, quando houver |
@@ -55,17 +55,13 @@ Se não houver design separado, explique a estrutura necessária no início das 
 ## Exemplo parcial
 
 ```markdown
-### T1: Implementar criação idempotente de solicitações
+### T1: Criar solicitações de forma idempotente
 
-- **O quê:** criar solicitação uma única vez para uma chave e conteúdo iguais
 - **Onde:** criar `src/Example/Requests/RequestService.cs` e os testes correspondentes
 - **Depende de:** nenhuma
-- **Requisitos:** EXM-01, EXM-02
 - **Interfaces:** consome `CreateRequest` e armazenamento por chave; produz `CreateResult` com solicitação ou conflito
 - **Pronto quando:**
-  - [ ] Repetir chave e conteúdo retorna o resultado original sem duplicar (EXM-01)
-  - [ ] Repetir a chave com outro conteúdo informa conflito e preserva a primeira solicitação (EXM-02)
-  - [ ] Os testes pertinentes passam
-- **Testes:** casos de criação, repetição equivalente e conflito
-- **Gate:** comando de testes confirmado na configuração da mudança
+  - [ ] EXM-01: repetir chave e conteúdo retorna o resultado original sem duplicar; teste de repetição equivalente
+  - [ ] EXM-02: repetir a chave com outro conteúdo informa conflito e preserva a primeira solicitação; teste de conflito
+  - [ ] `quick` passa
 ```

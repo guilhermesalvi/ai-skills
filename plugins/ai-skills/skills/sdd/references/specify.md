@@ -92,8 +92,8 @@ Contexto e Requisitos são a base; Rastreabilidade entra quando houver PRD, e as
 | --- | --- |
 | Contexto | Origem, consumidor, comportamento e código pertinente |
 | Escopo / Fora do escopo | O que entra e exclusões necessárias |
-| Premissas | Inferências e escolhas provisórias de comportamento, com os campos de premissa |
-| Lacunas | Informações e decisões ausentes, com os campos de lacuna |
+| Premissas | Inferências e escolhas provisórias de comportamento |
+| Lacunas | Informações e decisões ausentes |
 | Requisitos | IDs e comportamento observável |
 | Decisões observáveis | Decisões de cada superfície e dimensão, com a aterrissagem de cada uma |
 | Eventos de domínio | Produtor, consumidores, significado e gatilho |
