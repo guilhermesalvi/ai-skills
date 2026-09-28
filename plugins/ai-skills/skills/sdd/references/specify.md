@@ -20,7 +20,7 @@ Um pedido técnico delimitado dispensa PRD. Se faltar uma decisão real de produ
 - **Consulte a visão geral de produto**, quando existir, para produtores, consumidores, direção dos contratos e decisões delegadas a ADR.
 - **Trate os NFRs pelo que eles permitem verificar.** NFR com resultado verificável gera requisito técnico ou critério de aceitação; atributo usado para comparar soluções entra como critério de design, com origem registrada.
 - **Confira as citações** com o verificador descrito em Verificação de IDs e links da etapa [PRD](prd.md): ele aponta os IDs de produto citados pela spec, pelo design ou pelas tarefas que nenhum PRD define.
-- **Traga pelo nome os casos de aceitação** do PRD atingidos pela mudança, e marque os de outra capability com seu responsável. Casos de aceitação e de rejeição são cenários distintos.
+- **Traga pelo nome os casos de aceitação** do PRD atingidos pela mudança nos cenários que os verificam, e marque os de outra capability com seu responsável. Casos de aceitação e de rejeição são cenários distintos.
 
 ## Esclarecer o comportamento
 
@@ -28,7 +28,7 @@ Leia a spec existente, os ADRs pertinentes, os contratos e o código atingido an
 
 ## Superfícies e dimensões
 
-Percorra as superfícies que a mudança expõe e as dimensões do sistema, e registre em Decisões observáveis onde cada decisão aterrissou: num requisito, numa garantia que o código já oferece, com a citação, ou em `n/a` com o motivo. O motivo separa a decisão inaplicável da que ninguém tomou. Uma mudança trivial ou sem superfície exposta registra isso numa linha.
+Percorra as superfícies que a mudança expõe e as dimensões do sistema, e registre em Decisões observáveis onde cada decisão aterrissou: num requisito ou numa garantia que o código já oferece, com a citação. Reúna as que não se aplicam numa única linha `n/a`, cada uma com o motivo em poucas palavras; o motivo separa a decisão inaplicável da que ninguém tomou. Uma mudança trivial ou sem superfície exposta registra isso numa linha.
 
 | Superfície | Decisões que ela sempre carrega |
 | --- | --- |
@@ -85,7 +85,7 @@ Uma refatoração sem mudança observável preserva os requisitos e usa os teste
 
 ## Organização sugerida
 
-Contexto e Requisitos são a base; Rastreabilidade entra quando houver PRD, e as demais seções dependem do conteúdo.
+Contexto e Requisitos são a base, e as demais seções dependem do conteúdo. A citação entre colchetes liga cada requisito ao PRD; Cobertura do PRD lista só o que ficou sem essa ligação.
 
 | Seção | Conteúdo |
 | --- | --- |
@@ -94,10 +94,11 @@ Contexto e Requisitos são a base; Rastreabilidade entra quando houver PRD, e as
 | Premissas | Inferências e escolhas provisórias de comportamento |
 | Lacunas | Informações e decisões ausentes |
 | Requisitos | IDs e comportamento observável |
+| Cenários de aceitação | Nome, entrada, condições, resultado e requisitos verificados |
 | Decisões observáveis | Decisões de cada superfície e dimensão, com a aterrissagem de cada uma |
 | Eventos de domínio | Produtor, consumidores, significado e gatilho |
 | Glossário | Termos técnicos; termos de negócio apontam ao PRD |
-| Rastreabilidade | IDs de produto e cenários relacionados aos requisitos técnicos |
+| Cobertura do PRD | Requisitos e casos de aceitação do PRD em escopo que nenhum requisito da spec cita, com o motivo |
 | Divergências | Na origem código, diferença entre implementação e intenção documentada |
 
 ## Exemplo parcial
@@ -113,10 +114,9 @@ Contexto e Requisitos são a base; Rastreabilidade entra quando houver PRD, e as
 - **EXM-01** — QUANDO o consumidor repetir uma solicitação com a mesma chave e o mesmo conteúdo, ENTÃO o sistema DEVE retornar o resultado original sem criar uma segunda solicitação [PRX-01]
 - **EXM-02** — SE a chave já estiver associada a outro conteúdo, ENTÃO o sistema DEVE informar conflito e preservar a solicitação original [PRX-02]
 
-## Rastreabilidade
+## Cobertura do PRD
 
-| ID do PRD | Requisitos |
+| ID do PRD | Motivo |
 | --- | --- |
-| PRX-01 | EXM-01 |
-| PRX-02 | EXM-02 |
+| PRX-03 | O envio pelo backoffice usa outro serviço e tem spec própria |
 ```

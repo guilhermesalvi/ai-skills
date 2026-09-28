@@ -14,7 +14,7 @@ O PRD de uma capability começa pelo título, que é o nome da capability, e por
 | **Visão geral** | [Visão geral](../overview.md) |
 ```
 
-- Inclua Capabilities afetadas quando o PRD muda o que outras capabilities recebem ou observam, e explique o impacto em Dependências e riscos. Cite cada uma pelo título do PRD dela. Sem capability afetada, omita a linha.
+- Inclua Capabilities afetadas quando o PRD muda o que outras capabilities recebem ou observam, e explique o impacto em Dependências e riscos. Cite cada uma pelo título do PRD dela ou, sem PRD, pelo nome usado no projeto. Sem capability afetada, omita a linha.
 - Inclua Visão geral quando ela existir; sem ela, omita a linha.
 
 ## IDs

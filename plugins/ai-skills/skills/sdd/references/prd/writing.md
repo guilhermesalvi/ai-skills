@@ -87,7 +87,7 @@ As seções marcadas como base são obrigatórias numa nova capability. As demai
 
 ### Trade-offs declarados
 
-Registre os trade-offs numa tabela com as colunas Decisão, Custo e Motivo, com os IDs afetados na decisão. O custo diz o que se perde e para quem. Escolhas técnicas podem pertencer a um ADR.
+Registre os trade-offs numa tabela com as colunas Decisão, Custo e Motivo, com os IDs afetados na decisão. O custo diz o que se perde e para quem. Se ninguém informou o motivo, escreva isso na célula em vez de inferi-lo. Escolhas técnicas podem pertencer a um ADR.
 
 ### Métricas de sucesso
 

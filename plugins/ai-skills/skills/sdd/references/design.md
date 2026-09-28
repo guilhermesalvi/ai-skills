@@ -50,7 +50,7 @@ Os eventos definem produtor, consumidores conhecidos, significado do payload, or
 
 Se houver persistência, explicite entidades, relações, invariantes e migração.
 
-Para cada cenário de erro da spec em escopo, mostre tratamento e efeito observável. Não introduza um novo resultado para facilitar a solução.
+Para cada cenário de erro da spec em escopo, mostre o tratamento e cite o requisito que define o efeito observável, sem repeti-lo. Não introduza um novo resultado para facilitar a solução.
 
 Antes de apresentar o design, confira que cada requisito em escopo aterrissa num componente, contrato, fluxo ou estrutura de dados. O que não aterrissa está fora do escopo declarado ou é lacuna da solução, e precisa de resposta antes da decomposição.
 
@@ -76,15 +76,15 @@ Use as seções pertinentes, nesta ordem. Diagramas entram quando tornam as rela
 | Componentes | Responsabilidade, interfaces, reutilização e relações entre os componentes |
 | Eventos de domínio | Contrato de cada evento produzido ou consumido |
 | Modelo de dados | Entidades, relações, invariantes e migração |
-| Tratamento de erros | Tratamento e efeito observável de cada cenário de erro da spec |
-| Decisões técnicas | Decisão, escolha, alternativa rejeitada, custo aceito e reversibilidade |
+| Tratamento de erros | Tratamento de cada cenário de erro da spec, com o requisito que define o efeito |
+| Decisões técnicas | Decisões que Abordagens não cobre: decisão, escolha, alternativa rejeitada, custo aceito e reversibilidade |
 | Riscos e técnicas | Riscos concretos e sua mitigação, evidência ou aceitação |
 | Premissas | Inferências e escolhas provisórias da solução |
 | Lacunas | Informações e decisões ausentes que a solução precisa |
 
-Regras que passam a valer para outras capabilities vão para ADR; decisões locais permanecem em Decisões técnicas.
+Regras que passam a valer para outras capabilities vão para ADR; decisões locais permanecem em Decisões técnicas. A abordagem recomendada e as alternativas que ela venceu já estão em Abordagens e não se repetem ali.
 
-Marque como irreversível, com o motivo, a decisão cujo desfazer custa mais que uma refatoração: esquema persistido, contrato que outro consome, dependência nova, migração sobre dados existentes ou precedente que o repositório ainda não tem. Registre nela a forma literal que o próximo leitor vai copiar, como a definição do índice, o valor do enum ou a versão do pacote. Escopo adiado e regra sem mecanismo se desfazem sem esse custo e não entram.
+Marque como irreversível, com o motivo, a decisão cujo desfazer custa mais que uma refatoração: esquema persistido, contrato que outro consome, dependência nova, migração sobre dados existentes ou precedente que o repositório ainda não tem. Registre nela a forma literal que o próximo leitor vai copiar, como a definição do índice, o valor do enum ou a versão do pacote, ou cite a seção que já a mostra, como Modelo de dados ou Eventos de domínio. Escopo adiado e regra sem mecanismo se desfazem sem esse custo e não entram.
 
 Exemplo de linha de Decisões técnicas:
 

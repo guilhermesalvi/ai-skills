@@ -35,7 +35,7 @@ O comando de gate está confirmado na configuração real do projeto ou nomeia u
 
 Ordene por dependência, sem ciclos nem referência a uma tarefa inexistente. Agrupe por coesão: fases fixas de fundação, domínio e adapters não são obrigatórias.
 
-Cada requisito em escopo deve ter um caminho até implementação e evidência. Não atribua a uma tarefa um requisito que ela não verifica.
+Cada requisito em escopo aparece no Pronto quando de alguma tarefa. Esses IDs já formam a rastreabilidade: não os repita numa tabela à parte. Não atribua a uma tarefa um requisito que ela não verifica.
 
 A última tarefa de uma fase não exige repetir toda a suíte quando já existe evidência válida para o mesmo estado; uma mudança posterior ou uma falha justifica repetir os checks afetados.
 
@@ -48,7 +48,6 @@ Se não houver design separado, explique a estrutura necessária no início das 
 | Comandos de gate | Checks pertinentes, como `quick`, `full` e `build`, se esses nomes ajudarem |
 | Plano de execução | Ordem e paralelismo das tarefas, quando as dependências não os deixarem claros |
 | Tarefas | Tarefas com os campos da unidade de trabalho |
-| Rastreabilidade | Requisito, tarefa e evidência |
 | Desvios | Divergências justificadas do design, quando houver |
 | Tarefas de correção | Tarefas de correção vindas da verificação, quando houver |
 
