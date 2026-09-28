@@ -10,7 +10,7 @@ from tempfile import TemporaryDirectory
 
 
 SCRIPT = Path(__file__).resolve().parents[1] / "plugins" / "ai-skills" / "skills" / "sdd" / "scripts" / "check_prd.py"
-EXAMPLE = SCRIPT.parents[1] / "references" / "prd" / "example.md"
+EXAMPLE = SCRIPT.parents[1] / "references" / "prd-example.md"
 # Keep bytecode out of the skill folder, which a local plugin install copies as is.
 ENV = {**os.environ, "PYTHONDONTWRITEBYTECODE": "1"}
 sys.dont_write_bytecode = True

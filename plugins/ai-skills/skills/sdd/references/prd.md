@@ -8,11 +8,11 @@ Leia as referências cujo gatilho o pedido aciona; um pedido pode acionar vária
 
 | Referência | Quando ler | O que entrega |
 | --- | --- | --- |
-| [Entrada e pesquisa](prd/intake.md) | Ao criar um PRD, ou ao incorporar material de descoberta ou fato externo | Recorte do pedido, suficiência da informação, peso das fontes e regras de pesquisa |
-| [Requisitos e seções](prd/writing.md) | Ao criar um PRD; ao editar, nas regras que a mudança toca | Comportamento observável, capabilities e eventos, forma dos requisitos, diagramas, seções e premissas |
-| [Convenções](prd/conventions.md) | Ao criar ou editar um PRD | Cabeçalho, IDs e nomes de seção por idioma |
-| [Modos](prd/modes.md) | Quando o PRD documenta produto existente, atende outros times ou sistemas (plataforma, infraestrutura, SDK, API) ou é a visão geral de produto | Ajustes de evidência, seções e estrutura de cada modo |
-| [Exemplo](prd/example.md) | Quando a forma de um PRD não estiver clara; leia só o trecho pertinente | PRD de capability e exemplo de edição |
+| [Entrada e pesquisa](prd-intake.md) | Ao criar um PRD, ou ao incorporar material de descoberta ou fato externo | Recorte do pedido, suficiência da informação, peso das fontes e regras de pesquisa |
+| [Requisitos e seções](prd-writing.md) | Ao criar um PRD; ao editar, nas regras que a mudança toca | Comportamento observável, capabilities e eventos, forma dos requisitos, diagramas, seções e premissas |
+| [Convenções](prd-conventions.md) | Ao criar ou editar um PRD | Cabeçalho, IDs e nomes de seção por idioma |
+| [Modos](prd-modes.md) | Quando o PRD documenta produto existente, atende outros times ou sistemas (plataforma, infraestrutura, SDK, API) ou é a visão geral de produto | Ajustes de evidência, seções e estrutura de cada modo |
+| [Exemplo](prd-example.md) | Quando a forma de um PRD não estiver clara; leia só o trecho pertinente | PRD de capability e exemplo de edição |
 
 ## Produzir e revisar
 
@@ -50,7 +50,7 @@ O script não lê a estrutura do documento. Confira nos PRDs tocados:
 
 ### Revisão de conteúdo
 
-Releia o PRD contra as seções Comportamento observável e Uma regra e seus usos de [requisitos e seções](prd/writing.md): os requisitos descrevem comportamento observável e cada regra tem uma definição principal.
+Releia o PRD contra as seções Comportamento observável e Uma regra e seus usos de [requisitos e seções](prd-writing.md): os requisitos descrevem comportamento observável e cada regra tem uma definição principal.
 
 Confira se fórmulas, limites, exemplos, estados e eventos coincidem entre as seções e entre os PRDs que citam os mesmos IDs.
 
