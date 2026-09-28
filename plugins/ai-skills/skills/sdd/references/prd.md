@@ -9,7 +9,7 @@ Leia as referências cujo gatilho o pedido aciona; um pedido pode acionar vária
 | Referência | Quando ler | O que entrega |
 | --- | --- | --- |
 | [Entrada e pesquisa](prd/intake.md) | Ao criar um PRD, ou ao incorporar material de descoberta ou fato externo | Recorte do pedido, suficiência da informação, peso das fontes e regras de pesquisa |
-| [Requisitos e seções](prd/writing.md) | Ao criar um PRD; ao editar, nas regras que a mudança toca | Comportamento observável, capabilities e eventos, forma dos requisitos, diagramas, seções, premissas e lacunas |
+| [Requisitos e seções](prd/writing.md) | Ao criar um PRD; ao editar, nas regras que a mudança toca | Comportamento observável, capabilities e eventos, forma dos requisitos, diagramas, seções e premissas |
 | [Convenções](prd/conventions.md) | Ao criar ou editar um PRD | Cabeçalho, IDs e nomes de seção por idioma |
 | [Modos](prd/modes.md) | Quando o PRD documenta produto existente, atende outros times ou sistemas (plataforma, infraestrutura, SDK, API) ou é a visão geral de produto | Ajustes de evidência, seções e estrutura de cada modo |
 | [Exemplo](prd/example.md) | Quando a forma de um PRD não estiver clara; leia só o trecho pertinente | PRD de capability e exemplo de edição |
@@ -44,7 +44,7 @@ Corrija os achados e execute de novo. Se Python não estiver disponível, confir
 
 O script não lê a estrutura do documento. Confira nos PRDs tocados:
 
-- As seções base existem, nenhuma seção está vazia, e só Referências vem depois de Ponto mais frágil.
+- As seções base existem, nenhuma seção está vazia, e os títulos seguem a ordem da tabela de seções.
 - Cada trade-off declarado tem custo e motivo.
 - Cada diagrama Mermaid declara um tipo suportado.
 

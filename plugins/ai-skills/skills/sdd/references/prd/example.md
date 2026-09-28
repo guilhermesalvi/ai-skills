@@ -12,11 +12,11 @@ Um PRD de capability, sem visão geral. Ele não tem Considerações regulatóri
 
 ## Resumo executivo
 
-A operação precisa acompanhar documentos enviados para análise sem coordenar cada envio por e-mail. A proposta mantém um caso de verificação por cliente, com estado explícito e critérios para cada item. A elegibilidade para ativação depende do resultado do caso. A proposta parte da hipótese, ainda não medida, de que a espera entre envios e análises é o principal componente do prazo atual.
+A operação acompanha por mensagens os documentos enviados para análise, e a ativação de conta não tem onde consultar o resultado. A proposta cria um caso de verificação por cliente, com estado explícito e critérios por item, e a ativação passa a depender só do resultado do caso.
 
 ## Contexto e problema
 
-Neste cenário fictício, a operação envia documentos em nome do cliente e acompanha a análise por mensagens. A aprovação não tem um registro único que os consumidores possam consultar. Não há baseline medido para estabelecer a meta de prazo.
+Neste cenário fictício, a operação envia documentos em nome do cliente e acompanha a análise por mensagens. A aprovação não tem um registro único que os consumidores possam consultar.
 
 ## Usuário-alvo / JTBD
 
@@ -26,7 +26,7 @@ Neste cenário fictício, a operação envia documentos em nome do cliente e aco
 
 ## Solução proposta
 
-Um caso reúne os itens exigidos para o cliente e informa o resultado da verificação. A operação envia documentos; a análise aprova itens ou informa o motivo de rejeição. Os requisitos abaixo definem as transições.
+Um caso reúne os itens exigidos para o cliente e informa o resultado da verificação. A operação envia documentos; a análise aprova itens ou informa o motivo de rejeição.
 
 ```mermaid
 stateDiagram-v2
@@ -87,29 +87,18 @@ Armazenamento, notificações e desenho da interface serão definidos no trabalh
 
 ## Trade-offs declarados
 
-### Operação intermediando o envio (DOC-02)
-
-*Custo:* mantém parte da carga manual.
-
-*Motivo:* permite avaliar o fluxo interno antes de abrir o envio ao cliente.
-
-### Checklist atual preservado (DOC-05)
-
-*Custo:* critérios legados de pouco valor podem continuar no processo.
-
-*Motivo:* rever seu mérito exige uma decisão de produto distinta.
-
-### Prazo de reenvio de 10 dias úteis (DOC-10)
-
-*Custo:* clientes mais lentos precisam de novo convite.
-
-*Motivo:* limita casos pendentes por tempo indefinido.
+| Decisão | Custo | Motivo |
+| --- | --- | --- |
+| Operação intermedeia o envio (DOC-02) | Mantém parte da carga manual | Avaliar o fluxo interno antes de abrir o envio ao cliente |
+| Checklist atual preservado (DOC-05) | Critérios legados de pouco valor continuam no processo | Rever o mérito dos critérios é outra decisão de produto |
+| Prazo de reenvio de 10 dias úteis (DOC-10) | Clientes mais lentos precisam de novo convite | Evita casos pendentes por tempo indefinido |
 
 ## Métricas de sucesso
 
 ### Leading
 
 - Taxa de reenvio por formato ou tamanho inválido (DOC-04): medir se o feedback no envio reduz retrabalho.
+- Motivos de rejeição por critério do checklist (DOC-06): se a maior parte vier do mérito dos critérios legados, rever a decisão de preservar o checklist (DOC-05).
 
 ### Lagging
 
@@ -139,55 +128,15 @@ Armazenamento, notificações e desenho da interface serão definidos no trabalh
 
 ## Premissas
 
-### O principal atraso está na espera entre envios e análise
-
-**Premissa:** o tempo de espera, e não o de análise, domina o prazo atual.
-
-**Evidência:** relatos da operação sobre documentos parados à espera de análise; não há medição.
-
-**Impacto:** se a premissa for falsa, digitalizar o fluxo reduz pouco o prazo e a proposta perde sua justificativa.
-
-**Responsável:** operação.
-
-**Verificação:** medir os tempos de espera e de análise em casos reais antes de aprovar.
+- **A espera entre envios e análise domina o prazo atual.** A evidência são relatos da operação, sem medição. Se for falsa, digitalizar o fluxo reduz pouco o prazo e a proposta perde a justificativa. A operação verifica medindo os tempos de espera e de análise em casos reais antes da aprovação.
 
 ## Lacunas
 
-### Calendário de dias úteis
-
-**Decisão pendente:** qual calendário define os dias úteis da expiração.
-
-**IDs afetados:** DOC-10.
-
-**Impacto:** determina quando um caso pendente passa a `Declined`.
-
-**Responsável:** autor do produto.
-
-### Retenção de documentos
-
-**Decisão pendente:** quais política e obrigações definem a retenção.
-
-**Impacto:** sem ela, o PRD não define por quanto tempo os documentos são mantidos nem quando são descartados; o requisito será escrito quando a decisão existir.
-
-**Responsável:** conformidade.
-
-### Limite do guardrail de erros
-
-**Decisão pendente:** a taxa máxima de erros encontrados após a aprovação.
-
-**Impacto:** sem limite, o guardrail não indica quando a redução de prazo passa a comprometer a análise.
-
-**Responsável:** conformidade.
-
-## Ponto mais frágil
-
-**Decisão:** preservar o checklist atual sem revisar o mérito dos critérios (DOC-05).
-
-**Risco:** exigências legadas podem continuar causando retrabalho sem melhorar a análise.
-
-**Mitigação:** medir os motivos de reenvio desde o início do fluxo.
-
-**Critério de reavaliação:** se a maior parte do retrabalho decorrer do mérito dos critérios, a decisão de adiar sua revisão precisa ser reavaliada.
+| Lacuna | Afeta | Responsável |
+| --- | --- | --- |
+| Calendário de dias úteis da expiração | DOC-10: quando um caso pendente passa a `Declined` | Autor do produto |
+| Política de retenção de documentos | Por quanto tempo os documentos são mantidos; o requisito será escrito quando a decisão existir | Conformidade |
+| Taxa máxima de erros após a aprovação | Guardrail de erros, que sem limite não indica degradação | Conformidade |
 ````
 
 ## Exemplo de edição

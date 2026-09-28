@@ -59,9 +59,9 @@ Inspeção textual não comprova renderização. Renderize quando a alteração 
 
 ## Seções
 
-Use `#` para o título, `##` para as seções e `###` para agrupamentos úteis. Os títulos seguem a ordem da tabela, e só Referências pode vir depois de Ponto mais frágil.
+Use `#` para o título, `##` para as seções e `###` para agrupamentos úteis. Os títulos seguem a ordem da tabela.
 
-As seções marcadas como base são obrigatórias numa nova capability. As demais entram quando há conteúdo pertinente, sem frases vazias. Não altere documentos existentes só para introduzir seções opcionais. Se o pedido exigir outra seção, preserve-a e explique sua finalidade.
+As seções marcadas como base são obrigatórias numa nova capability. As demais são opcionais. Não altere documentos existentes só para introduzir seções opcionais. Se o pedido exigir outra seção, preserve-a e explique sua finalidade.
 
 | Seção | Base | Conteúdo |
 | --- | --- | --- |
@@ -83,12 +83,11 @@ As seções marcadas como base são obrigatórias numa nova capability. As demai
 | Dependências e riscos | | Dependência ou risco, origem, impacto e tratamento; capabilities afetadas |
 | Premissas | | Condições sobre o problema, o usuário ou o contexto atual que a proposta toma como verdadeiras sem ter verificado |
 | Lacunas | | Informações e decisões ausentes e os IDs que elas afetam |
-| Ponto mais frágil | | Decisão frágil, risco, mitigação e condição de reavaliação |
 | Referências | | Fontes externas usadas, escopo e datas reais de consulta |
 
 ### Trade-offs declarados
 
-Apresente cada decisão sob um subtítulo `###`, com `*Custo:*` concreto e `*Motivo:*` em parágrafos separados. Escolhas técnicas podem pertencer a um ADR.
+Registre os trade-offs numa tabela com as colunas Decisão, Custo e Motivo, com os IDs afetados na decisão. O custo diz o que se perde e para quem. Escolhas técnicas podem pertencer a um ADR.
 
 ### Métricas de sucesso
 
@@ -104,9 +103,7 @@ Para cálculos ou ramificações, prefira uma tabela com valores intermediários
 
 Use Dado/Quando/Então quando a tabela não expressar o cenário, e cite os requisitos verificados. Os marcadores seguem o idioma da prosa; em português, flexione Dado conforme o sujeito (Dada, Dados ou Dadas).
 
-### Premissas e lacunas
-
-Dê um subtítulo a cada entrada e separe os campos em parágrafos próprios, quando conhecidos. Em Premissas: a premissa, a evidência que a motivou, o impacto se for falsa, o responsável e a forma de verificá-la. Em Lacunas: a informação ou decisão que falta, os IDs afetados, o impacto, o responsável e o que a resolve.
+### Premissas
 
 Uma premissa não é a hipótese de Oportunidade / hipótese. A hipótese é a aposta do produto: o resultado que a entrega deve causar, como reduzir o prazo de análise, confirmado pelas métricas depois da entrega ou num experimento. A premissa é uma condição do presente em que a proposta se apoia, como a espera dominar o prazo atual, e pode ser verificada antes de construir. Se a hipótese falhar, o produto foi entregue e não causou o resultado; se a premissa falhar, a proposta foi escrita sobre um fato errado e precisa ser revista. Registre cada afirmação numa só das duas seções.
 
