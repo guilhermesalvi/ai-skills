@@ -1,17 +1,17 @@
 ---
 name: sdd
-description: Especifica, planeja, implementa, verifica ou retoma mudanças com requisitos rastreáveis da spec ao teste, e registra ADRs. Use para spec de funcionalidade ou de comportamento do sistema, inclusive a partir de necessidade de produto, pedido de tela ou CRUD, documento de produto ou código existente; para plano com decisões técnicas e tarefas; para implementação não trivial a partir de uma spec e verificação contra ela; e para ADR de decisão arquitetural nova ou já adotada no código. Não use para code review sem spec, documentação geral ou ajuste mecânico.
+description: Especifica, planeja, implementa, verifica ou retoma mudanças com requisitos rastreáveis da spec ao teste, e registra ADRs. Use para spec de funcionalidade ou de comportamento do sistema, inclusive a partir de necessidade de produto, pedido de tela ou CRUD, documento de produto ou código existente; para plano com decisões técnicas e checks com prova; para implementação não trivial a partir de uma spec e verificação contra ela; e para ADR de decisão arquitetural nova ou já adotada no código. Não use para code review sem spec, documentação geral ou ajuste mecânico.
 ---
 
 # Desenvolvimento por especificação
 
-Converta uma necessidade em uma mudança verificável. A spec define o comportamento que o consumidor observa, inclusive as regras de negócio; o plano, a solução e as tarefas.
+Converta uma necessidade em uma mudança verificável. A spec define o comportamento que o consumidor observa, inclusive as regras de negócio; o plano, as decisões técnicas e os checks que provam a mudança.
 
 ```mermaid
 flowchart TD
     Source[Necessidade de produto, pedido técnico<br/>ou código existente] --> Spec[Spec: comportamento e regras]
     Spec --> NeedPlan{Há decisão técnica com alternativa real,<br/>decisão irreversível ou trabalho<br/>que atravessa sessões ou executores?}
-    NeedPlan -- sim --> Plan[Plano: decisões e tarefas]
+    NeedPlan -- sim --> Plan[Plano: decisões e checks]
     NeedPlan -- não --> Short[Plano curto na conversa]
     Plan -. regra para outras capabilities .-> ADR[ADR]
     Decision[Decisão arquitetural avulsa] --> ADR
@@ -28,7 +28,7 @@ Leia o [fluxo comum](references/workflow.md) e a referência da etapa solicitada
 | Pedido | Referência | Resultado |
 | --- | --- | --- |
 | Especificar comportamento, inclusive a partir de necessidade de produto, ou documentar módulo existente | [Especificação](references/specify.md) | Spec com requisitos verificáveis e o custo das decisões |
-| Planejar a solução e decompor o trabalho | [Plano e tarefas](references/tasks.md) | Decisões com custo e tarefas executáveis por dependência |
+| Planejar a solução | [Plano](references/plan.md) | Decisões com custo e checks com a prova de cada um |
 | Implementar spec ou funcionalidade não trivial | [Execução](references/execute.md) | Mudança implementada e verificada |
 | Verificar implementação | [Verificação](references/verify.md) | Evidências de conformidade e lacunas |
 | Retomar mudança | Seção Retomar uma mudança de [execução](references/execute.md) | Próxima etapa sustentada pelo estado atual |

@@ -1,6 +1,6 @@
 # Decisão arquitetural
 
-Use ADR para uma escolha que define convenção, restrição ou padrão para outras capabilities: estilo arquitetural, transporte de eventos ou política de versionamento, por exemplo. Uma decisão local permanece no plano da mudança; se o pedido for um ADR para ela, diga em uma linha que ela caberia no plano e escreva o ADR.
+Use ADR para uma escolha que define convenção, restrição ou padrão para outras capabilities: estilo arquitetural, transporte de eventos ou política de versionamento, por exemplo. Uma decisão local permanece em Technical Decisions do plano da mudança; se o pedido for um ADR para ela, diga em uma linha que ela caberia no plano e escreva o ADR.
 
 Registrar uma decisão não amplia o escopo: aplicá-la ao restante do projeto exige pedido próprio.
 
@@ -10,17 +10,17 @@ Preserve o motivo, as alternativas realmente avaliadas, os benefícios e os cust
 
 Use `docs/adr/NNNN-<decisão>.md`. Preserve o formato dos ADRs existentes; sem ADR anterior, use a estrutura abaixo.
 
-| Seção ou campo | Conteúdo |
+| Section | Conteúdo |
 | --- | --- |
-| Título | `ADR NNNN: decisão` |
-| Participantes | Quem decidiu ou foi consultado, quando conhecido |
-| Contexto | Problema, restrições e critérios |
-| Decisão | Escolha e seu alcance |
-| Alternativas consideradas | Alternativas reais avaliadas pelos mesmos critérios e motivo da rejeição |
-| Consequências | Benefícios e custos concretos aceitos |
-| Regras derivadas | Regras criadas ou alteradas, com link para o arquivo onde cada uma é mantida |
+| Título | `ADR NNNN: <decisão>` |
+| Participants | Quem decidiu ou foi consultado, quando conhecido |
+| Context | Problema, restrições e critérios |
+| Decision | Escolha e seu alcance |
+| Alternatives Considered | Alternativas reais avaliadas pelos mesmos critérios e motivo da rejeição |
+| Consequences | Benefícios e custos concretos aceitos |
+| Derived Rules | Regras criadas ou alteradas, com link para o arquivo onde cada uma é mantida |
 
-Regras derivadas só existe quando a decisão cria ou altera uma regra. Mantenha cada regra no arquivo responsável pelo objeto que ela governa, e acrescente a essa regra o vínculo com o ADR que a justifica.
+Derived Rules só existe quando a decisão cria ou altera uma regra. Mantenha cada regra no arquivo responsável pelo objeto que ela governa, e acrescente a essa regra o vínculo com o ADR que a justifica.
 
 ## ADR avulso
 
@@ -34,4 +34,4 @@ Ao registrar uma decisão já adotada no código, derive contexto e decisão do 
 
 Leia os ADRs pertinentes antes de planejar. Quando uma escolha conflitar com um ADR vigente, explicite se a solução seguirá a restrição ou se é necessária sua substituição, dentro da autorização do pedido.
 
-Ao substituir, crie o novo ADR com `Substitui: NNNN` e acrescente `Substituído por: NNNN` ao anterior. Preserve o conteúdo histórico do documento antigo e confira que as referências são recíprocas e apontam para arquivos existentes.
+Ao substituir, crie o novo ADR com `Supersedes: NNNN` e acrescente `Superseded by: NNNN` ao anterior. Preserve o conteúdo histórico do documento antigo e confira que as referências são recíprocas e apontam para arquivos existentes.

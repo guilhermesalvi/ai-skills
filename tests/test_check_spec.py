@@ -18,20 +18,38 @@ sys.dont_write_bytecode = True
 _spec = importlib.util.spec_from_file_location("check_spec", SCRIPT)
 check_spec = importlib.util.module_from_spec(_spec)
 _spec.loader.exec_module(check_spec)
-check = check_spec.check
+
+
+def check(folder):
+    return check_spec.check(folder)[0]
 
 
 DOCUMENT = """# Solicitações
 
 | | |
 | --- | --- |
-| **Prefixo dos requisitos** | `REQ` |
+| **Requirement Prefix** | `REQ` |
 
-## Requisitos
+## Context
+O consumidor repete solicitações quando a rede falha.
+
+## Requirements
 - **REQ-100** — QUANDO a chave se repetir, ENTÃO o sistema DEVE retornar o resultado original.
 
-## Cenários de aceitação
+## Acceptance Scenarios
 Repetir a chave retorna o resultado de REQ-100.
+"""
+
+PLAN = """# Repetição de solicitações
+
+## Assumptions
+
+- **O armazenamento aceita índice único.** O banco atual oferece. Se for falsa, a garantia muda de mecanismo. Confirmed? n
+
+## Checks
+
+- [ ] **REQ-100**: repetir a chave retorna o original — `dotnet test --filter RepeatReturnsOriginal`
+- [x] Gate — `dotnet test`
 """
 
 ENGLISH = """# Requests
@@ -39,6 +57,9 @@ ENGLISH = """# Requests
 | | |
 | --- | --- |
 | **Requirement Prefix** | `ENG` |
+
+## Context
+Clients retry requests after network failures.
 
 ## Requirements
 - **ENG-01** — WHEN a key repeats THEN the system SHALL return the original result.
@@ -125,6 +146,65 @@ class SpecChecks(unittest.TestCase):
     def test_several_prefixes_in_one_spec_are_reported(self):
         self.document.write_text(DOCUMENT + "- **ALT-01** — Outra capability.\n", encoding="utf-8")
         self.assertTrue(any("definitions use several prefixes: ALT, REQ" in f for f in check(self.folder)))
+
+    def test_header_prefix_must_match_definitions(self):
+        self.document.write_text(DOCUMENT.replace("`REQ` |", "`RQS` |"), encoding="utf-8")
+        self.assertIn("requests-lifecycle/spec.md: Requirement Prefix RQS differs from the definitions", check(self.folder))
+
+    def test_missing_header_and_base_section_are_reported(self):
+        text = DOCUMENT.replace("| **Requirement Prefix** | `REQ` |\n", "").replace("## Context\n", "## Background\n")
+        self.document.write_text(text, encoding="utf-8")
+        findings = check(self.folder)
+        self.assertIn("requests-lifecycle/spec.md: missing Requirement Prefix in the header", findings)
+        self.assertIn("requests-lifecycle/spec.md: missing section Context", findings)
+
+    def test_empty_section_is_reported(self):
+        self.document.write_text(DOCUMENT + "\n## Glossary\n\n", encoding="utf-8")
+        self.assertEqual(["requests-lifecycle/spec.md: empty section Glossary"], check(self.folder))
+
+    def test_assumption_without_confirmation_is_reported(self):
+        assumptions = "\n## Assumptions\n\n- **Chave por cliente.** Inferida do cadastro.\n  Se falsa, muda o escopo.\n"
+        self.document.write_text(DOCUMENT + assumptions, encoding="utf-8")
+        self.assertTrue(any("assumption without Confirmed?" in f for f in check(self.folder)))
+
+    def test_gap_row_with_empty_cell_is_reported(self):
+        gaps = "\n## Gaps\n\n| Gap | Affects | Owner |\n| --- | --- | --- |\n| Prazo da chave | REQ-100 | |\n"
+        self.document.write_text(DOCUMENT + gaps, encoding="utf-8")
+        self.assertTrue(any("Gaps row with an empty cell" in f for f in check(self.folder)))
+
+    def test_legacy_titles_are_not_checked_for_structure(self):
+        self.document.write_text("# Solicitações\n\n## Requisitos\n- **REQ-100** — Resultado original.\n\n## Trade-offs\n| Decisão | Custo | Motivo |\n", encoding="utf-8")
+        self.assertEqual(([], ["requests-lifecycle/spec.md"]), check_spec.check(self.folder))
+
+    def test_valid_plan_has_no_findings(self):
+        (self.document.parent / "0001-retry.md").write_text(PLAN, encoding="utf-8")
+        self.assertEqual([], check(self.folder))
+
+    def test_check_without_proof_or_checkbox_is_reported(self):
+        plan = PLAN.replace(" — `dotnet test --filter RepeatReturnsOriginal`", "").replace("- [x] Gate", "- Gate")
+        (self.document.parent / "0001-retry.md").write_text(plan, encoding="utf-8")
+        findings = check(self.folder)
+        self.assertTrue(any("check without proof: - [ ] **REQ-100**" in f for f in findings))
+        self.assertTrue(any("check is not a checkbox: - Gate" in f for f in findings))
+
+    def test_proof_must_close_the_check(self):
+        plan = PLAN.replace("- [x] Gate — `dotnet test`", "- [x] Criar `NATAL10` funciona")
+        (self.document.parent / "0001-retry.md").write_text(plan, encoding="utf-8")
+        self.assertTrue(any("check without proof: - [x] Criar `NATAL10`" in f for f in check(self.folder)))
+
+    def test_plan_links_are_checked(self):
+        (self.document.parent / "0001-retry.md").write_text(PLAN + "\n[Spec](spec.md) [ADR](missing.md)\n", encoding="utf-8")
+        self.assertEqual(["requests-lifecycle/0001-retry.md: local link does not resolve: missing.md"], check(self.folder))
+
+    def test_plan_without_checks_is_reported(self):
+        (self.document.parent / "0001-retry.md").write_text(PLAN.split("## Checks")[0], encoding="utf-8")
+        self.assertIn("requests-lifecycle/0001-retry.md: missing section Checks", check(self.folder))
+
+    def test_decision_row_with_empty_cell_is_reported(self):
+        table = ("\n## Technical Decisions\n\n| Decision | Choice | Rejected alternatives | Cost | Reversible |\n"
+                 "| --- | --- | --- | --- | --- |\n| Unicidade | Índice único | | Migração | Não |\n")
+        (self.document.parent / "0001-retry.md").write_text(PLAN + table, encoding="utf-8")
+        self.assertTrue(any("Technical Decisions row with an empty cell" in f for f in check(self.folder)))
 
     def test_definition_inside_code_fence_is_ignored(self):
         self.document.write_text(DOCUMENT + "\n```markdown\n- **REQ-100** — Exemplo.\n```\n", encoding="utf-8")

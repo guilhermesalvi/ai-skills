@@ -4,7 +4,7 @@ Skills do Claude Code para desenvolvimento orientado por especificações, distr
 
 | Skill | Finalidade |
 |---|---|
-| `sdd` | Especificar, planejar, implementar e verificar mudanças, com requisitos EARS rastreáveis da spec ao teste e ADRs. A spec absorve as regras de negócio e o plano, as decisões técnicas. Inclui um verificador de IDs, prefixos e links das specs, e das citações a eles nos planos, que independe do idioma dos títulos. |
+| `sdd` | Especificar, planejar, implementar e verificar mudanças, com requisitos EARS rastreáveis da spec ao teste e ADRs. A spec absorve as regras de negócio; o plano traz as decisões técnicas e os checks, cada um com a prova que o decide, sem decompor o trabalho em tarefas. Inclui um verificador de IDs, links e estrutura das specs e dos planos. |
 
 ## Instalação
 
@@ -49,7 +49,7 @@ Para uma origem local, incremente a versão e repita apenas `claude plugin insta
 ## Convenções
 
 - O pedido do usuário prevalece sobre os defaults das skills. As instruções aplicáveis do repositório consumidor, em `CLAUDE.md` ou `CLAUDE.local.md`, vêm em seguida.
-- As instruções das skills estão em português. A prosa dos artefatos gerados segue o pedido, a convenção do repositório e o material de origem, nessa ordem; títulos de seção, rótulos, tags e campos acompanham o idioma da prosa, e termos canônicos em inglês não se traduzem.
+- As instruções das skills estão em português. A prosa dos artefatos gerados segue o pedido, a convenção do repositório e o material de origem, nessa ordem; títulos de seção, rótulos, colunas e campos formam um schema em inglês em qualquer idioma de prosa, e termos canônicos em inglês não se traduzem.
 - As skills continuam o trabalho autorizado até a validação e perguntam apenas sobre decisões ausentes que afetem escopo ou correção. Commit e push seguem a autorização do usuário.
 - Os scripts exigem Python 3.10+ e não usam pacotes de terceiros. Nos comandos das skills, substitua `<skill-dir>` pela pasta absoluta do `SKILL.md` carregado; execute a partir do projeto consumidor.
 
