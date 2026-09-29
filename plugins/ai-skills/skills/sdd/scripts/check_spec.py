@@ -1,16 +1,16 @@
-"""Check requirement IDs and local links of the PRDs in a specs folder.
+"""Check requirement IDs and local links of the specs in a specs folder.
 
-Usage: python check_prd.py [<specs folder>]   (default: docs/specs)
+Usage: python check_spec.py [<specs folder>]   (default: docs/specs)
 
-Fully checks <capability>/prd.md and the product overview overview.md. In
-the other Markdown files under a capability folder, such as spec.md and the
-change plans, it checks only that cited PRD IDs are defined. Other files, such as CLAUDE.md,
-are not read. The check ignores section titles and labels, so it works in any prose
-language. A requirement is defined by a list item that starts with a bold ID,
-such as "- **DOC-01 (Must)** ...". A prefix belongs to the PRD that defines it,
-and tokens whose prefix no PRD defines, such as SHA-256, are not citations.
-This read-only check does not validate business meaning, document structure or
-Mermaid rendering.
+Fully checks <capability>/spec.md. In the other Markdown files under a
+capability folder, such as the change plans, it checks only that cited IDs are
+defined. Other files, such as CLAUDE.md, are not read. The check ignores section
+titles and labels, so it works in any prose language. A requirement is defined
+by a list item that starts with a bold ID, such as "- **DOC-01** ...". A prefix
+belongs to the spec that defines it, and tokens whose prefix no spec defines,
+such as SHA-256, are not citations.
+This read-only check does not validate behavior, document structure or Mermaid
+rendering.
 Exit codes: 0 = no findings, 1 = findings, 2 = invalid input or read error.
 """
 
@@ -24,9 +24,8 @@ from urllib.parse import unquote, urlsplit
 
 ID = r"[A-Z][A-Z0-9]*-[0-9]{2,}"
 ID_TOKEN = re.compile(r"(?<![A-Za-z0-9_-])(" + ID + r")(?![A-Za-z0-9_-])")
-DEFINITION = re.compile(r"^-\s+\*\*(" + ID + r")(?:\s+\(([^)]+)\))?\*\*", re.M)
+DEFINITION = re.compile(r"^-\s+\*\*(" + ID + r")\*\*", re.M)
 LINK = re.compile(r"\[[^\]]*\]\(([^)]+)\)")
-PRIORITIES = {"Must", "Should", "Could", "Won't"}
 
 
 def strip_fences(text):
@@ -59,25 +58,21 @@ def check(folder):
     folder = Path(folder).resolve()
     if not folder.is_dir():
         raise ValueError(f"not a folder: {folder}")
-    prds = sorted(folder.glob("*/prd.md"))
-    if not prds:
-        raise ValueError(f"no PRDs in {folder}")
-    overview = folder / "overview.md"
-    paths = prds + ([overview] if overview.is_file() else [])
-    names = {p.relative_to(folder).as_posix(): p for p in paths}
+    specs = sorted(folder.glob("*/spec.md"))
+    if not specs:
+        raise ValueError(f"no specs in {folder}")
+    names = {p.relative_to(folder).as_posix(): p for p in specs}
     texts = {name: p.read_text(encoding="utf-8-sig") for name, p in names.items()}
     parsed = {name: strip_fences(text) for name, text in texts.items()}
-    consumers = sorted(p for p in folder.glob("*/**/*.md") if p.name != "prd.md")
+    consumers = sorted(p for p in folder.glob("*/**/*.md") if p.name != "spec.md")
     findings = []
 
     definitions, prefix_owners = defaultdict(list), defaultdict(set)
     for name, (prose, _) in parsed.items():
         prefixes = set()
-        for identifier, priority in DEFINITION.findall(prose):
+        for identifier in DEFINITION.findall(prose):
             definitions[identifier].append(name)
             prefixes.add(prefix_of(identifier))
-            if priority not in PRIORITIES:
-                findings.append(f"{name}: {identifier} has no valid MoSCoW priority")
         for prefix in prefixes:
             prefix_owners[prefix].add(name)
         if len(prefixes) > 1:
@@ -87,7 +82,7 @@ def check(folder):
             findings.append(f"ids: {identifier} defined {len(owners)} times")
     for prefix, owners in sorted(prefix_owners.items()):
         if len(owners) > 1:
-            findings.append(f"prefix: {prefix} belongs to several PRDs: {', '.join(sorted(owners))}")
+            findings.append(f"prefix: {prefix} belongs to several specs: {', '.join(sorted(owners))}")
 
     root = repository_root(folder)
     for name, text in texts.items():

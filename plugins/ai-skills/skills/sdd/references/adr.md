@@ -24,7 +24,7 @@ Regras derivadas só existe quando a decisão cria ou altera uma regra. Mantenha
 
 ## ADR avulso
 
-Fora de um plano, leia os ADRs vigentes, a visão geral de produto e as specs e o código que a decisão atinge, para achar conflitos e as capabilities afetadas.
+Fora de um plano, leia os ADRs vigentes e as specs e o código que a decisão atinge, para achar conflitos e as capabilities afetadas.
 
 Se o pedido não indicar a escolha, compare as alternativas pelos mesmos critérios, recomende uma e peça a escolha ao usuário antes de escrever: o ADR registra a decisão, não a recomendação.
 

@@ -1,0 +1,169 @@
+"""Regression cases for the spec ID and link check, using only temporary documents."""
+import importlib.util
+import os
+import re
+import subprocess
+import sys
+import unittest
+from pathlib import Path
+from tempfile import TemporaryDirectory
+
+
+SCRIPT = Path(__file__).resolve().parents[1] / "plugins" / "ai-skills" / "skills" / "sdd" / "scripts" / "check_spec.py"
+EXAMPLE = SCRIPT.parents[1] / "references" / "spec-example.md"
+# Keep bytecode out of the skill folder, which a local plugin install copies as is.
+ENV = {**os.environ, "PYTHONDONTWRITEBYTECODE": "1"}
+sys.dont_write_bytecode = True
+
+_spec = importlib.util.spec_from_file_location("check_spec", SCRIPT)
+check_spec = importlib.util.module_from_spec(_spec)
+_spec.loader.exec_module(check_spec)
+check = check_spec.check
+
+
+DOCUMENT = """# Solicitações
+
+| | |
+| --- | --- |
+| **Prefixo dos requisitos** | `REQ` |
+
+## Requisitos
+- **REQ-100** — QUANDO a chave se repetir, ENTÃO o sistema DEVE retornar o resultado original.
+
+## Cenários de aceitação
+Repetir a chave retorna o resultado de REQ-100.
+"""
+
+ENGLISH = """# Requests
+
+| | |
+| --- | --- |
+| **Requirement Prefix** | `ENG` |
+
+## Requirements
+- **ENG-01** — WHEN a key repeats THEN the system SHALL return the original result.
+- **ENG-02** — The system SHALL reject a key longer than 64 characters.
+"""
+
+
+def run_cli(folder):
+    return subprocess.run(
+        [sys.executable, "-X", "utf8", str(SCRIPT), str(folder)],
+        capture_output=True, text=True, encoding="utf-8", env=ENV,
+    )
+
+
+def write_spec(folder, capability, text):
+    path = Path(folder) / capability / "spec.md"
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(text, encoding="utf-8")
+    return path
+
+
+class SpecChecks(unittest.TestCase):
+    def setUp(self):
+        self.temp = TemporaryDirectory()
+        self.addCleanup(self.temp.cleanup)
+        self.folder = Path(self.temp.name)
+        self.document = write_spec(self.folder, "requests-lifecycle", DOCUMENT)
+
+    def test_valid_document_has_no_findings(self):
+        self.assertEqual([], check(self.folder))
+
+    def test_titles_in_any_language_are_accepted(self):
+        write_spec(self.folder, "requests-en", ENGLISH)
+        self.assertEqual([], check(self.folder))
+
+    def test_skill_example_has_no_findings(self):
+        example = re.search(r"^````markdown\n(.*?)^````$", EXAMPLE.read_text(encoding="utf-8"), re.M | re.S)
+        self.document.write_text(example[1], encoding="utf-8")
+        self.assertEqual([], check(self.folder))
+
+    def test_instructions_outside_capabilities_are_not_read(self):
+        (self.folder / "CLAUDE.md").write_text("# Instruções\nReferência: REQ-99\n", encoding="utf-8")
+        self.assertEqual([], check(self.folder))
+
+    def test_plan_citations_are_checked(self):
+        legacy = self.document.parent / "0001-retry"
+        legacy.mkdir()
+        (self.document.parent / "0002-limit.md").write_text("- [ ] REQ-100: repetição\n- [ ] REQ-103: limite\n", encoding="utf-8")
+        (legacy / "tasks.md").write_text("Atende REQ-102.\n", encoding="utf-8")
+        self.assertEqual([
+            "requests-lifecycle/0001-retry/tasks.md: citation REQ-102 has no definition",
+            "requests-lifecycle/0002-limit.md: citation REQ-103 has no definition",
+        ], check(self.folder))
+
+    def test_legacy_prd_prefixes_are_not_citations(self):
+        (self.document.parent / "prd.md").write_text("- **PRX-01 (Must)** Regra de produto.\n", encoding="utf-8")
+        self.document.write_text(DOCUMENT + "\nOrigem: PRX-01 e PRX-02.\n", encoding="utf-8")
+        self.assertEqual([], check(self.folder))
+
+    def test_three_digit_citation_is_not_truncated(self):
+        self.document.write_text(DOCUMENT + "\nConsultar REQ-101.\n", encoding="utf-8")
+        self.assertIn("requests-lifecycle/spec.md: citation REQ-101 has no definition", check(self.folder))
+
+    def test_undefined_prefix_is_not_a_citation(self):
+        self.document.write_text(DOCUMENT + "\nAssinatura com SHA-256 conforme ISO-27001.\n", encoding="utf-8")
+        self.assertEqual([], check(self.folder))
+
+    def test_citation_of_another_spec_resolves(self):
+        write_spec(self.folder, "requests-en", ENGLISH + "\nDepends on REQ-100.\n")
+        self.assertEqual([], check(self.folder))
+
+    def test_unprefixed_id_is_reported(self):
+        self.document.write_text(DOCUMENT + "\nVer FR-12.\n", encoding="utf-8")
+        self.assertTrue(any("unprefixed id FR-12" in f for f in check(self.folder)))
+
+    def test_duplicate_definition_is_reported(self):
+        self.document.write_text(DOCUMENT + "\n- **REQ-100** — Outro resultado.\n", encoding="utf-8")
+        self.assertIn("ids: REQ-100 defined 2 times", check(self.folder))
+
+    def test_prefix_shared_by_two_specs_is_reported(self):
+        write_spec(self.folder, "other", DOCUMENT.replace("REQ-100", "REQ-101"))
+        self.assertTrue(any("prefix: REQ belongs to several specs" in f for f in check(self.folder)))
+
+    def test_several_prefixes_in_one_spec_are_reported(self):
+        self.document.write_text(DOCUMENT + "- **ALT-01** — Outra capability.\n", encoding="utf-8")
+        self.assertTrue(any("definitions use several prefixes: ALT, REQ" in f for f in check(self.folder)))
+
+    def test_definition_inside_code_fence_is_ignored(self):
+        self.document.write_text(DOCUMENT + "\n```markdown\n- **REQ-100** — Exemplo.\n```\n", encoding="utf-8")
+        self.assertEqual([], check(self.folder))
+
+    def test_missing_local_file_is_reported(self):
+        self.document.write_text(DOCUMENT + "\n[Plano](0001-missing.md)\n", encoding="utf-8")
+        self.assertTrue(any("local link does not resolve" in f for f in check(self.folder)))
+
+    def test_links_resolve_from_the_document_folder(self):
+        (self.document.parent / "0001-retry.md").write_text("# Plano\n", encoding="utf-8")
+        write_spec(self.folder, "requests-en", ENGLISH)
+        self.document.write_text(DOCUMENT + "\n[Plano](0001-retry.md) [Outra](../requests-en/spec.md)\n", encoding="utf-8")
+        self.assertEqual([], check(self.folder))
+
+    def test_anchor_and_external_links_are_not_local_files(self):
+        self.document.write_text(DOCUMENT + "\n[Topo](#solicitações) [Fonte](https://example.com)\n", encoding="utf-8")
+        self.assertEqual([], check(self.folder))
+
+    def test_unclosed_fence_is_reported(self):
+        self.document.write_text(DOCUMENT + "\n```mermaid\nflowchart LR\n", encoding="utf-8")
+        self.assertTrue(any("unclosed code fence" in f for f in check(self.folder)))
+
+    def test_empty_input_is_an_error(self):
+        with TemporaryDirectory() as empty:
+            (Path(empty) / "requests").mkdir()
+            (Path(empty) / "requests" / "0001-retry.md").write_text("# Plano\n", encoding="utf-8")
+            with self.assertRaisesRegex(ValueError, "no specs"):
+                check(empty)
+
+
+class SpecCommandLine(unittest.TestCase):
+    def test_exit_codes(self):
+        with TemporaryDirectory() as temp:
+            folder = Path(temp)
+            self.assertEqual(2, run_cli(folder).returncode)
+            write_spec(folder, "requests", DOCUMENT)
+            self.assertEqual(0, run_cli(folder).returncode)
+            write_spec(folder, "other", DOCUMENT.replace("REQ-100", "REQ-101"))
+            result = run_cli(folder)
+            self.assertEqual(1, result.returncode)
+            self.assertIn("prefix: REQ", result.stdout)

@@ -5,16 +5,16 @@
     "url": "https://github.com/guilhermesalvi"
   },
   "metadata": {
-    "description": "Skills de requisitos de produto e desenvolvimento orientado por especificações.",
+    "description": "Skills de desenvolvimento orientado por especificações.",
     "version": "1.0.0"
   },
   "plugins": [
     {
       "name": "ai-skills",
       "source": "./plugins/ai-skills",
-      "description": "Requisitos de produto e desenvolvimento orientado por especificações.",
+      "description": "Desenvolvimento orientado por especificações.",
       "category": "productivity",
-      "keywords": ["prd", "sdd", "spec-driven-development", "adr"]
+      "keywords": ["sdd", "spec-driven-development", "ears", "adr"]
     }
   ]
 }

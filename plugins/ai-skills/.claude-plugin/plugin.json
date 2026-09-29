@@ -2,12 +2,12 @@
   "name": "ai-skills",
   "displayName": "AI Skills",
   "version": "3.0.0",
-  "description": "Requisitos de produto e desenvolvimento orientado por especificações.",
+  "description": "Desenvolvimento orientado por especificações.",
   "author": {
     "name": "Guilherme Salvi",
     "url": "https://github.com/guilhermesalvi"
   },
   "homepage": "https://github.com/guilhermesalvi/ai-skills#readme",
   "repository": "https://github.com/guilhermesalvi/ai-skills",
-  "keywords": ["prd", "sdd", "spec-driven-development", "adr"]
+  "keywords": ["sdd", "spec-driven-development", "ears", "adr"]
 }

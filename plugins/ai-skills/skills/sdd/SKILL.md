@@ -1,17 +1,15 @@
 ---
 name: sdd
-description: Escreve PRDs e ADRs e especifica, planeja, implementa, verifica ou retoma mudanças técnicas com requisitos rastreáveis do produto ao código. Use para PRD de produto ou funcionalidade, inclusive de produto existente e de plataforma, SDK ou API como produto, mesmo quando o pedido chega como tela ou CRUD; para ADR de decisão arquitetural nova ou já adotada no código; para tech spec ou spec de comportamento do sistema, plano com decisões técnicas e tarefas, implementação não trivial a partir de uma spec e verificação contra ela. Não use para code review sem spec, documentação geral ou ajuste mecânico.
+description: Especifica, planeja, implementa, verifica ou retoma mudanças com requisitos rastreáveis da spec ao teste, e registra ADRs. Use para spec de funcionalidade ou de comportamento do sistema, inclusive a partir de necessidade de produto, pedido de tela ou CRUD, documento de produto ou código existente; para plano com decisões técnicas e tarefas; para implementação não trivial a partir de uma spec e verificação contra ela; e para ADR de decisão arquitetural nova ou já adotada no código. Não use para code review sem spec, documentação geral ou ajuste mecânico.
 ---
 
 # Desenvolvimento por especificação
 
-Converta uma necessidade em uma mudança verificável. O PRD define problema, comportamento e regras de negócio; a spec, o comportamento técnico; o plano, a solução e as tarefas.
+Converta uma necessidade em uma mudança verificável. A spec define o comportamento que o consumidor observa, inclusive as regras de negócio; o plano, a solução e as tarefas.
 
 ```mermaid
 flowchart TD
-    Need[Necessidade de produto] --> PRD[PRD: problema e regras de negócio]
-    PRD --> Spec[Spec: comportamento técnico]
-    Source[Pedido técnico ou código existente] --> Spec
+    Source[Necessidade de produto, pedido técnico<br/>ou código existente] --> Spec[Spec: comportamento e regras]
     Spec --> NeedPlan{Há decisão técnica com alternativa real,<br/>decisão irreversível ou trabalho<br/>que atravessa sessões ou executores?}
     NeedPlan -- sim --> Plan[Plano: decisões e tarefas]
     NeedPlan -- não --> Short[Plano curto na conversa]
@@ -20,10 +18,8 @@ flowchart TD
     Plan --> Execute[Execução]
     Short --> Execute
     Execute --> Verify[Verificação contra spec e plano]
-    Verify -- defeito de contrato --> Fix[Corrigir na origem:<br/>PRD, spec ou plano]
+    Verify -- defeito de contrato --> Fix[Corrigir na origem:<br/>spec ou plano]
 ```
-
-Uma mudança precisa de PRD quando muda o resultado, a informação ou o prazo que o consumidor observa. Refatoração interna, decisão arquitetural local e contrato de API sem contexto de produto começam pela spec. Uma decisão que vale para outras capabilities pode ir direto para o ADR.
 
 ## Escolher a etapa
 
@@ -31,8 +27,7 @@ Leia o [fluxo comum](references/workflow.md) e a referência da etapa solicitada
 
 | Pedido | Referência | Resultado |
 | --- | --- | --- |
-| Escrever, editar ou revisar PRD, inclusive a visão geral de produto | [PRD](references/prd.md) | Problema, usuário, comportamento, requisitos verificáveis e custo das decisões |
-| Especificar comportamento ou documentar módulo existente | [Especificação](references/specify.md) | Spec com critérios verificáveis |
+| Especificar comportamento, inclusive a partir de necessidade de produto, ou documentar módulo existente | [Especificação](references/specify.md) | Spec com requisitos verificáveis e o custo das decisões |
 | Planejar a solução e decompor o trabalho | [Plano e tarefas](references/tasks.md) | Decisões com custo e tarefas executáveis por dependência |
 | Implementar spec ou funcionalidade não trivial | [Execução](references/execute.md) | Mudança implementada e verificada |
 | Verificar implementação | [Verificação](references/verify.md) | Evidências de conformidade e lacunas |

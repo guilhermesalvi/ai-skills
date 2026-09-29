@@ -8,7 +8,7 @@ Confira `git status`, o plano, a spec atual e as regras dos diretórios atingido
 
 Sem uma branch própria para a mudança, registre a base de comparação antes da primeira alteração, no Contexto do plano ou no plano curto: a saída de `git rev-parse HEAD`. A verificação usa essa base para isolar o diff da mudança.
 
-Sem plano em arquivo, comece com um plano curto na resposta, com requisitos, estrutura, passos e verificação, e siga para a implementação. Uma nova decisão de produto continua exigindo resposta antes da parte dependente.
+Sem plano em arquivo, comece com um plano curto na resposta, com requisitos, estrutura, passos e verificação, e siga para a implementação. Uma nova decisão de negócio continua exigindo resposta antes da parte dependente.
 
 ## Implementar uma unidade
 
@@ -23,7 +23,7 @@ Ao concluir as unidades, execute a [verificação](verify.md).
 
 ## Desvios e restrições
 
-Uma restrição descoberta pode exigir corrigir a spec ou o plano. Registre o efeito material e continue o escopo autorizado. Se a mudança implicar novo comportamento de produto, obtenha a decisão correspondente e mantenha o restante em andamento.
+Uma restrição descoberta pode exigir corrigir a spec ou o plano. Registre o efeito material e continue o escopo autorizado. Se a mudança depender de uma decisão de negócio, obtenha-a do usuário e mantenha o restante em andamento.
 
 Atualize a spec ou o plano no mesmo commit que muda o que eles descrevem, não ao final: escrito depois, o registro vira justificativa do que já foi feito. Uma decisão irreversível descoberta na implementação entra em Decisões técnicas do plano antes do código que a fecha, com a forma literal e a alternativa rejeitada.
 

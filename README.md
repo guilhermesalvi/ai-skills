@@ -1,10 +1,10 @@
 # ai-skills
 
-Skills do Claude Code para requisitos de produto e desenvolvimento orientado por especificações, distribuídas como plugin.
+Skills do Claude Code para desenvolvimento orientado por especificações, distribuídas como plugin.
 
 | Skill | Finalidade |
 |---|---|
-| `sdd` | Escrever PRDs e especificar, planejar, implementar e verificar mudanças técnicas, com requisitos rastreáveis do produto ao código, EARS e ADRs. Inclui um verificador de IDs, prefixos e links dos PRDs, e das citações a eles na spec e nos planos, que independe do idioma dos títulos. |
+| `sdd` | Especificar, planejar, implementar e verificar mudanças, com requisitos EARS rastreáveis da spec ao teste e ADRs. A spec absorve as regras de negócio e o plano, as decisões técnicas. Inclui um verificador de IDs, prefixos e links das specs, e das citações a eles nos planos, que independe do idioma dos títulos. |
 
 ## Instalação
 
@@ -92,7 +92,7 @@ CLAUDE.md                            orientações para editar o repositório
 plugins/ai-skills/
   .claude-plugin/plugin.json         manifesto do plugin
   skills/
-    sdd/                             SKILL.md, references/, scripts/check_prd.py
+    sdd/                             SKILL.md, references/, scripts/check_spec.py
 tests/                               testes dos scripts
 ```
 
