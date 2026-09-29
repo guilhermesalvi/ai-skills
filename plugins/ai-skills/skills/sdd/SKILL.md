@@ -21,21 +21,19 @@ flowchart TD
     Verify -- defeito de contrato --> Fix[Corrigir na origem:<br/>spec ou plano]
 ```
 
-## Escolher a etapa
+## Escolher as referências
 
-Leia o [fluxo comum](references/workflow.md) e a referência da etapa solicitada. Carregue outras referências apenas quando forem pré-requisitos reais.
+Leia cada referência cuja condição vale para o pedido. Carregue as demais apenas quando forem pré-requisitos reais.
 
-| Pedido | Referência | Resultado |
-| --- | --- | --- |
-| Especificar comportamento, inclusive a partir de necessidade de produto, ou documentar módulo existente | [Especificação](references/specify.md) | Spec com requisitos verificáveis e o custo das decisões |
-| Planejar a solução | [Plano](references/plan.md) | Decisões com custo e checks com a prova de cada um |
-| Implementar spec ou funcionalidade não trivial | [Execução](references/execute.md) | Mudança implementada e verificada |
-| Verificar implementação | [Verificação](references/verify.md) | Evidências de conformidade e lacunas |
-| Retomar mudança | Seção Retomar uma mudança de [execução](references/execute.md) | Próxima etapa sustentada pelo estado atual |
-| Registrar decisão arquitetural, avulsa ou durante o planejamento | [ADR](references/adr.md) | Decisão e consequências rastreáveis |
-| Revisar spec, plano ou ADR | Referência da etapa do artefato | Achados com a regra violada |
-
-Consulte [prosa](references/prose.md) sempre que escrever.
+| Referência | Quando ler |
+| --- | --- |
+| [Fluxo comum](references/workflow.md) | Sempre, antes da referência da etapa |
+| [Prosa](references/prose.md) | Ao escrever ou revisar qualquer artefato |
+| [Especificação](references/specify.md) | Especificar comportamento, inclusive a partir de necessidade de produto, documentar módulo existente ou revisar uma spec |
+| [Plano](references/plan.md) | Planejar a solução ou revisar um plano |
+| [Execução](references/execute.md) | Implementar spec ou funcionalidade não trivial, ou retomar uma mudança |
+| [Verificação](references/verify.md) | Verificar a implementação contra a spec e o plano |
+| [ADR](references/adr.md) | Registrar decisão arquitetural, avulsa ou durante o planejamento, ou revisar um ADR |
 
 Os exemplos das referências são didáticos. Seus números, atores, interfaces, comandos e escolhas não se tornam fatos do projeto nem evidência executada.
 
