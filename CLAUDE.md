@@ -1,6 +1,6 @@
 # Orientações do repositório
 
-Este repositório distribui as skills `sdd` e `transcript-fix` no plugin `ai-skills` do Claude Code. O pacote fica em `plugins/ai-skills/`, com o manifesto em `plugins/ai-skills/.claude-plugin/plugin.json`, e o marketplace em `.claude-plugin/marketplace.json`. Instruções, referências e textos de interface das skills ficam em português. Código, identificadores, comentários, mensagens dos scripts e commits ficam em inglês. Títulos de seção, rótulos, tags e campos dos artefatos que as skills geram acompanham o idioma da prosa do artefato; cada skill documenta os nomes em português e mantém uma única tabela de equivalência com o inglês. Termos canônicos em inglês, como JTBD, MoSCoW, NFR, trade-off, Leading, Lagging e Guardrails, não se traduzem.
+Este repositório distribui a skill `sdd` no plugin `ai-skills` do Claude Code. O pacote fica em `plugins/ai-skills/`, com o manifesto em `plugins/ai-skills/.claude-plugin/plugin.json`, e o marketplace em `.claude-plugin/marketplace.json`. Instruções, referências e textos de interface das skills ficam em português. Código, identificadores, comentários, mensagens dos scripts e commits ficam em inglês. Títulos de seção, rótulos, tags e campos dos artefatos que as skills geram acompanham o idioma da prosa do artefato; cada skill documenta os nomes em português e mantém uma única tabela de equivalência com o inglês. Termos canônicos em inglês, como JTBD, MoSCoW, NFR, trade-off, Leading, Lagging e Guardrails, não se traduzem.
 
 ## Editar as skills
 
@@ -13,8 +13,7 @@ Este repositório distribui as skills `sdd` e `transcript-fix` no plugin `ai-ski
 - Não crie links entre skills, porque cada uma pode ser copiada sozinha.
 - Mantenha as skills genéricas. Regra de um projeto consumidor fica no `CLAUDE.md` dele, e as skills a aplicam pela precedência do pedido e da convenção do repositório sobre seus defaults.
 - Siga o escopo e a autorização do usuário. Não acrescente aprovações para escolhas rotineiras, edições ou validações já autorizadas.
-- Não fixe modelos nas skills, nem por ID, nem por alias, nem por classificação estática. A `transcript-fix` escolhe o modelo dos subagentes durante a execução.
-- Ao mudar a orquestração da `transcript-fix`, preserve as saídas exclusivas por executor, o glossário imutável por etapa e a divisão e reunião determinísticas dos trechos.
+- Não fixe modelos nas skills, nem por ID, nem por alias, nem por classificação estática.
 
 ## Validar
 

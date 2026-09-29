@@ -5,16 +5,16 @@
     "url": "https://github.com/guilhermesalvi"
   },
   "metadata": {
-    "description": "Skills de requisitos de produto, desenvolvimento orientado por especificações e correção de transcrições técnicas em português.",
+    "description": "Skills de requisitos de produto e desenvolvimento orientado por especificações.",
     "version": "1.0.0"
   },
   "plugins": [
     {
       "name": "ai-skills",
       "source": "./plugins/ai-skills",
-      "description": "Requisitos de produto, desenvolvimento orientado por especificações e correção de transcrições técnicas em português.",
+      "description": "Requisitos de produto e desenvolvimento orientado por especificações.",
       "category": "productivity",
-      "keywords": ["prd", "sdd", "spec-driven-development", "transcript", "whisper"]
+      "keywords": ["prd", "sdd", "spec-driven-development", "adr"]
     }
   ]
 }
