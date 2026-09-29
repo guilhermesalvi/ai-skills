@@ -10,7 +10,7 @@ Sem convenção do repositório, use este layout, com slugs em inglês e em keba
 docs/specs/
   <capability>/
     spec.md                 spec viva da capability, editada no lugar
-    NNNN-<change>.md        plano da mudança, quando houver
+    NNNN-<change>.md        plano da mudança
 docs/adr/NNNN-<decision>.md
 ```
 
@@ -20,7 +20,7 @@ O ADR fica fora das pastas de capability porque registra uma decisão que vale p
 
 Num repositório que já tem PRD ou design, trate o PRD como material de origem da spec e o design como as decisões técnicas do plano da mudança. Não os converta nem os remova sem pedido.
 
-A quantidade de arquivos ou de exemplos encontrados não decide sozinha o tamanho do processo. Se o trabalho revelar depois a necessidade de um plano, produza-o e ajuste os dependentes.
+Toda implementação tem um plano em arquivo, mesmo a pequena: é nele que os checks sobrevivem à sessão, são marcados e chegam ao verificador. O tamanho do plano acompanha o risco da mudança, não a quantidade de arquivos ou de exemplos encontrados; uma mudança pequena pode ter só Checks.
 
 ## Documentos vivos
 

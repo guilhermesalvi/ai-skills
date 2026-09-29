@@ -75,7 +75,7 @@ Revise se o diff contém trabalho fora do pedido, abstrações sem necessidade, 
 
 ## Correções
 
-Em implementação autorizada, corrija as lacunas executáveis e repita a verificação pertinente. Com plano em arquivo, uma lacuna corrigida ganha o check que a prova. Em pedido apenas de revisão, entregue os achados sem iniciar implementação.
+Em implementação autorizada, corrija as lacunas executáveis e repita a verificação pertinente. Uma lacuna corrigida ganha no plano o check que a prova. Em pedido apenas de revisão, entregue os achados sem iniciar implementação.
 
 Se as mesmas lacunas persistirem depois de uma rodada de correção, leve o diagnóstico ao usuário em vez de repetir o ciclo.
 

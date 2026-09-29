@@ -6,9 +6,9 @@ Implemente o escopo pedido até sua verificação. O trabalho termina quando cad
 
 Confira `git status`, o plano, a spec atual e as regras dos diretórios atingidos. Preserve o trabalho alheio.
 
-Sem uma branch própria para a mudança, registre a base de comparação antes da primeira alteração, em Context do plano ou no plano curto: a saída de `git rev-parse HEAD`. A verificação usa essa base para isolar o diff da mudança.
+Sem uma branch própria para a mudança, registre a base de comparação antes da primeira alteração, em Context do plano: a saída de `git rev-parse HEAD`. A verificação usa essa base para isolar o diff da mudança.
 
-Sem plano em arquivo, comece com um plano curto na resposta, com as decisões e os checks com prova, e siga para a implementação. Uma nova decisão de negócio continua exigindo resposta antes da parte dependente.
+Sem plano da mudança, escreva-o antes da primeira alteração.
 
 ## Implementar
 

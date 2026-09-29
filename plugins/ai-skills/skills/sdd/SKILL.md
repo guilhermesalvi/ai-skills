@@ -10,13 +10,10 @@ Converta uma necessidade em uma mudança verificável. A spec define o comportam
 ```mermaid
 flowchart TD
     Source[Necessidade de produto, pedido técnico<br/>ou código existente] --> Spec[Spec: comportamento e regras]
-    Spec --> NeedPlan{Há decisão técnica com alternativa real,<br/>decisão irreversível ou trabalho<br/>que atravessa sessões ou executores?}
-    NeedPlan -- sim --> Plan[Plano: decisões e checks]
-    NeedPlan -- não --> Short[Plano curto na conversa]
+    Spec --> Plan[Plano: decisões e checks]
     Plan -. regra para outras capabilities .-> ADR[ADR]
     Decision[Decisão arquitetural avulsa] --> ADR
     Plan --> Execute[Execução]
-    Short --> Execute
     Execute --> Verify[Verificação contra spec e plano]
     Verify -- defeito de contrato --> Fix[Corrigir na origem:<br/>spec ou plano]
 ```
@@ -30,7 +27,7 @@ Leia cada referência cuja condição vale para o pedido. Carregue as demais ape
 | [Fluxo comum](references/workflow.md) | Sempre, antes da referência da etapa |
 | [Prosa](references/prose.md) | Ao escrever ou revisar qualquer artefato |
 | [Especificação](references/specify.md) | Especificar comportamento, inclusive a partir de necessidade de produto, documentar módulo existente ou revisar uma spec |
-| [Plano](references/plan.md) | Planejar a solução ou revisar um plano |
+| [Plano](references/plan.md) | Planejar a solução, implementar uma mudança ainda sem plano ou revisar um plano |
 | [Execução](references/execute.md) | Implementar spec ou funcionalidade não trivial, ou retomar uma mudança |
 | [Verificação](references/verify.md) | Verificar a implementação contra a spec e o plano |
 | [ADR](references/adr.md) | Registrar decisão arquitetural, avulsa ou durante o planejamento, ou revisar um ADR |
