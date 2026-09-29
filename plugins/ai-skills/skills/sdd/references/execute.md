@@ -6,9 +6,9 @@ Implemente o escopo pedido até sua verificação. Cada unidade combina código,
 
 Confira `git status`, o plano, a spec atual e as regras dos diretórios atingidos. Preserve o trabalho alheio.
 
-Sem uma branch própria para a mudança, registre a base de comparação antes da primeira alteração, no `tasks.md` ou no plano: a saída de `git rev-parse HEAD`. A verificação usa essa base para isolar o diff da mudança.
+Sem uma branch própria para a mudança, registre a base de comparação antes da primeira alteração, no Contexto do plano ou no plano curto: a saída de `git rev-parse HEAD`. A verificação usa essa base para isolar o diff da mudança.
 
-Sem `tasks.md`, comece com um plano curto na resposta, com requisitos, estrutura, passos e verificação, e siga para a implementação. Uma nova decisão de produto continua exigindo resposta antes da parte dependente.
+Sem plano em arquivo, comece com um plano curto na resposta, com requisitos, estrutura, passos e verificação, e siga para a implementação. Uma nova decisão de produto continua exigindo resposta antes da parte dependente.
 
 ## Implementar uma unidade
 
@@ -23,11 +23,9 @@ Ao concluir as unidades, execute a [verificação](verify.md).
 
 ## Desvios e restrições
 
-Uma restrição descoberta pode exigir corrigir spec, design ou tarefas. Registre o efeito material e continue o escopo autorizado. Se a mudança implicar novo comportamento de produto, obtenha a decisão correspondente e mantenha o restante em andamento.
+Uma restrição descoberta pode exigir corrigir a spec ou o plano. Registre o efeito material e continue o escopo autorizado. Se a mudança implicar novo comportamento de produto, obtenha a decisão correspondente e mantenha o restante em andamento.
 
-Atualize o artefato no mesmo commit que muda o comportamento descrito, não ao final: escrito depois, ele vira justificativa do que já foi feito. Uma decisão irreversível descoberta na implementação entra no design antes do código que a fecha, com a forma literal e a alternativa rejeitada.
-
-Uma divergência estrutural justificada pode ficar em Desvios ou na descrição da tarefa.
+Atualize a spec ou o plano no mesmo commit que muda o que eles descrevem, não ao final: escrito depois, o registro vira justificativa do que já foi feito. Uma decisão irreversível descoberta na implementação entra em Decisões técnicas do plano antes do código que a fecha, com a forma literal e a alternativa rejeitada.
 
 Valide a existência e a procedência de um pacote antes de adicioná-lo, e respeite as permissões de instalação e de acesso externo. Segredos e dados de produção não entram em respostas, exemplos, commits ou logs de teste.
 
@@ -41,4 +39,4 @@ Sem plano disponível, reconstrua o próximo passo com o que for comprovável. N
 
 Resuma resultado, evidência e pendências reais. Um pedido de continuação mantém o objetivo e a autorização anteriores, salvo mudança explícita do usuário.
 
-Quando outro executor ou outra sessão for continuar, registre no `tasks.md` ou no plano a fronteira alcançada, as decisões do usuário durante a implementação e o que foi tentado e descartado.
+Quando outro executor ou outra sessão for continuar, registre no plano a fronteira alcançada, as decisões do usuário durante a implementação e o que foi tentado e descartado.

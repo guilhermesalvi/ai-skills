@@ -4,7 +4,7 @@ Skills do Claude Code para requisitos de produto e desenvolvimento orientado por
 
 | Skill | Finalidade |
 |---|---|
-| `sdd` | Escrever PRDs e especificar, projetar, planejar, implementar e verificar mudanças técnicas, com requisitos rastreáveis do produto ao código, EARS e ADRs. Inclui um verificador de IDs, prefixos e links dos PRDs, e das citações a eles na spec, no design e nas tarefas, que independe do idioma dos títulos. |
+| `sdd` | Escrever PRDs e especificar, planejar, implementar e verificar mudanças técnicas, com requisitos rastreáveis do produto ao código, EARS e ADRs. Inclui um verificador de IDs, prefixos e links dos PRDs, e das citações a eles na spec e nos planos, que independe do idioma dos títulos. |
 
 ## Instalação
 

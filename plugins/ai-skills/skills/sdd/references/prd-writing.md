@@ -4,7 +4,7 @@ Descreva comportamento observável do produto.
 
 ## Comportamento observável
 
-Na solução, no resumo e nos requisitos, identifique a mudança que o consumidor observa. Cite uma implementação específica apenas quando ela fizer parte do produto solicitado ou de uma restrição real; o restante pertence ao design técnico.
+Na solução, no resumo e nos requisitos, identifique a mudança que o consumidor observa. Cite uma implementação específica apenas quando ela fizer parte do produto solicitado ou de uma restrição real; o restante pertence ao plano técnico.
 
 | Descrição de mecanismo | Comportamento a explicitar |
 | --- | --- |
@@ -74,7 +74,7 @@ As seções marcadas como base são obrigatórias numa nova capability. As demai
 | Glossário do domínio | | Termos necessários, ambiguidades e conceitos da capability |
 | Requisitos funcionais | Sim | Requisitos com condição, resultado, ID e prioridade |
 | Eventos de domínio | | Eventos produzidos ou consumidos e requisitos que os governam |
-| Requisitos não funcionais | | Atributos de qualidade, limites e restrições que orientam o design, com ID e prioridade |
+| Requisitos não funcionais | | Atributos de qualidade, limites e restrições que orientam as decisões técnicas, com ID e prioridade |
 | Considerações regulatórias | | Norma realmente consultada, interpretação adotada e IDs deste PRD afetados |
 | Fora do escopo | | Funcionalidades adjacentes explicitamente excluídas |
 | Trade-offs declarados | | Decisões tomadas que custam algo |

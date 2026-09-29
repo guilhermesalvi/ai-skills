@@ -82,14 +82,15 @@ class PrdChecks(unittest.TestCase):
         (self.document.parent / "spec.md").write_text("- **REQ-100 (Must)** Cópia.\n[Ausente](missing.md)\n", encoding="utf-8")
         self.assertEqual([], check(self.folder))
 
-    def test_spec_design_and_tasks_citations_are_checked(self):
-        change = self.document.parent / "0001-retry"
-        change.mkdir()
+    def test_spec_and_plan_citations_are_checked(self):
+        legacy = self.document.parent / "0001-retry"
+        legacy.mkdir()
         (self.document.parent / "spec.md").write_text("- **API-01** Repetir a chave [REQ-100] [REQ-101].\n", encoding="utf-8")
-        (change / "design.md").write_text("Atende REQ-102.\n", encoding="utf-8")
-        (change / "tasks.md").write_text("- [ ] API-01 [REQ-100]\n", encoding="utf-8")
+        (self.document.parent / "0002-limit.md").write_text("- [ ] API-01 [REQ-100] [REQ-103]\n", encoding="utf-8")
+        (legacy / "design.md").write_text("Atende REQ-102.\n", encoding="utf-8")
         self.assertEqual([
             "requests-lifecycle/0001-retry/design.md: citation REQ-102 has no definition",
+            "requests-lifecycle/0002-limit.md: citation REQ-103 has no definition",
             "requests-lifecycle/spec.md: citation REQ-101 has no definition",
         ], check(self.folder))
 

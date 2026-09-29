@@ -4,7 +4,7 @@
 
 Defina o comportamento antes de implementá-lo. Reutilize um PRD ou uma spec existente ou registre o contrato necessário para a mudança; não crie arquivos vazios.
 
-Sem convenção do repositório, use este layout, com slugs em inglês e em kebab-case. A pasta de uma capability reúne o PRD, a spec e as mudanças dela:
+Sem convenção do repositório, use este layout, com slugs em inglês e em kebab-case. A pasta de uma capability reúne o PRD, a spec e os planos das mudanças dela:
 
 ```text
 docs/specs/
@@ -12,15 +12,13 @@ docs/specs/
   <capability>/
     prd.md                  PRD da capability, editado no lugar
     spec.md                 spec viva da capability, editada no lugar
-    NNNN-<change>/          só quando a mudança tem design ou tarefas
-      design.md
-      tasks.md
+    NNNN-<change>.md        plano da mudança, quando houver
 docs/adr/NNNN-<decision>.md
 ```
 
 O ADR fica fora das pastas de capability porque registra uma decisão que vale para outras capabilities.
 
-`NNNN` tem quatro dígitos e é o número seguinte ao maior da pasta. Cada número pertence a um só item e não muda quando ele é revisado. Se branches paralelos chegarem ao mesmo número, mantenha o do item que já estava na branch de destino, dê ao outro o número seguinte ao maior da pasta e atualize quem o cita. Preserve outra organização já estabelecida no repositório. Planos técnicos duráveis ficam com os artefatos da mudança, não numa pasta de planos independente.
+`NNNN` tem quatro dígitos e é o número seguinte ao maior da pasta. Cada número pertence a um só item e não muda quando ele é revisado. Se branches paralelos chegarem ao mesmo número, mantenha o do item que já estava na branch de destino, dê ao outro o número seguinte ao maior da pasta e atualize quem o cita. Preserve outra organização já estabelecida no repositório. Os planos ficam na pasta da capability, não numa pasta de planos independente.
 
 A quantidade de arquivos ou de exemplos encontrados não decide sozinha o tamanho do processo. Se o trabalho revelar depois a necessidade de um desses artefatos, produza-o e ajuste os dependentes.
 
@@ -28,7 +26,7 @@ A quantidade de arquivos ou de exemplos encontrados não decide sozinha o tamanh
 
 PRD e spec descrevem o contrato atual. Altere-os no próprio arquivo, sem cópia ou versão paralela: o diff registra a mudança, e o histórico do Git, a autoria e a evolução.
 
-O andamento da implementação pertence às tarefas e à entrega; não o registre no PRD nem na spec. Ficam fora desses documentos, porque não descrevem o contrato:
+O andamento da implementação pertence ao plano e à entrega; não o registre no PRD nem na spec. Ficam fora desses documentos, porque não descrevem o contrato:
 
 - instruções dirigidas ao agente ou a quem edita o documento;
 - histórico de revisões;
@@ -41,7 +39,7 @@ O andamento da implementação pertence às tarefas e à entrega; não o registr
 
 As regras valem para os requisitos do PRD e da spec. Ao ajustar o mesmo comportamento, preserve o ID dele; ao substituir o conceito, retire o ID e crie outro.
 
-Antes de alterar ou retirar um requisito ou um caso de aceitação, procure o ID ou o nome do caso com `git grep -n` para encontrar os PRDs, specs, designs, tarefas e testes que dependem dele. Um ID retirado sai do arquivo, e quem o citava passa a citar o substituto ou deixa de citá-lo. O documento não guarda lista de retirados: o histórico do Git registra o que o ID significava.
+Antes de alterar ou retirar um requisito ou um caso de aceitação, procure o ID ou o nome do caso com `git grep -n` para encontrar os PRDs, specs, planos e testes que dependem dele. Um ID retirado sai do arquivo, e quem o citava passa a citar o substituto ou deixa de citá-lo. O documento não guarda lista de retirados: o histórico do Git registra o que o ID significava.
 
 Um ID novo recebe o número seguinte ao maior já usado com o mesmo prefixo. Como o maior número pode ter sido retirado, confira com `git log -S "<ID>"` que o candidato nunca existiu; sem o histórico completo, como num clone raso, informe na entrega que a conferência não foi feita. Um ID retirado não volta a ser usado, e os demais não são renumerados para fechar buracos na sequência.
 
@@ -49,7 +47,7 @@ Um ID novo recebe o número seguinte ao maior já usado com o mesmo prefixo. Com
 
 O pedido define as etapas autorizadas:
 
-- **Pedido de PRD, spec, design ou tarefas.** Termina no artefato.
+- **Pedido de PRD, spec ou plano.** Termina no artefato.
 - **Pedido de implementação.** Autoriza a spec que faltar, o planejamento necessário, a execução, a verificação e as correções dentro do escopo, sem aprovações intermediárias. Não autoriza criar um PRD nem mudar uma regra de negócio, porque essas decisões pertencem ao usuário.
 
 Artefatos ainda sem commit valem como entrada; registre qual versão a implementação usou. Commit e push seguem a autorização do usuário e não liberam etapas.
@@ -68,21 +66,21 @@ Se uma regra local parecer impedir o trabalho, informe o arquivo, a regra e a a�
 
 Um fato aponta para sua origem: decisão do usuário, regra formalizada, PRD, código, documentação, observação ou fonte pertinente. Verifique informações técnicas atuais nas fontes oficiais quando necessário; não invente APIs, ferramentas ou comportamento.
 
-O que ainda não é fato vai para a seção Premissas ou para a seção Lacunas do artefato onde a questão surge: o PRD, para produto; a spec, para comportamento técnico; o design, para a solução.
+O que ainda não é fato vai para a seção Premissas ou para a seção Lacunas do artefato onde a questão surge: o PRD, para produto; a spec, para comportamento técnico; o plano, para a solução.
 
-Uma premissa é uma inferência ou uma escolha provisória que o trabalho usa. O texto que depende dela a apresenta como hipótese, não como fato. Registre cada premissa como um item de lista, num só parágrafo: a premissa em negrito, a origem ou a evidência que a motivou, a consequência se ela for falsa e, quando conhecidos, quem a verifica e como. Na spec e no design, o item registra também a escolha feita, quando a premissa for uma escolha, e termina com `Confirmada?`: `s` quando o usuário decidiu, inclusive ao delegar a escolha, e `n` para o default que ninguém viu. Sem esse campo, um default silencioso parece decisão tomada.
+Uma premissa é uma inferência ou uma escolha provisória que o trabalho usa. O texto que depende dela a apresenta como hipótese, não como fato. Registre cada premissa como um item de lista, num só parágrafo: a premissa em negrito, a origem ou a evidência que a motivou, a consequência se ela for falsa e, quando conhecidos, quem a verifica e como. Na spec e no plano, o item registra também a escolha feita, quando a premissa for uma escolha, e termina com `Confirmada?`: `s` quando o usuário decidiu, inclusive ao delegar a escolha, e `n` para o default que ninguém viu. Sem esse campo, um default silencioso parece decisão tomada.
 
 Uma lacuna é uma informação ou decisão ausente. Registre as lacunas numa tabela com as colunas Lacuna, Afeta e Responsável: o que falta, os IDs ou o comportamento que ficam indefinidos e quem decide. O corpo do artefato afirma só o que está decidido, e um requisito que depende inteiramente de uma lacuna só é escrito quando ela for resolvida. Não preencha uma lacuna com especulação: usuário, métrica, limite ou regra ausente continua lacuna, e inventar um valor só torna a frase aparentemente verificável.
 
 Quando regras, fontes ou paráfrases se contradisserem, ou quando uma correção depender de decisão de negócio, registre a lacuna com os IDs afetados e conclua o restante. Não escolha uma das versões em silêncio.
 
-Corrija a inconsistência na origem dela: regra de negócio no PRD, comportamento técnico na spec, decisão estrutural no design. Depois atualize os consumidores afetados. Uma mudança de comportamento encontrada na verificação segue o mesmo caminho; ela não sobrevive apenas como observação de revisão.
+Corrija a inconsistência na origem dela: regra de negócio no PRD, comportamento técnico na spec, decisão de solução no plano. Depois atualize os consumidores afetados. Uma mudança de comportamento encontrada na verificação segue o mesmo caminho; ela não sobrevive apenas como observação de revisão.
 
 Não altere o contrato para fazer um teste passar, nem refaça todo o fluxo por causa de um defeito local.
 
 ## Revisar um artefato
 
-Revise PRD, spec, design, tarefas ou ADR contra a referência da etapa, com profundidade proporcional à mudança, e confira também:
+Revise PRD, spec, plano ou ADR contra a referência da etapa, com profundidade proporcional à mudança, e confira também:
 
 - Caminhos, links e IDs resolvem para as fontes corretas; a numeração não colide e IDs retirados não voltam.
 - Idioma, rótulos e formato existentes foram preservados, cada seção tem conteúdo útil e nenhum fato se repete entre seções.
@@ -101,11 +99,10 @@ Nomes de APIs, tipos, paths e identificadores não se traduzem, nem termos canô
 
 | Artefato | Português | English |
 | --- | --- | --- |
-| PRD, spec e design | Premissas, Lacunas; colunas Lacuna, Afeta, Responsável | Assumptions, Gaps; columns Gap, Affects, Owner |
-| Spec e design | Campo `Confirmada?` com `s` ou `n` | Field `Confirmed?` with `y` or `n` |
+| PRD, spec e plano | Premissas, Lacunas; colunas Lacuna, Afeta, Responsável | Assumptions, Gaps; columns Gap, Affects, Owner |
+| Spec e plano | Campo `Confirmada?` com `s` ou `n` | Field `Confirmed?` with `y` or `n` |
 | PRD | Resumo executivo, Alinhamento estratégico, Contexto e problema, Usuário-alvo / JTBD, Oportunidade / hipótese, Solução proposta, Glossário do domínio, Requisitos funcionais, Eventos de domínio, Requisitos não funcionais, Considerações regulatórias, Fora do escopo, Trade-offs declarados, Métricas de sucesso, Critérios de aceitação, Dependências e riscos, Referências; Prefixo dos requisitos, Capabilities afetadas, Visão geral, Identificador; colunas Decisão, Custo, Motivo | Executive Summary, Strategic Alignment, Context and Problem, Target User / JTBD, Opportunity / Hypothesis, Proposed Solution, Domain Glossary, Functional Requirements, Domain Events, Non-functional Requirements, Regulatory Considerations, Non-goals, Declared Trade-offs, Success Metrics, Acceptance Criteria, Dependencies and Risks, References; Requirement Prefix, Affected Capabilities, Overview, Identifier; columns Decision, Cost, Reason |
 | Visão geral de produto | Escopo, Propósito, Capabilities, Catálogo de eventos, Fluxos entre capabilities, Termos com mais de um significado, Decisões delegadas a ADR | Scope, Purpose, Capabilities, Event Catalog, Flows Between Capabilities, Terms with Multiple Meanings, Decisions Delegated to ADR |
 | Spec | Prefixo dos requisitos, PRD de origem, Contexto, Escopo / Fora do escopo, Requisitos, Cenários de aceitação, Decisões observáveis, Eventos de domínio, Glossário, Cobertura do PRD, Divergências; colunas ID do PRD, Motivo | Requirement Prefix, Source PRD, Context, Scope / Out of Scope, Requirements, Acceptance Scenarios, Observable Decisions, Domain Events, Glossary, PRD Coverage, Divergences; columns PRD ID, Reason |
-| Design | Contexto do design, Abordagens, Unidade de implantação, Componentes, Eventos de domínio, Modelo de dados, Tratamento de erros, Decisões técnicas, Riscos e técnicas; colunas Decisão, Escolha, Alternativa rejeitada, Custo, Reversível | Design Context, Approaches, Deployment Unit, Components, Domain Events, Data Model, Error Handling, Technical Decisions, Risks and Techniques; columns Decision, Choice, Rejected alternative, Cost, Reversible |
-| Tarefas | Comandos de gate, Plano de execução, Tarefas, Desvios, Tarefas de correção; campos Onde, Depende de (`nenhuma`), Interfaces, Pronto quando | Gate Commands, Execution Plan, Tasks, Deviations, Correction Tasks; fields Where, Depends on (`none`), Interfaces, Done when |
+| Plano | Contexto, Decisões técnicas, Estrutura, Riscos, Comandos de gate, Tarefas; colunas Decisão, Escolha, Alternativas rejeitadas, Custo, Reversível; campos Onde, Depende de (`nenhuma`), Interfaces, Pronto quando | Context, Technical Decisions, Structure, Risks, Gate Commands, Tasks; columns Decision, Choice, Rejected alternatives, Cost, Reversible; fields Where, Depends on (`none`), Interfaces, Done when |
 | ADR | `ADR NNNN: decisão`, Participantes, Contexto, Decisão, Alternativas consideradas, Consequências, Regras derivadas, `Substitui: NNNN`, `Substituído por: NNNN` | `ADR NNNN: decision`, Participants, Context, Decision, Alternatives considered, Consequences, Derived rules, `Supersedes: NNNN`, `Superseded by: NNNN` |

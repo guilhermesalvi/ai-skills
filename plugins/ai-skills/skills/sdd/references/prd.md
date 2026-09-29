@@ -30,7 +30,7 @@ python "<skill-dir>/scripts/check_prd.py" docs/specs
 
 `<skill-dir>` é o caminho absoluto da pasta que contém o `SKILL.md` carregado, não uma variável de ambiente fornecida pela ferramenta. `docs/specs` é o default; use a pasta que a convenção do repositório fixar, relativa à raiz do projeto.
 
-O script lê o `prd.md` de cada pasta de capability e a visão geral `overview.md`, e ignora títulos e rótulos, então funciona em qualquer idioma. Ele confere definição única de cada ID, prefixo exclusivo por PRD, prioridade MoSCoW, citações sem definição, links locais e cercas de código abertas. Na spec, nos designs e nas tarefas da capability, confere só as citações a IDs de PRD. Um requisito conta como definição quando o item de lista começa pelo ID em negrito, como no exemplo de IDs das convenções.
+O script lê o `prd.md` de cada pasta de capability e a visão geral `overview.md`, e ignora títulos e rótulos, então funciona em qualquer idioma. Ele confere definição única de cada ID, prefixo exclusivo por PRD, prioridade MoSCoW, citações sem definição, links locais e cercas de código abertas. Na spec e nos planos da capability, confere só as citações a IDs de PRD. Um requisito conta como definição quando o item de lista começa pelo ID em negrito, como no exemplo de IDs das convenções.
 
 | Saída | Significado |
 | --- | --- |

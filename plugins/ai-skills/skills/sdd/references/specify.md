@@ -1,6 +1,6 @@
 # Especificação
 
-Defina comportamento técnico testável e rastreável. A spec é o contrato que design, tarefas e verificação usam; ela não decide regras de negócio, que pertencem ao PRD.
+Defina comportamento técnico testável e rastreável. A spec é o contrato que o plano e a verificação usam; ela não decide regras de negócio, que pertencem ao PRD.
 
 ## Origem do contrato
 
@@ -18,8 +18,8 @@ Um pedido técnico delimitado dispensa PRD. Se faltar uma decisão real de produ
 - **Preserve identificadores** de estados, eventos e enumerações do domínio.
 - **Não converta lacuna de negócio em premissa técnica** para liberar a implementação. Registre-a em Lacunas com a origem no PRD e bloqueie somente os requisitos dependentes.
 - **Consulte a visão geral de produto**, quando existir, para produtores, consumidores, direção dos contratos e decisões delegadas a ADR.
-- **Trate os NFRs pelo que eles permitem verificar.** NFR com resultado verificável gera requisito técnico ou critério de aceitação; atributo usado para comparar soluções entra como critério de design, com origem registrada.
-- **Confira as citações** com o verificador descrito em Verificação de IDs e links da etapa [PRD](prd.md): ele aponta os IDs de produto citados pela spec, pelo design ou pelas tarefas que nenhum PRD define.
+- **Trate os NFRs pelo que eles permitem verificar.** NFR com resultado verificável gera requisito técnico ou critério de aceitação; atributo usado para comparar soluções entra como critério das decisões técnicas do plano, com origem registrada.
+- **Confira as citações** com o verificador descrito em Verificação de IDs e links da etapa [PRD](prd.md): ele aponta os IDs de produto citados pela spec ou pelo plano que nenhum PRD define.
 - **Traga pelo nome os casos de aceitação** do PRD atingidos pela mudança nos cenários que os verificam, e marque os de outra capability com seu responsável. Casos de aceitação e de rejeição são cenários distintos.
 
 ## Esclarecer o comportamento

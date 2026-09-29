@@ -1,6 +1,6 @@
 # Decisão arquitetural
 
-Use ADR para uma escolha que define convenção, restrição ou padrão para outras capabilities: estilo arquitetural, transporte de eventos ou política de versionamento, por exemplo. Uma decisão local permanece no design da mudança; se o pedido for um ADR para ela, diga em uma linha que ela caberia no design e escreva o ADR.
+Use ADR para uma escolha que define convenção, restrição ou padrão para outras capabilities: estilo arquitetural, transporte de eventos ou política de versionamento, por exemplo. Uma decisão local permanece no plano da mudança; se o pedido for um ADR para ela, diga em uma linha que ela caberia no plano e escreva o ADR.
 
 Registrar uma decisão não amplia o escopo: aplicá-la ao restante do projeto exige pedido próprio.
 
@@ -24,7 +24,7 @@ Regras derivadas só existe quando a decisão cria ou altera uma regra. Mantenha
 
 ## ADR avulso
 
-Sem design, leia os ADRs vigentes, a visão geral de produto e as specs e o código que a decisão atinge, para achar conflitos e as capabilities afetadas.
+Fora de um plano, leia os ADRs vigentes, a visão geral de produto e as specs e o código que a decisão atinge, para achar conflitos e as capabilities afetadas.
 
 Se o pedido não indicar a escolha, compare as alternativas pelos mesmos critérios, recomende uma e peça a escolha ao usuário antes de escrever: o ADR registra a decisão, não a recomendação.
 
@@ -32,6 +32,6 @@ Ao registrar uma decisão já adotada no código, derive contexto e decisão do 
 
 ## Cumprir ou substituir uma decisão
 
-Leia os ADRs pertinentes antes de projetar. Quando uma escolha conflitar com um ADR vigente, explicite se a solução seguirá a restrição ou se é necessária sua substituição, dentro da autorização do pedido.
+Leia os ADRs pertinentes antes de planejar. Quando uma escolha conflitar com um ADR vigente, explicite se a solução seguirá a restrição ou se é necessária sua substituição, dentro da autorização do pedido.
 
 Ao substituir, crie o novo ADR com `Substitui: NNNN` e acrescente `Substituído por: NNNN` ao anterior. Preserve o conteúdo histórico do documento antigo e confira que as referências são recíprocas e apontam para arquivos existentes.

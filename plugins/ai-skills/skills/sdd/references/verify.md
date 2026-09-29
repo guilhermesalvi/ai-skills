@@ -1,6 +1,6 @@
 # Verificação
 
-Confronte a implementação com a spec e o design atuais. Informe quais requisitos têm evidência, quais estão sem cobertura e quais ainda não definem um resultado preciso.
+Confronte a implementação com a spec e o plano atuais. Informe quais requisitos têm evidência, quais estão sem cobertura e quais ainda não definem um resultado preciso.
 
 O relatório normalmente vai na resposta. Salve um artefato quando o pedido ou a necessidade de rastreabilidade justificar.
 
@@ -14,7 +14,7 @@ Preserve as alterações alheias: a revisão não exige `add`, `stash`, restaura
 
 Leia os requisitos e os testes antes de consultar a conclusão de quem implementou, para reduzir a confirmação automática da própria solução.
 
-Numa mudança não trivial, verifique em contexto separado de quem implementou sempre que houver subagente disponível: o autor tende a reaplicar o raciocínio que produziu a lacuna. Passe ao subagente os caminhos da spec, do design e do plano, a base, os comandos de verificação e todos os requisitos em escopo, não só a última fatia implementada. Sem subagente, verifique mesmo assim e declare no relatório que autor e verificador são o mesmo.
+Numa mudança não trivial, verifique em contexto separado de quem implementou sempre que houver subagente disponível: o autor tende a reaplicar o raciocínio que produziu a lacuna. Passe ao subagente os caminhos da spec e do plano, a base, os comandos de verificação e todos os requisitos em escopo, não só a última fatia implementada. Sem subagente, verifique mesmo assim e declare no relatório que autor e verificador são o mesmo.
 
 ## Conformidade com a spec
 
@@ -41,7 +41,7 @@ Um requisito que quantifica sobre um conjunto se satisfaz por frase e se reprova
 | Status do provedor (9) | EXM-04, prova por tabela sobre os 9 | `-` |
 | Tipos de evento recebidos (4) | `paused` EXM-05 · `updated` EXM-06 · `deleted` EXM-07 · `trial_end` EXM-08 | `-` |
 
-Parta dos conjuntos, não dos testes escritos: resumir os testes não encontra membro sem teste. Tire os membros de quem tem autoridade sobre o conjunto, como o provedor, o framework, o design ou o contrato, e não da implementação, que sempre se declara completa.
+Parta dos conjuntos, não dos testes escritos: resumir os testes não encontra membro sem teste. Tire os membros de quem tem autoridade sobre o conjunto, como o provedor, o framework, o plano ou o contrato, e não da implementação, que sempre se declara completa.
 
 Os pontos de composição da aplicação também formam um conjunto: cada aplicação que monta o módulo precisa de prova própria ou de uma composição compartilhada com a suíte.
 
@@ -67,15 +67,15 @@ Sem essa confirmação, reporte a origem da falha como incerta. Ela continua imp
 
 Se apenas a remoção da worktree falhar, o resultado na base continua valendo; informe o diretório que ficou.
 
-## Conformidade com o design
+## Conformidade com o plano
 
-Confira responsabilidades, contratos, dependências, fronteiras, eventos, persistência e mitigação dos riscos descritos. Arquivos adicionais necessários à integração precisam de justificativa registrada.
+Confira as decisões técnicas, responsabilidades, contratos, dependências, fronteiras, eventos, persistência e mitigação dos riscos descritos. Arquivos adicionais necessários à integração precisam de justificativa registrada.
 
 Revise se o diff contém trabalho fora do pedido, abstrações sem necessidade, opções sem consumidor ou mudanças adjacentes indevidas. Uma abstração usada uma vez pode ter motivo concreto: avalie-o, em vez de proibi-la com base apenas na contagem de usos.
 
 ## Correções
 
-Em implementação autorizada, corrija as lacunas executáveis e repita a verificação pertinente. Registre tarefas de correção quando a decomposição ajudar. Em pedido apenas de revisão, entregue os achados sem iniciar implementação.
+Em implementação autorizada, corrija as lacunas executáveis e repita a verificação pertinente. Com plano em arquivo, acrescente as correções como novas tarefas. Em pedido apenas de revisão, entregue os achados sem iniciar implementação.
 
 Se as mesmas lacunas persistirem depois de uma rodada de correção, leve o diagnóstico ao usuário em vez de repetir o ciclo.
 
@@ -89,6 +89,6 @@ Um mutante sobrevivente é achado: a asserção passaria sob uma implementação
 
 ## Entrega
 
-Comece pelo resultado e pela cobertura conhecida. Apresente os checks executados, as ressalvas do design, as lacunas ordenadas pelo impacto e a ação necessária para resolvê-las.
+Comece pelo resultado e pela cobertura conhecida. Apresente os checks executados, as ressalvas do plano, as lacunas ordenadas pelo impacto e a ação necessária para resolvê-las.
 
 Distinga observação, hipótese e verificação não executada. Não transforme inspeção estática em prova de runtime, nem uma nota de confiança em aprovação do produto.

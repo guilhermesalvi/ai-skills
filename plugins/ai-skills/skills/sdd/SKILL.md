@@ -1,29 +1,26 @@
 ---
 name: sdd
-description: Escreve PRDs e ADRs e especifica, projeta, decompõe, implementa, verifica ou retoma mudanças técnicas com requisitos rastreáveis do produto ao código. Use para PRD de produto ou funcionalidade, inclusive de produto existente e de plataforma, SDK ou API como produto, mesmo quando o pedido chega como tela ou CRUD; para ADR de decisão arquitetural nova ou já adotada no código; para tech spec ou spec de comportamento do sistema, design de solução, plano de tarefas, implementação não trivial a partir de uma spec e verificação contra ela. Não use para code review sem spec, documentação geral ou ajuste mecânico.
+description: Escreve PRDs e ADRs e especifica, planeja, implementa, verifica ou retoma mudanças técnicas com requisitos rastreáveis do produto ao código. Use para PRD de produto ou funcionalidade, inclusive de produto existente e de plataforma, SDK ou API como produto, mesmo quando o pedido chega como tela ou CRUD; para ADR de decisão arquitetural nova ou já adotada no código; para tech spec ou spec de comportamento do sistema, plano com decisões técnicas e tarefas, implementação não trivial a partir de uma spec e verificação contra ela. Não use para code review sem spec, documentação geral ou ajuste mecânico.
 ---
 
 # Desenvolvimento por especificação
 
-Converta uma necessidade em uma mudança verificável. O PRD define problema, comportamento e regras de negócio; a spec, o comportamento técnico; o design, a solução.
+Converta uma necessidade em uma mudança verificável. O PRD define problema, comportamento e regras de negócio; a spec, o comportamento técnico; o plano, a solução e as tarefas.
 
 ```mermaid
 flowchart TD
     Need[Necessidade de produto] --> PRD[PRD: problema e regras de negócio]
     PRD --> Spec[Spec: comportamento técnico]
     Source[Pedido técnico ou código existente] --> Spec
-    Spec --> NeedDesign{Há decisão de arquitetura, contrato público,<br/>persistência, integração ou migração,<br/>ou risco que exija comparar soluções?}
-    NeedDesign -- sim --> Design[Design: solução]
-    Design -. regra para outras capabilities .-> ADR[ADR]
+    Spec --> NeedPlan{Há decisão técnica com alternativa real,<br/>decisão irreversível ou trabalho<br/>que atravessa sessões ou executores?}
+    NeedPlan -- sim --> Plan[Plano: decisões e tarefas]
+    NeedPlan -- não --> Short[Plano curto na conversa]
+    Plan -. regra para outras capabilities .-> ADR[ADR]
     Decision[Decisão arquitetural avulsa] --> ADR
-    Design --> NeedTasks
-    NeedDesign -- não --> NeedTasks{A decomposição e as dependências<br/>precisam de registro durável?}
-    NeedTasks -- sim --> Tasks[Tarefas]
-    NeedTasks -- não --> Plan[Plano curto na conversa]
-    Tasks --> Execute[Execução]
-    Plan --> Execute
-    Execute --> Verify[Verificação contra spec e design]
-    Verify -- defeito de contrato --> Fix[Corrigir na origem:<br/>PRD, spec ou design]
+    Plan --> Execute[Execução]
+    Short --> Execute
+    Execute --> Verify[Verificação contra spec e plano]
+    Verify -- defeito de contrato --> Fix[Corrigir na origem:<br/>PRD, spec ou plano]
 ```
 
 Uma mudança precisa de PRD quando muda o resultado, a informação ou o prazo que o consumidor observa. Refatoração interna, decisão arquitetural local e contrato de API sem contexto de produto começam pela spec. Uma decisão que vale para outras capabilities pode ir direto para o ADR.
@@ -36,13 +33,12 @@ Leia o [fluxo comum](references/workflow.md) e a referência da etapa solicitada
 | --- | --- | --- |
 | Escrever, editar ou revisar PRD, inclusive a visão geral de produto | [PRD](references/prd.md) | Problema, usuário, comportamento, requisitos verificáveis e custo das decisões |
 | Especificar comportamento ou documentar módulo existente | [Especificação](references/specify.md) | Spec com critérios verificáveis |
-| Projetar solução | [Design](references/design.md) | Responsabilidades, contratos, alternativas e custos |
-| Decompor o trabalho | [Tarefas](references/tasks.md) | Unidades executáveis por dependência |
+| Planejar a solução e decompor o trabalho | [Plano e tarefas](references/tasks.md) | Decisões com custo e tarefas executáveis por dependência |
 | Implementar spec ou funcionalidade não trivial | [Execução](references/execute.md) | Mudança implementada e verificada |
 | Verificar implementação | [Verificação](references/verify.md) | Evidências de conformidade e lacunas |
 | Retomar mudança | Seção Retomar uma mudança de [execução](references/execute.md) | Próxima etapa sustentada pelo estado atual |
-| Registrar decisão arquitetural, avulsa ou durante o design | [ADR](references/adr.md) | Decisão e consequências rastreáveis |
-| Revisar spec, design, tarefas ou ADR | Referência da etapa do artefato | Achados com a regra violada |
+| Registrar decisão arquitetural, avulsa ou durante o planejamento | [ADR](references/adr.md) | Decisão e consequências rastreáveis |
+| Revisar spec, plano ou ADR | Referência da etapa do artefato | Achados com a regra violada |
 
 Consulte [prosa](references/prose.md) sempre que escrever.
 
