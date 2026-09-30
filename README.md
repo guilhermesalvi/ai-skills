@@ -4,7 +4,7 @@ Skills do Claude Code para desenvolvimento orientado por especificações, distr
 
 | Skill | Finalidade |
 |---|---|
-| `sdd` | Especificar, planejar, implementar e verificar mudanças, com requisitos EARS rastreáveis da spec ao teste e ADRs. A spec absorve as regras de negócio; o plano traz as decisões técnicas e os checks, cada um com a prova que o decide, sem decompor o trabalho em tarefas. Inclui um verificador de IDs, links e estrutura das specs e dos planos. |
+| `sdd` | Especificar, planejar, implementar e verificar mudanças, com requisitos EARS rastreáveis da spec ao teste e ADRs. A spec absorve as regras de negócio; o plano traz as decisões técnicas, o escopo e os checks, cada um com a prova que o decide, sem decompor o trabalho em tarefas. Inclui modelos dos artefatos e um script que confere IDs, links, schema, cobertura das dimensões e rastreabilidade entre o escopo do plano e os checks. |
 
 ## Instalação
 
@@ -35,6 +35,8 @@ O repositório Git, o plugin e o marketplace se chamam `ai-skills`. O catálogo 
 
 Para usar só uma skill, copie `plugins/ai-skills/skills/<nome>` para `~/.claude/skills/<nome>` (todos os projetos) ou `.claude/skills/<nome>` de um projeto. Ela pode ser invocada como `/<nome>`, por exemplo `/sdd`. Escolha entre o plugin e as cópias para não carregar a mesma skill duas vezes.
 
+A skill segue o padrão aberto [Agent Skills](https://agentskills.io/specification), então a mesma pasta funciona em outros agentes que o adotam. No Codex, copie-a para `.agents/skills/sdd` do projeto ou `~/.agents/skills/sdd` e invoque com `$sdd`. Em qualquer agente, o `check_spec.py` precisa de Python 3.10+ e git.
+
 ## Atualização
 
 O manifesto declara uma versão semântica. Ao publicar uma alteração no pacote, incremente `version` em `plugins/ai-skills/.claude-plugin/plugin.json`: sem esse incremento, instalações existentes continuam na versão em cache. Um push não atualiza cópias instaladas por si só. Para uma origem Git:
@@ -49,8 +51,9 @@ Para uma origem local, incremente a versão e repita apenas `claude plugin insta
 ## Convenções
 
 - O pedido do usuário prevalece sobre os defaults das skills. As instruções aplicáveis do repositório consumidor, em `CLAUDE.md` ou `CLAUDE.local.md`, vêm em seguida.
-- As instruções das skills estão em português. A prosa dos artefatos gerados segue o pedido, a convenção do repositório e o material de origem, nessa ordem; títulos de seção, rótulos, colunas e campos formam um schema em inglês em qualquer idioma de prosa, e termos canônicos em inglês não se traduzem.
+- As instruções das skills estão em português. A prosa dos artefatos gerados segue o pedido ou a convenção do repositório e, sem essa definição, o idioma em que o pedido foi escrito; títulos de seção, rótulos, colunas, campos e dimensões formam um schema em inglês em qualquer idioma de prosa, e termos canônicos em inglês não se traduzem.
 - As skills continuam o trabalho autorizado até a validação e perguntam apenas sobre decisões ausentes que afetem escopo ou correção. Commit e push seguem a autorização do usuário.
+- As skills são validadas do Sonnet para cima. A verificação da `sdd` roda num subagente quando há um; se você configurar subagentes num modelo menor, ela fica abaixo desse piso.
 - Os scripts exigem Python 3.10+ e não usam pacotes de terceiros. Nos comandos das skills, substitua `<skill-dir>` pela pasta absoluta do `SKILL.md` carregado; execute a partir do projeto consumidor.
 
 ## Desenvolvimento
@@ -86,13 +89,33 @@ try {
 
 O inventário deve mostrar `ai-skills` habilitado com a skill `sdd`. Esse teste verifica empacotamento e instalação; a qualidade das skills exige uso e revisão dos artefatos. Para testar o seletor na sessão, instale pelo procedimento normal e abra uma nova sessão.
 
+### Evals
+
+A suíte em `plugins/ai-skills/evals/` mede o comportamento da skill com [`claude plugin eval`](https://code.claude.com/docs/en/plugin-evals). Cada caso monta um repositório de exemplo num workspace vazio e compara as execuções com e sem o plugin:
+
+| Caso | O que confere |
+| --- | --- |
+| `cancel-orders-spec` | Spec e plano a partir de um pedido vago: capability, idioma, dimensões, pedido pago como lacuna, `Confirmed?`, escopo do plano e perguntas na entrega |
+| `adr-from-code` | ADR de decisão já adotada, sem inventar participantes, alternativas ou motivo |
+| `implement-and-verify` | Implementação de um plano: testes nomeados pelas provas, checks marcados e relatório de verificação |
+| `ignores-code-review` | A skill não dispara para code review sem spec |
+
+Os scaffolds criam arquivos e repositórios Git como você, fora do sandbox, e só rodam com `--scaffold`. Os casos escrevem arquivos, então conceda `Write` e `Edit`:
+
+```bash
+claude plugin eval plugins/ai-skills --scaffold --allow-tools Write Edit --model sonnet --no-publish
+```
+
+O Sonnet é o menor modelo suportado. Repita com os modelos maiores que você usa, como `--model opus`. Conceder `Bash` exige o sandbox do sistema, que o Windows nativo não tem; nele, rode a suíte sem Bash e exclua o caso que depende dele com `--tag spec plan adr trigger`, ou rode tudo no WSL2 com `--allow-tools Write Edit "Bash(python *)" "Bash(git *)"`. Os resultados ficam em `plugins/ai-skills/evals/results/`, fora do Git.
+
 ```text
 .claude-plugin/marketplace.json      catálogo deste repositório
 CLAUDE.md                            orientações para editar o repositório
 plugins/ai-skills/
   .claude-plugin/plugin.json         manifesto do plugin
   skills/
-    sdd/                             SKILL.md, references/, scripts/check_spec.py
+    sdd/                             SKILL.md, references/, assets/, scripts/check_spec.py
+  evals/                             casos de claude plugin eval
 tests/                               testes dos scripts
 ```
 
