@@ -37,7 +37,7 @@ O andamento da implementação pertence ao plano e à entrega; não o registre n
 
 ## IDs de requisito
 
-Ao ajustar o mesmo comportamento, preserve o ID dele; ao substituir o conceito, retire o ID e crie outro.
+Ao ajustar o mesmo comportamento, preserve o ID dele; ao substituir o conceito, retire o ID e crie outro. Ao dividir um requisito, o ID fica com a parte que mantém o conceito do enunciado original, e as demais recebem IDs novos.
 
 Antes de alterar ou retirar um requisito ou um cenário de aceitação, procure o ID ou o nome do cenário com `git grep -n` para encontrar as specs, os planos e os testes que dependem dele. Um ID retirado sai do arquivo, e quem o citava passa a citar o substituto ou deixa de citá-lo. O documento não guarda lista de retirados: o histórico do Git registra o que o ID significava.
 
