@@ -16,7 +16,7 @@ A spec é dona das regras da sua capability. Nomeie em Affected Capabilities as 
 | Documento de produto, ata ou ticket | Pese cada afirmação pela autoridade, porque decisão registrada, observação e sugestão pesam diferente. Cite a origem com seção ou página e sintetize em vez de reformatar |
 | Código existente | Descreva o comportamento observado com `arquivo:linha` e as divergências com a intenção documentada. A intenção inferida vai para Assumptions, com a evidência; a justificativa ausente e as intenções concorrentes vão para Gaps. Não reescreva o comportamento para concordar com uma intenção inferida |
 
-Um domínio amplo ou várias iniciativas pedem um recorte com resultado identificável; se a escolha mudar o escopo materialmente, peça a decisão e avance nas partes independentes. Com apenas um nome ou uma ideia genérica, reúna as perguntas indispensáveis sobre problema, consumidor e resultado esperado. Leia a spec existente, os ADRs pertinentes, os contratos e o código atingido antes de perguntar.
+Um domínio amplo ou várias iniciativas pedem um recorte com resultado identificável; um recorte que muda o escopo materialmente é decisão do usuário. Com apenas um nome ou uma ideia genérica, reúna as perguntas indispensáveis sobre problema, consumidor e resultado esperado. Leia a spec existente, os ADRs pertinentes, os contratos e o código atingido antes de perguntar.
 
 Num assunto regulado, distinga o que a norma diz, a interpretação adotada e a regra do sistema: a interpretação do modelo não comprova conformidade.
 
@@ -118,7 +118,7 @@ Use `#` para o título e `##` para as seções, nesta ordem. Context e Requireme
 | Context | Problema, consumidor e o trabalho que ele precisa fazer, origem do contrato e código pertinente | Parágrafos |
 | Scope | O que entra e as exclusões que um leitor esperaria ver dentro | Parágrafo ou lista |
 | Assumptions | Inferências e defaults de comportamento | Lista, como define o fluxo comum |
-| Gaps | Informações e decisões ausentes | Tabela Gap, Affects, Owner |
+| Gaps | Informações e decisões ausentes | Tabela, como define o fluxo comum |
 | Glossary | Termos canônicos, sinônimos e identificadores no idioma do código | Tabela Term, Identifier, Definition |
 | Requirements | IDs e comportamento observável, com os diagramas pertinentes | Lista de requisitos; tabela State, Identifier, Meaning para estados |
 | Domain Events | Gatilho, significado, consumidores e o que eles podem assumir | Tabela Event, Trigger, Content, Consumers |
@@ -126,4 +126,4 @@ Use `#` para o título e `##` para as seções, nesta ordem. Context e Requireme
 | Observable Decisions | Decisões de cada superfície e dimensão, com a aterrissagem | Tabela Surface or dimension, Landing |
 | Trade-offs | Decisões de comportamento que custam algo | Tabela Decision, Cost, Reason |
 | Divergences | Na origem código, diferença entre implementação e intenção documentada | Lista |
-| References | Fontes externas e normas consultadas, com link, escopo e data | Lista |
+| References | Fontes externas e normas consultadas, como define o fluxo comum | Lista |

@@ -30,8 +30,6 @@ Se o pedido não indicar a escolha, compare as alternativas pelos mesmos critér
 
 Ao registrar uma decisão já adotada no código, derive contexto e decisão do código, dos commits e da documentação, e marque como inferência o motivo que a evidência não mostra. Quando ninguém registrou as alternativas avaliadas ou os participantes, diga isso nas seções correspondentes em vez de reconstruí-los.
 
-## Cumprir ou substituir uma decisão
-
-Leia os ADRs pertinentes antes de planejar. Quando uma escolha conflitar com um ADR vigente, explicite se a solução seguirá a restrição ou se é necessária sua substituição, dentro da autorização do pedido.
+## Substituir uma decisão
 
 Ao substituir, crie o novo ADR com `Supersedes: NNNN` e acrescente `Superseded by: NNNN` ao anterior. Preserve o conteúdo histórico do documento antigo e confira que as referências são recíprocas e apontam para arquivos existentes.

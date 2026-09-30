@@ -24,6 +24,8 @@ Use a arquitetura do projeto quando ela atende ao problema. Módulo de código, 
 
 Uma decisão que define convenção, restrição ou padrão para outras capabilities, como estilo arquitetural, transporte de eventos ou política de versionamento, vai para [ADR](adr.md), dentro da autorização existente; decisões locais ficam no plano.
 
+Quando uma escolha conflitar com um ADR vigente, explicite se a solução seguirá a restrição ou se o ADR precisa ser substituído, dentro da autorização do pedido; a substituição segue o [ADR](adr.md).
+
 Cada garantia negativa da spec em escopo, como não duplicar nem cobrar duas vezes, tem aqui o mecanismo que a sustenta, a menos que a spec cite um mecanismo que o código já oferece.
 
 Marque como irreversível, com o motivo, a decisão cujo desfazer custa mais que uma refatoração: esquema persistido, contrato que outro consome, dependência nova de runtime, migração sobre dados existentes ou precedente que o repositório ainda não tem. Registre em Choice a forma literal que o próximo leitor vai copiar, como a definição do índice, o valor do enum ou a versão do pacote, e em Reversible o motivo do `Não`. Escopo adiado e regra sem mecanismo se desfazem sem esse custo e não entram.
@@ -58,7 +60,7 @@ Um requisito sobre um conjunto tem um check por membro nomeado na spec, ou um ch
 
 O último check é o gate do repositório, com o comando confirmado na configuração real do projeto. Sem projeto ou sem comando confirmável, o comando provável vai para Assumptions, e o gate entra em Checks quando for confirmado.
 
-Marque um check só depois de executar a prova sobre o conteúdo atual e vê-la passar. Registre no plano o estado inicial dos checks quando ele for necessário para distinguir regressões.
+Registre no plano o estado inicial dos checks quando ele for necessário para distinguir regressões.
 
 ## Estrutura do documento
 
@@ -71,9 +73,9 @@ O título é o nome da mudança. Use as seções pertinentes, nesta ordem; Check
 | Structure | Caminho, entidades, relações, invariantes, migração e eventos | Lista ou diagrama |
 | Risks | Riscos concretos e sua mitigação, evidência ou aceitação | Tabela Risk, Mitigation |
 | Assumptions | Inferências e defaults da solução | Lista, como define o fluxo comum |
-| Gaps | Informações e decisões ausentes que a solução precisa | Tabela Gap, Affects, Owner |
+| Gaps | Informações e decisões ausentes que a solução precisa | Tabela, como define o fluxo comum |
 | Checks | Afirmações com prova | Lista de checkboxes |
-| References | Fontes técnicas consultadas, com escopo e data | Lista |
+| References | Fontes técnicas consultadas, como define o fluxo comum | Lista |
 
 ## Exemplo parcial
 

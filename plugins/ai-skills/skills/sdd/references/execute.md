@@ -15,21 +15,21 @@ Sem plano da mudança, escreva-o antes da primeira alteração.
 A ordem, os arquivos e a divisão em passos são decisão sua, guiada pelas dependências reais e pelas convenções do repositório. Avance em fatias coerentes, cada uma integrável e com seus checks.
 
 1. **Escreva os testes a partir dos checks e da spec**, nunca lendo a implementação: um teste derivado do código confirma o que ele faz, não o que o contrato exige.
-2. **Implemente a menor solução** que satisfaça o contrato e as regras locais. Não acrescente flexibilidade sem consumidor nem refatore áreas adjacentes sem necessidade.
+2. **Implemente a menor solução** que satisfaça o contrato e as regras locais.
 3. **Execute as provas**, inspecione o resultado e corrija as falhas introduzidas. Uma falha repetida sem evidência nova exige diagnóstico ou a explicitação do bloqueio, não tentativas idênticas indefinidas.
 4. **Marque o check** só depois de ver a prova passar sobre o conteúdo atual; prova não executada deixa o check pendente.
 
 Num pedido restrito a parte do plano, não amplie o escopo para pré-requisitos não autorizados: informe o impedimento e avance no que for independente.
 
-Não enfraqueça uma asserção nem apague ou pule um teste para a suíte passar. Um check que se revela errado volta à spec ou ao plano com o motivo; se a correção muda o resultado de um requisito, ela é decisão do usuário.
+Não enfraqueça uma asserção nem apague ou pule um teste para a suíte passar. Um check que se revela errado volta à spec ou ao plano com o motivo.
 
 Ao concluir, execute a [verificação](verify.md).
 
 ## Desvios e restrições
 
-Uma restrição descoberta pode exigir corrigir a spec ou o plano. Registre o efeito material e continue o escopo autorizado. Se a mudança depender de uma decisão de negócio, obtenha-a do usuário e mantenha o restante em andamento.
+Uma restrição descoberta pode exigir corrigir a spec ou o plano. Registre o efeito material e continue o escopo autorizado.
 
-Atualize a spec ou o plano no mesmo commit que muda o que eles descrevem, não ao final: escrito depois, o registro vira justificativa do que já foi feito. Uma decisão irreversível descoberta na implementação entra em Technical Decisions do plano antes do código que a fecha, com a forma literal e a alternativa rejeitada.
+Atualize a spec ou o plano no mesmo commit que muda o que eles descrevem, não ao final: escrito depois, o registro vira justificativa do que já foi feito. Uma decisão irreversível descoberta na implementação entra em Technical Decisions do plano antes do código que a fecha, no formato do [plano](plan.md).
 
 Valide a existência e a procedência de um pacote antes de adicioná-lo, e respeite as permissões de instalação e de acesso externo. Segredos e dados de produção não entram em respostas, exemplos, commits ou logs de teste.
 

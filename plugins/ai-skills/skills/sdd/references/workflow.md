@@ -70,7 +70,7 @@ Artefatos ainda sem commit valem como entrada; registre qual versão a implement
 
 Decida por conta própria as escolhas técnicas e editoriais reversíveis dentro do escopo. Procure os fatos no código e nas fontes; pergunte as decisões de negócio e as informações que o contexto não resolve, com opções concretas e a sua recomendação, e continue o trabalho independente enquanto espera.
 
-Corrija o que a sua mudança quebrar e os problemas preexistentes do trecho alterado que tenham o mesmo motivo da mudança. Os demais entram como sugestão no fim, sem alteração. Não acrescente complexidade sem necessidade concreta.
+Corrija o que a sua mudança quebrar e os problemas preexistentes do trecho alterado que tenham o mesmo motivo da mudança. Os demais entram como sugestão no fim, sem alteração. Não acrescente complexidade sem necessidade concreta, como uma opção ou abstração sem consumidor.
 
 ## Precedência
 
