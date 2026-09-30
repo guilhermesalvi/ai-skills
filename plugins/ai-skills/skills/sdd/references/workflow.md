@@ -74,7 +74,7 @@ Corrija o que a sua mudança quebrar e os problemas preexistentes do trecho alte
 
 ## Precedência
 
-O pedido da sessão prevalece sobre as convenções do repositório, e ambos prevalecem sobre os defaults desta skill e do verificador. Convenção é a regra escrita no `CLAUDE.md` ou em outra instrução do repositório; um padrão apenas observado em arquivos existentes não obriga, mas preserve-o ao editá-los.
+O pedido da sessão prevalece sobre as convenções do repositório, e ambos prevalecem sobre os defaults desta skill e do verificador. Convenção é a regra escrita no `CLAUDE.md` ou em outra instrução do repositório; um padrão apenas observado em arquivos existentes não obriga, mas preserve-o ao editá-los. Um ADR vigente não é convenção, e sim uma decisão que vale para outras capabilities: substituí-lo é decisão do usuário, inclusive quando o pedido o contradiz.
 
 Se uma regra local parecer impedir o trabalho, informe o arquivo, a regra e a ação afetada.
 

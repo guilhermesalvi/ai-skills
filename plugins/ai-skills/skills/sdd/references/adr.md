@@ -1,6 +1,6 @@
 # Decisão arquitetural
 
-Se o pedido for um ADR para uma decisão que vale só para uma capability, diga em uma linha que ela caberia em Technical Decisions do plano e escreva o ADR.
+Se o pedido for um ADR para uma decisão que vale só para uma capability, diga em uma linha onde ela caberia, em Technical Decisions do plano numa mudança em andamento ou junto do código numa decisão já adotada, e escreva o ADR.
 
 Registrar uma decisão não amplia o escopo: aplicá-la ao restante do projeto exige pedido próprio.
 
@@ -19,8 +19,9 @@ Use `docs/adr/NNNN-<decisão>.md`. Preserve o formato dos ADRs existentes; sem A
 | Alternatives Considered | Alternativas reais avaliadas pelos mesmos critérios e motivo da rejeição |
 | Consequences | Benefícios e custos concretos aceitos |
 | Derived Rules | Regras criadas ou alteradas, com link para o arquivo onde cada uma é mantida |
+| References | Fontes externas consultadas, como define o fluxo comum |
 
-Derived Rules só existe quando a decisão cria ou altera uma regra. Mantenha cada regra no arquivo responsável pelo objeto que ela governa, e acrescente a essa regra o vínculo com o ADR que a justifica.
+Derived Rules só existe quando a decisão cria ou altera uma regra, e References, quando o ADR se apoia em fonte externa. Mantenha cada regra no arquivo responsável pelo objeto que ela governa, e acrescente a essa regra o vínculo com o ADR que a justifica.
 
 ## ADR avulso
 

@@ -24,7 +24,7 @@ Use a arquitetura do projeto quando ela atende ao problema. Módulo de código, 
 
 Uma decisão que define convenção, restrição ou padrão para outras capabilities, como estilo arquitetural, transporte de eventos ou política de versionamento, vai para [ADR](adr.md), dentro da autorização existente; decisões locais ficam no plano.
 
-Quando uma escolha conflitar com um ADR vigente, explicite se a solução seguirá a restrição ou se o ADR precisa ser substituído, dentro da autorização do pedido; a substituição segue o [ADR](adr.md).
+Quando uma escolha conflitar com um ADR vigente, explicite se a solução seguirá a restrição ou se o ADR precisa ser substituído; a substituição segue o [ADR](adr.md).
 
 Cada garantia negativa da spec em escopo, como não duplicar nem cobrar duas vezes, tem aqui o mecanismo que a sustenta, a menos que a spec cite um mecanismo que o código já oferece.
 

@@ -14,7 +14,7 @@ Preserve as alterações alheias: a revisão não exige `add`, `stash`, restaura
 
 Leia os requisitos e os testes antes de consultar a conclusão de quem implementou, para reduzir a confirmação automática da própria solução.
 
-Numa mudança não trivial, verifique em contexto separado de quem implementou sempre que houver subagente disponível: o autor tende a reaplicar o raciocínio que produziu a lacuna. Passe ao subagente os caminhos da spec e do plano, a base, os comandos de verificação e todos os requisitos em escopo, não só a última fatia implementada. Sem subagente, verifique mesmo assim e declare no relatório que autor e verificador são o mesmo.
+Numa mudança não trivial, verifique em contexto separado de quem implementou sempre que houver subagente disponível: o autor tende a reaplicar o raciocínio que produziu a lacuna. Passe ao subagente os caminhos da spec e do plano, a base, os comandos de verificação e todos os requisitos em escopo, não só a última fatia implementada. Sem subagente, verifique mesmo assim e declare no relatório que autor e verificador são o mesmo. Com subagente, a entrega espera o resultado dele: sem esse resultado, a mudança não está verificada.
 
 ## Conformidade com a spec
 
@@ -83,7 +83,7 @@ Se as mesmas lacunas persistirem depois de uma rodada de correção, leve o diag
 
 Uma suíte verde prova que os testes executam, não que detectariam uma regressão. Conforme o risco do que a mudança sustenta, o pedido e a regra do projeto, injete uma falha por superfície de asserção, como inverter uma condição, trocar um valor retornado, deslocar um limite ou remover um efeito exigido, e confirme que a prova mais estreita daquele requisito falha. Pare quando cada prova que sustenta um requisito tiver falhado uma vez. Com ferramenta de mutação disponível ou autorizada, use-a e registre comando e escopo.
 
-Injete a falha numa worktree temporária sobre `HEAD`, com o procedimento de Falha preexistente, e confira que o `git status --porcelain` da árvore real continua igual ao de antes. Não use `git stash` para isolar a falha: desempilhar não a desfaz, e numa árvore limpa o stash nem cria entrada.
+Injete a falha numa worktree temporária sobre `HEAD`, com o procedimento de Falha preexistente; se a mudança ainda não tiver commit, copie para a worktree os arquivos alterados e novos dela antes de injetar. Confira que o `git status --porcelain` da árvore real continua igual ao de antes. Não use `git stash` para isolar a falha: desempilhar não a desfaz, e numa árvore limpa o stash nem cria entrada.
 
 Um mutante sobrevivente é achado: a asserção passaria sob uma implementação errada, salvo se a análise mostrar equivalência de comportamento. Numa mudança não trivial, o relatório diz se houve injeção e, se não houve, por quê.
 
