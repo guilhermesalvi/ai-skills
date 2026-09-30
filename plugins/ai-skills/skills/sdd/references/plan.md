@@ -22,7 +22,7 @@ Rejeite uma alternativa pela propriedade que a desqualifica, como “não expres
 
 Use a arquitetura do projeto quando ela atende ao problema. Módulo de código, pacote versionado e unidade que sobe e desce em conjunto são decisões distintas: avalie primeiro uma mudança no serviço existente, depois um módulo interno e, só com necessidade concreta de isolamento, escala ou cadência, uma nova unidade implantável, com dono, operação, contrato e compatibilidade. Uma biblioteca compartilhada precisa de dono, consumidores e estabilidade suficiente; não extraia regras de negócio para ela apenas por semelhança de código.
 
-Uma regra que passa a valer para outras capabilities, como um novo estilo arquitetural, vai para [ADR](adr.md), dentro da autorização existente; decisões locais ficam no plano.
+Uma decisão que define convenção, restrição ou padrão para outras capabilities, como estilo arquitetural, transporte de eventos ou política de versionamento, vai para [ADR](adr.md), dentro da autorização existente; decisões locais ficam no plano.
 
 Cada garantia negativa da spec em escopo, como não duplicar nem cobrar duas vezes, tem aqui o mecanismo que a sustenta, a menos que a spec cite um mecanismo que o código já oferece.
 

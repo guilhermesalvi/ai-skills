@@ -1,6 +1,6 @@
 # Decisão arquitetural
 
-Use ADR para uma escolha que define convenção, restrição ou padrão para outras capabilities: estilo arquitetural, transporte de eventos ou política de versionamento, por exemplo. Uma decisão local permanece em Technical Decisions do plano da mudança; se o pedido for um ADR para ela, diga em uma linha que ela caberia no plano e escreva o ADR.
+Se o pedido for um ADR para uma decisão que vale só para uma capability, diga em uma linha que ela caberia em Technical Decisions do plano e escreva o ADR.
 
 Registrar uma decisão não amplia o escopo: aplicá-la ao restante do projeto exige pedido próprio.
 

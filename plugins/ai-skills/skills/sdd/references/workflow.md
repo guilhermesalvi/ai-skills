@@ -100,7 +100,7 @@ Não altere o contrato para fazer um teste passar, nem refaça todo o fluxo por 
 
 ## Revisar um artefato
 
-Revise spec, plano ou ADR contra a referência da etapa, com profundidade proporcional à mudança, e confira também:
+Numa revisão de spec, plano ou ADR, com profundidade proporcional à mudança, confira também:
 
 - Caminhos, links e IDs resolvem para as fontes corretas; a numeração não colide e IDs retirados não voltam.
 - Idioma, títulos e formato existentes foram preservados e cada seção tem conteúdo útil.

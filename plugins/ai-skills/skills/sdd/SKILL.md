@@ -30,7 +30,7 @@ Leia cada referência cuja condição vale para o pedido. Carregue as demais ape
 | [Plano](references/plan.md) | Planejar a solução, implementar uma mudança ainda sem plano ou revisar um plano |
 | [Execução](references/execute.md) | Implementar spec ou funcionalidade não trivial, ou retomar uma mudança |
 | [Verificação](references/verify.md) | Verificar a implementação contra a spec e o plano |
-| [ADR](references/adr.md) | Registrar decisão arquitetural, avulsa ou durante o planejamento, ou revisar um ADR |
+| [ADR](references/adr.md) | Registrar uma decisão pedida como ADR ou encaminhada pelo plano, ou revisar um ADR |
 
 Os exemplos das referências são didáticos. Seus números, atores, interfaces, comandos e escolhas não se tornam fatos do projeto nem evidência executada.
 
