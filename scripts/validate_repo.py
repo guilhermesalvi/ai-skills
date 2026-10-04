@@ -14,6 +14,20 @@ from urllib.parse import unquote, urlsplit
 ROOT = Path(__file__).resolve().parents[1]
 
 
+def valid_version(value):
+    """Accept SemVer releases, prereleases and build metadata."""
+    if not isinstance(value, str):
+        return False
+    number = r"(0|[1-9][0-9]*)"
+    identifiers = r"([0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*)"
+    match = re.fullmatch(rf"{number}\.{number}\.{number}(?:-{identifiers})?(?:\+{identifiers})?", value)
+    if not match:
+        return False
+    prerelease = match[4]
+    return prerelease is None or all(not part.isdigit() or part == "0" or not part.startswith("0")
+                                     for part in prerelease.split("."))
+
+
 def local_path(root, value):
     """Resolve a package path without allowing it to leave its root."""
     if not isinstance(value, str) or not value.startswith("./"):
@@ -79,8 +93,8 @@ def validate(root=ROOT):
             raise ValueError(f"{name}: missing portable plugin schema")
         if manifest.get("name") != name or not re.fullmatch(r"[a-z0-9]+(?:-[a-z0-9]+)*", name):
             raise ValueError(f"{name}: invalid plugin identity")
-        if not re.fullmatch(r"\d+\.\d+\.\d+", manifest.get("version", "")):
-            raise ValueError(f"{name}: invalid release version")
+        if not valid_version(manifest.get("version")):
+            raise ValueError(f"{name}: invalid semantic version")
         interface = manifest["extensions"]["com.openai"]["interface"]
         if not all(interface.get(key) for key in ("displayName", "shortDescription", "defaultPrompt")):
             raise ValueError(f"{name}: incomplete OpenAI interface")

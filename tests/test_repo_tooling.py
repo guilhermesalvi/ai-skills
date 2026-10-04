@@ -26,6 +26,16 @@ evals = load("run_evals")
 
 
 class PackageValidation(unittest.TestCase):
+    def test_release_and_prerelease_versions_are_accepted(self):
+        for value in ("1.0.0", "0.1.0-beta.1", "0.1.0-beta.2", "0.0.0", "1.0.0-0", "1.0.0-beta.1+build.01"):
+            with self.subTest(version=value):
+                self.assertTrue(validator.valid_version(value))
+
+    def test_malformed_semantic_versions_are_rejected(self):
+        for value in (None, 1, "", "0", "0.1", "v0.1.0", "01.0.0", "1.0.0-beta.01", "1.0.0-", "1.0.0+", "1.0.0 beta"):
+            with self.subTest(version=value):
+                self.assertFalse(validator.valid_version(value))
+
     def test_repository_resources_resolve(self):
         result = validator.validate()
         self.assertEqual(["ai-skills"], result["plugins"])
@@ -73,7 +83,8 @@ class PackageValidation(unittest.TestCase):
                 observed.append(home)
                 if command[1:3] == ["plugin", "add"]:
                     source = ROOT / "plugins/ai-skills/skills/sdd"
-                    target = home / "plugins/cache/ai-skills/ai-skills/7.0.0/skills/sdd"
+                    version = json.loads((ROOT / "plugins/ai-skills/plugin.json").read_text(encoding="utf-8"))["version"]
+                    target = home / "plugins/cache/ai-skills/ai-skills" / version / "skills/sdd"
                     validator.shutil.copytree(source, target, ignore=validator.shutil.ignore_patterns("__pycache__"))
                 return SimpleNamespace(returncode=0,
                                        stdout='{"installed": [{"pluginId": "ai-skills@ai-skills", "enabled": true}]}',

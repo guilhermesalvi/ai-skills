@@ -1,6 +1,8 @@
 # ai-skills
 
-Skills para Codex, distribuídas como plugin no formato portátil Agent Plugins.
+Skills para uso pessoal no Codex, empacotadas como plugin no formato portátil Agent Plugins.
+
+O pacote está em beta, na versão `0.1.0-beta.1`, definida em [plugin.json](plugins/ai-skills/plugin.json). A skill `sdd` acompanha a versão do pacote. Os contratos podem mudar durante o beta, sem compromisso de retrocompatibilidade.
 
 | Skill | Finalidade |
 | --- | --- |
@@ -39,7 +41,7 @@ Os recursos seguem o padrão aberto [Agent Skills](https://agentskills.io/specif
 
 ## Atualização
 
-Incremente `version` em `plugins/ai-skills/plugin.json` ao publicar alterações. Para atualizar o snapshot de uma origem Git:
+Incremente o sufixo beta, como de `0.1.0-beta.1` para `0.1.0-beta.2`, ao disponibilizar uma nova revisão para seus projetos. Mantenha a versão em `plugins/ai-skills/plugin.json`. Para atualizar o snapshot de uma origem Git:
 
 ```bash
 codex plugin marketplace upgrade ai-skills
