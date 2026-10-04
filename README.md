@@ -126,13 +126,30 @@ python scripts/run_evals.py --judge
 python scripts/run_evals.py --case cancel-orders-spec --judge
 ```
 
-O runner cria cada fixture Git fora deste repositório, instala o plugin em uma configuração temporária e captura eventos JSONL, resposta e arquivos gerados. Reutiliza apenas `auth.json`, quando existente, numa cópia temporária removida ao terminar; variáveis de autenticação por API também podem ser usadas. Não copia sua configuração, instruções ou plugins pessoais. Os scaffolds são Python e funcionam no Windows, macOS e Linux.
+O runner cria cada fixture Git fora deste repositório, instala o plugin em uma configuração temporária e captura eventos JSONL, resposta e arquivos gerados. A instalação vem de uma cópia temporária dos recursos de runtime, sem a pasta `evals`, para não expor prompts e rubricas ao executor. Marca como confiável apenas o workspace que acabou de gerar, mantendo o sandbox do caso.
+
+Reutiliza apenas `auth.json`, quando existente, numa cópia temporária removida ao terminar; variáveis de autenticação por API também podem ser usadas. Não copia sua configuração, instruções ou plugins pessoais. Os scaffolds são Python e funcionam no Windows, macOS e Linux.
 
 Os casos selecionam os perfis de permissões `:workspace`, ou `:read-only` para code review; o julgamento das rubricas também usa `:read-only`. Esses perfis exigem uma CLI atual. O runner não pede aprovação interativa nem remove o sandbox. Falhas de autenticação, acesso ao workspace ou timeout são erros de execução.
 
-Checks determinísticos examinam artefatos e eventos `command_execution`. A leitura bem-sucedida de `sdd/SKILL.md` é o sinal observável de ativação, uma aproximação pelo trace. Rubricas de conteúdo usam uma segunda execução com `--output-schema` quando `--judge` é passado. Sem essa opção, ficam pendentes e a execução termina com código `2`.
+No Windows, a configuração temporária usa o sandbox nativo `unelevated`, com token restrito, para dispensar setup administrativo na execução isolada. O runner ajusta as ACLs apenas da pasta descartável: permite leitura dos recursos do plugin e edição do fixture, sem propagar essas permissões para `auth.json`. A instalação pessoal mantém sua configuração.
+
+Checks determinísticos examinam artefatos e eventos `command_execution`. Uma leitura de `sdd/SKILL.md` com exit code `0` e o campo `name: sdd` na saída é o sinal observável de ativação, uma aproximação pelo trace. Isso evita contar um pipeline que termina com sucesso após falhar na leitura. Rubricas de conteúdo usam uma segunda execução com `--output-schema` quando `--judge` é passado. Sem essa opção, ficam pendentes e a execução termina com código `2`.
 
 Adicione `--compare` para registrar uma execução independente sem o plugin. O baseline serve para comparação; somente o resultado com plugin decide aprovação. Para avaliar um modelo escolhido por você, passe `--model <modelo>`; sem a opção, vale o default da CLI na configuração temporária. Cada execução consome o uso normal do Codex.
+
+Use `--reasoning-effort <esforço>` para escolher o mesmo esforço na geração e no julgamento. Sem essa opção, vale o default do modelo na CLI isolada, que pode diferir da sua configuração pessoal. O relatório registra modelo e esforço explícitos; níveis disponíveis dependem do modelo e do cliente, conforme a [referência de configuração](https://learn.chatgpt.com/docs/config-file/config-reference).
+
+Para comparar os modelos escolhidos neste projeto, execute os mesmos casos e rubricas em cada um:
+
+```bash
+python scripts/run_evals.py --model gpt-5.6-luna --judge
+python scripts/run_evals.py --model gpt-6-astra --judge
+```
+
+Esses comandos não alteram o modelo do consumidor. Aprovação nos casos exercitados mostra evidência para esses pedidos; não garante desempenho igual em toda tarefa. Compare também os artefatos e os motivos do julgamento, além dos checks determinísticos.
+
+O runner usa a CLI encontrada no `PATH`. Se ela não reconhecer o modelo escolhido, passe `--codex <caminho-do-executável>` para usar outra instalação, sem alterar o `PATH` ou a configuração pessoal.
 
 Resultados ficam em `plugins/ai-skills/evals/results/`, fora do Git. Saídas: `0` para aprovação, `1` para check reprovado e `2` para erro de execução ou rubrica pendente. Revise evidências e motivos das rubricas antes de interpretar mudanças de score.
 

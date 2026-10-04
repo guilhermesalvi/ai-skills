@@ -1,6 +1,8 @@
 """Exercise package isolation, trace grading and portable evaluation fixtures."""
 
 import importlib.util
+import io
+import json
 from pathlib import Path
 import subprocess
 from tempfile import TemporaryDirectory
@@ -28,6 +30,19 @@ class PackageValidation(unittest.TestCase):
         result = validator.validate()
         self.assertEqual(["ai-skills"], result["plugins"])
         self.assertEqual(1, len(result["skills"]))
+
+    def test_eval_install_keeps_runtime_resources_without_grading_material(self):
+        with TemporaryDirectory() as temporary:
+            marketplace = evals.stage_plugin(temporary)
+            staged = marketplace / "plugins/ai-skills"
+            self.assertFalse((staged / "evals").exists())
+            self.assertEqual((ROOT / ".agents/plugins/marketplace.json").read_bytes(),
+                             (marketplace / ".agents/plugins/marketplace.json").read_bytes())
+            source = ROOT / "plugins/ai-skills"
+            for path in source.rglob("*"):
+                relative = path.relative_to(source)
+                if path.is_file() and "evals" not in relative.parts and "__pycache__" not in relative.parts:
+                    self.assertEqual(path.read_bytes(), (staged / relative).read_bytes(), str(relative))
 
     def test_package_paths_reject_escape_and_absolute_input(self):
         with TemporaryDirectory() as temporary:
@@ -94,12 +109,56 @@ class TraceGrading(unittest.TestCase):
     def test_skill_read_recognizes_windows_and_posix_paths(self):
         check = {"type": "skill_read", "skill": "sdd", "expected": True}
         for command in ("cat /cache/skills/sdd/SKILL.md", r"Get-Content 'C:\cache\skills\sdd\SKILL.md'"):
-            self.assertTrue(evals.evaluate(check, self.workspace, [self.command(command)], ""))
+            event = self.command(command)
+            event["item"]["aggregated_output"] = "---\nname: sdd\ndescription: Specify changes\n---\n"
+            self.assertTrue(evals.evaluate(check, self.workspace, [event], ""))
         self.assertFalse(evals.evaluate(check, self.workspace, [self.command("echo sdd/SKILL.md")], ""))
         self.assertFalse(evals.evaluate(check, self.workspace, [self.command("cat sdd/SKILL.md", 1)], ""))
 
+    def test_successful_pipeline_does_not_prove_a_failed_skill_read(self):
+        check = {"type": "skill_read", "skill": "sdd", "expected": True}
+        event = self.command("Get-Content 'sdd/SKILL.md'; Get-Location")
+        event["item"]["aggregated_output"] = "Get-Content: Access denied\nPath\n----\nC:/workspace\n"
+        self.assertFalse(evals.evaluate(check, self.workspace, [event], ""))
+
     def test_qualitative_checks_stay_pending(self):
         self.assertIsNone(evals.evaluate({"type": "rubric"}, self.workspace, [], ""))
+
+    def test_judge_failure_preserves_generated_evidence(self):
+        case = {"name": "sample", "sandbox": "workspace-write", "timeout_seconds": 30,
+                "checks": [{"id": "content", "type": "rubric"}]}
+        source = self.workspace / "cases/sample"
+        source.mkdir(parents=True)
+        (source / "prompt.md").write_text("Create an artifact", encoding="utf-8")
+
+        def seed_fixture(case, workspace):
+            workspace.mkdir()
+            (workspace / "artifact.md").write_text("Generated contract", encoding="utf-8")
+
+        def inspect_fixture_run(executable, env, workspace, prompt, output, sandbox, timeout, model,
+                                reasoning_effort=None):
+            config = (Path(env["CODEX_HOME"]) / "config.toml").read_text(encoding="utf-8")
+            self.assertIn(workspace.as_posix(), config)
+            self.assertNotIn(ROOT.as_posix(), config)
+            self.assertEqual("workspace-write", sandbox)
+            self.assertEqual("chosen-model", model)
+            self.assertEqual("xhigh", reasoning_effort)
+            return ([{"type": "turn.completed"}], "Done")
+
+        args = SimpleNamespace(fixtures_only=False, model="chosen-model", judge=True, codex="codex",
+                               reasoning_effort="xhigh")
+        with patch.object(evals, "EVALS", source.parent), \
+                patch.object(evals, "seed", side_effect=seed_fixture), \
+                patch.object(evals.Path, "home", return_value=self.workspace / "empty-home"), \
+                patch.dict(evals.os.environ, {"CODEX_HOME": str(self.workspace / "empty-home")}), \
+                patch.object(evals.shutil, "which", return_value="codex"), \
+                patch.object(evals.subprocess, "run", return_value=SimpleNamespace(returncode=0)), \
+                patch.object(evals, "run_codex", side_effect=inspect_fixture_run), \
+                patch.object(evals, "judge_checks", side_effect=ValueError("judge failed")), \
+                self.assertRaisesRegex(ValueError, "judge failed"):
+            evals.run_case(case, self.workspace / "results", args)
+        saved = self.workspace / "results/sample/plugin/workspace/artifact.md"
+        self.assertEqual("Generated contract", saved.read_text(encoding="utf-8"))
 
     def test_eval_environment_does_not_reuse_desktop_chat_identity(self):
         with patch.dict(evals.os.environ, {"CODEX_APP_TOOLS_PIPE_PATH": "parent-pipe", "CODEX_THREAD_ID": "parent-thread"}):
@@ -134,15 +193,41 @@ class TraceGrading(unittest.TestCase):
                     (self.workspace / "answer.md").write_text("Done", encoding="utf-8")
                     return SimpleNamespace(returncode=0)
                 run.side_effect = execute
-                evals.run_codex("codex", {}, self.workspace, "$sdd", self.workspace, sandbox, 30)
+                effort = "xhigh" if sandbox == "workspace-write" else None
+                evals.run_codex("codex", {}, self.workspace, "$sdd", self.workspace, sandbox, 30,
+                                reasoning_effort=effort)
                 command = run.call_args.args[0]
                 self.assertIn(f'default_permissions="{profile}"', command)
+                if effort:
+                    self.assertIn('model_reasoning_effort="xhigh"', command)
+                else:
+                    self.assertFalse(any(item.startswith("model_reasoning_effort=") for item in command))
                 self.assertNotIn("--dangerously-bypass-approvals-and-sandbox", command)
                 self.assertEqual("-", command[-1])
                 self.assertEqual("$sdd", run.call_args.kwargs["input"])
 
 
 class PortableFixtures(unittest.TestCase):
+    def test_fixture_report_can_use_an_ansi_console(self):
+        case = {"name": "sample\u2192feature"}
+
+        def seed_fixture(case, workspace):
+            workspace.mkdir()
+
+        with TemporaryDirectory() as temporary:
+            destination = Path(temporary) / "results"
+            buffer = io.BytesIO()
+            console = io.TextIOWrapper(buffer, encoding="cp1252")
+            args = SimpleNamespace(fixtures_only=True)
+            with patch.object(evals, "seed", side_effect=seed_fixture), patch.object(evals.sys, "stdout", console):
+                report = evals.run_case(case, destination, args)
+                console.flush()
+                printed = json.loads(buffer.getvalue().decode("cp1252"))
+            self.assertEqual(report, printed)
+            saved = destination / case["name"] / "plugin/report.json"
+            self.assertEqual(report, json.loads(saved.read_text(encoding="utf-8")))
+            console.close()
+
     def test_resume_fixture_exposes_the_local_contract_regression(self):
         with TemporaryDirectory() as temporary:
             workspace = Path(temporary) / "workspace"
