@@ -38,6 +38,24 @@
       "description": "A spec nasce na pasta da capability do ciclo do pedido, não numa pasta com o nome da funcionalidade de cancelamento."
     },
     {
+      "id": "concise-plan",
+      "type": "rubric",
+      "source": {
+        "source": "file",
+        "path": "eval-out/plan.md"
+      },
+      "rubric": "graders/concise-plan.md"
+    },
+    {
+      "id": "concise-spec",
+      "type": "rubric",
+      "source": {
+        "source": "file",
+        "path": "eval-out/spec.md"
+      },
+      "rubric": "graders/concise-spec.md"
+    },
+    {
       "type": "regex",
       "target": {
         "source": "file",

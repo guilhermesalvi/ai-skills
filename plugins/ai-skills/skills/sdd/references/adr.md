@@ -24,7 +24,7 @@ Registre uma decisão que vale para outras capabilities.
 | Section | Conteúdo |
 | --- | --- |
 | Participants | Quem decidiu ou foi consultado, quando conhecido |
-| Context | Problema, restrições e critérios |
+| Context | Problema, restrições, critérios e origem do motivo da escolha |
 | Decision | Escolha e seu alcance |
 | Alternatives Considered | Alternativas reais avaliadas pelos mesmos critérios e motivo da rejeição |
 | Consequences | Benefícios e custos concretos aceitos |
@@ -37,9 +37,9 @@ Registre uma decisão que vale para outras capabilities.
 ## ADR avulso
 
 - Fora de um plano, leia os ADRs vigentes e as specs e o código que a decisão atinge, para achar conflitos e as capabilities afetadas.
-- Se o pedido não indicar a escolha, compare as alternativas pelos mesmos critérios, recomende uma e peça a escolha ao usuário antes de escrever. O ADR registra a decisão, não a recomendação.
+- Se a escolha estiver em aberto, compare as alternativas pelos mesmos critérios. Decida quando o usuário tiver delegado essa escolha; caso contrário, recomende uma e peça a decisão antes de registrar o ADR. O documento registra uma escolha adotada, com sua origem.
 - Ao registrar uma decisão já adotada no código, derive contexto e decisão do código, dos commits e da documentação.
-- Marque como inferência o motivo que a evidência não mostra.
+- Separe a escolha observada do motivo histórico. Se o código mostrar a escolha, mas nenhuma fonte registrar por que ela foi adotada, declare em Context: "O motivo original não está registrado." Apresente uma explicação provável como inferência, por exemplo, "Infere-se que a escolha evita..."; um benefício técnico plausível não comprova a intenção original.
 - Quando ninguém registrou as alternativas avaliadas ou os participantes, diga isso nas seções correspondentes em vez de reconstruí-los.
 
 ## Substituir uma decisão

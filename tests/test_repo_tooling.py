@@ -143,6 +143,22 @@ class TraceGrading(unittest.TestCase):
 
 
 class PortableFixtures(unittest.TestCase):
+    def test_resume_fixture_exposes_the_local_contract_regression(self):
+        with TemporaryDirectory() as temporary:
+            workspace = Path(temporary) / "workspace"
+            evals.seed(evals.cases()["resume-contract-conflict"], workspace)
+            result = subprocess.run([evals.sys.executable, "-B", "-m", "unittest", "discover", "-s", "tests", "-v"],
+                                    cwd=workspace, capture_output=True, text=True)
+            self.assertEqual(1, result.returncode)
+            self.assertIn("test_zero_is_accepted", result.stderr)
+            self.assertIn("Ran 3 tests", result.stderr)
+            base = subprocess.run(["git", "show", "HEAD:units/validation.py"], cwd=workspace,
+                                  check=True, capture_output=True, text=True)
+            (workspace / "units/validation.py").write_text(base.stdout, encoding="utf-8")
+            fixed = subprocess.run([evals.sys.executable, "-B", "-m", "unittest", "discover", "-s", "tests", "-q"],
+                                   cwd=workspace, capture_output=True, text=True)
+            self.assertEqual(0, fixed.returncode, fixed.stderr)
+
     def test_order_fixtures_have_passing_baseline_and_committed_source(self):
         for name in ("cancel-orders-spec", "implement-and-verify"):
             with self.subTest(name=name), TemporaryDirectory() as temporary:

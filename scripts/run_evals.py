@@ -157,8 +157,11 @@ def run_case(case, destination, args, baseline=False):
         seed(case, workspace)
         if args.fixtures_only:
             if (workspace / "tests").exists():
-                subprocess.run([sys.executable, "-m", "unittest", "discover", "-s", "tests", "-q"],
-                               cwd=workspace, check=True)
+                result = subprocess.run([sys.executable, "-m", "unittest", "discover", "-s", "tests", "-q"],
+                                        cwd=workspace)
+                expected = case.get("fixture_test_exit_code", 0)
+                if result.returncode != expected:
+                    raise ValueError(f"fixture tests exited with {result.returncode}; expected {expected}")
             report = {"case": name, "fixture": "passed"}
         else:
             executable = shutil.which("codex")

@@ -4,7 +4,9 @@ Skills para Codex, distribuídas como plugin no formato portátil Agent Plugins.
 
 | Skill | Finalidade |
 | --- | --- |
-| `sdd` | Especificar, planejar, implementar e verificar mudanças com requisitos EARS rastreáveis da spec ao teste e ADRs. A spec absorve as regras de negócio; o plano registra decisões técnicas, escopo e checks com prova. Inclui modelos e um script para conferir IDs, links, schema, dimensões e rastreabilidade. |
+| `sdd` | Especificar, planejar, implementar e verificar mudanças com requisitos rastreáveis; registrar decisões em ADRs |
+
+A spec define o comportamento e as regras de negócio. O plano registra decisões técnicas e checks com prova. Modelos e um validador mantêm IDs, links, schema e rastreabilidade coerentes.
 
 ## Instalação
 
@@ -27,7 +29,7 @@ codex plugin marketplace add guilhermesalvi/ai-skills
 codex plugin add ai-skills@ai-skills
 ```
 
-Use uma origem por marketplace. Para trocar entre checkout local e Git, remova o registro anterior com `codex plugin marketplace remove ai-skills` antes de adicionar a nova origem. A origem Git só terá a migração depois que ela for publicada.
+Use uma origem por marketplace. Para trocar entre checkout local e Git, remova o registro anterior com `codex plugin marketplace remove ai-skills` antes de adicionar a nova origem. A origem Git instala a versão publicada; mudanças locais chegam a ela após publicação.
 
 ### Skill avulsa
 
@@ -37,7 +39,7 @@ Os recursos seguem o padrão aberto [Agent Skills](https://agentskills.io/specif
 
 ## Atualização
 
-Incremente `version` em `plugins/ai-skills/plugin.json` ao publicar alterações. A migração para Codex inaugura `7.0.0`. Para atualizar o snapshot de uma origem Git:
+Incremente `version` em `plugins/ai-skills/plugin.json` ao publicar alterações. Para atualizar o snapshot de uma origem Git:
 
 ```bash
 codex plugin marketplace upgrade ai-skills
@@ -61,6 +63,24 @@ Instalações locais usam uma cópia em cache: editar o checkout não altera ess
 - Os scripts usam somente a biblioteca padrão. Substitua `<skill-dir>` pela pasta absoluta do `SKILL.md` carregado e execute a partir do projeto consumidor.
 
 ## Desenvolvimento
+
+### Escrita e organização
+
+As orientações oficiais recomendam instruções imperativas, entradas e resultados explícitos e leitura progressiva dos recursos. O entrypoint apresenta propósito e encaminhamento; cada referência detalha uma etapa quando ela for necessária. Consulte [criação de skills](https://learn.chatgpt.com/docs/build-skills) e [revisão de skills e prompts](https://developers.openai.com/blog/rethinking-skills-and-prompts-for-gpt-6-astra).
+
+| Conteúdo | Organização |
+| --- | --- |
+| Contexto, decisão e justificativa | Uma ideia por parágrafo, com evidência pertinente |
+| Obrigações e itens paralelos | Bullets com ação e condição claras |
+| Comparações e registros com os mesmos campos | Tabelas com cabeçalhos explícitos |
+| Dependência real de ordem | Passos numerados |
+| Detalhe de uma etapa | Referência indicada no ponto de uso |
+
+EARS, os schemas em inglês, a numeração e os checks rastreáveis são contratos desta skill. Eles não são exigências da OpenAI para toda skill. Mantenha uma fonte por regra e revise instruções conflitantes antes de acrescentar mais orientações.
+
+Os modelos de spec e plano começam pelas partes centrais e pelas pendências. Os blocos opcionais ficam em `assets/spec-sections.md` e `assets/plan-sections.md`; inclua apenas os que acrescentarem informação ao contrato ou à solução.
+
+### Checks locais
 
 ```bash
 python scripts/validate_repo.py
@@ -87,6 +107,7 @@ Os casos em `plugins/ai-skills/evals/` usam um runner próprio com `codex exec -
 | `cancel-orders-spec` | Capability, idioma, dimensões, autorização, pedido pago como lacuna, origem das confirmações, escopo do plano, concisão e entrega |
 | `adr-from-code` | ADR derivado do código e histórico, sem inventar participantes, alternativas ou motivos |
 | `implement-and-verify` | Implementação, testes nomeados nas provas, execução bem-sucedida, checks marcados e relatório |
+| `resume-contract-conflict` | Retomada com diff divergente, preservação da spec e nova execução dos checks afetados |
 | `ignores-code-review` | Resposta sobre divisão por zero sem carregar a SDD |
 
 Liste os casos ou confira os scaffolds sem chamar um modelo:
@@ -95,6 +116,8 @@ Liste os casos ou confira os scaffolds sem chamar um modelo:
 python scripts/run_evals.py --list
 python scripts/run_evals.py --fixtures-only
 ```
+
+Fixtures normalmente têm testes verdes na origem. `resume-contract-conflict` inclui uma regressão local deliberada; seu `fixture_test_exit_code` declara a falha esperada na conferência offline. A avaliação com o modelo só passa depois da correção e dos testes verdes.
 
 Execute com a autenticação existente do Codex:
 
@@ -132,4 +155,4 @@ scripts/                           validação do pacote e runner Codex
 tests/                             testes dos scripts e fixtures
 ```
 
-O formato segue as orientações oficiais de [AGENTS.md](https://learn.chatgpt.com/docs/agent-configuration/agents-md), [skills](https://learn.chatgpt.com/docs/build-skills), [empacotamento e marketplaces](https://developers.openai.com/plugins/build/plugins) e [execução não interativa](https://learn.chatgpt.com/docs/non-interactive-mode), consultadas em 2026-10-03. A OpenAI recomenda `plugin.json` portátil para novos pacotes; `.codex-plugin/plugin.json` permanece uma opção de compatibilidade, sem necessidade de duplicar manifestos neste projeto.
+O formato segue as orientações oficiais de [skills](https://learn.chatgpt.com/docs/build-skills), [empacotamento e marketplaces](https://developers.openai.com/plugins/build/plugins) e [revisão de instruções](https://developers.openai.com/blog/rethinking-skills-and-prompts-for-gpt-6-astra), consultadas em 2026-10-04. Para configuração e execução, consulte [AGENTS.md](https://learn.chatgpt.com/docs/agent-configuration/agents-md) e [modo não interativo](https://learn.chatgpt.com/docs/non-interactive-mode). A OpenAI recomenda `plugin.json` portátil para novos pacotes; `.codex-plugin/plugin.json` permanece uma opção de compatibilidade, sem necessidade de duplicar manifestos neste projeto.

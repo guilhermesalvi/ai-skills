@@ -10,7 +10,7 @@
 
 ## Context
 
-{{Problema, restrições e critérios}}
+{{Problema, restrições, critérios e origem do motivo; se o motivo original não estiver registrado, declare a ausência e marque qualquer explicação provável como inferência}}
 
 ## Decision
 

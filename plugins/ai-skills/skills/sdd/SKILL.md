@@ -1,50 +1,38 @@
 ---
 name: sdd
-description: Especifica, planeja, implementa e verifica mudanças com requisitos rastreáveis, e registra ADRs. Use para specs de funcionalidade ou comportamento a partir de produto ou código, planos técnicos com checks, execução de spec e ADR de decisão nova ou existente. Não use para code review sem spec, documentação geral ou ajuste mecânico.
+description: Especifique, planeje, implemente e verifique mudanças com requisitos rastreáveis. Use para specs a partir de produto ou código, planos técnicos, implementação por spec e ADRs. Não use para code review sem spec, documentação geral ou ajustes mecânicos.
 ---
 
 # Desenvolvimento por especificação
 
-Os scripts desta skill exigem Python 3.10+ e Git.
+Converta o pedido, o material de produto ou o código existente em um contrato verificável. Entregue os artefatos e as etapas que o pedido autoriza.
 
-Converta uma necessidade em uma mudança verificável:
+Na própria resposta final, informe os caminhos dos artefatos, o resultado, as evidências e todas as premissas `Confirmed? n` que sustentam o escopo entregue, com os IDs afetados. Faça perguntas diretas sobre as lacunas de negócio abertas, com opções e recomendação.
 
-- A spec define o comportamento que o consumidor observa, inclusive as regras de negócio.
-- O plano define as decisões técnicas e os checks que provam a mudança.
-- O ADR registra uma decisão que vale para outras capabilities.
-
-```mermaid
-flowchart TD
-    Source[Necessidade de produto, pedido técnico<br/>ou código existente] --> Spec[Spec: comportamento e regras]
-    Spec --> Plan[Plano: decisões e checks]
-    Plan -. regra para outras capabilities .-> ADR[ADR]
-    Decision[Decisão arquitetural avulsa] --> ADR
-    Plan --> Execute[Execução]
-    Execute --> Verify[Verificação contra spec e plano]
-    Verify -- defeito de contrato --> Fix[Corrigir na origem:<br/>spec ou plano]
-```
-
-## Termos
-
-- **Consumidor**: quem observa o resultado de uma capability. Pode ser uma pessoa, outro sistema ou o código que a chama.
-- **Mudança não trivial**: altera comportamento observável, dados persistidos ou um contrato que outro componente consome. Renomear, formatar ou ajustar texto sem efeito observável é trivial.
+| Artefato | Resultado |
+| --- | --- |
+| Spec | Comportamento observável da capability, com regras de negócio e requisitos estáveis |
+| Plano | Decisões técnicas e checks que provam a mudança |
+| ADR | Decisão arquitetural e seus custos, aplicável a outras capabilities ou pedida como registro avulso |
 
 ## Escolher as referências
 
-Leia cada referência cuja condição vale para o pedido. Carregue as demais só quando forem pré-requisito real.
+Leia o [fluxo comum](references/workflow.md) ao iniciar o trabalho com a skill. Depois, escolha as referências pelo resultado pedido. Reutilize as que já estiverem no contexto; uma correção localizada exige apenas o trecho pertinente e suas dependências.
 
 | Referência | Quando ler |
 | --- | --- |
-| [Fluxo comum](references/workflow.md) | Sempre, antes da referência da etapa |
 | [Prosa](references/prose.md) | Ao escrever ou revisar qualquer artefato |
-| [Especificação](references/specify.md) | Especificar comportamento, inclusive a partir de necessidade de produto; documentar módulo existente; revisar uma spec; implementar uma mudança que ainda não tem spec |
-| [Exemplo de spec](references/spec-example.md) | Escrever uma spec nova, depois da especificação |
+| [Alterar artefato](references/change.md) | Alterar, dividir ou retirar um requisito ou cenário existente; resolver número repetido entre branches; revisar uma spec, um plano ou um ADR |
+| [Especificação](references/specify.md) | Criar ou revisar uma spec, inclusive a partir de produto ou código |
+| [Exemplo de spec](references/spec-example.md) | Esclarecer a aplicação do schema e o nível de detalhe de uma spec nova |
 | [Plano](references/plan.md) | Planejar a solução; implementar uma mudança ainda sem plano; revisar um plano |
-| [Execução](references/execute.md) | Implementar spec ou funcionalidade não trivial; retomar uma mudança |
+| [Execução](references/execute.md) | Implementar ou retomar uma mudança por spec; criar antes a spec e o plano que faltarem |
 | [Verificação](references/verify.md) | Verificar a implementação contra a spec e o plano |
 | [ADR](references/adr.md) | Registrar uma decisão pedida como ADR ou encaminhada pelo plano; revisar um ADR |
 
-## Limites
+Ao preparar a resposta final, aplique [entrega](references/deliver.md) em qualquer modo. Confira os artefatos contra os critérios pertinentes, corrija os achados e inclua na resposta os registros que essa referência exige.
 
-- Os exemplos das referências são didáticos. Números, atores, interfaces, comandos e escolhas deles não se tornam fatos do projeto nem evidência executada.
-- Numa correção localizada, de artefato ou de código, leia o trecho e as dependências dele em vez de reler todas as referências. Preserve os requisitos e os formatos existentes.
+## Recursos e limites
+
+- Resolva os caminhos a partir da pasta deste `SKILL.md`. `<skill-dir>` representa esse caminho absoluto. Os modelos ficam em `assets/`; a conferência determinística usa `scripts/check_spec.py`, com Python 3.10+ e Git, a partir do projeto consumidor.
+- Trate os exemplos como ilustrações de formato. Use os fatos, interfaces e comandos do projeto ao produzir o artefato.

@@ -6,12 +6,13 @@ Conteúdo: Capability e arquivo · Origem do contrato · Observable Decisions ·
 
 ## Capability e arquivo
 
-- Cada spec descreve uma capability: algo que o sistema faz ou oferece, com um resultado que o consumidor observa, e cujo nome continua válido quando a solução muda.
-- Uma funcionalidade entra na spec da capability a que pertence. Emissão de fatura é uma capability; reenviar a fatura é uma funcionalidade dela.
+- Descreva uma capability por spec, conforme o termo do fluxo comum.
+- Inclua uma funcionalidade na spec da capability a que pertence. Emissão de fatura é uma capability; reenviar a fatura é uma funcionalidade dela.
+- Quando a funcionalidade só acrescentar uma operação ou transição ao ciclo existente, mantenha-a na mesma capability.
 - Quando a funcionalidade pertence a uma capability que ainda não tem spec, crie a spec da capability, com o nome dela, e não uma spec da funcionalidade.
 - Na primeira spec de uma capability, especifique também o comportamento existente de que a mudança depende, como estados, transições e recusas, a partir do código e com `arquivo:linha`. O resto da capability entra quando outra mudança o atingir. Assim os IDs e o diagrama já nascem na forma que as próximas mudanças vão estender.
 - Uma mudança que não cria resultado novo para o consumidor edita a spec existente em vez de abrir outra.
-- A spec é dona das regras da sua capability.
+- Mantenha as regras da capability na spec que a define.
 - Nomeie em Affected Capabilities as capabilities cujo resultado a mudança altera, sem redefinir as regras delas.
 - Uma capability que talvez seja afetada, sem confirmação, vai para Gaps, e não para Affected Capabilities.
 - Cite IDs de outra spec só quando consumir a definição, a entrada ou o evento correspondente.
@@ -35,14 +36,19 @@ Conteúdo: Capability e arquivo · Origem do contrato · Observable Decisions ·
 
 ### O que a seção registra
 
-- Observable Decisions mostra, para a capability, onde está cada decisão de superfície e de dimensão:
-  - num requisito;
-  - numa garantia que o código já oferece, com `arquivo:linha`;
-  - numa premissa, citada pelo texto em negrito;
-  - numa lacuna.
+Registre em Observable Decisions onde está cada decisão de superfície e de dimensão:
+
+| Registro | Citação em Landing |
+| --- | --- |
+| Requisito | ID que observa a decisão |
+| Garantia existente no código | `arquivo:linha` e o resultado garantido |
+| Premissa | Texto em negrito da premissa |
+| Lacuna | Texto da coluna Gap |
+
 - Ao mudar a spec, percorra as superfícies que a mudança expõe e todas as dimensões, e atualize as linhas que a mudança atinge.
-- Uma linha só cita um requisito que observa aquela dimensão. O mesmo requisito pode aparecer em várias linhas quando observa cada uma delas.
-- Uma dimensão que se aplica e que nenhum requisito observa fica com uma premissa ou uma lacuna, nunca com `n/a`.
+- Cite em cada linha apenas requisitos que observam aquela dimensão. Reuse um requisito em várias linhas quando ele observar cada uma delas.
+- Use apenas IDs ou nomes de premissas e lacunas em Landing quando esses registros já contiverem a decisão. Descreva somente a garantia externa que não está nesses registros, com `arquivo:linha` quando vier do código.
+- Vincule a uma premissa ou lacuna a dimensão aplicável que ainda não tiver requisito.
 - Reúna as dimensões que não se aplicam numa única linha `n/a`, cada uma como `<Dimension>: <motivo>`. O motivo separa a decisão inaplicável da que ninguém tomou.
 - O motivo de um `n/a` não cita requisito: se um requisito observa a dimensão, ela se aplica e tem linha própria.
 - Inclua apenas os requisitos justificados pela mudança, sem ampliar o produto preventivamente.
@@ -110,7 +116,7 @@ O formato de erro e o estado vazio são as decisões que mais escapam: o primeir
 - Use EARS para deixar claras as condições de requisitos novos quando o formato ajudar.
 - Preserve uma formulação existente que já seja igualmente verificável.
 - As palavras-chave seguem o idioma da prosa: em inglês, use a coluna Forma; em português, a última coluna. Escreva-as em maiúsculas, sem formatação de código.
-- Uma proibição usa SHALL NOT ou NÃO DEVE.
+- Use SHALL NOT ou NÃO DEVE para proibições.
 
 | Padrão | Forma | Adaptação em português |
 | --- | --- | --- |
@@ -126,7 +132,7 @@ O formato de erro e o estado vazio são as decisões que mais escapam: o primeir
 - **Uma execução decide o requisito.** Percentil, média, taxa de erro e disponibilidade são alvos de serviço, que nenhuma execução isolada satisfaz ou reprova. Mantenha o comportamento no requisito e registre o alvo na dimensão Observability.
 - **NFR pelo que ele permite verificar.** Um atributo de qualidade com resultado verificável vira requisito. Um atributo usado para comparar soluções vira critério das decisões técnicas do plano, com a origem registrada.
 - **Conjunto nomeado.** Um requisito que quantifica sobre um conjunto nomeia os membros ou a fonte que os enumera. Sem isso, uma prova sobre dois membros satisfaz a frase inteira.
-- **Garantia negativa.** Um requisito de que algo não acontece, como uma duplicata ou uma segunda cobrança, cita no próprio texto o mecanismo que o código já oferece, com `arquivo:linha`. Não aponte para o plano, que envelhece quando outra mudança troca o mecanismo.
+- **Garantia negativa.** Para exigir que algo não aconteça, como uma segunda cobrança, cite no requisito o mecanismo que o código já oferece, com `arquivo:linha`. Não aponte para o plano, que envelhece quando outra mudança troca o mecanismo.
 - **Garantia negativa nova.** Quando o mecanismo ainda não existe no código, o requisito descreve só o resultado, e o plano registra o mecanismo que o sustenta.
 - **Opção fora da condição.** Uma opção aplicável só em determinada condição define também o resultado de recebê-la fora dela. Rejeitar e ignorar são escolhas de negócio distintas.
 
@@ -158,7 +164,8 @@ O formato de erro e o estado vazio são as decisões que mais escapam: o primeir
 
 ## Cenários de aceitação
 
-- Cada resultado de aceitação deriva de um requisito ou de uma decisão identificável.
+- Inclua Acceptance Scenarios quando um cálculo, ramificação ou combinação de condições precisar de um exemplo que o requisito sozinho não esclarece. Derive cada resultado de um requisito ou de uma decisão identificável.
+- Exclua o cenário cujas condições e resultado apenas repetem o requisito. Mantenha a prova correspondente nos Checks do plano.
 - Um cenário tem nome, entrada, condições e resultado esperado, e cita os requisitos que verifica. "O usuário consegue usar a função" não discrimina um resultado.
 - Casos de aceitação e de rejeição são cenários distintos.
 - Para cálculos ou ramificações, inclua os valores intermediários e o ramo. Os números coincidem com as fórmulas, e uma mudança quantitativa exige recalcular os cenários atingidos.
@@ -176,6 +183,7 @@ O formato de erro e o estado vazio são as decisões que mais escapam: o primeir
 
 - Use `#` para o título e `##` para as seções, nesta ordem.
 - Context, Requirements e Observable Decisions são a base. As demais seções dependem do conteúdo.
+- O modelo `assets/spec.md` começa pelo contrato e pelas pendências. Quando uma seção adicional for necessária, copie apenas o bloco pertinente de [seções opcionais](../assets/spec-sections.md).
 - Não altere uma spec existente só para introduzir seções.
 
 | Section | Conteúdo | Forma |

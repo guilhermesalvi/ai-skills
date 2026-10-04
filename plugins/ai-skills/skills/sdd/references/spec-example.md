@@ -2,11 +2,12 @@
 
 Conteúdo: Context · Scope · Assumptions · Gaps · Glossary · Requirements · Domain Events · Acceptance Scenarios · Observable Decisions · Trade-offs
 
-A spec de uma capability que nasceu de uma necessidade de produto, num cenário fictício. Ela mostra o nível de detalhe esperado em cada seção.
+Use este exemplo para entender como requisitos, premissas, lacunas e dimensões se relacionam. O cenário e as evidências são fictícios; ajuste o nível de detalhe ao contrato do projeto.
 
-- Não tem References nem Divergences, porque não consulta norma nem parte de código existente.
+- Não tem References nem Divergences: usa fontes internas fictícias e não identifica diferenças entre implementação e intenção documentada.
 - Observable Decisions cobre todas as dimensões: cada uma aponta para requisitos, premissas ou lacunas, ou aparece na linha `n/a` com o motivo.
 - As duas premissas são defaults que ninguém confirmou; cada uma sustenta um requisito que muda se ela for recusada.
+- Acceptance Scenarios mostra combinações entre condições ou requisitos; casos cujo resultado já está inteiro num requisito ficam nos checks do plano.
 
 ````markdown
 # Verificação de documentos
@@ -18,7 +19,11 @@ A spec de uma capability que nasceu de uma necessidade de produto, num cenário 
 
 ## Context
 
-A operação envia documentos em nome do cliente e acompanha a análise por mensagens, e a ativação de conta não tem onde consultar o resultado. O analista de conformidade precisa validar cada documento contra um critério identificável, o operador precisa saber quais itens exigem reenvio, e a ativação precisa da elegibilidade do cliente sem interpretar mensagens. O contrato vem do pedido da operação e do checklist mantido pela conformidade.
+A operação envia documentos em nome do cliente e acompanha a análise por mensagens. A ativação de conta não tem onde consultar o resultado.
+
+O analista de conformidade precisa validar cada documento contra um critério identificável. O operador precisa saber quais itens exigem reenvio, e a ativação precisa consultar a elegibilidade do cliente.
+
+O contrato vem do pedido da operação e do checklist mantido pela conformidade. A API reutiliza o formato de erro definido pelo serviço fictício em `src/Api/Errors.cs:12`.
 
 ## Scope
 
@@ -94,30 +99,27 @@ stateDiagram-v2
 
 | Scenario | Input | Condition | Requirements | Result |
 | --- | --- | --- | --- | --- |
-| Envio completo | Três itens válidos anexados | Checklist completo | DOC-03 | `UnderReview` |
 | Formato inválido | Item 2 em formato não aceito | Itens 1 e 3 já anexados | DOC-04 | Item 2 rejeitado com o critério; itens 1 e 3 continuam anexados; caso continua em `AwaitingDocuments` |
 | Rejeição parcial | Itens 1 e 3 aprovados, item 2 rejeitado com motivo previsto | Caso em `UnderReview` | DOC-05, DOC-08 | `PendingResubmission`; só o item 2 aceita reenvio |
-| Rejeição sem motivo | Item 2 rejeitado sem motivo previsto | Caso em `UnderReview` | DOC-06 | Operação recusada; caso continua em `UnderReview` |
 | Reenvio parcial | Itens 2 e 3 rejeitados; só o item 2 reenviado | Item 3 ainda rejeitado | DOC-09 | `UnderReview`, com a rejeição do item 3 preservada |
 | Aprovação | Três itens aprovados | Nenhum item pendente | DOC-07, DOC-12, DOC-15 | `Approved`; elegibilidade verdadeira; evento publicado |
 | Prazo excedido | Caso pendente há 10 dias úteis | Nenhum reenvio | DOC-11, DOC-12 | `Declined` com motivo de prazo; elegibilidade falsa |
-| Decisão concorrente | Analista B rejeita o item 2 | Analista A já aprovou o item 2 nesta análise | DOC-16 | Decisão de B recusada; item 2 continua aprovado |
 
 ## Observable Decisions
 
 | Surface or dimension | Landing |
 | --- | --- |
-| API de envio: formato do erro | DOC-04; o corpo segue o formato de erro do serviço (`src/Api/Errors.cs:12`) |
+| API de envio: formato do erro | DOC-04 e o formato de erro do serviço (`src/Api/Errors.cs:12`) |
 | Validation and limits | DOC-04 |
-| Failure and partial failure | DOC-04: a rejeição de um item mantém os demais itens do caso |
-| Idempotency and duplication | DOC-15 e Domain Events: o evento pode chegar repetido, e a ativação descarta a repetição pelo caso |
-| Authorization | DOC-02, DOC-05 e DOC-10 definem quem envia, quem decide itens e quem recusa o caso; lacuna sobre outros perfis que recusam |
+| Failure and partial failure | DOC-04 |
+| Idempotency and duplication | DOC-15 e Domain Events |
+| Authorization | DOC-02, DOC-05, DOC-10 e a lacuna Quem pode recusar um caso além da conformidade |
 | Concurrency and ordering | DOC-16 e a premissa **Decisões simultâneas sobre o mesmo item: vale a primeira.** |
-| Data lifecycle | Lacuna da política de retenção |
+| Data lifecycle | A lacuna Política de retenção de documentos |
 | State transitions | DOC-01, DOC-03, DOC-05, DOC-07, DOC-09, DOC-10, DOC-11 e o diagrama |
 | Observability | DOC-13 e DOC-14 |
-| Cross-capability consistency | DOC-12 e DOC-15: a ativação consulta a elegibilidade ou recebe o evento de conclusão |
-| `n/a` | Rate limiting: uso interno pela operação; External dependency failure: a análise não chama serviço externo; Tela: a interface fica com o time de backoffice |
+| Cross-capability consistency | DOC-12 e DOC-15 |
+| `n/a` | Rate limiting: a análise não impõe limite próprio e usa a quota interna do serviço; External dependency failure: a análise não chama serviço externo; Tela: a interface fica com o time de backoffice |
 
 ## Trade-offs
 

@@ -9,8 +9,7 @@ Conteúdo: Base e leitura crítica · Revisor separado · Conformidade com a spe
 
 ## Base e leitura crítica
 
-- Compare contra a base da mudança, incluindo os arquivos novos autorizados.
-- A base é a registrada em Context do plano antes da primeira alteração ou, com branch própria, `git merge-base HEAD <branch principal>`.
+- Compare contra a base de comparação, incluindo os arquivos novos autorizados.
 - O último commit da spec não serve de base, porque uma spec viva acumula mudanças diferentes.
 - Se não for possível recuperar a base, declare que a ausência de regressão não está demonstrada e verifique o estado atual sem inventar uma origem.
 - Preserve as alterações alheias: a revisão não exige `add`, `stash`, restauração nem troca de checkout.
@@ -86,7 +85,7 @@ Para confirmar que uma falha já existia, compare com evidência equivalente da 
 - Em implementação autorizada, corrija os achados executáveis e repita a verificação pertinente.
 - Um requisito que ficou sem cobertura e foi corrigido ganha no plano o check que o prova.
 - Em pedido apenas de revisão, entregue os achados sem iniciar implementação.
-- Se os mesmos achados persistirem depois de uma rodada de correção, leve o diagnóstico ao usuário em vez de repetir o ciclo.
+- Se um achado persistir sem evidência nova, diagnostique a causa antes de repetir a correção. Informe o bloqueio quando a solução depender de informação, autorização ou recurso indisponível.
 
 ## Injeção de falha
 
@@ -96,7 +95,7 @@ Uma suíte verde prova que os testes executam, não que detectariam uma regress�
 - Injete uma falha por superfície de asserção, como inverter uma condição, trocar um valor retornado, deslocar um limite ou remover um efeito exigido, e confirme que a prova mais estreita daquele requisito falha.
 - Pare quando cada prova escolhida tiver falhado uma vez.
 - Com ferramenta de mutação disponível ou autorizada, use-a e registre comando e escopo.
-- Injete a falha numa worktree temporária sobre `HEAD`, com o procedimento de Falha preexistente. Se a mudança ainda não tiver commit, copie para a worktree os arquivos alterados e novos dela antes de injetar.
+- Injete a falha numa árvore isolada com o conteúdo atual da mudança. Use uma worktree temporária sobre `HEAD`, conforme Falha preexistente, e copie os arquivos alterados e novos ainda sem commit. Quando Git ou as permissões impedirem a worktree, use uma cópia temporária dos arquivos necessários às mesmas provas e informe essa alternativa no relatório.
 - Confira que o `git status --porcelain` da árvore real continua igual ao de antes.
 - Não use `git stash` para isolar a falha: desempilhar não a desfaz, e numa árvore limpa o stash nem cria entrada.
 - Um mutante sobrevivente é achado: a asserção passaria sob uma implementação errada, salvo se a análise mostrar equivalência de comportamento.
@@ -104,7 +103,4 @@ Uma suíte verde prova que os testes executam, não que detectariam uma regress�
 
 ## Relatório
 
-- Comece pelo resultado e pela cobertura conhecida.
-- Apresente os checks executados, as ressalvas do plano, os achados ordenados pelo impacto e a ação necessária para resolvê-los.
-- Distinga observação, hipótese e verificação não executada.
-- Não transforme inspeção estática em prova de runtime, nem uma nota de confiança em aprovação do produto.
+Entregue o resultado conforme [entrega](deliver.md), com os comandos executados, a cobertura, a origem da revisão e as pendências que afetam o escopo.

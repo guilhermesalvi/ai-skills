@@ -20,12 +20,15 @@ Escreva para quem vai decidir ou implementar a partir do artefato. Inclua o que 
 | Comparações, alternativas, interfaces, cenários, evidências, notação e entradas com os mesmos campos | Tabelas |
 | Agrupamentos que o leitor procura pelo nome | Subtítulos |
 
+- Separe parágrafos, listas, tabelas e blocos de código com linhas em branco. Nas tabelas de registros, use cabeçalhos que expliquem as colunas; na tabela de metadados do artefato, preserve os rótulos de campo do schema.
 - Não fragmente um raciocínio em itens apenas para encurtá-lo.
 - Não transforme uma entrada curta em formulário, com subtítulo e um campo em negrito por parágrafo.
 
 ## Estilo
 
 - Use verbos diretos, nomes concretos e o vocabulário do projeto.
+- Escreva orientações ao executor no imperativo, com ação, condição e resultado esperado. Escreva contexto, evidências e decisões como afirmações; use DEVE ou NÃO DEVE para as obrigações do sistema, conforme EARS.
+- Mantenha o tom factual e direto. Explique restrições que afetem uma escolha, sem elogios, urgência artificial ou justificativas genéricas.
 - Identifique o responsável quando ele for conhecido.
 - Troque qualificadores como "robusto" ou "eficiente" pelo comportamento observável, pela evidência, pela condição de falha, pelo mecanismo ou pelo critério de teste.
 - Nomeie o objeto em vez de usar "o anterior" ou "o mesmo" quando a referência puder ser ambígua.

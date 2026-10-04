@@ -1,13 +1,16 @@
 # Plano
 
-Produza um plano que outro executor consiga seguir sem adivinhar decisões nem o que provar. O plano decide como cumprir a spec, com profundidade proporcional ao risco, e fixa os checks: as afirmações que a mudança precisa tornar verdadeiras, cada uma com a prova que a decide.
+Produza um plano que outro executor consiga seguir sem adivinhar decisões nem o que provar. Ajuste a profundidade ao risco da mudança.
+
+Fixe os checks: afirmações que a mudança precisa tornar verdadeiras, cada uma com uma prova capaz de decidir seu resultado.
 
 Conteúdo: O que o plano não faz · Contexto pertinente · Escopo · Decisões técnicas · Structure e eventos · Riscos · Checks · Estrutura do documento · Exemplo parcial
 
 ## O que o plano não faz
 
-- Não decompõe o trabalho em tarefas, passos ou lista de arquivos. Ordem, arquivos e divisão ficam com quem implementa e aparecem no diff.
-- Motivo: uma lista de passos não garante correção e disputa a atenção de quem executa com as obrigações que o plano precisa fixar.
+- Não decomponha o trabalho em tarefas, passos ou lista de arquivos. Ordem, arquivos e divisão ficam com quem implementa e aparecem no diff.
+
+Neste formato, decisões e provas orientam a execução. Uma lista de passos não substitui essas obrigações.
 
 ## Contexto pertinente
 
@@ -32,7 +35,7 @@ Conteúdo: O que o plano não faz · Contexto pertinente · Escopo · Decisões 
 ### O que registrar
 
 - Registre as escolhas que outro executor não deduziria da spec e do código.
-- Cada garantia negativa da spec em escopo, como não duplicar nem cobrar duas vezes, tem aqui o mecanismo que a sustenta, a menos que a spec cite um mecanismo que o código já oferece.
+- Cada garantia negativa da spec em escopo tem aqui o mecanismo que a sustenta, a menos que a spec cite um mecanismo que o código já oferece.
 
 ### Comparar alternativas
 
@@ -46,10 +49,7 @@ Conteúdo: O que o plano não faz · Contexto pertinente · Escopo · Decisões 
 ### Arquitetura
 
 - Use a arquitetura do projeto quando ela atende ao problema.
-- Módulo de código, pacote versionado e unidade que sobe e desce em conjunto são decisões distintas. Avalie nesta ordem:
-  1. mudança no serviço existente;
-  2. módulo interno;
-  3. nova unidade implantável, só com necessidade concreta de isolamento, escala ou cadência, e com dono, operação, contrato e compatibilidade definidos.
+- Distinga módulo de código, pacote versionado e unidade implantável. Avalie se a mudança cabe no serviço existente ou num módulo interno. Proponha uma nova unidade implantável quando houver necessidade concreta de isolamento, escala ou cadência, com dono, operação, contrato e compatibilidade definidos.
 - Uma biblioteca compartilhada precisa de dono, consumidores e estabilidade suficiente. Não extraia regras de negócio para ela apenas por semelhança de código.
 - Uma decisão que define convenção, restrição ou padrão para outras capabilities, como estilo arquitetural, transporte de eventos ou política de versionamento, vai para [ADR](adr.md), dentro da autorização existente. Decisões locais ficam no plano.
 - Quando uma escolha conflitar com um ADR vigente, explicite em Technical Decisions se a solução seguirá a restrição ou se o ADR precisa ser substituído. A substituição segue o [ADR](adr.md).
@@ -62,21 +62,21 @@ Conteúdo: O que o plano não faz · Contexto pertinente · Escopo · Decisões 
   - dependência nova de runtime;
   - migração sobre dados existentes;
   - precedente que o repositório ainda não tem.
-- Registre em Choice a forma literal que o próximo leitor vai copiar, como a definição do índice, o valor do enum ou a versão do pacote.
+- Registre em Choice a forma literal: o texto exato de uma assinatura, índice, valor de enum ou versão que o executor precisa usar.
 - Escopo adiado e regra de negócio sem mecanismo técnico não são decisões irreversíveis, porque se desfazem sem esse custo.
 
 ## Structure e eventos
 
-- Em Structure, descreva o caminho da mudança pelos componentes existentes e novos, um salto por linha.
-- Com persistência, descreva entidades, relações, invariantes e migração.
-- Descreva os contratos entre componentes que outro executor não deduziria, e a ordem de operações que sustenta a correção, como travar antes de avaliar.
+- Reserve Structure para dependências, relações e ordens que outro executor não deduziria da spec, do código e de Technical Decisions. Liste apenas essa informação adicional, um salto por linha; sem ela, remova a seção.
+- Inclua entidades, invariantes e migração quando a mudança as exigir e os demais registros ainda não as definirem.
 - Não liste pastas, nomes de arquivo, colunas fora de uma forma literal nem divisão em classes: ficam com a convenção do repositório e com o diff, e um catálogo de caminhos envelhece e engana o próximo leitor.
 - Para cada evento, registre o transporte, a ordenação e a evolução de versão.
 - A garantia de entrega vem do transporte escolhido. Não presuma entrega exatamente uma vez, e descreva como duplicações e falhas são tratadas.
 
 ## Riscos
 
-- Registre os riscos concretos da mudança, cada um com mitigação, evidência ou aceitação justificada.
+- Registre os riscos concretos ainda não tratados pelo contrato ou pelos checks, cada um com mitigação, evidência ou aceitação justificada. Quando uma premissa ou lacuna já descrever o risco, cite-a e acrescente apenas a mitigação necessária.
+- Omita a linha cuja única mitigação seja cumprir um requisito, executar um check ou resolver uma lacuna já registrada.
 - A tabela sugere técnicas a avaliar, não escolhas obrigatórias.
 
 | Risco | Técnicas a avaliar conforme o contrato |
@@ -101,12 +101,12 @@ Conteúdo: O que o plano não faz · Contexto pertinente · Escopo · Decisões 
 
 - A prova é o teste ou o comando cujo exit code decide a afirmação, num trecho de código no fim do item. Sem prova, não há check.
 - Um check de decisão técnica começa pelo nome da decisão em vez do ID.
-- Escreva a afirmação a partir da spec e das decisões, nunca a partir de uma implementação existente.
+- Derive a afirmação da spec e das decisões. Consulte a implementação para escolher a integração da prova, sem tomar seu resultado atual como resultado esperado.
 - Quando o teste ainda não existe, a prova nomeia o teste que a implementação vai criar, pelo comando que o executa. Isso fixa o caminho do teste; os demais caminhos ficam com o diff.
 
 ### Escolher a prova
 
-- Conheça a verificação do projeto antes de escolher as provas: leia as instruções das áreas atingidas, a documentação de build e testes, a configuração dos projetos, a CI e os testes pertinentes, para entender framework, estilo e camada.
+- Identifique framework, estilo e camada nas instruções, na configuração, na CI ou nos testes das áreas atingidas. Leia as fontes necessárias para confirmar os comandos, sem exigir todo esse material para cada mudança.
 - Escolha a prova que observa o requisito na camada em que ele é definido.
 - Testes de integração, publicação ou mutação entram quando a mudança, a regra local ou o pedido os justifica.
 - Quando a mudança não precisar de teste novo, o check nomeia a verificação existente que a cobre.
@@ -120,7 +120,7 @@ Conteúdo: O que o plano não faz · Contexto pertinente · Escopo · Decisões 
 
 ### Gate
 
-- O último check é o gate do repositório:
+- Reserve o último check para o gate, o comando de verificação do repositório:
 
   ```markdown
   - [ ] Gate: <o que passa> — `<comando>`
@@ -134,6 +134,7 @@ Conteúdo: O que o plano não faz · Contexto pertinente · Escopo · Decisões 
 
 - O título é o nome da mudança.
 - Use as seções pertinentes, nesta ordem. Checks é a base.
+- O modelo `assets/plan.md` começa pelas decisões, provas e pendências. Quando uma seção adicional for necessária, copie apenas o bloco pertinente de [seções opcionais](../assets/plan-sections.md).
 
 | Section | Conteúdo | Forma |
 | --- | --- | --- |

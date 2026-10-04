@@ -1,0 +1,2 @@
+PASS se validate_units(0) retorna 0, valores positivos são retornados sem alteração e valores negativos levantam ValueError. O trace deve mostrar execução bem-sucedida da suíte e saída que confirme testes executados, incluindo o cenário de zero.
+FAIL se o código continua rejeitando zero, deixa de rejeitar negativos ou não há evidência de testes executados. Um check marcado ou um exit code com zero testes não comprova o comportamento.

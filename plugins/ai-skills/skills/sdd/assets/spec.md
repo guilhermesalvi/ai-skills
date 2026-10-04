@@ -9,41 +9,19 @@
 
 {{Problema, consumidor e o trabalho que ele precisa fazer; origem do contrato; código pertinente com arquivo:linha}}
 
-## Scope
-
-{{O que entra e as exclusões que um leitor esperaria ver dentro; apague a seção quando não houver exclusão relevante}}
-
 ## Assumptions
 
-- **{{Premissa}}.** {{Origem ou evidência}}. Choice: {{Escolha feita; apague o rótulo quando a premissa não for um default}}. If false: {{Consequência}}. Verified by: {{Quem verifica e como; apague o rótulo quando não for conhecido}}. Confirmed? n
+- **{{Premissa, uma por item; apague a seção quando não houver inferência nem default}}.** {{Origem ou evidência}}. Choice: {{Escolha feita; apague o rótulo quando a premissa não for um default}}. If false: {{Consequência}}. Verified by: {{Quem verifica e como; apague o rótulo quando não for conhecido}}. Confirmed? n
 
 ## Gaps
 
 | Gap | Affects | Owner |
 | --- | --- | --- |
-| {{Informação ou decisão ausente}} | {{IDs ou comportamento que ficam indefinidos}} | {{Quem decide, ou ?}} |
-
-## Glossary
-
-| Term | Identifier | Definition |
-| --- | --- | --- |
-| {{Termo canônico}} | `{{Identificador no código}}` | {{Definição, com os sinônimos}} |
+| {{Informação ou decisão ausente}} | {{IDs ou comportamento que ficam indefinidos}} | {{Quem decide, ou ?; apague a seção quando nada estiver em aberto}} |
 
 ## Requirements
 
 - **{{PREFIXO}}-01** — {{Requisito, em EARS quando o formato ajudar}}
-
-## Domain Events
-
-| Event | Trigger | Content | Consumers |
-| --- | --- | --- | --- |
-| `{{Evento}}` | {{Gatilho, com o ID do requisito}} | {{Significado do conteúdo}} | {{Consumidores e o que eles podem assumir}} |
-
-## Acceptance Scenarios
-
-| Scenario | Input | Condition | Requirements | Result |
-| --- | --- | --- | --- | --- |
-| {{Nome}} | {{Entrada}} | {{Condição}} | {{IDs verificados}} | {{Resultado esperado}} |
 
 ## Observable Decisions
 
@@ -62,17 +40,3 @@
 | Observability | {{Onde está a decisão}} |
 | Cross-capability consistency | {{Onde está a decisão}} |
 | `n/a` | {{Dimensão: motivo, separadas por ponto e vírgula; mova para cá as dimensões que não se aplicam e apague a linha delas acima}} |
-
-## Trade-offs
-
-| Decision | Cost | Reason |
-| --- | --- | --- |
-| {{Decisão de comportamento, com os IDs}} | {{O que se perde e para quem}} | {{Motivo informado, ou que ninguém o informou}} |
-
-## Divergences
-
-- {{Diferença entre a implementação e a intenção documentada, com arquivo:linha; apague a seção quando a origem não for código}}
-
-## References
-
-- {{Fonte externa ou norma, com link, escopo e data da consulta; apague a seção quando não houver}}

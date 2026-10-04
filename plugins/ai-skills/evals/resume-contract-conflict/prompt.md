@@ -1,0 +1,1 @@
+Use $sdd para retomar e concluir a mudança em `docs/specs/unit-validation/0001-accept-zero.md`, verificando a implementação contra a spec e o plano atuais. Preserve o trabalho existente e corrija os achados dentro desse escopo. Não faça commit.
