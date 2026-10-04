@@ -108,7 +108,7 @@ Nos demais arquivos Markdown das pastas de capability, o script confere só as c
 ## Precedência
 
 - O pedido da sessão prevalece sobre as convenções do repositório, e ambos prevalecem sobre os defaults desta skill e do `check_spec.py`.
-- Convenção é a regra escrita no `CLAUDE.md`, no `AGENTS.md` ou em outra instrução do repositório.
+- Convenção é a regra escrita no `AGENTS.md`, no `AGENTS.override.md` ou em outra instrução aplicável do repositório.
 - Um padrão apenas observado em arquivos existentes não obriga, mas preserve-o ao editar esses arquivos.
 - Um ADR vigente não é convenção, e sim uma decisão que vale para outras capabilities. Quando o pedido o contradisser, siga o ADR e pergunte ao usuário se ele deve ser substituído.
 - Se uma regra local parecer impedir o trabalho, informe o arquivo, a regra e a ação afetada.

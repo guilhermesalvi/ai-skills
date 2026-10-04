@@ -1,0 +1,103 @@
+{
+  "name": "cancel-orders-spec",
+  "description": "Pedido vago de funcionalidade num módulo sem spec, com uma decisão de negócio que envolve dinheiro.",
+  "tags": [
+    "spec",
+    "plan"
+  ],
+  "timeout_seconds": 1500,
+  "sandbox": "workspace-write",
+  "expected_outcome": "Spec da capability do ciclo do pedido, com autorização e concorrência decididas ou registradas, o cancelamento de pedido pago como lacuna, e um plano com Requirements in Scope.",
+  "checks": [
+    {
+      "type": "regex",
+      "target": {
+        "source": "file",
+        "path": "eval-out/spec.md"
+      },
+      "pattern": "^(?=[\\s\\S]*Validation and limits)(?=[\\s\\S]*Failure and partial failure)(?=[\\s\\S]*Idempotency and duplication)(?=[\\s\\S]*Authorization)(?=[\\s\\S]*Rate limiting)(?=[\\s\\S]*Concurrency and ordering)(?=[\\s\\S]*Data lifecycle)(?=[\\s\\S]*External dependency failure)(?=[\\s\\S]*State transitions)(?=[\\s\\S]*Observability)(?=[\\s\\S]*Cross-capability consistency)",
+      "id": "all-dimensions",
+      "description": "Observable Decisions nomeia as onze dimensões do schema."
+    },
+    {
+      "type": "regex",
+      "target": {
+        "source": "file",
+        "path": "eval-out/spec.md"
+      },
+      "pattern": "^\\|\\s*Authorization\\s*\\|",
+      "flags": "m",
+      "id": "authorization-row",
+      "description": "Autorização se aplica a este pedido (quem pode cancelar o pedido de quem) e tem linha própria em Observable Decisions, fora do n/a."
+    },
+    {
+      "type": "regex",
+      "target": "files",
+      "pattern": "docs[\\/]specs[\\/](?![^\\/\\n]*cancel)[^\\/\\n]+[\\/]spec\\.md",
+      "id": "capability-folder",
+      "description": "A spec nasce na pasta da capability do ciclo do pedido, não numa pasta com o nome da funcionalidade de cancelamento."
+    },
+    {
+      "type": "regex",
+      "target": {
+        "source": "file",
+        "path": "eval-out/spec.md"
+      },
+      "pattern": "Confirmed\\? y(?!\\s*\\()",
+      "match": "not_contains",
+      "id": "confirmed-origin",
+      "description": "Nenhuma premissa aparece como confirmada sem dizer quem confirmou e quando; ninguém confirmou nada nesta execução."
+    },
+    {
+      "id": "delivery",
+      "type": "rubric",
+      "source": "last_message",
+      "rubric": "graders/delivery.md"
+    },
+    {
+      "id": "paid-cancel-gap",
+      "type": "rubric",
+      "source": {
+        "source": "file",
+        "path": "eval-out/spec.md"
+      },
+      "rubric": "graders/paid-cancel-gap.md"
+    },
+    {
+      "type": "regex",
+      "target": "files",
+      "pattern": "docs[\\/]specs[\\/][^\\/\\n]+[\\/]0001-[^\\/\\n]+\\.md",
+      "id": "plan-file",
+      "description": "O plano fica na pasta da capability, numerado a partir de 0001."
+    },
+    {
+      "type": "regex",
+      "target": {
+        "source": "file",
+        "path": "eval-out/spec.md"
+      },
+      "pattern": "\\b(pedidos?|clientes?)\\b",
+      "flags": "i",
+      "id": "portuguese-prose",
+      "description": "A prosa segue o idioma do pedido, português, mesmo com o código em inglês."
+    },
+    {
+      "type": "regex",
+      "target": {
+        "source": "file",
+        "path": "eval-out/plan.md"
+      },
+      "pattern": "\\*\\*Requirements in Scope\\*\\*\\s*\\|\\s*\\S",
+      "id": "scope-header",
+      "description": "O plano declara os requisitos em escopo no cabeçalho."
+    },
+    {
+      "id": "skill-fired",
+      "type": "skill_read",
+      "skill": "sdd",
+      "expected": true,
+      "description": "A skill sdd foi invocada."
+    }
+  ],
+  "scaffold": "scaffold.py"
+}

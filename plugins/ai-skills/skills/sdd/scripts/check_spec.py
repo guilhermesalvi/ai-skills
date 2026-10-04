@@ -4,7 +4,7 @@ Usage: python check_spec.py [<specs folder>]   (default: docs/specs)
 
 Reads <capability>/spec.md and the change plans <capability>/NNNN-<change>.md.
 Other Markdown files under a capability folder are checked only for cited IDs;
-files outside capability folders, such as CLAUDE.md, are not read.
+files outside capability folders, such as AGENTS.md, are not read.
 
 IDs: a requirement is defined by a list item that starts with a bold ID, such
 as "- **DOC-01** ...". A prefix belongs to the spec that defines it and must

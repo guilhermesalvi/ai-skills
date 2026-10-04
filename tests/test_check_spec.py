@@ -117,7 +117,7 @@ class SpecChecks(unittest.TestCase):
         self.assertEqual([], check(self.folder))
 
     def test_instructions_outside_capabilities_are_not_read(self):
-        (self.folder / "CLAUDE.md").write_text("# Instruções\nReferência: REQ-99\n", encoding="utf-8")
+        (self.folder / "AGENTS.md").write_text("# Instruções\nReferência: REQ-99\n", encoding="utf-8")
         self.assertEqual([], check(self.folder))
 
     def test_plan_citations_are_checked(self):

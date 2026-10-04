@@ -18,7 +18,7 @@ Conteúdo: Base e leitura crítica · Revisor separado · Conformidade com a spe
 
 ## Revisor separado
 
-- Numa mudança não trivial, verifique em contexto separado de quem implementou sempre que houver subagente disponível, porque o autor tende a reaplicar o raciocínio que produziu a falha.
+- Numa mudança não trivial, verifique em contexto separado de quem implementou quando houver subagente disponível e a delegação estiver autorizada pelas instruções aplicáveis, porque o autor tende a reaplicar o raciocínio que produziu a falha.
 - Passe ao subagente os caminhos da spec e do plano, a base, os comandos de verificação e todos os requisitos de Requirements in Scope, não só a última fatia implementada.
 - Com subagente, a entrega espera o resultado dele: sem esse resultado, a mudança não está verificada.
 - Sem subagente, verifique mesmo assim e declare no relatório que autor e revisor são o mesmo.

@@ -1,18 +1,34 @@
-#!/usr/bin/env bash
-# Seeds a billing module whose history converted every stored instant to UTC, with no ADR.
-set -euo pipefail
+"""Seed an isolated evaluation fixture; requires an empty directory and Git."""
 
-commit() {
-  git add -A
-  git -c user.name=fixture -c user.email=fixture@example.com commit -qm "$1"
-}
+from pathlib import Path
+import subprocess
+import sys
 
-mkdir -p billing tests
-: > billing/__init__.py
-: > tests/__init__.py
 
-cat > billing/invoices.py <<'EOF'
-from dataclasses import dataclass
+root = Path(sys.argv[1]).resolve()
+root.mkdir(parents=True, exist_ok=True)
+if any(root.iterdir()):
+    raise SystemExit("Fixture directory must be empty")
+
+
+def write(path, text):
+    target = root / path
+    target.parent.mkdir(parents=True, exist_ok=True)
+    target.write_text(text, encoding="utf-8", newline="\n")
+
+
+def git(*arguments):
+    subprocess.run(["git", *arguments], cwd=root, check=True)
+
+
+def commit(message):
+    git("add", "-A")
+    git("-c", "user.name=fixture", "-c", "user.email=fixture@example.com", "commit", "-qm", message)
+
+
+write("billing/__init__.py", "")
+write("tests/__init__.py", "")
+write("billing/invoices.py", r'''from dataclasses import dataclass
 from datetime import datetime
 from decimal import Decimal
 
@@ -27,28 +43,24 @@ class Invoice:
 
 def issue(invoice_id: str, customer_id: str, amount: Decimal) -> Invoice:
     return Invoice(invoice_id, customer_id, amount, datetime.now())
-EOF
+''')
 
-cat > README.md <<'EOF'
-# billing
+write("README.md", r'''# billing
 
 Invoice issuing for the storefront. Run the tests with `python -m unittest discover -s tests`.
-EOF
+''')
 
-git init -q
-commit "feat: issue invoices"
-
-cat > billing/clock.py <<'EOF'
-from datetime import datetime, timezone
+git("init", "-q")
+commit("feat: issue invoices")
+write("billing/clock.py", r'''from datetime import datetime, timezone
 
 
 def now() -> datetime:
     """Current instant, always timezone-aware in UTC."""
     return datetime.now(timezone.utc)
-EOF
+''')
 
-cat > billing/invoices.py <<'EOF'
-from dataclasses import dataclass
+write("billing/invoices.py", r'''from dataclasses import dataclass
 from datetime import datetime
 from decimal import Decimal
 
@@ -65,10 +77,9 @@ class Invoice:
 
 def issue(invoice_id: str, customer_id: str, amount: Decimal) -> Invoice:
     return Invoice(invoice_id, customer_id, amount, clock.now())
-EOF
+''')
 
-cat > billing/storage.py <<'EOF'
-from datetime import datetime, timedelta
+write("billing/storage.py", r'''from datetime import datetime, timedelta
 
 
 def serialize_instant(value: datetime) -> str:
@@ -82,10 +93,9 @@ def parse_instant(text: str) -> datetime:
     if value.utcoffset() != timedelta(0):
         raise ValueError("stored instants must be UTC")
     return value
-EOF
+''')
 
-cat > tests/test_storage.py <<'EOF'
-import unittest
+write("tests/test_storage.py", r'''import unittest
 from datetime import datetime, timedelta, timezone
 
 from billing.storage import parse_instant, serialize_instant
@@ -103,6 +113,6 @@ class StorageTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
-EOF
+''')
 
-commit "refactor: store instants in utc"
+commit("refactor: store instants in utc")

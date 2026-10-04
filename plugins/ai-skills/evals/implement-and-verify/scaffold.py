@@ -1,13 +1,34 @@
-#!/usr/bin/env bash
-# Seeds the order module with a committed spec and plan for customer cancellation.
-set -euo pipefail
+"""Seed an isolated evaluation fixture; requires an empty directory and Git."""
 
-mkdir -p orders tests
-: > orders/__init__.py
-: > tests/__init__.py
+from pathlib import Path
+import subprocess
+import sys
 
-cat > orders/orders.py <<'EOF'
-from dataclasses import dataclass, field
+
+root = Path(sys.argv[1]).resolve()
+root.mkdir(parents=True, exist_ok=True)
+if any(root.iterdir()):
+    raise SystemExit("Fixture directory must be empty")
+
+
+def write(path, text):
+    target = root / path
+    target.parent.mkdir(parents=True, exist_ok=True)
+    target.write_text(text, encoding="utf-8", newline="\n")
+
+
+def git(*arguments):
+    subprocess.run(["git", *arguments], cwd=root, check=True)
+
+
+def commit(message):
+    git("add", "-A")
+    git("-c", "user.name=fixture", "-c", "user.email=fixture@example.com", "commit", "-qm", message)
+
+
+write("orders/__init__.py", "")
+write("tests/__init__.py", "")
+write("orders/orders.py", r'''from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from decimal import Decimal
 from enum import Enum
@@ -76,10 +97,9 @@ def deliver(order: Order) -> None:
     if order.status is not OrderStatus.SHIPPED:
         raise InvalidTransition(f"cannot deliver order in {order.status.value}")
     _move(order, OrderStatus.DELIVERED)
-EOF
+''')
 
-cat > tests/test_orders.py <<'EOF'
-import unittest
+write("tests/test_orders.py", r'''import unittest
 from decimal import Decimal
 
 from orders.orders import InvalidTransition, Order, OrderItem, OrderStatus, PaymentGateway, pay, ship
@@ -113,18 +133,14 @@ class OrderTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
-EOF
+''')
 
-cat > README.md <<'EOF'
-# orders
+write("README.md", r'''# orders
 
 Order lifecycle for the storefront backend. Run the tests with `python -m unittest discover -s tests`.
-EOF
+''')
 
-mkdir -p docs/specs/order-lifecycle
-
-cat > docs/specs/order-lifecycle/spec.md <<'EOF'
-# Ciclo do pedido
+write("docs/specs/order-lifecycle/spec.md", r'''# Ciclo do pedido
 
 | | |
 | --- | --- |
@@ -190,10 +206,9 @@ stateDiagram-v2
 | Observability | OLC-06: o histórico registra o instante do cancelamento |
 | Cross-capability consistency | Lacuna do reembolso em `PAID` |
 | `n/a` | Validation and limits: o cancelamento só recebe o pedido e o solicitante; Failure and partial failure: cancelar não chama outro sistema; External dependency failure: cancelar não chama o provedor; Rate limiting: chamada no mesmo processo; Data lifecycle: o módulo não persiste pedidos |
-EOF
+''')
 
-cat > docs/specs/order-lifecycle/0001-customer-cancellation.md <<'EOF'
-# Cancelamento de pedido pelo cliente
+write("docs/specs/order-lifecycle/0001-customer-cancellation.md", r'''# Cancelamento de pedido pelo cliente
 
 | | |
 | --- | --- |
@@ -226,8 +241,7 @@ Base de comparação: o commit que traz esta spec e este plano. Nela, `python -m
 - [ ] **OLC-05**: `pay`, `ship` e `deliver` sobre um pedido em `CANCELLED` levantam `InvalidTransition`, `pay` não registra cobrança, e o pedido continua em `CANCELLED` — `python -m unittest tests.test_orders.OrderTests.test_cancelled_order_rejects_transitions`
 - [ ] Erro de propriedade e representação do cancelamento: `NotOrderOwner` não é subclasse de `InvalidTransition`, e `OrderStatus.CANCELLED.value == "cancelled"` — `python -m unittest tests.test_orders.OrderTests.test_cancellation_contract`
 - [ ] Gate: a suíte inteira passa — `python -m unittest discover -s tests`
-EOF
+''')
 
-git init -q
-git add -A
-git -c user.name=fixture -c user.email=fixture@example.com commit -qm "docs: specify customer cancellation"
+git("init", "-q")
+commit("docs: specify customer cancellation")

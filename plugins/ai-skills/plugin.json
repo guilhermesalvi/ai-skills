@@ -1,0 +1,30 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "ai-skills",
+  "version": "7.0.0",
+  "description": "Desenvolvimento orientado por especificações.",
+  "author": {
+    "name": "Guilherme Salvi",
+    "url": "https://github.com/guilhermesalvi"
+  },
+  "homepage": "https://github.com/guilhermesalvi/ai-skills#readme",
+  "repository": "https://github.com/guilhermesalvi/ai-skills",
+  "keywords": ["sdd", "spec-driven-development", "ears", "adr"],
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "AI Skills",
+        "shortDescription": "Desenvolvimento orientado por especificações",
+        "longDescription": "Especifique, planeje, implemente e verifique mudanças com requisitos rastreáveis, checks com prova e ADRs.",
+        "developerName": "Guilherme Salvi",
+        "category": "Productivity",
+        "capabilities": ["Read", "Write"],
+        "websiteURL": "https://github.com/guilhermesalvi/ai-skills",
+        "defaultPrompt": [
+          "Use $sdd para escrever a spec e o plano desta mudança.",
+          "Use $sdd para implementar e verificar este plano."
+        ]
+      }
+    }
+  }
+}

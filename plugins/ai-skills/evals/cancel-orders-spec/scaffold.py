@@ -1,13 +1,34 @@
-#!/usr/bin/env bash
-# Seeds a small Python order module, committed, with no spec yet.
-set -euo pipefail
+"""Seed an isolated evaluation fixture; requires an empty directory and Git."""
 
-mkdir -p orders tests
-: > orders/__init__.py
-: > tests/__init__.py
+from pathlib import Path
+import subprocess
+import sys
 
-cat > orders/orders.py <<'EOF'
-from dataclasses import dataclass, field
+
+root = Path(sys.argv[1]).resolve()
+root.mkdir(parents=True, exist_ok=True)
+if any(root.iterdir()):
+    raise SystemExit("Fixture directory must be empty")
+
+
+def write(path, text):
+    target = root / path
+    target.parent.mkdir(parents=True, exist_ok=True)
+    target.write_text(text, encoding="utf-8", newline="\n")
+
+
+def git(*arguments):
+    subprocess.run(["git", *arguments], cwd=root, check=True)
+
+
+def commit(message):
+    git("add", "-A")
+    git("-c", "user.name=fixture", "-c", "user.email=fixture@example.com", "commit", "-qm", message)
+
+
+write("orders/__init__.py", "")
+write("tests/__init__.py", "")
+write("orders/orders.py", r'''from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from decimal import Decimal
 from enum import Enum
@@ -76,10 +97,9 @@ def deliver(order: Order) -> None:
     if order.status is not OrderStatus.SHIPPED:
         raise InvalidTransition(f"cannot deliver order in {order.status.value}")
     _move(order, OrderStatus.DELIVERED)
-EOF
+''')
 
-cat > tests/test_orders.py <<'EOF'
-import unittest
+write("tests/test_orders.py", r'''import unittest
 from decimal import Decimal
 
 from orders.orders import InvalidTransition, Order, OrderItem, OrderStatus, PaymentGateway, pay, ship
@@ -113,14 +133,12 @@ class OrderTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
-EOF
+''')
 
-cat > README.md <<'EOF'
-# orders
+write("README.md", r'''# orders
 
 Order lifecycle for the storefront backend. Run the tests with `python -m unittest discover -s tests`.
-EOF
+''')
 
-git init -q
-git add -A
-git -c user.name=fixture -c user.email=fixture@example.com commit -qm "feat: order lifecycle"
+git("init", "-q")
+commit("feat: order lifecycle")

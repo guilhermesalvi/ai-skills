@@ -1,10 +1,11 @@
 ---
 name: sdd
-description: Especifica, planeja, implementa, verifica ou retoma mudanças com requisitos rastreáveis da spec ao teste, e registra ADRs. Use para spec de funcionalidade ou de comportamento do sistema, inclusive a partir de necessidade de produto, pedido de tela ou CRUD, documento de produto ou código existente; para plano com decisões técnicas e checks com prova; para implementação não trivial a partir de uma spec e verificação contra ela; e para ADR de decisão arquitetural nova ou já adotada no código. Não use para code review sem spec, documentação geral ou ajuste mecânico.
-compatibility: Requires Python 3.10+ and git.
+description: Especifica, planeja, implementa e verifica mudanças com requisitos rastreáveis, e registra ADRs. Use para specs de funcionalidade ou comportamento a partir de produto ou código, planos técnicos com checks, execução de spec e ADR de decisão nova ou existente. Não use para code review sem spec, documentação geral ou ajuste mecânico.
 ---
 
 # Desenvolvimento por especificação
+
+Os scripts desta skill exigem Python 3.10+ e Git.
 
 Converta uma necessidade em uma mudança verificável:
 
