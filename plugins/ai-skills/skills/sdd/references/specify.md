@@ -177,7 +177,7 @@ O formato de erro e o estado vazio são as decisões que mais escapam: o primeir
 - Registre em Trade-offs as decisões de comportamento do usuário ou do material de origem que custam algo, e cite na decisão os IDs afetados.
 - O custo diz o que se perde e para quem.
 - Se ninguém informou o motivo, escreva isso na célula em vez de inferi-lo.
-- Uma escolha sua com custo é premissa, com o custo descrito em `Choice:`. Uma escolha técnica fica nas decisões do plano.
+- Uma escolha sua com custo é premissa: descreva a escolha provisória e seu custo em prosa. Uma escolha técnica fica nas decisões do plano.
 
 ## Estrutura do documento
 

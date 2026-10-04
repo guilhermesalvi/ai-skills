@@ -56,15 +56,13 @@
       "rubric": "graders/concise-spec.md"
     },
     {
-      "type": "regex",
-      "target": {
+      "id": "assumption-lifecycle",
+      "type": "rubric",
+      "source": {
         "source": "file",
         "path": "eval-out/spec.md"
       },
-      "pattern": "Confirmed\\? y(?!\\s*\\()",
-      "match": "not_contains",
-      "id": "confirmed-origin",
-      "description": "Nenhuma premissa aparece como confirmada sem dizer quem confirmou e quando; ninguém confirmou nada nesta execução."
+      "rubric": "graders/assumptions.md"
     },
     {
       "id": "delivery",

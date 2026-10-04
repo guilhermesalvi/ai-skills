@@ -80,6 +80,8 @@ EARS, os schemas em inglês, a numeração e os checks rastreáveis são contrat
 
 Os modelos de spec e plano começam pelas partes centrais e pelas pendências. Os blocos opcionais ficam em `assets/spec-sections.md` e `assets/plan-sections.md`; inclua apenas os que acrescentarem informação ao contrato ou à solução.
 
+Assumptions reúne apenas fatos ainda não verificados e escolhas provisórias, em parágrafos com a afirmação em negrito, seu fundamento e o impacto de estar errada. Ao resolver uma premissa, mova o resultado para o corpo com evidência ou origem da decisão e atualize as referências afetadas. O fluxo completo está em [premissas e lacunas](plugins/ai-skills/skills/sdd/references/workflow.md#premissas-e-lacunas).
+
 ### Checks locais
 
 ```bash
@@ -104,7 +106,7 @@ Os casos em `plugins/ai-skills/evals/` usam um runner próprio com `codex exec -
 
 | Caso | O que confere |
 | --- | --- |
-| `cancel-orders-spec` | Capability, idioma, dimensões, autorização, pedido pago como lacuna, origem das confirmações, escopo do plano, concisão e entrega |
+| `cancel-orders-spec` | Capability, idioma, dimensões, autorização, pedido pago como lacuna, premissas abertas e origem das decisões, escopo do plano, concisão e entrega |
 | `adr-from-code` | ADR derivado do código e histórico, sem inventar participantes, alternativas ou motivos |
 | `implement-and-verify` | Implementação, testes nomeados nas provas, execução bem-sucedida, checks marcados e relatório |
 | `resume-contract-conflict` | Retomada com diff divergente, preservação da spec e nova execução dos checks afetados |

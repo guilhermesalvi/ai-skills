@@ -18,15 +18,11 @@ check, and each ID a check cites is in scope. A committed plan whose checks are
 all marked is the record of a concluded change: its citations and scope are
 not checked, because the spec may have retired an ID since.
 
-Structure: section titles, header labels, table columns, assumption labels and
+Structure: section titles, header labels, table columns and
 the dimensions of Observable Decisions are the English schema of the skill,
-whatever the prose language. A new artifact, which HEAD does not have, gets the
-whole schema: known sections in order, the header, Observable Decisions with
-every dimension, and assumptions with "If false:" and the origin of a
-"Confirmed? y". An artifact already in HEAD keeps the checks of its existing
-content: with none of the schema titles it is listed as not checked, and only
-its new or changed assumptions need the whole item form. Outside a Git
-repository every artifact is new.
+whatever the prose language. Every artifact gets the whole schema: known
+sections in order, the header, Observable Decisions with every dimension,
+and assumptions with a bold statement followed by explanation.
 
 Every spec and plan is also checked for template fields ({{...}}) left from
 the skill's assets and for placeholder cells or proofs, such as TBD or n/a.
@@ -52,10 +48,7 @@ HEADER_PREFIX = re.compile(r"^\|\s*\*\*Requirement Prefix\*\*\s*\|\s*`?([A-Z][A-
 HEADER_SCOPE = re.compile(r"^\|\s*\*\*Requirements in Scope\*\*\s*\|(.*)\|\s*$", re.M)
 HEADER_ROW = re.compile(r"^\|\s*\*\*([^*|]+)\*\*\s*\|\s*\|\s*$", re.M)
 PLAN_NAME = re.compile(r"^([0-9]{4})-.+\.md$")
-CONFIRMED = re.compile(r"Confirmed\?\s*[yn]\.?\s*$")
-# A "y" names who decided and when: "Confirmed? y (Operations, 2026-03-10)".
-CONFIRMED_WITH_ORIGIN = re.compile(r"Confirmed\?\s*(?:n|y\s*\([^,()]+,\s*[0-9]{4}-[0-9]{2}-[0-9]{2}\))\.?\s*$")
-IF_FALSE = re.compile(r"\bIf false:\s*\S")
+ASSUMPTION = re.compile(r"^-\s+\*\*\S(?:.*?\S)?\*\*\s+\S")
 CHECKBOX = re.compile(r"^- \[([ xX])\] ")
 PROOF = re.compile(r"`([^`]+)`\s*$")
 INLINE_CODE = re.compile(r"`[^`\n]*`")
@@ -66,8 +59,7 @@ SPEC_SECTIONS = ("Context", "Scope", "Assumptions", "Gaps", "Glossary", "Require
                  "Acceptance Scenarios", "Observable Decisions", "Trade-offs", "Divergences", "References")
 PLAN_SECTIONS = ("Context", "Technical Decisions", "Structure", "Risks", "Assumptions", "Gaps", "Checks",
                  "Progress", "References")
-SPEC_BASE = ("Context", "Requirements")
-NEW_SPEC_BASE = SPEC_BASE + ("Observable Decisions",)
+SPEC_BASE = ("Context", "Requirements", "Observable Decisions")
 PLAN_BASE = ("Checks",)
 DIMENSIONS = ("Validation and limits", "Failure and partial failure", "Idempotency and duplication",
               "Authorization", "Rate limiting", "Concurrency and ordering", "Data lifecycle",
@@ -76,8 +68,6 @@ FULL_TABLES = ("Gaps", "Observable Decisions", "Trade-offs", "Technical Decision
 # Cells where the schema itself allows a short marker: the Owner of a gap nobody owns yet,
 # and the row that gathers the dimensions that do not apply.
 ALLOWED_MARKERS = {("Gaps", 2): {"?"}, ("Observable Decisions", 0): {"n/a"}}
-# Titles spelled the same in other prose languages do not identify the schema.
-SHARED_TITLES = {"Trade-offs"}
 
 
 def strip_fences(text):
@@ -169,22 +159,12 @@ def check_links(name, prose, path, root):
     return findings
 
 
-def check_assumptions(name, items, previous):
-    """Check assumption items; those already in HEAD keep the older, shorter form."""
+def check_assumptions(name, items):
+    """Check item structure; meaning and evidence require content review."""
     findings = []
     for item in items:
-        if previous is not None and item in previous:
-            if not (CONFIRMED.search(item) or CONFIRMED_WITH_ORIGIN.search(item)):
-                findings.append(f"{name}: assumption without Confirmed? y or n: {item[:60]}")
-            continue
-        if CONFIRMED_WITH_ORIGIN.search(item):
-            pass
-        elif CONFIRMED.search(item):
-            findings.append(f"{name}: Confirmed? y without who and when, as y (<who>, <YYYY-MM-DD>): {item[:60]}")
-        else:
-            findings.append(f"{name}: assumption without Confirmed? y or n: {item[:60]}")
-        if not IF_FALSE.search(item):
-            findings.append(f"{name}: assumption without If false: {item[:60]}")
+        if not ASSUMPTION.match(item):
+            findings.append(f"{name}: assumption needs a bold statement followed by explanation: {item[:60]}")
     return findings
 
 
@@ -208,26 +188,21 @@ def check_dimensions(name, lines):
     return findings
 
 
-def check_structure(name, prose, schema, base, previous):
-    """Return the schema findings, or None for a committed artifact whose titles are outside the schema."""
-    new = previous is None
+def check_structure(name, prose, schema, base):
+    """Return the schema findings for the current artifact."""
     found = sections(prose)
-    if not new and not (set(schema) - SHARED_TITLES) & found.keys():
-        return None
     findings = [f"{name}: missing section {title}" for title in base if title not in found]
     header = prose.split("\n## ", 1)[0]
     for label in HEADER_ROW.findall(header):
         findings.append(f"{name}: header row {label} is empty; delete the row when it does not apply")
-    if new:
-        findings.extend(f"{name}: section {title} is not in the schema" for title in found if title not in schema)
-        order = [schema.index(title) for title in found if title in schema]
-        if order != sorted(order):
-            findings.append(f"{name}: sections are out of the schema order: {', '.join(schema)}")
+    findings.extend(f"{name}: section {title} is not in the schema" for title in found if title not in schema)
+    order = [schema.index(title) for title in found if title in schema]
+    if order != sorted(order):
+        findings.append(f"{name}: sections are out of the schema order: {', '.join(schema)}")
     for title, lines in found.items():
         if not any(line.strip() for line in lines):
             findings.append(f"{name}: empty section {title}")
-    old_items = None if new else set(list_items(sections(strip_fences(previous)[0]).get("Assumptions", [])))
-    findings.extend(check_assumptions(name, list_items(found.get("Assumptions", [])), old_items))
+    findings.extend(check_assumptions(name, list_items(found.get("Assumptions", []))))
     for title in FULL_TABLES:
         for row in table_rows(found.get(title, [])):
             if not all(row):
@@ -237,7 +212,7 @@ def check_structure(name, prose, schema, base, previous):
                 if PLACEHOLDER.match(marker(cell)) and marker(cell) not in ALLOWED_MARKERS.get((title, column), ()):
                     findings.append(f"{name}: {title} row with a placeholder cell: {' | '.join(row)[:60]}")
                     break
-    if new and "Observable Decisions" in schema and "Observable Decisions" in found:
+    if "Observable Decisions" in schema and "Observable Decisions" in found:
         findings.extend(check_dimensions(name, found["Observable Decisions"]))
     for item in list_items(found.get("Checks", [])):
         proof = PROOF.search(item)
@@ -256,10 +231,10 @@ def cited(text, prefixes):
     return {identifier for identifier in ID_TOKEN.findall(text) if prefix_of(identifier) in prefixes}
 
 
-def check_scope(name, prose, checks, definitions, prefixes, new):
+def check_scope(name, prose, checks, definitions, prefixes):
     header = HEADER_SCOPE.search(prose)
     if not header:
-        return [f"{name}: missing Requirements in Scope in the header"] if new else []
+        return [f"{name}: missing Requirements in Scope in the header"]
     cell = header[1].strip()
     scope = set(ID_TOKEN.findall(cell))
     findings = []
@@ -289,7 +264,7 @@ def check(folder):
     texts = {name: p.read_text(encoding="utf-8-sig") for name, p in names.items()}
     parsed = {name: strip_fences(text) for name, text in texts.items()}
     consumers = sorted(p for p in folder.glob("*/**/*.md") if p.name != "spec.md")
-    findings, unchecked = [], []
+    findings = []
 
     definitions, prefix_owners = defaultdict(list), defaultdict(set)
     for name, (prose, _) in parsed.items():
@@ -304,15 +279,9 @@ def check(folder):
         header = HEADER_PREFIX.search(prose)
         if header and prefixes and header[1] not in prefixes:
             findings.append(f"{name}: Requirement Prefix {header[1]} differs from the definitions")
-        previous = committed_text(names[name], root)
-        base = NEW_SPEC_BASE if previous is None else SPEC_BASE
-        structure = check_structure(name, prose, SPEC_SECTIONS, base, previous)
-        if structure is None:
-            unchecked.append(name)
-        else:
-            if not header:
-                findings.append(f"{name}: missing Requirement Prefix in the header")
-            findings.extend(structure)
+        if not header:
+            findings.append(f"{name}: missing Requirement Prefix in the header")
+        findings.extend(check_structure(name, prose, SPEC_SECTIONS, SPEC_BASE))
     for identifier, owners in sorted(definitions.items()):
         if len(owners) > 1:
             findings.append(f"ids: {identifier} defined {len(owners)} times")
@@ -351,19 +320,17 @@ def check(folder):
             if unclosed:
                 findings.append(f"{name}: unclosed code fence")
             findings.extend(check_links(name, prose, path, root))
-            structure = check_structure(name, prose, PLAN_SECTIONS, PLAN_BASE, previous)
-            if structure is None:
-                unchecked.append(name)
-            else:
-                findings.extend(structure)
-            if not concluded:
-                findings.extend(check_scope(name, prose, checks, definitions, prefix_owners.keys(), previous is None))
+            findings.extend(check_structure(name, prose, PLAN_SECTIONS, PLAN_BASE))
+            if not HEADER_SCOPE.search(prose):
+                findings.append(f"{name}: missing Requirements in Scope in the header")
+            elif not concluded:
+                findings.extend(check_scope(name, prose, checks, definitions, prefix_owners.keys()))
         if concluded:
             continue
         for identifier in sorted(set(ID_TOKEN.findall(text))):
             if prefix_of(identifier) in prefix_owners and identifier not in definitions:
                 findings.append(f"{name}: citation {identifier} has no definition")
-    return findings, sorted(unchecked)
+    return findings
 
 
 def main():
@@ -375,13 +342,11 @@ def main():
     parser.add_argument("folder", nargs="?", default="docs/specs")
     args = parser.parse_args()
     try:
-        findings, unchecked = check(args.folder)
+        findings = check(args.folder)
     except (OSError, UnicodeError, ValueError) as error:
         print(str(error), file=sys.stderr)
         return 2
     print("\n".join(findings) if findings else f"no findings in {args.folder}")
-    for name in unchecked:
-        print(f"structure not checked, titles outside the schema: {name}")
     return 1 if findings else 0
 
 

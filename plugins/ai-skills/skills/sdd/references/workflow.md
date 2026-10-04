@@ -136,26 +136,35 @@ Motivo: inventar um valor para uma decisão que ninguém tomou só torna a frase
 ### Comportamento provisório
 
 - Enquanto uma lacuna estiver aberta e o sistema precisar de um comportamento para o caso, escolha o que preserva o estado atual e não move dinheiro nem dados.
-- Registre esse comportamento como premissa `Confirmed? n` que cita a lacuna, e escreva o requisito com ele. O requisito muda quando a lacuna for resolvida.
+- Registre esse comportamento como escolha provisória em Assumptions que cita a lacuna, e escreva o requisito com ele. O requisito muda quando a lacuna for resolvida.
 - Sem comportamento provisório seguro, o requisito só é escrito quando a lacuna for resolvida.
 - O corpo do artefato afirma só o que está decidido ou o comportamento provisório de uma premissa.
 
 ### Formato da premissa
 
-Cada premissa é um item de lista num só parágrafo, com os rótulos do schema:
+Mantenha em Assumptions apenas fatos ainda não verificados e escolhas provisórias. Escreva cada premissa como um item de lista num só parágrafo: destaque a afirmação em negrito e explique o fundamento, a escolha provisória quando houver e a consequência de estar errada. Nomeie quem verifica e como, quando conhecido, inclusive como papel, como "dono do backend". Use prosa natural, sem campos de status ou rótulos dentro do parágrafo.
+
+Exemplo de inferência ainda aberta:
 
 ```markdown
-- **<premissa>.** <origem ou evidência>. Choice: <escolha feita, quando é um default>. If false: <consequência>. Verified by: <quem verifica e como, quando conhecido>. Confirmed? n
+- **O chamador serializa as operações sobre o mesmo pedido.** O módulo altera o pedido em memória e não expõe uma trava; a serialização pelo chamador ainda precisa ser verificada pelo dono do backend. Se ela não existir, um pagamento concorrente pode cobrar um pedido cancelado.
 ```
 
-- `Choice:` aparece quando a premissa é um default; `Verified by:`, quando quem verifica é conhecido, inclusive como papel, como "dono do backend".
-- `If false:` e `Confirmed?` são obrigatórios.
-- `Confirmed? n` marca o default que ninguém confirmou. Sem esse campo, um default silencioso parece decisão tomada.
-- `Confirmed? y (<quem>, <AAAA-MM-DD>)` marca a premissa que o usuário decidiu, inclusive ao delegar a escolha. Nunca marque `y` pela sua própria confiança.
 - Agrupe numa premissa só os defaults que o usuário aceitaria ou recusaria juntos, como os estados de uma tela. Decisões que ele pode responder de forma diferente ficam em premissas separadas.
 - Ordene as premissas pelo impacto de estarem erradas: primeiro a que inviabilizaria a mudança, depois as que custariam dinheiro, dado ou conformidade, depois as demais.
-- Uma premissa sobre um fato não vira fato por ter sido aceita. Ela sai da seção quando for verificada, e o corpo passa a afirmá-la com a origem.
 - Para citar uma premissa em outra seção, use o texto em negrito dela. Em outro artefato, acrescente o nome do artefato, como "da spec".
+
+### Quando a premissa for resolvida
+
+Retire a premissa de Assumptions quando houver evidência ou decisão suficiente e registre o resultado no lugar correspondente:
+
+| Resolução | Destino e origem |
+| --- | --- |
+| Fato verificado | Context ou a seção que usa o fato, com a evidência que o comprova |
+| Escolha decidida pelo usuário, inclusive por delegação | Requirements na spec ou Technical Decisions no plano, com a origem da decisão; registre quem decidiu e a data quando conhecidos |
+
+- Aceitar uma inferência não comprova um fato. Mantenha a premissa aberta até verificar a afirmação.
+- Atualize os requisitos e as citações que dependiam da premissa. Se ela atendia uma lacuna, resolva também o registro em Gaps. Apague Assumptions quando a seção ficar vazia.
 
 ### Formato da lacuna
 

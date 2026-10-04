@@ -6,7 +6,7 @@ Use este exemplo para entender como requisitos, premissas, lacunas e dimensões 
 
 - Não tem References nem Divergences: usa fontes internas fictícias e não identifica diferenças entre implementação e intenção documentada.
 - Observable Decisions cobre todas as dimensões: cada uma aponta para requisitos, premissas ou lacunas, ou aparece na linha `n/a` com o motivo.
-- As duas premissas são defaults que ninguém confirmou; cada uma sustenta um requisito que muda se ela for recusada.
+- As duas premissas são escolhas provisórias; cada uma sustenta um requisito que muda se ela for recusada.
 - Acceptance Scenarios mostra combinações entre condições ou requisitos; casos cujo resultado já está inteiro num requisito ficam nos checks do plano.
 
 ````markdown
@@ -31,8 +31,8 @@ Um caso de verificação por cliente, com estado explícito, critérios por item
 
 ## Assumptions
 
-- **Um cliente tem no máximo um caso aberto.** Inferida do cadastro atual, que associa um convite ativo por cliente. Choice: um novo convite exige que o caso anterior tenha chegado a um estado terminal. If false: a elegibilidade (DOC-12) precisa dizer qual caso vale. Verified by: operação, no cadastro de convites. Confirmed? n
-- **Decisões simultâneas sobre o mesmo item: vale a primeira.** A operação tem mais de um analista por turno, e dois podem abrir o mesmo caso. Choice: a segunda decisão sobre um item já decidido é recusada (DOC-16). If false: a última decisão prevalece, e o primeiro analista precisa ser avisado da troca. Confirmed? n
+- **Um cliente tem no máximo um caso aberto.** O cadastro atual associa um convite ativo por cliente, mas a operação ainda precisa verificar se isso também limita os casos abertos. Provisoriamente, um novo convite exige que o caso anterior tenha chegado a um estado terminal. Se vários casos puderem coexistir, a elegibilidade (DOC-12) precisará dizer qual caso vale.
+- **Decisões simultâneas sobre o mesmo item: vale a primeira.** A operação tem mais de um analista por turno, e dois podem abrir o mesmo caso. Até que a regra seja decidida, a segunda decisão sobre um item já decidido é recusada (DOC-16). Se a última decisão tiver de prevalecer, o primeiro analista precisará ser avisado da troca.
 
 ## Gaps
 

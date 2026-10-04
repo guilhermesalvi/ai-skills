@@ -7,7 +7,7 @@ description: Especifique, planeje, implemente e verifique mudanças com requisit
 
 Converta o pedido, o material de produto ou o código existente em um contrato verificável. Entregue os artefatos e as etapas que o pedido autoriza.
 
-Na própria resposta final, informe os caminhos dos artefatos, o resultado, as evidências e todas as premissas `Confirmed? n` que sustentam o escopo entregue, com os IDs afetados. Faça perguntas diretas sobre as lacunas de negócio abertas, com opções e recomendação.
+Na própria resposta final, informe os caminhos dos artefatos, o resultado, as evidências e todas as premissas ainda abertas que sustentam o escopo entregue, com os IDs afetados. Faça perguntas diretas sobre as lacunas de negócio abertas, com opções e recomendação.
 
 | Artefato | Resultado |
 | --- | --- |

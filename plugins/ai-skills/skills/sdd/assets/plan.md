@@ -18,7 +18,7 @@
 
 ## Assumptions
 
-- **{{Premissa, uma por item; apague a seção quando não houver inferência nem default}}.** {{Origem ou evidência}}. Choice: {{Escolha feita; apague o rótulo quando a premissa não for um default}}. If false: {{Consequência}}. Verified by: {{Quem verifica e como; apague o rótulo quando não for conhecido}}. Confirmed? n
+- **{{Premissa ainda aberta, uma por item; apague a seção quando não houver inferência nem escolha provisória}}.** {{Explique em prosa o fundamento, a escolha provisória quando houver, a consequência de estar errada e quem verifica quando conhecido}}.
 
 ## Gaps
 

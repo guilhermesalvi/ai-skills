@@ -156,9 +156,9 @@ Cancelamento pelo cliente dono do pedido e as regras de estado de que ele depend
 
 ## Assumptions
 
-- **O chamador entrega ao módulo a identidade autenticada do cliente que pede o cancelamento.** O módulo só conhece o cliente por `Order.customer_id` (`orders/orders.py:28`). Choice: o cancelamento recebe o identificador do solicitante e confere a propriedade antes do estado (OLC-07). If false: quem conhecer o identificador de um cliente cancela os pedidos dele. Verified by: dono do backend da loja. Confirmed? n
-- **Pedido pago é recusado enquanto a política de reembolso não for decidida.** Comportamento provisório da lacuna do reembolso. Choice: `PAID` é recusado, como `SHIPPED`, `DELIVERED` e `CANCELLED` (OLC-08). If false: o cliente com pedido pago depende do atendimento para desistir. Confirmed? n
-- **O chamador serializa as operações sobre o mesmo pedido.** O módulo altera o `Order` em memória, sem trava, e `pay` cobra antes de gravar `PAID` (`orders/orders.py:51-57`). If false: um cancelamento concorrente com o pagamento pode deixar um pedido cobrado em `CANCELLED`. Verified by: dono do backend da loja. Confirmed? n
+- **O chamador entrega ao módulo a identidade autenticada do cliente que pede o cancelamento.** O módulo só conhece o cliente por `Order.customer_id` (`orders/orders.py:28`); o dono do backend da loja ainda precisa verificar a origem autenticada do solicitante. Provisoriamente, o cancelamento recebe esse identificador e confere a propriedade antes do estado (OLC-07). Se a identidade não vier autenticada, quem conhecer o identificador de um cliente poderá cancelar os pedidos dele.
+- **Pedido pago é recusado enquanto a política de reembolso não for decidida.** Para atender provisoriamente a lacuna do reembolso, `PAID` é recusado, como `SHIPPED`, `DELIVERED` e `CANCELLED` (OLC-08). Se a política permitir o cancelamento de pedidos pagos, essa recusa precisará mudar; enquanto isso, o cliente dependerá do atendimento para desistir.
+- **O chamador serializa as operações sobre o mesmo pedido.** O módulo altera o `Order` em memória, sem trava, e `pay` cobra antes de gravar `PAID` (`orders/orders.py:51-57`); a serialização pelo chamador ainda precisa ser verificada pelo dono do backend da loja. Se ela não existir, um cancelamento concorrente com o pagamento poderá deixar um pedido cobrado em `CANCELLED`.
 
 ## Gaps
 

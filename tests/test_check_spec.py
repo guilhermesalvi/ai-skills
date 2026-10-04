@@ -22,7 +22,7 @@ _spec.loader.exec_module(check_spec)
 
 
 def check(folder):
-    return check_spec.check(folder)[0]
+    return check_spec.check(folder)
 
 
 NOT_APPLICABLE = "; ".join(f"{dimension}: fora do módulo" for dimension in check_spec.DIMENSIONS
@@ -55,7 +55,7 @@ PLAN = """# Repetição de solicitações
 
 ## Assumptions
 
-- **O armazenamento aceita índice único.** O banco atual oferece. If false: a garantia muda de mecanismo. Confirmed? n
+- **O armazenamento aceita índice único.** A configuração do banco ainda precisa ser conferida. Se não houver esse recurso, a garantia precisará de outro mecanismo.
 
 ## Checks
 
@@ -83,7 +83,7 @@ def git(folder, *args):
 
 
 def commit_all(folder):
-    """Commit the folder as HEAD, so its artifacts are no longer new."""
+    """Commit the folder as HEAD to exercise checks against recorded artifacts."""
     if not (Path(folder) / ".git").exists():
         git(folder, "init", "-q")
     git(folder, "add", "-A")
@@ -221,7 +221,7 @@ class SpecChecks(unittest.TestCase):
 
 
 class NewArtifacts(unittest.TestCase):
-    """Artifacts that HEAD does not have get the whole schema."""
+    """Validate the schema of uncommitted artifacts."""
 
     def setUp(self):
         self.temp = TemporaryDirectory()
@@ -274,22 +274,22 @@ class NewArtifacts(unittest.TestCase):
         self.assertEqual(["requests-lifecycle/spec.md: header row Affected Capabilities is empty; "
                           "delete the row when it does not apply"], check(self.folder))
 
-    def test_assumption_without_confirmation_is_reported(self):
-        assumptions = "- **Chave por cliente.** Inferida do cadastro.\n  If false: muda o escopo."
-        self.document.write_text(document({"Assumptions": assumptions}), encoding="utf-8")
-        self.assertTrue(any("assumption without Confirmed?" in f for f in check(self.folder)))
+    def test_assumptions_accept_natural_prose_in_either_language(self):
+        for item in (
+            "- **Chave por cliente.** Inferida do cadastro; se a chave for global, muda o escopo.",
+            "- **Keys belong to a customer.** Inferred from registration. Global keys would change the scope.",
+            "- **Chave por cliente.** Inferida do cadastro.\n  Se a chave for global, muda o escopo.",
+        ):
+            with self.subTest(item=item):
+                self.document.write_text(document({"Assumptions": item}), encoding="utf-8")
+                self.assertEqual([], check(self.folder))
 
-    def test_assumption_needs_if_false(self):
-        assumptions = "- **Chave por cliente.** Inferida do cadastro. Confirmed? n"
-        self.document.write_text(document({"Assumptions": assumptions}), encoding="utf-8")
-        self.assertTrue(any("assumption without If false:" in f for f in check(self.folder)))
-
-    def test_confirmed_yes_needs_who_and_when(self):
-        item = "- **Chave por cliente.** Inferida do cadastro. If false: muda o escopo. Confirmed? y"
-        self.document.write_text(document({"Assumptions": item}), encoding="utf-8")
-        self.assertTrue(any("Confirmed? y without who and when" in f for f in check(self.folder)))
-        self.document.write_text(document({"Assumptions": item + " (Operação, 2026-03-10)"}), encoding="utf-8")
-        self.assertEqual([], check(self.folder))
+    def test_assumption_needs_a_statement_and_explanation(self):
+        for item in ("- Chave por cliente. Inferida do cadastro.", "- **Chave por cliente.**", "- ** ** Explicação."):
+            with self.subTest(item=item):
+                self.document.write_text(document({"Assumptions": item}), encoding="utf-8")
+                self.assertTrue(any("assumption needs a bold statement followed by explanation" in f
+                                    for f in check(self.folder)))
 
 
 class Plans(unittest.TestCase):
@@ -306,6 +306,10 @@ class Plans(unittest.TestCase):
     def test_valid_plan_has_no_findings(self):
         self.write_plan(PLAN)
         self.assertEqual([], check(self.folder))
+
+    def test_new_plan_assumption_uses_the_same_structure_check(self):
+        self.write_plan(PLAN.replace("**O armazenamento aceita índice único.**", "O armazenamento aceita índice único."))
+        self.assertTrue(any("0001-retry.md: assumption needs" in f for f in check(self.folder)))
 
     def test_check_without_proof_or_checkbox_is_reported(self):
         self.write_plan(PLAN.replace(" — `dotnet test --filter RepeatReturnsOriginal`", "").replace("- [x] Gate", "- Gate"))
@@ -367,7 +371,7 @@ class Plans(unittest.TestCase):
 
 
 class CommittedArtifacts(unittest.TestCase):
-    """Artifacts already in HEAD keep the checks of their existing content."""
+    """Recorded artifacts obey the same schema; concluded plans retain historical citations."""
 
     def setUp(self):
         self.temp = TemporaryDirectory()
@@ -375,27 +379,58 @@ class CommittedArtifacts(unittest.TestCase):
         self.folder = Path(self.temp.name)
         self.document = write_spec(self.folder, "requests-lifecycle", DOCUMENT)
 
-    def test_legacy_titles_are_not_checked_for_structure(self):
+    def test_committed_artifact_with_unknown_titles_is_reported(self):
         self.document.write_text("# Solicitações\n\n## Requisitos\n- **REQ-100** — Resultado original.\n\n## Trade-offs\n"
                                  "| Decisão | Custo | Motivo |\n", encoding="utf-8")
         commit_all(self.folder)
-        self.assertEqual(([], ["requests-lifecycle/spec.md"]), check_spec.check(self.folder))
+        findings = check(self.folder)
+        self.assertIn("requests-lifecycle/spec.md: section Requisitos is not in the schema", findings)
+        self.assertIn("requests-lifecycle/spec.md: missing Requirement Prefix in the header", findings)
 
-    def test_committed_spec_without_observable_decisions_is_accepted(self):
+    def test_committed_spec_without_observable_decisions_is_reported(self):
         self.document.write_text(document(drop=("Observable Decisions",)), encoding="utf-8")
         commit_all(self.folder)
+        self.assertIn("requests-lifecycle/spec.md: missing section Observable Decisions", check(self.folder))
+
+    def test_committed_assumption_without_explanation_is_reported(self):
+        item = "- **Chave por cliente.**"
+        self.document.write_text(document({"Assumptions": item}), encoding="utf-8")
+        commit_all(self.folder)
+        self.assertTrue(any("assumption needs" in f for f in check(self.folder)))
+        self.document.write_text(document({"Assumptions": item + " Inferida do cadastro; se falsa, muda o escopo."}),
+                                 encoding="utf-8")
         self.assertEqual([], check(self.folder))
 
-    def test_only_new_or_changed_assumptions_need_the_whole_form(self):
-        legacy = "- **Chave por cliente.** Inferida do cadastro. Se falsa, muda o escopo. Confirmed? y"
-        self.document.write_text(document({"Assumptions": legacy}), encoding="utf-8")
+    def test_unchanged_natural_assumption_and_new_assumption_are_accepted(self):
+        original = "- **Chave por cliente.** Inferida do cadastro; se falsa, muda o escopo."
+        self.document.write_text(document({"Assumptions": original}), encoding="utf-8")
         commit_all(self.folder)
+        added = "- **Uma solicitação por vez.** Inferida do consumidor; concorrência exigiria uma trava."
+        self.document.write_text(document({"Assumptions": original + "\n" + added}), encoding="utf-8")
         self.assertEqual([], check(self.folder))
-        changed = legacy.replace("cadastro", "cadastro atual")
-        self.document.write_text(document({"Assumptions": changed}), encoding="utf-8")
+
+    def test_committed_open_plan_needs_scope_header(self):
+        plan = self.document.parent / "0001-retry.md"
+        plan.write_text(PLAN.replace("| **Requirements in Scope** | `REQ-100` |\n", ""), encoding="utf-8")
+        commit_all(self.folder)
+        self.assertIn("requests-lifecycle/0001-retry.md: missing Requirements in Scope in the header", check(self.folder))
+
+    def test_concluded_plan_still_needs_scope_header(self):
+        plan = self.document.parent / "0001-retry.md"
+        text = PLAN.replace("| **Requirements in Scope** | `REQ-100` |\n", "").replace("- [ ]", "- [x]")
+        plan.write_text(text, encoding="utf-8")
+        commit_all(self.folder)
+        self.assertIn("requests-lifecycle/0001-retry.md: missing Requirements in Scope in the header", check(self.folder))
+
+    def test_committed_artifact_checks_section_order_and_dimensions(self):
+        text = document({"Observable Decisions": "| Surface or dimension | Landing |\n| --- | --- |\n"
+                                                 "| Idempotency and duplication | REQ-100 |"})
+        text = text.replace("## Context", "## References")
+        self.document.write_text(text, encoding="utf-8")
+        commit_all(self.folder)
         findings = check(self.folder)
-        self.assertTrue(any("Confirmed? y without who and when" in f for f in findings))
-        self.assertTrue(any("assumption without If false:" in f for f in findings))
+        self.assertTrue(any("sections are out of the schema order" in f for f in findings))
+        self.assertTrue(any("Observable Decisions misses" in f for f in findings))
 
     def test_concluded_plan_keeps_citations_of_retired_ids(self):
         plan = self.document.parent / "0001-retry.md"
@@ -425,7 +460,7 @@ class Templates(unittest.TestCase):
             self.assertTrue(any("requests/spec.md: template field left" in f for f in findings))
             self.assertTrue(any("requests/0001-change.md: template field left" in f for f in findings))
             schema_errors = ("not in the schema", "out of the schema order", "Observable Decisions misses",
-                             "empty section", "empty cell", "placeholder", "without If false", "without Confirmed")
+                             "empty section", "empty cell", "placeholder", "assumption needs")
             self.assertEqual([], [f for f in findings if any(error in f for error in schema_errors)])
 
 
