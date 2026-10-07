@@ -10,6 +10,8 @@ O pacote está em beta, na versão `0.1.0-beta.1`, definida em [plugin.json](plu
 
 A spec define o comportamento e as regras de negócio. O plano registra decisões técnicas e checks com prova. Modelos e um validador mantêm IDs, links, schema e rastreabilidade coerentes.
 
+Consulte o [guia de uso da sdd](plugins/ai-skills/skills/sdd/README.md) para exemplos de pedidos, entradas e entregas de cada modo.
+
 ## Instalação
 
 Com uma CLI do Codex que oferece `codex plugin add`, na raiz deste checkout:
