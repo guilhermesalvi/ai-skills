@@ -16,7 +16,8 @@ Escreva para quem vai decidir ou implementar a partir do artefato. Inclua o que 
 | Conteúdo | Forma |
 | --- | --- |
 | Raciocínio, contexto e justificativas | Parágrafos |
-| Requisitos, itens paralelos e etapas | Listas |
+| Requisitos e itens paralelos | Listas |
+| Etapas cuja ordem altera o resultado | Listas numeradas |
 | Comparações, alternativas, interfaces, cenários, evidências, notação e entradas com os mesmos campos | Tabelas |
 | Agrupamentos que o leitor procura pelo nome | Subtítulos |
 
@@ -27,7 +28,7 @@ Escreva para quem vai decidir ou implementar a partir do artefato. Inclua o que 
 ## Estilo
 
 - Use verbos diretos, nomes concretos e o vocabulário do projeto.
-- Escreva orientações ao executor no imperativo, com ação, condição e resultado esperado. Escreva contexto, evidências e decisões como afirmações; use DEVE ou NÃO DEVE para as obrigações do sistema, conforme EARS.
+- Escreva orientações ao executor no imperativo, com ação, condição e resultado esperado. Escreva contexto, evidências e decisões como afirmações; use as palavras-chave de obrigação de EARS no idioma da prosa para as obrigações do sistema.
 - Mantenha o tom factual e direto. Explique restrições que afetem uma escolha, sem elogios, urgência artificial ou justificativas genéricas.
 - Identifique o responsável quando ele for conhecido.
 - Troque qualificadores como "robusto" ou "eficiente" pelo comportamento observável, pela evidência, pela condição de falha, pelo mecanismo ou pelo critério de teste.

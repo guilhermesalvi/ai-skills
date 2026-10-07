@@ -1,6 +1,6 @@
 """Evaluate SDD with Codex JSONL traces and isolated Git fixtures.
 
-Only --fixtures-only is offline. Live runs use the existing Codex login or
+Listing cases and --fixtures-only are offline. Live runs use the existing Codex login or
 API-key environment, but isolate plugin configuration and delete temporary auth.
 Exit codes: 0 = passed, 1 = failed checks, 2 = error or pending rubric review.
 """

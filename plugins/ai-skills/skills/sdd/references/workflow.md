@@ -28,7 +28,7 @@ docs/specs/
 docs/adr/NNNN-<decision>.md
 ```
 
-Reúna a spec e os planos na pasta da capability. Mantenha ADRs fora dessas pastas, pois suas decisões podem alcançar outras capabilities. Preserve outra organização estabelecida pelo consumidor.
+Reúna a spec e os planos na pasta da capability. Mantenha ADRs fora dessas pastas, pois suas decisões podem alcançar múltiplas capabilities. Preserve outra organização estabelecida pelo consumidor.
 
 Um pedido de cópia para entrega não muda a localização dos artefatos originais. Salve-os no layout do projeto antes de copiar.
 
@@ -38,12 +38,12 @@ Na implementação por esta skill, mantenha um plano em arquivo para preservar c
 
 ## Numeração
 
-- `NNNN` tem quatro dígitos, começa em `0001` e é o número seguinte ao maior da pasta.
-- Cada número pertence a um só item e não muda quando ele é revisado.
+- Numere os planos em cada pasta de capability e os ADRs na pasta de ADRs. Cada pasta tem sua própria sequência: `NNNN` tem quatro dígitos; numa pasta sem itens numerados, use `0001`; nos demais casos, use o número seguinte ao maior presente naquela pasta.
+- Dentro da mesma pasta, cada número pertence a um só item e não muda quando ele é revisado.
 
 ## Documentos vivos
 
-- A spec descreve o contrato atual. Altere-a no próprio arquivo, sem cópia nem versão paralela: o diff registra a mudança, e o histórico do Git, a autoria e a evolução.
+- A spec descreve o contrato que a implementação deve cumprir. Altere-a no próprio arquivo, sem cópia nem versão paralela: o diff registra a mudança, e o histórico do Git, a autoria e a evolução.
 - O andamento da implementação pertence ao plano e à entrega, nunca à spec.
 - Ficam fora da spec, porque não descrevem o contrato:
   - instruções dirigidas ao agente ou a quem edita o documento;
@@ -85,7 +85,7 @@ python "<skill-dir>/scripts/check_spec.py" docs/specs
 
 - Num pedido de implementação, acrescente requisitos para as dimensões técnicas que a mudança expõe. Não mude o resultado observável de um requisito existente, porque essa decisão pertence ao usuário.
 - Uma regra de negócio ausente segue Premissas e lacunas: nunca é decidida em silêncio.
-- Artefatos ainda sem commit valem como entrada. Registre em Context do plano a versão que a implementação usou.
+- Artefatos ainda sem commit valem como entrada. Registre em Context do plano o estado dos artefatos usado na implementação, incluindo as alterações locais pertinentes.
 - Commit e push seguem a autorização do usuário e não liberam etapas.
 
 ## Decidir e perguntar
@@ -117,8 +117,9 @@ python "<skill-dir>/scripts/check_spec.py" docs/specs
 
 ### Onde registrar
 
-- O que ainda não é fato vai para Assumptions ou para Gaps do artefato onde a questão surge.
+- Nas specs e nos planos, registre em Assumptions ou Gaps o que ainda não é fato ou decisão tomada.
 - A spec recebe as questões de comportamento e de regra de negócio; o plano, as questões da solução.
+- Num ADR, registre inferências e informações ausentes conforme [ADR](adr.md), preservando o schema desse artefato.
 
 ### Premissa ou lacuna
 

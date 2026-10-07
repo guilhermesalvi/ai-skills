@@ -11,7 +11,7 @@ Conteúdo: Capability e arquivo · Origem do contrato · Observable Decisions ·
 - Quando a funcionalidade só acrescentar uma operação ou transição ao ciclo existente, mantenha-a na mesma capability.
 - Quando a funcionalidade pertence a uma capability que ainda não tem spec, crie a spec da capability, com o nome dela, e não uma spec da funcionalidade.
 - Na primeira spec de uma capability, especifique também o comportamento existente de que a mudança depende, como estados, transições e recusas, a partir do código e com `arquivo:linha`. O resto da capability entra quando outra mudança o atingir. Assim os IDs e o diagrama já nascem na forma que as próximas mudanças vão estender.
-- Uma mudança que não cria resultado novo para o consumidor edita a spec existente em vez de abrir outra.
+- Quando a capability já tiver uma spec, edite esse arquivo em vez de criar outra spec para a mesma capability.
 - Mantenha as regras da capability na spec que a define.
 - Nomeie em Affected Capabilities as capabilities cujo resultado a mudança altera, sem redefinir as regras delas.
 - Uma capability que talvez seja afetada, sem confirmação, vai para Gaps, e não para Affected Capabilities.
@@ -82,7 +82,7 @@ Os identificadores fazem parte do schema, e o `check_spec.py` exige cada um numa
 | Documento ou texto lido por alguém | Estrutura, profundidade e a ação esperada do leitor |
 | Coleção organizada | Critério de agrupamento, nomeação, ordenação, tratamento de duplicatas e a exceção que não se encaixa |
 
-O formato de erro e o estado vazio são as decisões que mais escapam: o primeiro handler define o formato que os outros copiam, e o estado vazio só aparece para conta nova.
+O formato de erro costuma ser reutilizado por outros handlers, e o estado vazio pode passar despercebido quando os testes usam apenas contas com dados.
 
 ## Glossário e nomes
 
@@ -182,7 +182,7 @@ O formato de erro e o estado vazio são as decisões que mais escapam: o primeir
 ## Estrutura do documento
 
 - Use `#` para o título e `##` para as seções, nesta ordem.
-- Context, Requirements e Observable Decisions são a base. As demais seções dependem do conteúdo.
+- Context, Requirements e Observable Decisions são seções obrigatórias. As demais seções dependem do conteúdo.
 - O modelo `assets/spec.md` começa pelo contrato e pelas pendências. Quando uma seção adicional for necessária, copie apenas o bloco pertinente de [seções opcionais](../assets/spec-sections.md).
 - Não altere uma spec existente só para introduzir seções.
 
@@ -190,7 +190,7 @@ O formato de erro e o estado vazio são as decisões que mais escapam: o primeir
 | --- | --- | --- |
 | Context | Problema, consumidor e o trabalho que ele precisa fazer, origem do contrato e código pertinente | Parágrafos |
 | Scope | O que entra e as exclusões que um leitor esperaria ver dentro | Parágrafo ou lista |
-| Assumptions | Inferências e defaults de comportamento | Lista, como define o fluxo comum |
+| Assumptions | Inferências ainda não verificadas e escolhas provisórias de comportamento | Lista, como define o fluxo comum |
 | Gaps | Informações e decisões ausentes | Tabela Gap, Affects, Owner |
 | Glossary | Termos canônicos, sinônimos e identificadores no idioma do código | Tabela Term, Identifier, Definition |
 | Requirements | IDs e comportamento observável, com os diagramas pertinentes | Lista de requisitos; tabela State, Identifier, Meaning para estados |

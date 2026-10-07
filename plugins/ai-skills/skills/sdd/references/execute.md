@@ -6,10 +6,9 @@ Implemente o escopo pedido e verifique o contrato. Conclua quando cada check do 
 
 - Confira `git status`, o plano, a spec atual e as regras dos diretórios atingidos.
 - Preserve o trabalho alheio.
-- Sem plano da mudança, escreva-o antes da primeira alteração.
 - Sem spec para o comportamento alterado, leia [especificação](specify.md) e registre o contrato antes de planejar.
-- Para criar ou ajustar o plano, leia [plano](plan.md).
-- Sem uma branch própria para a mudança, registre em Context do plano a base de comparação, a saída de `git rev-parse HEAD`, antes da primeira alteração.
+- Para criar ou ajustar o plano, leia [plano](plan.md). Sem plano da mudança, escreva-o antes de implementar.
+- Sem uma branch própria para a mudança, registre em Context do plano a base de comparação, a saída de `git rev-parse HEAD`, antes de implementar.
 
 Use como base de comparação o commit contra o qual o diff será medido: o `HEAD` registrado antes da mudança ou, para uma branch própria, `git merge-base HEAD <branch principal>`.
 
@@ -38,7 +37,7 @@ Ao concluir, execute a [verificação](verify.md).
 ## Desvios e restrições
 
 - Uma restrição descoberta pode exigir corrigir a spec ou o plano. Registre o efeito material e continue o escopo autorizado.
-- Atualize a spec ou o plano no mesmo commit que muda o que eles descrevem, não ao final. Escrito depois, o registro vira justificativa do que já foi feito.
+- Atualize a spec ou o plano quando a decisão mudar, antes de implementar o comportamento ou a solução correspondente. Quando houver commit autorizado, agrupe o artefato com a mudança que ele descreve.
 - Uma decisão irreversível descoberta na implementação entra em Technical Decisions do plano antes do código que a fecha, no formato do [plano](plan.md).
 
 ## Retomar uma mudança

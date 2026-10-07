@@ -1,29 +1,29 @@
 # Decisão arquitetural
 
-Registre uma decisão que vale para outras capabilities.
+Registre uma decisão que vale para múltiplas capabilities.
 
 ## Alcance
 
-- Se o pedido for um ADR para uma decisão que vale só para uma capability, diga em uma linha onde ela caberia e escreva o ADR mesmo assim: em Technical Decisions do plano, numa mudança em andamento, ou junto do código, numa decisão já adotada.
-- Registrar uma decisão não amplia o escopo: aplicá-la ao restante do projeto exige pedido próprio.
+- Se o pedido for um ADR para uma decisão que vale só para uma capability, indique onde ela caberia e escreva o ADR mesmo assim: em Technical Decisions do plano, numa mudança em andamento, ou junto do código, numa decisão já adotada.
+- Registrar uma decisão não autoriza mudanças nas capabilities que ela alcança. A aplicação da decisão segue o escopo de implementação autorizado pelo usuário.
 
 ## Conteúdo
 
 - Preserve o motivo, as alternativas realmente avaliadas, os benefícios e os custos aceitos.
 - Registre os participantes conhecidos, sem inventar nomes.
 - Um custo genérico, que se aplica a qualquer solução, não explica a escolha.
-- Mantenha cada regra derivada no arquivo responsável pelo objeto que ela governa, e acrescente a essa regra o vínculo com o ADR que a justifica.
+- Mantenha a definição de cada regra derivada no arquivo responsável pelo contrato, componente ou convenção afetada. Nesse arquivo, vincule a regra ao ADR que a justifica.
 
 ## Arquivo e estrutura
 
 - Use `docs/adr/NNNN-<decisão>.md`.
-- Preserve o formato dos ADRs existentes. O modelo de ADR vale quando não há ADR anterior.
-- O título é `# ADR NNNN: <decisão>`.
-- Logo abaixo do título, a tabela de cabeçalho traz Supersedes e Superseded by quando houver substituição.
+- Preserve o formato dos ADRs existentes no projeto consumidor. Use o modelo da skill quando o projeto ainda não tiver ADRs.
+- No formato do modelo, o título é `# ADR NNNN: <decisão>`.
+- No formato do modelo, registre as substituições na tabela de cabeçalho logo abaixo do título: Supersedes no ADR novo e Superseded by no ADR substituído.
 
 | Section | Conteúdo |
 | --- | --- |
-| Participants | Quem decidiu ou foi consultado, quando conhecido |
+| Participants | Quem decidiu ou foi consultado; ausência de registro quando ninguém for conhecido |
 | Context | Problema, restrições, critérios e origem do motivo da escolha |
 | Decision | Escolha e seu alcance |
 | Alternatives Considered | Alternativas reais avaliadas pelos mesmos critérios e motivo da rejeição |
@@ -44,7 +44,7 @@ Registre uma decisão que vale para outras capabilities.
 
 ## Substituir uma decisão
 
-- Crie o novo ADR com `Supersedes` no cabeçalho, apontando para o anterior.
-- Acrescente `Superseded by` ao cabeçalho do anterior, apontando para o novo.
+- Crie o ADR substituto com `Supersedes` no cabeçalho, apontando para o ADR substituído.
+- Acrescente `Superseded by` ao cabeçalho do ADR substituído, apontando para o ADR substituto.
 - Preserve o conteúdo histórico do documento antigo.
 - Confira que as referências são recíprocas e apontam para arquivos existentes.

@@ -2,11 +2,11 @@
 
 | | |
 | --- | --- |
-| **Requirements in Scope** | {{IDs que a mudança cria, altera ou precisa provar, separados por vírgula, ou none}} |
+| **Requirements in Scope** | {{IDs cujo comportamento a mudança cria, altera ou precisa provar, separados por vírgula, ou none quando não houver ID em escopo}} |
 
 ## Context
 
-{{Base de comparação, versão dos artefatos usada, código inspecionado e limitações que afetam a solução}}
+{{Base de comparação, estado dos artefatos usado como entrada, código inspecionado e limitações que afetam a solução}}
 
 ## Technical Decisions
 

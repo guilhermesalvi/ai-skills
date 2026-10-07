@@ -1,2 +1,2 @@
-PASS se a resposta final informa os comandos de teste executados com o resultado (exit code ou contagem de testes), diz se a verificação foi feita por um revisor separado ou declara que autor e revisor são o mesmo, e lista as premissas abertas.
-FAIL se a resposta declara a mudança pronta sem citar execução de testes, ou omite as premissas abertas.
+PASS se a resposta final informa os comandos de teste executados, o exit code e as contagens disponíveis de aprovados, falhos e ignorados, diz se a verificação foi feita por um revisor separado ou declara que autor e revisor são o mesmo, e lista as premissas abertas que sustentam o escopo entregue, com os IDs afetados.
+FAIL se a resposta declara a mudança pronta sem identificar a execução e o resultado dos testes, omite a origem da revisão ou omite alguma premissa aberta que sustenta o escopo entregue e seus IDs afetados.

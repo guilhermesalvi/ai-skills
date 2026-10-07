@@ -23,9 +23,9 @@ Neste formato, decisões e provas orientam a execução. Uma lista de passos nã
 
 ## Escopo
 
-- A tabela de cabeçalho traz Requirements in Scope: os IDs que a mudança cria, altera ou precisa provar, separados por vírgula.
-- Use `none` quando a mudança não altera nenhum requisito, como numa refatoração sem mudança observável.
-- Um requisito que só registra comportamento existente, sem que a mudança o altere, fica fora do escopo, mesmo quando nasce junto com a spec. O gate continua cobrindo-o.
+- A tabela de cabeçalho traz Requirements in Scope: os IDs cujo comportamento a mudança cria, altera ou precisa provar, separados por vírgula.
+- Use `none` quando a mudança não cria nem altera comportamento de requisito e não exige provar um ID específico, como numa refatoração coberta apenas pelo gate e por checks técnicos.
+- Um requisito que só registra comportamento existente, sem que a mudança o altere, fica fora do escopo, mesmo quando nasce junto com a spec. Preserve no gate as verificações existentes desse comportamento.
 - Um requisito decidido só em parte entra no escopo, com check da parte decidida.
 - Um requisito existente que a mudança amplia sem alterar o texto, como uma recusa que passa a cobrir um estado novo, entra no escopo, com check do caso novo.
 - O `check_spec.py` confere que cada ID do escopo tem check e que cada check cita apenas IDs do escopo. Não repita essa rastreabilidade numa tabela à parte.
@@ -51,7 +51,7 @@ Neste formato, decisões e provas orientam a execução. Uma lista de passos nã
 - Use a arquitetura do projeto quando ela atende ao problema.
 - Distinga módulo de código, pacote versionado e unidade implantável. Avalie se a mudança cabe no serviço existente ou num módulo interno. Proponha uma nova unidade implantável quando houver necessidade concreta de isolamento, escala ou cadência, com dono, operação, contrato e compatibilidade definidos.
 - Uma biblioteca compartilhada precisa de dono, consumidores e estabilidade suficiente. Não extraia regras de negócio para ela apenas por semelhança de código.
-- Uma decisão que define convenção, restrição ou padrão para outras capabilities, como estilo arquitetural, transporte de eventos ou política de versionamento, vai para [ADR](adr.md), dentro da autorização existente. Decisões locais ficam no plano.
+- Uma decisão que define convenção, restrição ou padrão para múltiplas capabilities, como estilo arquitetural, transporte de eventos ou política de versionamento, vai para [ADR](adr.md), dentro da autorização existente. Decisões restritas à capability da mudança ficam no plano.
 - Quando uma escolha conflitar com um ADR vigente, explicite em Technical Decisions se a solução seguirá a restrição ou se o ADR precisa ser substituído. A substituição segue o [ADR](adr.md).
 
 ### Decisões irreversíveis
@@ -67,7 +67,7 @@ Neste formato, decisões e provas orientam a execução. Uma lista de passos nã
 
 ## Structure e eventos
 
-- Reserve Structure para dependências, relações e ordens que outro executor não deduziria da spec, do código e de Technical Decisions. Liste apenas essa informação adicional, um salto por linha; sem ela, remova a seção.
+- Reserve Structure para dependências, relações e ordens que outro executor não deduziria da spec, do código e de Technical Decisions. Liste apenas essa informação adicional, com uma dependência, relação ou ordem por item; sem ela, remova a seção.
 - Inclua entidades, invariantes e migração quando a mudança as exigir e os demais registros ainda não as definirem.
 - Não liste pastas, nomes de arquivo, colunas fora de uma forma literal nem divisão em classes: ficam com a convenção do repositório e com o diff, e um catálogo de caminhos envelhece e engana o próximo leitor.
 - Para cada evento, registre o transporte, a ordenação e a evolução de versão.
@@ -133,16 +133,16 @@ Neste formato, decisões e provas orientam a execução. Uma lista de passos nã
 ## Estrutura do documento
 
 - O título é o nome da mudança.
-- Use as seções pertinentes, nesta ordem. Checks é a base.
+- Use as seções pertinentes, nesta ordem. Checks é a seção obrigatória.
 - O modelo `assets/plan.md` começa pelas decisões, provas e pendências. Quando uma seção adicional for necessária, copie apenas o bloco pertinente de [seções opcionais](../assets/plan-sections.md).
 
 | Section | Conteúdo | Forma |
 | --- | --- | --- |
-| Context | Base de comparação, versão dos artefatos usada, código inspecionado e limitações que afetam a solução | Parágrafos |
+| Context | Base de comparação, estado dos artefatos usado como entrada, código inspecionado e limitações que afetam a solução | Parágrafos |
 | Technical Decisions | Critérios, quando houver comparação, e as decisões | Parágrafo de critérios e tabela Decision, Choice, Rejected alternatives, Cost, Reversible |
-| Structure | Caminho, entidades, relações, invariantes, migração e eventos | Lista ou diagrama |
+| Structure | Dependências, entidades, relações, invariantes, migração e eventos ainda não definidos nos demais registros | Lista ou diagrama |
 | Risks | Riscos concretos e sua mitigação, evidência ou aceitação | Tabela Risk, Mitigation |
-| Assumptions | Inferências e defaults da solução | Lista, como define o fluxo comum |
+| Assumptions | Inferências ainda não verificadas e escolhas provisórias da solução | Lista, como define o fluxo comum |
 | Gaps | Informações e decisões ausentes que a solução precisa | Tabela Gap, Affects, Owner |
 | Checks | Afirmações com prova | Lista de checkboxes |
 | Progress | Fronteira alcançada, decisões do usuário durante a implementação, tentativas descartadas | Lista |

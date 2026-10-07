@@ -94,7 +94,7 @@ Uma suíte verde prova que os testes executam, não que detectariam uma regress�
 - Numa mudança não trivial, injete falhas nas provas dos requisitos cujo erro custaria dinheiro, dado, conformidade ou um contrato publicado, e sempre que o pedido ou a regra do projeto pedir.
 - Injete uma falha por superfície de asserção, como inverter uma condição, trocar um valor retornado, deslocar um limite ou remover um efeito exigido, e confirme que a prova mais estreita daquele requisito falha.
 - Pare quando cada prova escolhida tiver falhado uma vez.
-- Com ferramenta de mutação disponível ou autorizada, use-a e registre comando e escopo.
+- Com ferramenta de mutação disponível e uso permitido pelas instruções e permissões aplicáveis, use-a e registre comando e escopo.
 - Injete a falha numa árvore isolada com o conteúdo atual da mudança. Use uma worktree temporária sobre `HEAD`, conforme Falha preexistente, e copie os arquivos alterados e novos ainda sem commit. Quando Git ou as permissões impedirem a worktree, use uma cópia temporária dos arquivos necessários às mesmas provas e informe essa alternativa no relatório.
 - Confira que o `git status --porcelain` da árvore real continua igual ao de antes.
 - Não use `git stash` para isolar a falha: desempilhar não a desfaz, e numa árvore limpa o stash nem cria entrada.

@@ -8,7 +8,7 @@ O `check_spec.py` não julga conteúdo. Antes de responder, confira os itens apl
 
 - [ ] A spec leva o nome da capability, não o da funcionalidade pedida.
 - [ ] A prosa, inclusive as palavras-chave EARS, está no idioma do pedido ou da convenção.
-- [ ] Cada decisão cujo erro custaria dinheiro, dado, conformidade ou um contrato publicado está em Gaps, e o comportamento provisório dela está identificado como escolha provisória em Assumptions.
+- [ ] Cada decisão ainda ausente cujo erro custaria dinheiro, dado, conformidade ou um contrato publicado está em Gaps; quando houver comportamento provisório seguro, ele está identificado como escolha provisória em Assumptions.
 - [ ] Nenhuma dimensão que se aplica ficou na linha `n/a`.
 - [ ] Assumptions contém apenas premissas abertas; fatos verificados e escolhas decididas foram registrados no corpo com evidência ou origem, e as citações afetadas foram atualizadas.
 - [ ] A resposta foi comparada com Assumptions da spec e do plano: cada premissa ainda aberta que sustenta o escopo entregue está na resposta com os IDs afetados.
@@ -17,9 +17,14 @@ O `check_spec.py` não julga conteúdo. Antes de responder, confira os itens apl
 
 ## Resposta
 
-Inclua também as conferências não feitas, como o `check_spec.py` ou o `git log -S`, com o motivo.
+Inclua na própria resposta final:
 
-Citar uma lacuna ou recomendar um default não solicita a decisão do usuário. Formule as perguntas exigidas pelo contrato de entrega do `SKILL.md`.
+- Os caminhos dos artefatos, o resultado e as evidências.
+- Todas as premissas ainda abertas da spec e do plano que sustentam o escopo entregue, cada uma acompanhada dos IDs que dependem dela.
+- Perguntas diretas sobre as lacunas de negócio abertas, com opções e recomendação.
+- As conferências não feitas, como o `check_spec.py` ou o `git log -S`, com o motivo.
+
+Citar uma lacuna ou recomendar um default não solicita a decisão do usuário. Escreva a pergunta sobre a escolha que falta.
 
 Motivo: sem aprovações intermediárias, um default de negócio só apareceria para quem abrisse o artefato.
 
@@ -31,7 +36,7 @@ Use este exemplo para reconhecer os registros de entrega; derive o conteúdo dos
 >
 > Escolha provisória: emissão recusada enquanto faltar a política de arredondamento (INV-04). A política está em Gaps; a recusa é provisória.
 >
-> Qual regra de arredondamento deve valer: por item ou pelo total da fatura? Recomendo seguir a regra contábil confirmada pelo responsável financeiro.
+> Qual regra de arredondamento deve valer: por item ou pelo total da fatura? Recomendo por item, para que o total coincida com a soma dos valores exibidos. A escolha ainda precisa da decisão do responsável financeiro.
 
 ## Implementação e verificação
 

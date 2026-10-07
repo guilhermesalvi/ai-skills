@@ -4,7 +4,7 @@ Copie apenas o bloco necessário para o artefato e preencha os campos. Insira-o 
 
 ## Structure
 
-- {{Dependência, relação ou ordem ainda não definida na spec, no código nem nas decisões técnicas; um salto por linha; apague a seção quando não houver informação adicional}}
+- {{Dependência, relação ou ordem ainda não definida na spec, no código nem nas decisões técnicas; uma por item; apague a seção quando não houver informação adicional}}
 
 ## Risks
 

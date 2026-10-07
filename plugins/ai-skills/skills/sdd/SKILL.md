@@ -7,13 +7,11 @@ description: Especifique, planeje, implemente e verifique mudanças com requisit
 
 Converta o pedido, o material de produto ou o código existente em um contrato verificável. Entregue os artefatos e as etapas que o pedido autoriza.
 
-Na própria resposta final, informe os caminhos dos artefatos, o resultado, as evidências e todas as premissas ainda abertas que sustentam o escopo entregue, com os IDs afetados. Faça perguntas diretas sobre as lacunas de negócio abertas, com opções e recomendação.
-
 | Artefato | Resultado |
 | --- | --- |
 | Spec | Comportamento observável da capability, com regras de negócio e requisitos estáveis |
 | Plano | Decisões técnicas e checks que provam a mudança |
-| ADR | Decisão arquitetural e seus custos, aplicável a outras capabilities ou pedida como registro avulso |
+| ADR | Decisão arquitetural e seus custos, aplicável a múltiplas capabilities ou pedida como registro avulso |
 
 ## Escolher as referências
 
@@ -22,15 +20,14 @@ Leia o [fluxo comum](references/workflow.md) ao iniciar o trabalho com a skill. 
 | Referência | Quando ler |
 | --- | --- |
 | [Prosa](references/prose.md) | Ao escrever ou revisar qualquer artefato |
-| [Alterar artefato](references/change.md) | Alterar, dividir ou retirar um requisito ou cenário existente; resolver número repetido entre branches; revisar uma spec, um plano ou um ADR |
-| [Especificação](references/specify.md) | Criar ou revisar uma spec, inclusive a partir de produto ou código |
-| [Exemplo de spec](references/spec-example.md) | Esclarecer a aplicação do schema e o nível de detalhe de uma spec nova |
-| [Plano](references/plan.md) | Planejar a solução; implementar uma mudança ainda sem plano; revisar um plano |
-| [Execução](references/execute.md) | Implementar ou retomar uma mudança por spec; criar antes a spec e o plano que faltarem |
-| [Verificação](references/verify.md) | Verificar a implementação contra a spec e o plano |
-| [ADR](references/adr.md) | Registrar uma decisão pedida como ADR ou encaminhada pelo plano; revisar um ADR |
-
-Ao preparar a resposta final, aplique [entrega](references/deliver.md) em qualquer modo. Confira os artefatos contra os critérios pertinentes, corrija os achados e inclua na resposta os registros que essa referência exige.
+| [Alterar artefato](references/change.md) | Ao alterar requisitos ou cenários existentes, resolver colisões de numeração entre branches ou revisar uma spec, um plano ou um ADR |
+| [Especificação](references/specify.md) | Ao criar ou revisar uma spec, inclusive a partir de produto ou código |
+| [Exemplo de spec](references/spec-example.md) | Quando houver dúvida sobre a aplicação do schema ou o nível de detalhe de uma spec nova |
+| [Plano](references/plan.md) | Ao criar ou revisar um plano de solução |
+| [Execução](references/execute.md) | Ao implementar ou retomar uma mudança, com ou sem spec e plano existentes |
+| [Verificação](references/verify.md) | Ao verificar a implementação contra a spec e o plano |
+| [ADR](references/adr.md) | Ao registrar ou revisar uma decisão pedida como ADR ou encaminhada pelo plano |
+| [Entrega](references/deliver.md) | Ao conferir os artefatos e preparar a resposta final, em qualquer modo |
 
 ## Recursos e limites
 

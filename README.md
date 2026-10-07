@@ -82,7 +82,7 @@ EARS, os schemas em inglês, a numeração e os checks rastreáveis são contrat
 
 Os modelos de spec e plano começam pelas partes centrais e pelas pendências. Os blocos opcionais ficam em `assets/spec-sections.md` e `assets/plan-sections.md`; inclua apenas os que acrescentarem informação ao contrato ou à solução.
 
-Assumptions reúne apenas fatos ainda não verificados e escolhas provisórias, em parágrafos com a afirmação em negrito, seu fundamento e o impacto de estar errada. Ao resolver uma premissa, mova o resultado para o corpo com evidência ou origem da decisão e atualize as referências afetadas. O fluxo completo está em [premissas e lacunas](plugins/ai-skills/skills/sdd/references/workflow.md#premissas-e-lacunas).
+Assumptions reúne apenas fatos ainda não verificados e escolhas provisórias, numa lista com um parágrafo por premissa: afirmação em negrito, fundamento e impacto de estar errada. Ao resolver uma premissa, mova o resultado para o corpo com evidência ou origem da decisão e atualize as referências afetadas. O fluxo completo está em [premissas e lacunas](plugins/ai-skills/skills/sdd/references/workflow.md#premissas-e-lacunas).
 
 ### Checks locais
 

@@ -5,8 +5,8 @@ Conteúdo: Context · Scope · Assumptions · Gaps · Glossary · Requirements �
 Use este exemplo para entender como requisitos, premissas, lacunas e dimensões se relacionam. O cenário e as evidências são fictícios; ajuste o nível de detalhe ao contrato do projeto.
 
 - Não tem References nem Divergences: usa fontes internas fictícias e não identifica diferenças entre implementação e intenção documentada.
-- Observable Decisions cobre todas as dimensões: cada uma aponta para requisitos, premissas ou lacunas, ou aparece na linha `n/a` com o motivo.
-- As duas premissas são escolhas provisórias; cada uma sustenta um requisito que muda se ela for recusada.
+- Observable Decisions cobre todas as dimensões: cada uma aponta para requisitos, garantias existentes, premissas ou lacunas, ou aparece na linha `n/a` com o motivo.
+- A primeira premissa é uma inferência ainda não verificada. A segunda registra o comportamento provisório de uma lacuna e sustenta DOC-16, que muda quando a decisão for tomada.
 - Acceptance Scenarios mostra combinações entre condições ou requisitos; casos cujo resultado já está inteiro num requisito ficam nos checks do plano.
 
 ````markdown
@@ -23,7 +23,7 @@ A operação envia documentos em nome do cliente e acompanha a análise por mens
 
 O analista de conformidade precisa validar cada documento contra um critério identificável. O operador precisa saber quais itens exigem reenvio, e a ativação precisa consultar a elegibilidade do cliente.
 
-O contrato vem do pedido da operação e do checklist mantido pela conformidade. A API reutiliza o formato de erro definido pelo serviço fictício em `src/Api/Errors.cs:12`.
+O contrato vem do pedido da operação e do checklist mantido pela conformidade. O checklist fixa o prazo de reenvio em 10 dias úteis, contados pelo calendário de expediente da operação. A API reutiliza o formato de erro definido pelo serviço fictício em `src/Api/Errors.cs:12`.
 
 ## Scope
 
@@ -31,14 +31,14 @@ Um caso de verificação por cliente, com estado explícito, critérios por item
 
 ## Assumptions
 
-- **Um cliente tem no máximo um caso aberto.** O cadastro atual associa um convite ativo por cliente, mas a operação ainda precisa verificar se isso também limita os casos abertos. Provisoriamente, um novo convite exige que o caso anterior tenha chegado a um estado terminal. Se vários casos puderem coexistir, a elegibilidade (DOC-12) precisará dizer qual caso vale.
-- **Decisões simultâneas sobre o mesmo item: vale a primeira.** A operação tem mais de um analista por turno, e dois podem abrir o mesmo caso. Até que a regra seja decidida, a segunda decisão sobre um item já decidido é recusada (DOC-16). Se a última decisão tiver de prevalecer, o primeiro analista precisará ser avisado da troca.
+- **Um cliente tem no máximo um caso aberto.** O cadastro atual associa um convite ativo por cliente, mas a operação ainda precisa verificar se isso também limita os casos abertos. Se vários casos puderem coexistir, a elegibilidade (DOC-12) precisará dizer qual caso vale.
+- **Decisões simultâneas sobre o mesmo item: vale a primeira.** A operação tem mais de um analista por turno, e dois podem abrir o mesmo caso. Enquanto a lacuna Política de decisões simultâneas sobre o mesmo item estiver aberta, a segunda decisão sobre um item já decidido é recusada (DOC-16), preservando o resultado vigente. Se a última decisão tiver de prevalecer, o primeiro analista precisará ser avisado da troca.
 
 ## Gaps
 
 | Gap | Affects | Owner |
 | --- | --- | --- |
-| Calendário de dias úteis da expiração | DOC-11: quando um caso pendente passa a `Declined` | Operação |
+| Política de decisões simultâneas sobre o mesmo item | DOC-16: recusa provisória da segunda decisão | Conformidade |
 | Política de retenção de documentos | Por quanto tempo os documentos são mantidos; o requisito será escrito quando a decisão existir | Conformidade |
 | Quem pode recusar um caso além da conformidade | DOC-10 | Conformidade |
 
@@ -99,9 +99,9 @@ stateDiagram-v2
 
 | Scenario | Input | Condition | Requirements | Result |
 | --- | --- | --- | --- | --- |
-| Formato inválido | Item 2 em formato não aceito | Itens 1 e 3 já anexados | DOC-04 | Item 2 rejeitado com o critério; itens 1 e 3 continuam anexados; caso continua em `AwaitingDocuments` |
+| Formato inválido | Item 2 em formato não aceito | Itens 1 e 3 já anexados; envio incompleto | DOC-03, DOC-04 | Item 2 rejeitado com o critério; itens 1 e 3 continuam anexados; caso continua em `AwaitingDocuments` |
 | Rejeição parcial | Itens 1 e 3 aprovados, item 2 rejeitado com motivo previsto | Caso em `UnderReview` | DOC-05, DOC-08 | `PendingResubmission`; só o item 2 aceita reenvio |
-| Reenvio parcial | Itens 2 e 3 rejeitados; só o item 2 reenviado | Item 3 ainda rejeitado | DOC-09 | `UnderReview`, com a rejeição do item 3 preservada |
+| Reenvio parcial | Itens 2 e 3 rejeitados; só o item 2 reenviado | Item 3 ainda rejeitado | DOC-08, DOC-09 | `UnderReview`, com a rejeição do item 3 preservada |
 | Aprovação | Três itens aprovados | Nenhum item pendente | DOC-07, DOC-12, DOC-15 | `Approved`; elegibilidade verdadeira; evento publicado |
 | Prazo excedido | Caso pendente há 10 dias úteis | Nenhum reenvio | DOC-11, DOC-12 | `Declined` com motivo de prazo; elegibilidade falsa |
 
@@ -114,12 +114,13 @@ stateDiagram-v2
 | Failure and partial failure | DOC-04 |
 | Idempotency and duplication | DOC-15 e Domain Events |
 | Authorization | DOC-02, DOC-05, DOC-10 e a lacuna Quem pode recusar um caso além da conformidade |
+| Rate limiting | Quota interna aplicada à API pelo serviço; excesso recusado antes de alterar o caso (`src/Api/RateLimit.cs:18`) |
 | Concurrency and ordering | DOC-16 e a premissa **Decisões simultâneas sobre o mesmo item: vale a primeira.** |
 | Data lifecycle | A lacuna Política de retenção de documentos |
 | State transitions | DOC-01, DOC-03, DOC-05, DOC-07, DOC-09, DOC-10, DOC-11 e o diagrama |
 | Observability | DOC-13 e DOC-14 |
 | Cross-capability consistency | DOC-12 e DOC-15 |
-| `n/a` | Rate limiting: a análise não impõe limite próprio e usa a quota interna do serviço; External dependency failure: a análise não chama serviço externo; Tela: a interface fica com o time de backoffice |
+| `n/a` | External dependency failure: a análise não chama serviço externo |
 
 ## Trade-offs
 

@@ -225,13 +225,7 @@ Base de comparação: o commit que traz esta spec e este plano. Nela, `python -m
 | Operação de cancelamento | `def cancel(order: Order, customer_id: str) -> None`, função do módulo como `pay`, `ship` e `deliver` | Conferir a propriedade no chamador: o módulo não garantiria OLC-07 | O chamador informa o solicitante em toda chamada | Não: assinatura pública que o chamador consome |
 | Erro de propriedade | `class NotOrderOwner(Exception)`, sem herdar de `InvalidTransition` | Reusar `InvalidTransition`: o chamador só distinguiria as recusas pelo texto, contra OLC-07 | Um tipo de erro a mais para o chamador tratar | Não: contrato que o chamador consome |
 | Representação do cancelamento | Membro `CANCELLED = "cancelled"` em `OrderStatus` | Campo `cancelled_at` sem estado novo: as guardas de `pay`, `ship` e `deliver` leem só `status` | Quem trata `OrderStatus` de forma exaustiva recebe um valor novo | Não: valor que o chamador pode persistir |
-
-## Structure
-
-- `cancel` recusa com `NotOrderOwner` quando `customer_id` difere de `order.customer_id`, antes de ler o estado (OLC-07).
-- Em seguida, `cancel` recusa com `InvalidTransition` quando `order.status` não é `PENDING` (OLC-08).
-- Só depois `cancel` chama `_move(order, OrderStatus.CANCELLED)` (OLC-06). Toda recusa acontece antes de `_move` e não altera o pedido.
-- `pay`, `ship` e `deliver` não mudam: as guardas atuais já recusam `CANCELLED` (OLC-05).
+| Preservação nas recusas | Validar propriedade e estado antes de chamar `_move(order, OrderStatus.CANCELLED)`, reutilizando o registro de estado e histórico | Aplicar `_move` antes das guardas: uma recusa deixaria estado ou histórico alterado | As guardas precisam continuar antes de qualquer efeito | Sim |
 
 ## Checks
 

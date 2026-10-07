@@ -20,9 +20,10 @@ not checked, because the spec may have retired an ID since.
 
 Structure: section titles, header labels, table columns and
 the dimensions of Observable Decisions are the English schema of the skill,
-whatever the prose language. Every artifact gets the whole schema: known
-sections in order, the header, Observable Decisions with every dimension,
-and assumptions with a bold statement followed by explanation.
+whatever the prose language. Each spec and plan is checked against its own
+schema: known sections in order, the header, and assumptions with a bold
+statement followed by explanation. Specs also need Observable Decisions
+with every dimension.
 
 Every spec and plan is also checked for template fields ({{...}}) left from
 the skill's assets and for placeholder cells or proofs, such as TBD or n/a.
