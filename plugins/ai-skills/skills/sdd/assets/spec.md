@@ -1,4 +1,4 @@
-# {{Nome da capability}}
+# {{Nome do comportamento completo}}
 
 | | |
 | --- | --- |
@@ -7,7 +7,7 @@
 
 ## Context
 
-{{Problema, consumidor e o trabalho que ele precisa fazer; origem do contrato; código pertinente com arquivo:linha}}
+{{Problema, gatilho, consumidor e resultado que encerra o comportamento; origem do contrato; código pertinente com arquivo:linha}}
 
 ## Assumptions
 
@@ -22,21 +22,3 @@
 ## Requirements
 
 - **{{PREFIXO}}-01** — {{Requisito, em EARS quando o formato ajudar}}
-
-## Observable Decisions
-
-| Surface or dimension | Landing |
-| --- | --- |
-| {{Superfície: decisão; uma linha por decisão de superfície}} | {{Requisito, garantia do código com arquivo:linha, premissa ou lacuna}} |
-| Validation and limits | {{Onde está a decisão}} |
-| Failure and partial failure | {{Onde está a decisão}} |
-| Idempotency and duplication | {{Onde está a decisão}} |
-| Authorization | {{Onde está a decisão}} |
-| Rate limiting | {{Onde está a decisão}} |
-| Concurrency and ordering | {{Onde está a decisão}} |
-| Data lifecycle | {{Onde está a decisão}} |
-| External dependency failure | {{Onde está a decisão}} |
-| State transitions | {{Onde está a decisão}} |
-| Observability | {{Onde está a decisão}} |
-| Cross-capability consistency | {{Onde está a decisão}} |
-| `n/a` | {{Dimensão: motivo, separadas por ponto e vírgula; mova para cá as dimensões que não se aplicam e apague a linha delas acima}} |

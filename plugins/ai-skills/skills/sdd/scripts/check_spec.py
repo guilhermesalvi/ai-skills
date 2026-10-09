@@ -2,14 +2,15 @@
 
 Usage: python check_spec.py [<specs folder>]   (default: docs/specs)
 
-Reads <capability>/spec.md and the change plans <capability>/NNNN-<change>.md.
-Other Markdown files under a capability folder are checked only for cited IDs;
-files outside capability folders, such as AGENTS.md, are not read.
+Reads spec.md recursively and NNNN-<change>.md plans beside each spec.
+This accepts both <behavior>/ and optional <capability>/<behavior>/ layouts.
+Other Markdown files under a spec folder are checked only for cited IDs;
+files outside spec folders, such as AGENTS.md, are not read.
 
 IDs: a requirement is defined by a list item that starts with a bold ID, such
 as "- **DOC-01** ...". A prefix belongs to the spec that defines it and must
 match the Requirement Prefix in its header; tokens whose prefix no spec
-defines, such as SHA-256, are not citations. Two plans of a capability cannot
+defines, such as SHA-256, are not citations. Two plans beside a spec cannot
 share a number.
 
 Plans: each item under Checks is a checkbox that ends with its proof in inline
@@ -22,8 +23,9 @@ Structure: section titles, header labels, table columns and
 the dimensions of Observable Decisions are the English schema of the skill,
 whatever the prose language. Each spec and plan is checked against its own
 schema: known sections in order, the header, and assumptions with a bold
-statement followed by explanation. Specs also need Observable Decisions
-with every dimension.
+statement followed by explanation. Observable Decisions is optional and need
+not enumerate every dimension. An optional Execution table needs the schema
+columns, unique kebab-case items, existing dependencies and an acyclic graph.
 
 Every spec and plan is also checked for template fields ({{...}}) left from
 the skill's assets and for placeholder cells or proofs, such as TBD or n/a.
@@ -58,14 +60,16 @@ PLACEHOLDER = re.compile(r"(?i)^(?:tbd|tba|todo|fixme|n/?a|\?+|-+|\.\.\.|…)$")
 
 SPEC_SECTIONS = ("Context", "Scope", "Assumptions", "Gaps", "Glossary", "Requirements", "Domain Events",
                  "Acceptance Scenarios", "Observable Decisions", "Trade-offs", "Divergences", "References")
-PLAN_SECTIONS = ("Context", "Technical Decisions", "Structure", "Risks", "Assumptions", "Gaps", "Checks",
+PLAN_SECTIONS = ("Context", "Technical Decisions", "Structure", "Risks", "Assumptions", "Gaps", "Execution", "Checks",
                  "Progress", "References")
-SPEC_BASE = ("Context", "Requirements", "Observable Decisions")
+SPEC_BASE = ("Context", "Requirements")
 PLAN_BASE = ("Checks",)
 DIMENSIONS = ("Validation and limits", "Failure and partial failure", "Idempotency and duplication",
               "Authorization", "Rate limiting", "Concurrency and ordering", "Data lifecycle",
               "External dependency failure", "State transitions", "Observability", "Cross-capability consistency")
-FULL_TABLES = ("Gaps", "Observable Decisions", "Trade-offs", "Technical Decisions")
+FULL_TABLES = ("Gaps", "Observable Decisions", "Trade-offs", "Technical Decisions", "Execution")
+EXECUTION_COLUMNS = ("Item", "Outcome", "Depends on", "Context", "Checks")
+ITEM_NAME = re.compile(r"[a-z][a-z0-9]*(?:-[a-z0-9]+)*$")
 # Cells where the schema itself allows a short marker: the Owner of a gap nobody owns yet,
 # and the row that gathers the dimensions that do not apply.
 ALLOWED_MARKERS = {("Gaps", 2): {"?"}, ("Observable Decisions", 0): {"n/a"}}
@@ -171,14 +175,11 @@ def check_assumptions(name, items):
 
 def check_dimensions(name, lines):
     rows = table_rows(lines)
-    landed = " ".join(marker(row[0]) for row in rows if row)
     not_applicable = " ".join(row[1] for row in rows if len(row) > 1 and marker(row[0]) == "n/a")
     findings = []
-    for dimension in DIMENSIONS:
-        in_row = dimension.lower() in landed
-        with_reason = re.search(re.escape(dimension) + r"\s*:\s*[^;\s]", not_applicable, re.I)
-        if not (in_row or with_reason):
-            findings.append(f"{name}: Observable Decisions misses {dimension}: add its row, or list it in the n/a row as '{dimension}: <reason>'")
+    for entry in filter(None, (entry.strip() for entry in not_applicable.split(";"))):
+        if not any(re.match(re.escape(dimension) + r"\s*:\s*\S", entry, re.I) for dimension in DIMENSIONS):
+            findings.append(f"{name}: n/a entry needs a dimension and reason: {entry[:60]}")
     for row in rows:
         if len(row) > 1 and marker(row[0]) != "n/a" and marker(row[1]).startswith("n/a"):
             findings.append(f"{name}: {row[0]} is marked n/a in its own row; move it to the single n/a row")
@@ -186,6 +187,42 @@ def check_dimensions(name, lines):
     for entry in not_applicable.split(";"):
         if ID_TOKEN.search(entry):
             findings.append(f"{name}: n/a entry cites a requirement, so the dimension applies; give it its own row: {entry.strip()[:60]}")
+    return findings
+
+
+def check_execution(name, lines):
+    """Check the dependency graph; context sufficiency requires content review."""
+    table = [line for line in lines if line.lstrip().startswith("|")]
+    columns = [cell.strip() for cell in table[0].strip().strip("|").split("|")] if table else []
+    if columns != list(EXECUTION_COLUMNS):
+        return [f"{name}: Execution needs columns {', '.join(EXECUTION_COLUMNS)}"]
+    rows = table_rows(lines)
+    if not rows:
+        return [f"{name}: Execution has no items"]
+    findings, graph = [], {}
+    for row in rows:
+        if len(row) != len(EXECUTION_COLUMNS):
+            findings.append(f"{name}: Execution row needs {len(EXECUTION_COLUMNS)} cells")
+            continue
+        item = row[0].strip("` ")
+        if not ITEM_NAME.fullmatch(item):
+            findings.append(f"{name}: invalid Execution item name: {item}")
+        if item in graph:
+            findings.append(f"{name}: duplicate Execution item: {item}")
+        dependencies = [] if marker(row[2]) == "none" else [part.strip("` ") for part in row[2].split(",")]
+        graph[item] = dependencies
+    for item, dependencies in graph.items():
+        for dependency in dependencies:
+            if dependency not in graph:
+                findings.append(f"{name}: Execution item {item} depends on unknown {dependency}")
+            elif dependency == item:
+                findings.append(f"{name}: Execution item {item} depends on itself")
+    # Remove ready nodes to detect cycles without recursion or ordering assumptions.
+    pending = {item: set(deps) & graph.keys() for item, deps in graph.items()}
+    while ready := {item for item, deps in pending.items() if not deps}:
+        pending = {item: deps - ready for item, deps in pending.items() if item not in ready}
+    if pending:
+        findings.append(f"{name}: Execution dependency cycle blocks: {', '.join(sorted(pending))}")
     return findings
 
 
@@ -215,6 +252,8 @@ def check_structure(name, prose, schema, base):
                     break
     if "Observable Decisions" in schema and "Observable Decisions" in found:
         findings.extend(check_dimensions(name, found["Observable Decisions"]))
+    if "Execution" in schema and "Execution" in found:
+        findings.extend(check_execution(name, found["Execution"]))
     for item in list_items(found.get("Checks", [])):
         proof = PROOF.search(item)
         if not CHECKBOX.match(item):
@@ -256,15 +295,15 @@ def check(folder):
     folder = Path(folder).resolve()
     if not folder.is_dir():
         raise ValueError(f"not a folder: {folder}")
-    specs = sorted(folder.glob("*/spec.md"))
+    specs = sorted(folder.rglob("spec.md"))
     if not specs:
         raise ValueError(f"no specs in {folder}")
     root = repository_root(folder)
-    plans = sorted(p for p in folder.glob("*/*.md") if PLAN_NAME.match(p.name))
+    plans = sorted({p for spec in specs for p in spec.parent.glob("*.md") if PLAN_NAME.match(p.name)})
     names = {p.relative_to(folder).as_posix(): p for p in specs}
     texts = {name: p.read_text(encoding="utf-8-sig") for name, p in names.items()}
     parsed = {name: strip_fences(text) for name, text in texts.items()}
-    consumers = sorted(p for p in folder.glob("*/**/*.md") if p.name != "spec.md")
+    consumers = sorted({p for spec in specs for p in spec.parent.rglob("*.md") if p.name != "spec.md"})
     findings = []
 
     definitions, prefix_owners = defaultdict(list), defaultdict(set)
@@ -303,10 +342,10 @@ def check(folder):
 
     numbers = defaultdict(list)
     for path in plans:
-        numbers[(path.parent.name, PLAN_NAME.match(path.name)[1])].append(path.name)
-    for (capability, number), files in sorted(numbers.items()):
+        numbers[(path.parent.relative_to(folder).as_posix(), PLAN_NAME.match(path.name)[1])].append(path.name)
+    for (behavior, number), files in sorted(numbers.items()):
         if len(files) > 1:
-            findings.append(f"{capability}: plan number {number} used by {', '.join(files)}")
+            findings.append(f"{behavior}: plan number {number} used by {', '.join(files)}")
 
     for path in consumers:
         name = path.relative_to(folder).as_posix()

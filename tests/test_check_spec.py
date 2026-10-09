@@ -244,16 +244,21 @@ class NewArtifacts(unittest.TestCase):
         self.assertIn("requests-lifecycle/spec.md: section State Transitions is not in the schema", findings)
         self.assertTrue(any("sections are out of the schema order" in f for f in findings))
 
-    def test_observable_decisions_is_required(self):
+    def test_minimal_spec_does_not_need_observable_decisions(self):
         self.document.write_text(document(drop=("Observable Decisions",)), encoding="utf-8")
-        self.assertEqual(["requests-lifecycle/spec.md: missing section Observable Decisions"], check(self.folder))
+        self.assertEqual([], check(self.folder))
 
-    def test_every_dimension_needs_a_row_or_a_reason(self):
+    def test_only_relevant_dimensions_are_accepted(self):
+        table = "| Surface or dimension | Landing |\n| --- | --- |\n| Idempotency and duplication | REQ-100 |"
+        self.document.write_text(document({"Observable Decisions": table}), encoding="utf-8")
+        self.assertEqual([], check(self.folder))
+
+    def test_legacy_not_applicable_entry_still_needs_a_reason(self):
         table = SPEC_SECTIONS["Observable Decisions"].replace("Authorization: fora do módulo", "Authorization")
         self.document.write_text(document({"Observable Decisions": table}), encoding="utf-8")
         findings = check(self.folder)
         self.assertEqual(1, len(findings))
-        self.assertIn("Observable Decisions misses Authorization", findings[0])
+        self.assertIn("n/a entry needs a dimension and reason: Authorization", findings[0])
 
     def test_not_applicable_entry_citing_a_requirement_is_reported(self):
         table = SPEC_SECTIONS["Observable Decisions"].replace("Observability: fora do módulo",
@@ -370,6 +375,81 @@ class Plans(unittest.TestCase):
         self.assertEqual(["requests-lifecycle: plan number 0001 used by 0001-limit.md, 0001-retry.md"], check(self.folder))
 
 
+class GroupedBehaviors(unittest.TestCase):
+    def test_nested_specs_resolve_cross_behavior_ids_and_links(self):
+        with TemporaryDirectory() as temp:
+            folder = Path(temp)
+            first = write_spec(folder, "orders/cancel-order", document(drop=("Observable Decisions",)))
+            second = write_spec(folder, "orders/repeat-request", ENGLISH)
+            first.write_text(first.read_text(encoding="utf-8") + "\nContrato de [repetição](../repeat-request/spec.md): ENG-01.\n",
+                             encoding="utf-8")
+            (first.parent / "0001-change.md").write_text(PLAN, encoding="utf-8")
+            (second.parent / "0001-change.md").write_text(PLAN.replace("REQ-100", "ENG-01"), encoding="utf-8")
+            (folder / "orders/AGENTS.md").write_text("Regras: REQ-99", encoding="utf-8")
+            self.assertEqual([], check(folder))
+            second.write_text(ENGLISH.replace("ENG-01", "ENG-03"), encoding="utf-8")
+            self.assertTrue(any("cancel-order/spec.md: citation ENG-01 has no definition" in f for f in check(folder)))
+
+    def test_same_behavior_name_in_distinct_groups_has_its_own_plan_sequence(self):
+        with TemporaryDirectory() as temp:
+            folder = Path(temp)
+            for grouping, prefix in (("orders", "REQ"), ("invoices", "INV")):
+                spec = write_spec(folder, f"{grouping}/cancel", DOCUMENT.replace("REQ", prefix))
+                (spec.parent / "0001-cancel.md").write_text(PLAN.replace("REQ", prefix), encoding="utf-8")
+            self.assertEqual([], check(folder))
+            (spec.parent / "0001-other.md").write_text(PLAN.replace("REQ", prefix), encoding="utf-8")
+            self.assertEqual(["invoices/cancel: plan number 0001 used by 0001-cancel.md, 0001-other.md"], check(folder))
+
+
+class ExecutionGraph(unittest.TestCase):
+    setUp = Plans.setUp
+    write_plan = Plans.write_plan
+
+    TABLE = """## Execution
+
+| Item | Outcome | Depends on | Context | Checks |
+| --- | --- | --- | --- | --- |
+| storage-rule | Restrição de unicidade disponível | none | [Contrato](spec.md) | REQ-100 |
+| request-result | Repetição integrada ao armazenamento | storage-rule | [Contrato](spec.md) | REQ-100, Gate |
+
+"""
+
+    def test_valid_dependency_graph_is_accepted(self):
+        self.write_plan(PLAN.replace("## Checks", self.TABLE + "## Checks"))
+        self.assertEqual([], check(self.folder))
+
+    def test_dependency_order_in_table_does_not_matter(self):
+        lines = self.TABLE.splitlines()
+        lines[4], lines[5] = lines[5], lines[4]
+        self.write_plan(PLAN.replace("## Checks", "\n".join(lines) + "\n## Checks"))
+        self.assertEqual([], check(self.folder))
+
+    def test_unknown_dependency_is_reported(self):
+        self.write_plan(PLAN.replace("## Checks", self.TABLE.replace("| storage-rule | [Contrato]", "| absent | [Contrato]") + "## Checks"))
+        self.assertTrue(any("request-result depends on unknown absent" in f for f in check(self.folder)))
+
+    def test_self_dependency_is_reported(self):
+        self.write_plan(PLAN.replace("## Checks", self.TABLE.replace("| none |", "| storage-rule |") + "## Checks"))
+        self.assertTrue(any("storage-rule depends on itself" in f for f in check(self.folder)))
+
+    def test_cycle_and_its_blocked_dependents_are_reported(self):
+        self.write_plan(PLAN.replace("## Checks", self.TABLE.replace("| none |", "| request-result |") + "## Checks"))
+        self.assertTrue(any("Execution dependency cycle blocks: request-result, storage-rule" in f for f in check(self.folder)))
+
+    def test_duplicate_item_is_reported(self):
+        self.write_plan(PLAN.replace("## Checks", self.TABLE.replace("| request-result |", "| storage-rule |") + "## Checks"))
+        self.assertTrue(any("duplicate Execution item: storage-rule" in f for f in check(self.folder)))
+
+    def test_malformed_execution_table_is_reported(self):
+        for table, expected in ((self.TABLE.replace("| Depends on |", "| Dependencies |"), "Execution needs columns"),
+                                (self.TABLE.replace("| request-result |", "| RequestResult |"), "invalid Execution item name"),
+                                (self.TABLE.replace("| REQ-100, Gate |", "|"), "Execution row needs 5 cells"),
+                                ("\n".join(self.TABLE.splitlines()[:4]), "Execution has no items")):
+            with self.subTest(expected=expected):
+                self.write_plan(PLAN.replace("## Checks", table + "\n## Checks"))
+                self.assertTrue(any(expected in f for f in check(self.folder)))
+
+
 class CommittedArtifacts(unittest.TestCase):
     """Recorded artifacts obey the same schema; concluded plans retain historical citations."""
 
@@ -387,10 +467,10 @@ class CommittedArtifacts(unittest.TestCase):
         self.assertIn("requests-lifecycle/spec.md: section Requisitos is not in the schema", findings)
         self.assertIn("requests-lifecycle/spec.md: missing Requirement Prefix in the header", findings)
 
-    def test_committed_spec_without_observable_decisions_is_reported(self):
+    def test_committed_minimal_spec_is_accepted(self):
         self.document.write_text(document(drop=("Observable Decisions",)), encoding="utf-8")
         commit_all(self.folder)
-        self.assertIn("requests-lifecycle/spec.md: missing section Observable Decisions", check(self.folder))
+        self.assertEqual([], check(self.folder))
 
     def test_committed_assumption_without_explanation_is_reported(self):
         item = "- **Chave por cliente.**"
@@ -422,15 +502,15 @@ class CommittedArtifacts(unittest.TestCase):
         commit_all(self.folder)
         self.assertIn("requests-lifecycle/0001-retry.md: missing Requirements in Scope in the header", check(self.folder))
 
-    def test_committed_artifact_checks_section_order_and_dimensions(self):
+    def test_committed_artifact_checks_section_order_and_legacy_reasons(self):
         text = document({"Observable Decisions": "| Surface or dimension | Landing |\n| --- | --- |\n"
-                                                 "| Idempotency and duplication | REQ-100 |"})
+                                                 "| Idempotency and duplication | REQ-100 |\n| n/a | Authorization |"})
         text = text.replace("## Context", "## References")
         self.document.write_text(text, encoding="utf-8")
         commit_all(self.folder)
         findings = check(self.folder)
         self.assertTrue(any("sections are out of the schema order" in f for f in findings))
-        self.assertTrue(any("Observable Decisions misses" in f for f in findings))
+        self.assertTrue(any("n/a entry needs a dimension and reason" in f for f in findings))
 
     def test_concluded_plan_keeps_citations_of_retired_ids(self):
         plan = self.document.parent / "0001-retry.md"

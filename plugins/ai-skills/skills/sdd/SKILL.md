@@ -1,6 +1,6 @@
 ---
 name: sdd
-description: Especifique, planeje, implemente e verifique mudanças com requisitos rastreáveis. Use para specs a partir de produto ou código, planos técnicos, implementação por spec e ADRs. Não use para code review sem spec, documentação geral ou ajustes mecânicos.
+description: Especifique comportamentos completos, prepare, implemente e verifique mudanças com requisitos rastreáveis. Use para specs a partir de produto ou código, planos técnicos, implementação por spec e ADRs. Não use para code review sem spec, documentação geral ou ajustes mecânicos.
 ---
 
 # Desenvolvimento por especificação
@@ -9,9 +9,9 @@ Converta o pedido, o material de produto ou o código existente em um contrato v
 
 | Artefato | Resultado |
 | --- | --- |
-| Spec | Comportamento observável da capability, com regras de negócio e requisitos estáveis |
-| Plano | Decisões técnicas e checks que provam a mudança |
-| ADR | Decisão arquitetural e seus custos, aplicável a múltiplas capabilities ou pedida como registro avulso |
+| Spec | Contrato vivo de um comportamento completo, do gatilho ao resultado observável, com requisitos estáveis |
+| Plano | Decisões técnicas, checks e, quando necessário, organização da execução |
+| ADR | Decisão arquitetural e seus custos, aplicável a múltiplos comportamentos ou pedida como registro avulso |
 
 ## Escolher as referências
 
@@ -24,6 +24,7 @@ Leia o [fluxo comum](references/workflow.md) ao iniciar o trabalho com a skill. 
 | [Especificação](references/specify.md) | Ao criar ou revisar uma spec, inclusive a partir de produto ou código |
 | [Exemplo de spec](references/spec-example.md) | Quando houver dúvida sobre a aplicação do schema ou o nível de detalhe de uma spec nova |
 | [Plano](references/plan.md) | Ao criar ou revisar um plano de solução |
+| [Preparação](references/prepare.md) | Ao avaliar se uma mudança pode ser implementada ou preparar sua passagem para outro executor |
 | [Execução](references/execute.md) | Ao implementar ou retomar uma mudança, com ou sem spec e plano existentes |
 | [Verificação](references/verify.md) | Ao verificar a implementação contra a spec e o plano |
 | [ADR](references/adr.md) | Ao registrar ou revisar uma decisão pedida como ADR ou encaminhada pelo plano |

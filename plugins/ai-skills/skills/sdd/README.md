@@ -1,6 +1,8 @@
 # sdd — Desenvolvimento por especificação
 
-Use a skill `sdd` para definir o comportamento de uma capability, planejar uma mudança, implementar e verificar requisitos rastreáveis ou registrar uma decisão arquitetural em ADR. Este guia apresenta os pedidos e as entregas; as instruções do agente ficam em [SKILL.md](SKILL.md).
+Use a skill `sdd` para especificar comportamentos completos, preparar uma mudança, implementar e verificar requisitos rastreáveis ou registrar uma decisão arquitetural em ADR. Ela continua sendo uma skill: o Codex executa o trabalho autorizado usando suas instruções. Este guia apresenta os pedidos e as entregas; as instruções do agente ficam em [SKILL.md](SKILL.md).
+
+Cada spec nova descreve o menor fluxo que vai de um gatilho a um resultado observável pelo consumidor, com as regras e alternativas necessárias. Cancelar um pedido inclui confirmar ou recusar a solicitação e definir o estado final; gestão de pedidos pode agrupar esse comportamento com pagamento e entrega. Capability é um agrupamento opcional, e contratos existentes continuam como fontes vivas, sem uma spec nova por ticket.
 
 ## Começar
 
@@ -25,7 +27,7 @@ Você pode começar sem todos esses dados. A skill procura as informações nas 
 | Pedido | Entradas úteis | Entrega esperada |
 | --- | --- | --- |
 | Especificar | Pedido de comportamento, material de produto ou código existente | Spec com regras de negócio, requisitos verificáveis e decisões ainda abertas |
-| Planejar | Spec, código atingido, ADRs e restrições técnicas | Plano com escopo, decisões técnicas e checks com provas |
+| Planejar | Spec, código atingido, ADRs e restrições técnicas | Plano com escopo, decisões e checks; contexto e dependências por item quando necessários |
 | Implementar | Mudança desejada ou spec e plano existentes | Código, provas executadas e artefatos atualizados |
 | Verificar | Spec, plano e implementação | Relatório de conformidade, cobertura, checks executados e pendências |
 | Registrar ADR | Decisão adotada ou escolha delegada, contexto e evidências | ADR com decisão, alternativas conhecidas e consequências |
@@ -48,24 +50,25 @@ flowchart LR
 
 ## Exemplos de uso
 
-Adapte os caminhos ao projeto. Os exemplos abaixo usam a capability `order-management` e a mudança `cancel-orders`.
+Adapte os caminhos ao projeto. Os exemplos abaixo usam o comportamento `cancel-order` e a mudança `customer-cancellation`. O layout pode agrupar esse comportamento em `docs/specs/order-management/cancel-order/`, sem ampliar a spec.
 
 ### Criar ou revisar uma spec
 
 ```text
-$sdd Especifique o cancelamento de pedidos na capability de gestão
-de pedidos. Use docs/product/orders.md e src/orders como fontes.
+$sdd Especifique o cancelamento de pedido, da solicitação do cliente
+à confirmação ou recusa com o estado final. Use docs/product/orders.md
+e src/orders como fontes.
 ```
 
 ```text
-$sdd Atualize docs/specs/order-management/spec.md para permitir
+$sdd Atualize docs/specs/cancel-order/spec.md para permitir
 o cancelamento de pedidos ainda não pagos. Preserve os demais contratos.
 ```
 
 Para descrever o sistema atual a partir do código:
 
 ```text
-$sdd Especifique o comportamento existente de gestão de pedidos
+$sdd Especifique o comportamento existente de cancelamento de pedido
 a partir de src/orders e dos testes em tests/orders.
 ```
 
@@ -75,18 +78,24 @@ Consulte [especificação](references/specify.md) para os critérios do contrato
 
 ```text
 $sdd Planeje a implementação do cancelamento definido em
-docs/specs/order-management/spec.md. Considere src/orders e os ADRs
+docs/specs/cancel-order/spec.md. Considere src/orders e os ADRs
 vigentes. Produza apenas o plano.
 ```
 
-O plano registra as escolhas da solução e as provas que devem passar. Consulte [plano](references/plan.md) para o formato e os critérios.
+O plano registra as escolhas da solução e as provas que devem passar. Para uma mudança simples, pode bastar o cabeçalho e Checks. Quando houver dependências ou passagem de trabalho, Execution organiza resultados implementáveis, contexto e referência às provas. Consulte [plano](references/plan.md) e [preparação](references/prepare.md).
+
+```text
+$sdd Prepare apenas o plano para implementar docs/specs/cancel-order/spec.md
+em outra sessão. Confirme os contratos pertinentes e explicite as dependências
+e o contexto necessário por item, sem implementar ainda.
+```
 
 ### Implementar e verificar
 
 ```text
 $sdd Implemente o cancelamento conforme
-docs/specs/order-management/spec.md e
-docs/specs/order-management/0001-cancel-orders.md.
+docs/specs/cancel-order/spec.md e
+docs/specs/cancel-order/0001-customer-cancellation.md.
 ```
 
 Você também pode pedir a implementação diretamente, descrevendo o comportamento desejado. A skill cria a spec e o plano que faltarem e segue até a verificação dentro do escopo autorizado. Consulte [execução](references/execute.md).
@@ -95,8 +104,9 @@ Você também pode pedir a implementação diretamente, descrevendo o comportame
 flowchart TD
     request["Pedido de implementação"] --> artifacts{"Spec e plano<br/>atendem ao pedido?"}
     artifacts -->|Não| prepare["Criar ou ajustar<br/>spec e plano"]
-    artifacts -->|Sim| implement["Implementar o escopo"]
-    prepare --> implement
+    artifacts -->|Sim| ready["Confirmar contexto,<br/>dependências e provas"]
+    prepare --> ready
+    ready --> implement["Implementar a parte pronta<br/>e integrar ao comportamento"]
     implement --> verify["Executar provas<br/>e verificar"]
     verify --> findings{"Há achados corrigíveis<br/>no escopo?"}
     findings -->|Sim| correct["Corrigir código ou artefatos<br/>na origem do problema"]
@@ -110,7 +120,7 @@ Quando uma decisão ou uma restrição impedir a conclusão de parte do escopo, 
 
 ```text
 $sdd Retome a implementação de
-docs/specs/order-management/0001-cancel-orders.md. Confira a spec
+docs/specs/cancel-order/0001-customer-cancellation.md. Confira a spec
 atual e o diff existente e conclua os checks pendentes do escopo.
 ```
 
@@ -120,8 +130,8 @@ Indique os artefatos da mudança para que a retomada use o contrato, as decisõe
 
 ```text
 $sdd Verifique a implementação contra
-docs/specs/order-management/spec.md e
-docs/specs/order-management/0001-cancel-orders.md.
+docs/specs/cancel-order/spec.md e
+docs/specs/cancel-order/0001-customer-cancellation.md.
 Entregue os achados e as evidências, sem aplicar correções.
 ```
 
@@ -141,7 +151,7 @@ Para uma escolha ainda em aberto, peça a comparação das alternativas e inform
 
 Você pode pedir cada resultado separadamente ou solicitar a implementação completa. Um pedido apenas de spec ou plano entrega esse artefato.
 
-As convenções do projeto consumidor determinam a organização dos arquivos. Consulte [artefatos e layout](references/workflow.md#artefatos-e-layout) para o layout usado quando o projeto não define outro. Os modelos ficam em [spec](assets/spec.md), [plano](assets/plan.md) e [ADR](assets/adr.md).
+As convenções do projeto consumidor determinam a organização dos arquivos. Consulte [artefatos e layout](references/workflow.md#artefatos-e-layout) para o layout usado quando o projeto não define outro. Os modelos ficam em [spec](assets/spec.md), [plano](assets/plan.md) e [ADR](assets/adr.md). Context e Requirements formam a base da spec; as demais seções entram quando acrescentam informação. A análise dos riscos continua, sem exigir um inventário de dimensões inaplicáveis no documento. O mapa Observable Decisions é preservado nas specs que já o usam e incluído em novas specs quando pedido.
 
 Confira na resposta os caminhos dos artefatos, os resultados dos checks e as premissas ou lacunas ainda abertas. Consulte [entrega](references/deliver.md) para os registros esperados e [escopo e autorização](references/workflow.md#escopo-e-autorização) para os limites de cada pedido. Commit e push precisam de autorização explícita.
 

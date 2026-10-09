@@ -1,22 +1,20 @@
 # Especificação
 
-Defina o comportamento testável de uma capability, das regras de negócio ao resultado técnico que o consumidor observa. A spec é o contrato vivo que o plano e a verificação usam.
+Defina o menor comportamento completo, das regras de negócio ao resultado que o consumidor observa. A spec é o contrato vivo que o plano e a verificação usam.
 
-Conteúdo: Capability e arquivo · Origem do contrato · Observable Decisions · Glossário e nomes · Requisitos · Prefixo, IDs e identificadores · Eventos de domínio · Diagramas · Cenários de aceitação · Trade-offs · Estrutura do documento
+Conteúdo: Comportamento e arquivo · Origem do contrato · Observable Decisions · Glossário e nomes · Requisitos · Prefixo, IDs e identificadores · Eventos de domínio · Diagramas · Cenários de aceitação · Trade-offs · Estrutura do documento
 
-## Capability e arquivo
+## Comportamento e arquivo
 
-- Descreva uma capability por spec, conforme o termo do fluxo comum.
-- Inclua uma funcionalidade na spec da capability a que pertence. Emissão de fatura é uma capability; reenviar a fatura é uma funcionalidade dela.
-- Quando a funcionalidade só acrescentar uma operação ou transição ao ciclo existente, mantenha-a na mesma capability.
-- Quando a funcionalidade pertence a uma capability que ainda não tem spec, crie a spec da capability, com o nome dela, e não uma spec da funcionalidade.
-- Na primeira spec de uma capability, especifique também o comportamento existente de que a mudança depende, como estados, transições e recusas, a partir do código e com `arquivo:linha`. O resto da capability entra quando outra mudança o atingir. Assim os IDs e o diagrama já nascem na forma que as próximas mudanças vão estender.
-- Quando a capability já tiver uma spec, edite esse arquivo em vez de criar outra spec para a mesma capability.
-- Mantenha as regras da capability na spec que a define.
-- Nomeie em Affected Capabilities as capabilities cujo resultado a mudança altera, sem redefinir as regras delas.
-- Uma capability que talvez seja afetada, sem confirmação, vai para Gaps, e não para Affected Capabilities.
-- Cite IDs de outra spec só quando consumir a definição, a entrada ou o evento correspondente.
-- Quando a capability afetada não tiver spec e o pedido não incluir o comportamento dela, especifique só o que a sua capability entrega a ela.
+- Use por default uma spec para o menor comportamento completo: identifique o gatilho, o consumidor e o resultado que encerra o fluxo. Inclua regras, alternativas e dependências necessárias para que esse resultado seja verificável.
+- Um endpoint, uma tela, uma camada ou uma tarefa não bastam como recorte quando só entregam uma etapa intermediária. O comportamento pode atravessar componentes sem exigir uma spec para cada um.
+- Por exemplo, cancelar um pedido vai da solicitação do cliente à confirmação ou recusa, com o estado final e os efeitos definidos. Gestão de pedidos pode agrupar cancelamento, pagamento e entrega, sem reunir seus contratos numa spec nova e abrangente.
+- Reutilize e edite a spec que já define o comportamento. Uma mudança ou ticket novo não cria um contrato concorrente. Preserve specs abrangentes existentes; divida-as apenas quando o pedido ou a manutenção justificar a divisão, conforme [alterar artefato](change.md).
+- Quando o pedido abranger resultados independentes, separe-os em specs de comportamentos completos. Não fragmente condições, recusas ou regras necessárias ao mesmo resultado, nem amplie o produto para preencher o agrupamento.
+- Mantenha cada regra compartilhada numa única fonte vigente: cite a spec, o contrato ou o ADR que a define. Inclua o comportamento existente de que a mudança depende quando ele ainda não tiver fonte, com `arquivo:linha`; não reconstrua todo o ciclo do domínio.
+- Nomeie em Affected Capabilities os agrupamentos cujo resultado a mudança altera, quando essa identificação ajudar o leitor. Cite os contratos dos comportamentos afetados sem redefini-los.
+- Uma dependência ainda não confirmada vai para Gaps. Cite IDs de outra spec apenas quando consumir a definição, a entrada ou o evento correspondente.
+- Quando um comportamento dependente não tiver spec e estiver fora do pedido, defina apenas o que o comportamento em escopo entrega a ele ou exige dele.
 
 ## Origem do contrato
 
@@ -27,6 +25,8 @@ Conteúdo: Capability e arquivo · Origem do contrato · Observable Decisions ·
 | Código existente | Descreva o comportamento observado com `arquivo:linha` e as divergências com a intenção documentada. A intenção inferida vai para Assumptions, com a evidência. A justificativa ausente e as intenções concorrentes vão para Gaps. Não reescreva o comportamento para concordar com uma intenção inferida |
 
 - Antes de perguntar, leia a spec existente, os ADRs pertinentes, os contratos e o código atingido.
+- Registre na spec como premissa ou lacuna as políticas provisórias e as condições ainda não confirmadas que determinam se o resultado pode ser garantido, inclusive identidade autenticada, autoridade do solicitante e exclusão de operações concorrentes. Uma exigência ao chamador faz parte do contrato; o mecanismo que a cumpre pertence ao plano.
+- Não trate a presença de um campo, estado ou relação no código como prova de uma regra nova. Uma política inferida, como quem pode agir sobre um registro, segue [premissas e lacunas](workflow.md#premissas-e-lacunas), em vez de aparecer como decisão tomada.
 - Um domínio amplo ou várias iniciativas pedem um recorte com resultado identificável. Um recorte que muda o escopo materialmente é decisão do usuário.
 - Com apenas um nome ou uma ideia genérica, reúna as perguntas indispensáveis sobre problema, consumidor e resultado esperado.
 - Num assunto regulado, distinga o que a norma diz, a interpretação adotada e a regra do sistema. A interpretação do modelo não comprova conformidade.
@@ -36,11 +36,11 @@ Conteúdo: Capability e arquivo · Origem do contrato · Observable Decisions ·
 
 ### O que a seção registra
 
-Registre em Observable Decisions onde está cada decisão de superfície e de dimensão:
+Em uma spec nova, registre as decisões pertinentes em Requirements, Context, Assumptions ou Gaps. Crie Observable Decisions somente quando o pedido exigir um mapa de decisões; preserve e atualize a seção nas specs existentes que a usem. O mapa localiza a decisão, sem criar uma segunda definição:
 
 | Registro | Citação em Landing |
 | --- | --- |
-| Requisito | ID que observa a decisão |
+| Requisito | ID quando a ligação esclarece uma interação entre superfícies ou condições |
 | Garantia existente no código | `arquivo:linha` e o resultado garantido |
 | Premissa | Texto em negrito da premissa |
 | Lacuna | Texto da coluna Gap |
@@ -49,13 +49,14 @@ Registre em Observable Decisions onde está cada decisão de superfície e de di
 - Cite em cada linha apenas requisitos que observam aquela dimensão. Reuse um requisito em várias linhas quando ele observar cada uma delas.
 - Use apenas IDs ou nomes de premissas e lacunas em Landing quando esses registros já contiverem a decisão. Descreva somente a garantia externa que não está nesses registros, com `arquivo:linha` quando vier do código.
 - Vincule a uma premissa ou lacuna a dimensão aplicável que ainda não tiver requisito.
-- Reúna as dimensões que não se aplicam numa única linha `n/a`, cada uma como `<Dimension>: <motivo>`. O motivo separa a decisão inaplicável da que ninguém tomou.
+- Inclua apenas linhas que acrescentem uma ligação ou garantia necessária para entender o contrato. Remova a linha que só indexa um requisito, premissa ou lacuna já claros; não mantenha essas linhas só porque outra linha da seção é útil. Sem informação adicional, omita a seção.
+- Omita dimensões inaplicáveis. Preserve uma linha `n/a` existente quando seu motivo ainda for útil, no formato `<Dimension>: <motivo>`, separando entradas por ponto e vírgula; não a crie para completar uma lista.
 - O motivo de um `n/a` não cita requisito: se um requisito observa a dimensão, ela se aplica e tem linha própria.
 - Inclua apenas os requisitos justificados pela mudança, sem ampliar o produto preventivamente.
 
 ### Dimensões
 
-Os identificadores fazem parte do schema, e o `check_spec.py` exige cada um numa linha própria ou na linha `n/a`.
+Use estas dimensões para analisar os riscos que o recorte expõe. Seus identificadores fazem parte do schema quando a seção estiver presente; nenhuma dimensão exige uma linha apenas para completar o documento.
 
 | Identifier | O que decidir |
 | --- | --- |
@@ -138,9 +139,9 @@ O formato de erro costuma ser reutilizado por outros handlers, e o estado vazio 
 
 ## Prefixo, IDs e identificadores
 
-- O título é o nome da capability. Logo abaixo, a tabela de cabeçalho do modelo traz Requirement Prefix e, quando houver, Affected Capabilities.
-- O prefixo abrevia a capability em letras maiúsculas e dígitos, começando por letra, como `INV` para Emissão de fatura.
-- Não abrevie a área a que a capability pertence, porque o prefixo se repetiria na segunda capability dela.
+- O título nomeia o comportamento completo. Logo abaixo, a tabela de cabeçalho do modelo traz Requirement Prefix e, quando houver, Affected Capabilities.
+- Um prefixo novo abrevia o comportamento em letras maiúsculas e dígitos, começando por letra, como `CAN` para Cancelamento de pedido.
+- Não abrevie apenas o agrupamento ou a área, porque outro comportamento pode precisar de prefixo próprio.
 - Evite nomes genéricos como `REQ`, que não indicam o dono, e não use `FR` nem `NFR`.
 - Escolha um prefixo que nenhuma outra spec use, e preserve o existente ao editar. Semelhança de letras, por si só, não exige renomeação.
 - Estados, motivos e outras enumerações que o código ou os contratos referenciam ficam numa tabela com a coluna Identifier ao lado do nome de exibição.
@@ -150,7 +151,7 @@ O formato de erro costuma ser reutilizado por outros handlers, e o estado vazio 
 
 ## Eventos de domínio
 
-- A spec da capability produtora define cada evento: gatilho, significado do conteúdo, consumidores conhecidos e, quando o consumidor precisar saber, se o evento pode chegar repetido ou fora de ordem.
+- A spec do comportamento produtor define cada evento: gatilho, significado do conteúdo, consumidores conhecidos e, quando o consumidor precisar saber, se o evento pode chegar repetido ou fora de ordem.
 - A spec consumidora cita o evento em vez de redefini-lo.
 - Estados, transições, requisitos e eventos concordam entre si.
 - Um evento sem consumidor identificado não entra em Domain Events. Registre-o em Gaps, com o consumidor como a informação que falta.
@@ -164,7 +165,7 @@ O formato de erro costuma ser reutilizado por outros handlers, e o estado vazio 
 
 ## Cenários de aceitação
 
-- Inclua Acceptance Scenarios quando um cálculo, ramificação ou combinação de condições precisar de um exemplo que o requisito sozinho não esclarece. Derive cada resultado de um requisito ou de uma decisão identificável.
+- Omita Acceptance Scenarios por default. Inclua a seção somente quando um cálculo ou uma interação entre condições precisar de um exemplo para esclarecer um resultado que não possa ser lido diretamente dos requisitos. Derive cada resultado de um requisito ou de uma decisão identificável.
 - Exclua o cenário cujas condições e resultado apenas repetem o requisito. Mantenha a prova correspondente nos Checks do plano.
 - Um cenário tem nome, entrada, condições e resultado esperado, e cita os requisitos que verifica. "O usuário consegue usar a função" não discrimina um resultado.
 - Casos de aceitação e de rejeição são cenários distintos.
@@ -182,13 +183,13 @@ O formato de erro costuma ser reutilizado por outros handlers, e o estado vazio 
 ## Estrutura do documento
 
 - Use `#` para o título e `##` para as seções, nesta ordem.
-- Context, Requirements e Observable Decisions são seções obrigatórias. As demais seções dependem do conteúdo.
+- Context e Requirements são seções obrigatórias. As demais seções dependem do conteúdo.
 - O modelo `assets/spec.md` começa pelo contrato e pelas pendências. Quando uma seção adicional for necessária, copie apenas o bloco pertinente de [seções opcionais](../assets/spec-sections.md).
 - Não altere uma spec existente só para introduzir seções.
 
 | Section | Conteúdo | Forma |
 | --- | --- | --- |
-| Context | Problema, consumidor e o trabalho que ele precisa fazer, origem do contrato e código pertinente | Parágrafos |
+| Context | Problema, gatilho, consumidor e resultado que encerra o comportamento, origem do contrato e código pertinente | Parágrafos |
 | Scope | O que entra e as exclusões que um leitor esperaria ver dentro | Parágrafo ou lista |
 | Assumptions | Inferências ainda não verificadas e escolhas provisórias de comportamento | Lista, como define o fluxo comum |
 | Gaps | Informações e decisões ausentes | Tabela Gap, Affects, Owner |

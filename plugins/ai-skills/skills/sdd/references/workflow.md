@@ -8,8 +8,9 @@ Conteúdo: Termos comuns · Artefatos e layout · Numeração · Documentos vivo
 
 | Termo | Significado |
 | --- | --- |
-| Capability | Algo que o sistema faz ou oferece, com resultado observável e nome que continua válido quando a solução muda |
-| Consumidor | Pessoa, sistema ou código que observa o resultado da capability |
+| Comportamento completo | Recorte com gatilho identificável e resultado observável para um consumidor, incluindo as regras e alternativas necessárias para chegar a esse resultado |
+| Capability | Agrupamento de comportamentos relacionados, usado quando ajuda a organizar o domínio |
+| Consumidor | Pessoa, sistema ou código que observa o resultado do comportamento |
 | Mudança não trivial | Alteração de comportamento observável, dados persistidos ou contrato consumido por outro componente |
 
 ## Artefatos e layout
@@ -22,13 +23,13 @@ Sem convenção do repositório, use este layout, com slugs em inglês e em keba
 
 ```text
 docs/specs/
-  <capability>/
-    spec.md                 spec viva da capability, editada no lugar
+  <behavior>/
+    spec.md                 contrato vivo do comportamento, editado no lugar
     NNNN-<change>.md         plano da mudança
 docs/adr/NNNN-<decision>.md
 ```
 
-Reúna a spec e os planos na pasta da capability. Mantenha ADRs fora dessas pastas, pois suas decisões podem alcançar múltiplas capabilities. Preserve outra organização estabelecida pelo consumidor.
+Reúna a spec e os planos na pasta do comportamento. Quando um agrupamento facilitar a navegação, use `docs/specs/<capability>/<behavior>/` com os mesmos arquivos. Mantenha ADRs fora dessas pastas, pois suas decisões podem alcançar múltiplos comportamentos. Preserve outra organização estabelecida pelo consumidor; não reorganize specs existentes apenas para adotar este default.
 
 Um pedido de cópia para entrega não muda a localização dos artefatos originais. Salve-os no layout do projeto antes de copiar.
 
@@ -38,7 +39,7 @@ Na implementação por esta skill, mantenha um plano em arquivo para preservar c
 
 ## Numeração
 
-- Numere os planos em cada pasta de capability e os ADRs na pasta de ADRs. Cada pasta tem sua própria sequência: `NNNN` tem quatro dígitos; numa pasta sem itens numerados, use `0001`; nos demais casos, use o número seguinte ao maior presente naquela pasta.
+- Numere os planos na pasta da spec e os ADRs na pasta de ADRs. Cada pasta tem sua própria sequência: `NNNN` tem quatro dígitos; numa pasta sem itens numerados, use `0001`; nos demais casos, use o número seguinte ao maior presente naquela pasta.
 - Dentro da mesma pasta, cada número pertence a um só item e não muda quando ele é revisado.
 
 ## Documentos vivos
@@ -94,7 +95,7 @@ python "<skill-dir>/scripts/check_spec.py" docs/specs
 - Procure os fatos no código e nas fontes antes de perguntar.
 - Pergunte as decisões de negócio e as informações que o contexto não resolve, com opções concretas e a sua recomendação.
 - Continue o trabalho independente da resposta e construa o artefato sobre premissas e lacunas. Na implementação, deixe pendente a parte que exige uma decisão ainda ausente e informe o impacto na entrega.
-- Exceção: quando a resposta decidiria qual capability especificar ou se o pedido faz sentido, pergunte antes de escrever. Uma lacuna dentro da capability não é motivo para parar.
+- Exceção: quando a resposta decidiria qual comportamento especificar ou se o pedido faz sentido, pergunte antes de escrever. Uma lacuna dentro do comportamento não é motivo para parar o trabalho independente.
 - Corrija o que a sua mudança quebrar e os problemas preexistentes do trecho alterado que tenham o mesmo motivo da mudança. Os demais entram como sugestão no fim, sem alteração.
 - Não acrescente complexidade sem necessidade concreta, como uma opção ou abstração sem consumidor.
 

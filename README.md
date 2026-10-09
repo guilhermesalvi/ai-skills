@@ -2,13 +2,13 @@
 
 Skills para uso pessoal no Codex, empacotadas como plugin no formato portátil Agent Plugins.
 
-O pacote está em beta, na versão `0.1.0-beta.1`, definida em [plugin.json](plugins/ai-skills/plugin.json). A skill `sdd` acompanha a versão do pacote. Os contratos podem mudar durante o beta, sem compromisso de retrocompatibilidade.
+O pacote está em beta, na versão `0.1.0-beta.2`, definida em [plugin.json](plugins/ai-skills/plugin.json). A skill `sdd` acompanha a versão do pacote. Os contratos podem mudar durante o beta, sem compromisso de retrocompatibilidade.
 
 | Skill | Finalidade |
 | --- | --- |
 | `sdd` | Especificar, planejar, implementar e verificar mudanças com requisitos rastreáveis; registrar decisões em ADRs |
 
-A spec define o comportamento e as regras de negócio. O plano registra decisões técnicas e checks com prova. Modelos e um validador mantêm IDs, links, schema e rastreabilidade coerentes.
+A spec define o menor comportamento completo, do gatilho ao resultado para o consumidor, com suas regras e alternativas. Capability é um agrupamento opcional. O plano registra decisões técnicas, checks com prova e, quando necessário, itens executáveis com contexto e dependências. Modelos e um validador mantêm IDs, links, schema e rastreabilidade coerentes.
 
 Consulte o [guia de uso da sdd](plugins/ai-skills/skills/sdd/README.md) para exemplos de pedidos, entradas e entregas de cada modo.
 
@@ -110,7 +110,8 @@ Os casos em `plugins/ai-skills/evals/` usam um runner próprio com `codex exec -
 
 | Caso | O que confere |
 | --- | --- |
-| `cancel-orders-spec` | Capability, idioma, dimensões, autorização, pedido pago como lacuna, premissas abertas e origem das decisões, escopo do plano, concisão e entrega |
+| `cancel-orders-spec` | Comportamento completo com recorte de cancelamento, autorização e concorrência, pedido pago como lacuna, premissas, escopo, concisão e entrega |
+| `prepare-dependent-change` | Plano transferível, contexto confirmado, dependências reais, provas da integração e pendência limitada à parte afetada |
 | `adr-from-code` | ADR derivado do código e histórico, sem inventar participantes, alternativas ou motivos |
 | `implement-and-verify` | Implementação, testes nomeados nas provas, execução bem-sucedida, checks marcados e relatório |
 | `resume-contract-conflict` | Retomada com diff divergente, preservação da spec e nova execução dos checks afetados |

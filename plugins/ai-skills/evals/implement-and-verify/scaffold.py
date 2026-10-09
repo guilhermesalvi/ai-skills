@@ -227,6 +227,13 @@ Base de comparação: o commit que traz esta spec e este plano. Nela, `python -m
 | Representação do cancelamento | Membro `CANCELLED = "cancelled"` em `OrderStatus` | Campo `cancelled_at` sem estado novo: as guardas de `pay`, `ship` e `deliver` leem só `status` | Quem trata `OrderStatus` de forma exaustiva recebe um valor novo | Não: valor que o chamador pode persistir |
 | Preservação nas recusas | Validar propriedade e estado antes de chamar `_move(order, OrderStatus.CANCELLED)`, reutilizando o registro de estado e histórico | Aplicar `_move` antes das guardas: uma recusa deixaria estado ou histórico alterado | As guardas precisam continuar antes de qualquer efeito | Sim |
 
+## Execution
+
+| Item | Outcome | Depends on | Context | Checks |
+| --- | --- | --- | --- | --- |
+| cancel-operation | Cancelamento e recusas disponíveis no contrato público do módulo | none | [Spec](spec.md), `orders/orders.py`: guardas antes de `_move`; forma literal em Technical Decisions | OLC-06, OLC-07, OLC-08, Erro de propriedade e representação do cancelamento |
+| transition-regression | Cancelamento integrado ao ciclo existente sem permitir cobrança, envio ou entrega de pedido cancelado | cancel-operation | [Spec](spec.md), `pay`, `ship` e `deliver` em `orders/orders.py`; preservar os testes existentes | OLC-05, Gate |
+
 ## Checks
 
 - [ ] **OLC-06**: `cancel(order, "c-1")` sobre um pedido de `c-1` em `PENDING` deixa `order.status` em `CANCELLED` e acrescenta um único item `(CANCELLED, instante UTC)` ao histórico — `python -m unittest tests.test_orders.OrderTests.test_customer_cancels_pending_order`

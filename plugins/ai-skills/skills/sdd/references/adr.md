@@ -1,11 +1,11 @@
 # Decisão arquitetural
 
-Registre uma decisão que vale para múltiplas capabilities.
+Registre uma decisão que vale para múltiplos comportamentos.
 
 ## Alcance
 
-- Se o pedido for um ADR para uma decisão que vale só para uma capability, indique onde ela caberia e escreva o ADR mesmo assim: em Technical Decisions do plano, numa mudança em andamento, ou junto do código, numa decisão já adotada.
-- Registrar uma decisão não autoriza mudanças nas capabilities que ela alcança. A aplicação da decisão segue o escopo de implementação autorizado pelo usuário.
+- Se o pedido for um ADR para uma decisão que vale só para um comportamento, indique onde ela caberia e escreva o ADR mesmo assim: em Technical Decisions do plano, numa mudança em andamento, ou junto do código, numa decisão já adotada.
+- Registrar uma decisão não autoriza mudanças nos comportamentos que ela alcança. A aplicação da decisão segue o escopo de implementação autorizado pelo usuário.
 
 ## Conteúdo
 
@@ -36,7 +36,7 @@ Registre uma decisão que vale para múltiplas capabilities.
 
 ## ADR avulso
 
-- Fora de um plano, leia os ADRs vigentes e as specs e o código que a decisão atinge, para achar conflitos e as capabilities afetadas.
+- Fora de um plano, leia os ADRs vigentes e as specs e o código que a decisão atinge, para achar conflitos e os comportamentos afetados.
 - Se a escolha estiver em aberto, compare as alternativas pelos mesmos critérios. Decida quando o usuário tiver delegado essa escolha; caso contrário, recomende uma e peça a decisão antes de registrar o ADR. O documento registra uma escolha adotada, com sua origem.
 - Ao registrar uma decisão já adotada no código, derive contexto e decisão do código, dos commits e da documentação.
 - Separe a escolha observada do motivo histórico. Se o código mostrar a escolha, mas nenhuma fonte registrar por que ela foi adotada, declare em Context: "O motivo original não está registrado." Apresente uma explicação provável como inferência, por exemplo, "Infere-se que a escolha evita..."; um benefício técnico plausível não comprova a intenção original.

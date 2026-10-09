@@ -4,13 +4,14 @@ Produza um plano que outro executor consiga seguir sem adivinhar decisões nem o
 
 Fixe os checks: afirmações que a mudança precisa tornar verdadeiras, cada uma com uma prova capaz de decidir seu resultado.
 
-Conteúdo: O que o plano não faz · Contexto pertinente · Escopo · Decisões técnicas · Structure e eventos · Riscos · Checks · Estrutura do documento · Exemplo parcial
+Conteúdo: Profundidade · Contexto pertinente · Escopo · Decisões técnicas · Structure e eventos · Riscos · Execution · Checks · Estrutura do documento · Exemplo parcial
 
-## O que o plano não faz
+## Profundidade
 
-- Não decomponha o trabalho em tarefas, passos ou lista de arquivos. Ordem, arquivos e divisão ficam com quem implementa e aparecem no diff.
+- Registre decisões e provas na profundidade que outro executor precisa. Um plano curto pode conter apenas o cabeçalho e Checks.
+- Antes de incluir Execution ou avaliar a prontidão para implementar, leia [preparação](prepare.md). Para uma mudança cuja execução já possa ser deduzida das decisões e dos checks, omita Execution; registre somente as dependências ou o contexto adicionais que a preparação identificar.
 
-Neste formato, decisões e provas orientam a execução. Uma lista de passos não substitui essas obrigações.
+Uma lista de passos ou arquivos não substitui decisões e provas. Não decomponha o trabalho apenas para repetir a spec ou os checks.
 
 ## Contexto pertinente
 
@@ -51,7 +52,7 @@ Neste formato, decisões e provas orientam a execução. Uma lista de passos nã
 - Use a arquitetura do projeto quando ela atende ao problema.
 - Distinga módulo de código, pacote versionado e unidade implantável. Avalie se a mudança cabe no serviço existente ou num módulo interno. Proponha uma nova unidade implantável quando houver necessidade concreta de isolamento, escala ou cadência, com dono, operação, contrato e compatibilidade definidos.
 - Uma biblioteca compartilhada precisa de dono, consumidores e estabilidade suficiente. Não extraia regras de negócio para ela apenas por semelhança de código.
-- Uma decisão que define convenção, restrição ou padrão para múltiplas capabilities, como estilo arquitetural, transporte de eventos ou política de versionamento, vai para [ADR](adr.md), dentro da autorização existente. Decisões restritas à capability da mudança ficam no plano.
+- Uma decisão que define convenção, restrição ou padrão para múltiplos comportamentos, como estilo arquitetural, transporte de eventos ou política de versionamento, vai para [ADR](adr.md), dentro da autorização existente. Decisões restritas à mudança ficam no plano.
 - Quando uma escolha conflitar com um ADR vigente, explicite em Technical Decisions se a solução seguirá a restrição ou se o ADR precisa ser substituído. A substituição segue o [ADR](adr.md).
 
 ### Decisões irreversíveis
@@ -75,7 +76,7 @@ Neste formato, decisões e provas orientam a execução. Uma lista de passos nã
 
 ## Riscos
 
-- Registre os riscos concretos ainda não tratados pelo contrato ou pelos checks, cada um com mitigação, evidência ou aceitação justificada. Quando uma premissa ou lacuna já descrever o risco, cite-a e acrescente apenas a mitigação necessária.
+- Reserve Risks para riscos concretos ainda não tratados pelos requisitos, decisões, checks, Assumptions ou Gaps, cada um com mitigação, evidência ou aceitação justificada. Quando uma premissa ou lacuna já descrever o risco, acrescente a mitigação pertinente nesse registro em vez de duplicá-lo aqui.
 - Omita a linha cuja única mitigação seja cumprir um requisito, executar um check ou resolver uma lacuna já registrada.
 - A tabela sugere técnicas a avaliar, não escolhas obrigatórias.
 
@@ -88,6 +89,20 @@ Neste formato, decisões e provas orientam a execução. Uma lista de passos nã
 | Migração ou incompatibilidade | Sequência de transição, compatibilidade e recuperação |
 | Desempenho | Orçamento medido, paginação e índices pertinentes |
 | Dados regulados ou autorização | Fronteira de acesso, retenção, auditoria e redução de exposição |
+
+## Execution
+
+Quando a [preparação](prepare.md#organizar-o-trabalho) exigir organização explícita da execução, use uma tabela com estas colunas:
+
+| Column | Conteúdo |
+| --- | --- |
+| Item | Nome local em inglês e kebab-case, único no plano |
+| Outcome | Resultado implementável e verificável que o item entrega |
+| Depends on | Nomes de itens que precisam estar integrados antes deste, separados por vírgula, ou `none` |
+| Context | Fontes, contratos e restrições necessários, com links ou citações pertinentes |
+| Checks | IDs de requisitos, nomes de decisões técnicas ou `Gate` que localizam as provas existentes |
+
+O `check_spec.py` confere a tabela, os nomes e o grafo de dependências. A suficiência do contexto e das provas exige revisão de conteúdo.
 
 ## Checks
 
@@ -144,6 +159,7 @@ Neste formato, decisões e provas orientam a execução. Uma lista de passos nã
 | Risks | Riscos concretos e sua mitigação, evidência ou aceitação | Tabela Risk, Mitigation |
 | Assumptions | Inferências ainda não verificadas e escolhas provisórias da solução | Lista, como define o fluxo comum |
 | Gaps | Informações e decisões ausentes que a solução precisa | Tabela Gap, Affects, Owner |
+| Execution | Resultados implementáveis, dependências e contexto para executá-los | Tabela Item, Outcome, Depends on, Context, Checks |
 | Checks | Afirmações com prova | Lista de checkboxes |
 | Progress | Fronteira alcançada, decisões do usuário durante a implementação, tentativas descartadas | Lista |
 | References | Fontes técnicas consultadas | Lista |

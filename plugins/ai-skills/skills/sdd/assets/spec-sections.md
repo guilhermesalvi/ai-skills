@@ -16,13 +16,19 @@ Copie apenas o bloco necessário para o artefato e preencha os campos. Insira-o 
 
 | Event | Trigger | Content | Consumers |
 | --- | --- | --- | --- |
-| `{{Evento}}` | {{Gatilho, com o ID do requisito}} | {{Significado do conteúdo}} | {{Consumidores e o que eles podem assumir; apague a seção quando a capability não publicar evento}} |
+| `{{Evento}}` | {{Gatilho, com o ID do requisito}} | {{Significado do conteúdo}} | {{Consumidores e o que eles podem assumir; apague a seção quando o comportamento não publicar evento}} |
 
 ## Acceptance Scenarios
 
 | Scenario | Input | Condition | Requirements | Result |
 | --- | --- | --- | --- | --- |
-| {{Nome}} | {{Entrada}} | {{Condição}} | {{IDs verificados}} | {{Resultado esperado; apague a seção quando nenhum cálculo, ramificação ou combinação de condições precisar de exemplo além do requisito}} |
+| {{Nome}} | {{Entrada}} | {{Condição}} | {{IDs verificados}} | {{Resultado esperado; apague a seção quando as entradas e os resultados já puderem ser lidos diretamente dos requisitos}} |
+
+## Observable Decisions
+
+| Surface or dimension | Landing |
+| --- | --- |
+| {{Superfície ou dimensão com informação adicional}} | {{Ligação ou garantia necessária para entender o contrato, com ID ou origem; em spec nova, inclua o mapa apenas quando pedido}} |
 
 ## Trade-offs
 

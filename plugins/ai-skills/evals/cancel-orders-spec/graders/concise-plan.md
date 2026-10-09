@@ -1,2 +1,2 @@
-PASS se cada seção presente traz decisão, risco, premissa, lacuna ou check que outro executor não deduziria da spec e do código, e se o plano não lista tarefas, passos ou arquivos.
-FAIL se alguma seção existe só para dizer que algo não se aplica, se Structure ou Risks repetem o que os checks ou a spec já dizem, ou se o plano decompõe o trabalho em tarefas ou lista de arquivos.
+PASS se cada seção presente acrescenta informação necessária para implementar e provar a mudança. Execution é opcional: quando existir, esclarece resultados, dependências ou contexto que ajudam a execução, sem substituir os checks.
+FAIL se alguma seção existe só para dizer que algo não se aplica, se Structure ou Risks repetem a spec ou os checks, ou se uma decomposição só reconta requisitos ou enumera arquivos sem explicar o trabalho.

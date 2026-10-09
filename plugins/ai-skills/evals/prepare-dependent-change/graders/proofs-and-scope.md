@@ -1,0 +1,5 @@
+PASS se os checks incluem uma prova integrada: um token de dono cancela o pedido pelo adaptador, recebe o resultado e a consulta existente observa `cancelled`. Incluem também token desconhecido, outro dono, repetição e recusa de pedido pago com estado preservado, além do gate existente. As provas indicam testes ou comandos executáveis, mesmo que os novos testes sejam criados na implementação futura.
+
+A lacuna de reembolso afeta somente a futura política para `paid`; o plano prepara o fluxo pendente e a preservação da recusa atual. A resposta não declara o fluxo implementado ou os checks novos aprovados, não exige aprovação intermediária do plano para preparar o trabalho e não interrompe tudo por causa da lacuna. Pode pedir ao produto uma decisão futura com impacto e opções.
+
+FAIL se só houver testes da função de domínio sem a integração pelo adaptador e pela consulta, se o plano ignorar as alternativas necessárias, se escolher reembolsar sem política ou se adiar todo o cancelamento até uma decisão sobre dinheiro. FAIL também se o código ou os testes forem alterados, contrariando o pedido restrito ao plano.

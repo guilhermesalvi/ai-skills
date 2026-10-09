@@ -9,12 +9,13 @@ Implemente o escopo pedido e verifique o contrato. Conclua quando cada check do 
 - Sem spec para o comportamento alterado, leia [especificação](specify.md) e registre o contrato antes de planejar.
 - Para criar ou ajustar o plano, leia [plano](plan.md). Sem plano da mudança, escreva-o antes de implementar.
 - Sem uma branch própria para a mudança, registre em Context do plano a base de comparação, a saída de `git rev-parse HEAD`, antes de implementar.
+- Leia [preparação](prepare.md) e resolva o que faltar para a parte que será implementada. Reutilize as decisões, dependências e fontes já confirmadas nos artefatos.
 
 Use como base de comparação o commit contra o qual o diff será medido: o `HEAD` registrado antes da mudança ou, para uma branch própria, `git merge-base HEAD <branch principal>`.
 
 ## Implementar
 
-- A ordem, os arquivos e a divisão em passos são decisão sua, guiada pelas dependências reais e pelas convenções do repositório.
+- Use as dependências de Execution, quando presente, para escolher o próximo item pronto. Sem essa seção, derive a ordem das dependências reais e das convenções do repositório.
 - Avance em fatias que possam se integrar e tenham seus próprios checks.
 
 Em cada fatia, nesta ordem:
@@ -24,7 +25,7 @@ Em cada fatia, nesta ordem:
 3. **Execute as provas**, inspecione o resultado e corrija as falhas introduzidas. Uma falha repetida sem evidência nova exige diagnóstico ou a explicitação do bloqueio, não tentativas idênticas.
 4. **Marque o check** só depois de ver a prova passar sobre o conteúdo atual. Prova não executada deixa o check pendente.
 
-Ao concluir, execute a [verificação](verify.md).
+Depois de integrar uma fatia, execute também os checks anteriores que a mudança possa ter afetado. Ao concluir, execute a [verificação](verify.md) sobre o escopo completo; provas isoladas dos itens não substituem a prova do comportamento de início ao fim.
 
 ## Limites
 
@@ -37,12 +38,14 @@ Ao concluir, execute a [verificação](verify.md).
 ## Desvios e restrições
 
 - Uma restrição descoberta pode exigir corrigir a spec ou o plano. Registre o efeito material e continue o escopo autorizado.
+- Reavalie apenas os itens, dependências e checks afetados pela descoberta, conforme [preparação](prepare.md#ajustar-com-novas-evidências).
 - Atualize a spec ou o plano quando a decisão mudar, antes de implementar o comportamento ou a solução correspondente. Quando houver commit autorizado, agrupe o artefato com a mudança que ele descreve.
 - Uma decisão irreversível descoberta na implementação entra em Technical Decisions do plano antes do código que a fecha, no formato do [plano](plan.md).
 
 ## Retomar uma mudança
 
 - Reconstrua o estado pelo plano, pelos requisitos, pelas evidências e pelo diff já entregue, não por um resumo narrativo.
+- Confira a prontidão do próximo trabalho e as dependências de Execution, quando presente. Complete o contexto ausente nas fontes antes de usar uma interface ou decisão inferida.
 - Use o diff como evidência do que foi implementado. Quando ele divergir da spec ou do plano, confronte a divergência com o pedido: corrija o código que viola o contrato ou registre uma decisão autorizada que ainda não chegou ao documento.
 - Checks marcados indicam o que foi registrado, mas não provam que mudanças posteriores continuam válidas. Reutilize a evidência para o mesmo conteúdo e repita apenas os checks afetados por diferenças relevantes.
 - Depois de uma compactação de contexto, releia os artefatos da mudança e o diff antes de continuar.

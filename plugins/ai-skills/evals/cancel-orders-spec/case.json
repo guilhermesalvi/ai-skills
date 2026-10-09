@@ -7,35 +7,23 @@
   ],
   "timeout_seconds": 1500,
   "sandbox": "workspace-write",
-  "expected_outcome": "Spec da capability do ciclo do pedido, com autorização e concorrência decididas ou registradas, o cancelamento de pedido pago como lacuna, e um plano com Requirements in Scope.",
+  "expected_outcome": "Spec do comportamento completo de cancelamento, com autorização e concorrência decididas ou registradas, pedido pago como lacuna e plano com Requirements in Scope.",
   "checks": [
     {
       "type": "regex",
-      "target": {
-        "source": "file",
-        "path": "eval-out/spec.md"
-      },
-      "pattern": "^(?=[\\s\\S]*Validation and limits)(?=[\\s\\S]*Failure and partial failure)(?=[\\s\\S]*Idempotency and duplication)(?=[\\s\\S]*Authorization)(?=[\\s\\S]*Rate limiting)(?=[\\s\\S]*Concurrency and ordering)(?=[\\s\\S]*Data lifecycle)(?=[\\s\\S]*External dependency failure)(?=[\\s\\S]*State transitions)(?=[\\s\\S]*Observability)(?=[\\s\\S]*Cross-capability consistency)",
-      "id": "all-dimensions",
-      "description": "Observable Decisions nomeia as onze dimensões do schema."
-    },
-    {
-      "type": "regex",
-      "target": {
-        "source": "file",
-        "path": "eval-out/spec.md"
-      },
-      "pattern": "^\\|\\s*Authorization\\s*\\|",
-      "flags": "m",
-      "id": "authorization-row",
-      "description": "Autorização se aplica a este pedido (quem pode cancelar o pedido de quem) e tem linha própria em Observable Decisions, fora do n/a."
-    },
-    {
-      "type": "regex",
       "target": "files",
-      "pattern": "docs[\\/]specs[\\/](?![^\\/\\n]*cancel)[^\\/\\n]+[\\/]spec\\.md",
-      "id": "capability-folder",
-      "description": "A spec nasce na pasta da capability do ciclo do pedido, não numa pasta com o nome da funcionalidade de cancelamento."
+      "pattern": "docs[\\\\/]specs[\\\\/][^\\n]*cancel[^\\n]*[\\\\/]spec\\.md",
+      "id": "behavior-folder",
+      "description": "A spec usa uma pasta que identifica o comportamento de cancelamento."
+    },
+    {
+      "id": "complete-behavior",
+      "type": "rubric",
+      "source": {
+        "source": "file",
+        "path": "eval-out/spec.md"
+      },
+      "rubric": "graders/behavior.md"
     },
     {
       "id": "concise-plan",
@@ -84,7 +72,7 @@
       "target": "files",
       "pattern": "docs[\\/]specs[\\/][^\\/\\n]+[\\/]0001-[^\\/\\n]+\\.md",
       "id": "plan-file",
-      "description": "O plano fica na pasta da capability, numerado a partir de 0001."
+      "description": "O plano fica junto da spec do comportamento, numerado a partir de 0001."
     },
     {
       "type": "regex",

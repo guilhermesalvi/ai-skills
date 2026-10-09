@@ -1,4 +1,4 @@
 interface:
   display_name: "Desenvolvimento por especificação"
-  short_description: "Specs, planos, implementação, verificação e ADRs"
-  default_prompt: "Use $sdd para especificar, planejar, implementar ou verificar esta mudança."
+  short_description: "Comportamentos completos, planos e execução verificada"
+  default_prompt: "Use $sdd para especificar um comportamento completo, preparar a mudança e executar o escopo pedido até a verificação."
