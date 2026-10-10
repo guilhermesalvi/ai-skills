@@ -1,6 +1,6 @@
 # sdd — Desenvolvimento por especificação
 
-Use a skill `sdd` para especificar comportamentos completos, preparar uma mudança, implementar e verificar requisitos rastreáveis ou registrar uma decisão arquitetural em ADR. Ela continua sendo uma skill: o Claude Code executa o trabalho autorizado usando suas instruções. Este guia apresenta os pedidos e as entregas; as instruções do agente ficam em [SKILL.md](SKILL.md).
+Use a skill `sdd` para especificar comportamentos completos, preparar uma mudança, implementar e verificar requisitos rastreáveis ou registrar uma decisão arquitetural em ADR. Este guia apresenta os pedidos e as entregas; as instruções do agente ficam em [SKILL.md](SKILL.md).
 
 Cada spec nova descreve o menor fluxo que vai de um gatilho a um resultado observável pelo consumidor, com as regras e alternativas necessárias. Cancelar um pedido inclui confirmar ou recusar a solicitação e definir o estado final; gestão de pedidos pode agrupar esse comportamento com pagamento e entrega. Capability é um agrupamento opcional, e contratos existentes continuam como fontes vivas, sem uma spec nova por ticket.
 
@@ -151,7 +151,7 @@ Para uma escolha ainda em aberto, peça a comparação das alternativas e inform
 
 Você pode pedir cada resultado separadamente ou solicitar a implementação completa. Um pedido apenas de spec ou plano entrega esse artefato.
 
-As convenções do projeto consumidor determinam a organização dos arquivos. Consulte [artefatos e layout](references/workflow.md#artefatos-e-layout) para o layout usado quando o projeto não define outro. Os modelos ficam em [spec](assets/spec.md), [plano](assets/plan.md) e [ADR](assets/adr.md). Context e Requirements formam a base da spec; as demais seções entram quando acrescentam informação. A análise dos riscos continua, sem exigir um inventário de dimensões inaplicáveis no documento. O mapa Observable Decisions é preservado nas specs que já o usam e incluído em novas specs quando pedido.
+As convenções do projeto consumidor determinam a organização dos arquivos. Consulte [artefatos e layout](references/workflow.md#artefatos-e-layout) para o layout usado quando o projeto não define outro. Os modelos ficam em [spec](assets/spec.md), [plano](assets/plan.md) e [ADR](assets/adr.md). Toda spec tem Context e Requirements; as demais seções entram só quando acrescentam informação. O mapa Observable Decisions só entra numa spec nova quando você pedir.
 
 Confira na resposta os caminhos dos artefatos, os resultados dos checks e as premissas ou lacunas ainda abertas. Consulte [entrega](references/deliver.md) para os registros esperados e [escopo e autorização](references/workflow.md#escopo-e-autorização) para os limites de cada pedido. Commit e push precisam de autorização explícita.
 
