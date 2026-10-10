@@ -293,7 +293,7 @@ class NewArtifacts(unittest.TestCase):
         for item in ("- Chave por cliente. Inferida do cadastro.", "- **Chave por cliente.**", "- ** ** Explicação."):
             with self.subTest(item=item):
                 self.document.write_text(document({"Assumptions": item}), encoding="utf-8")
-                self.assertTrue(any("assumption needs a bold statement followed by explanation" in f
+                self.assertTrue(any("assumption needs a bold title followed by explanation" in f
                                     for f in check(self.folder)))
 
 

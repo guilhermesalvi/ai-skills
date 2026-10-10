@@ -23,7 +23,7 @@ O chamador entrega identidade autenticada, conforme `current_customer` em `api/s
 
 ## Assumptions
 
-- **Pedido pago é recusado enquanto a política de reembolso estiver aberta.** A lacuna Política de cancelamento de pedido pago ainda não tem decisão. Provisoriamente, CAN-03 preserva pedido e cobrança; se o produto permitir cancelar pedidos pagos, a recusa precisará mudar.
+- **Recusa provisória de pedido pago.** Enquanto a lacuna Política de cancelamento de pedido pago não tiver decisão, CAN-03 recusa o cancelamento de pedido em `PAID` e preserva pedido e cobrança. Se o produto permitir cancelar pedidos pagos, a recusa precisará mudar.
 
 ## Gaps
 

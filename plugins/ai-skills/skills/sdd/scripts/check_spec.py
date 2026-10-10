@@ -23,7 +23,7 @@ Structure: section titles, header labels, table columns and
 the dimensions of Observable Decisions are the English schema of the skill,
 whatever the prose language. Each spec and plan is checked against its own
 schema: known sections in order, the header, and assumptions with a bold
-statement followed by explanation. Observable Decisions is optional and need
+title followed by explanation. Observable Decisions is optional and need
 not enumerate every dimension. An optional Execution table needs the schema
 columns, unique kebab-case items, existing dependencies and an acyclic graph.
 
@@ -169,7 +169,7 @@ def check_assumptions(name, items):
     findings = []
     for item in items:
         if not ASSUMPTION.match(item):
-            findings.append(f"{name}: assumption needs a bold statement followed by explanation: {item[:60]}")
+            findings.append(f"{name}: assumption needs a bold title followed by explanation: {item[:60]}")
     return findings
 
 

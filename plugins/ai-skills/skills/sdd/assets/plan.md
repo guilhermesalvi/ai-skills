@@ -18,7 +18,7 @@
 
 ## Assumptions
 
-- **{{Premissa ainda aberta, uma por item; apague a seção quando não houver inferência nem escolha provisória}}.** {{Explique em prosa o fundamento, a escolha provisória quando houver, a consequência de estar errada e quem verifica quando conhecido}}.
+- **{{Título curto da premissa ainda aberta, uma por item; apague a seção quando não houver inferência nem escolha provisória}}.** {{Em prosa, a afirmação, o fundamento, a escolha provisória quando houver, a consequência de estar errada e quem verifica quando conhecido}}.
 
 ## Gaps
 

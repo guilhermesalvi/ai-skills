@@ -145,17 +145,17 @@ Motivo: inventar um valor para uma decisão que ninguém tomou só torna a frase
 
 ### Formato da premissa
 
-Mantenha em Assumptions apenas fatos ainda não verificados e escolhas provisórias. Escreva cada premissa como um item de lista num só parágrafo: destaque a afirmação em negrito e explique o fundamento, a escolha provisória quando houver e a consequência de estar errada. Nomeie quem verifica e como, quando conhecido, inclusive como papel, como "dono do backend". Use prosa natural, sem campos de status ou rótulos dentro do parágrafo.
+Mantenha em Assumptions apenas fatos ainda não verificados e escolhas provisórias. Escreva cada premissa como um item de lista num só parágrafo. Comece por um título curto em negrito, que nomeia o assunto e serve para citá-la; depois, em prosa, escreva a afirmação, o fundamento, a escolha provisória quando houver e a consequência de estar errada. Nomeie quem verifica e como, quando conhecido, inclusive como papel, como "dono do backend". Use prosa natural, sem campos de status ou rótulos dentro do parágrafo.
 
 Exemplo de inferência ainda aberta:
 
 ```markdown
-- **O chamador serializa as operações sobre o mesmo pedido.** O módulo altera o pedido em memória e não expõe uma trava; a serialização pelo chamador ainda precisa ser verificada pelo dono do backend. Se ela não existir, um pagamento concorrente pode cobrar um pedido cancelado.
+- **Serialização pelo chamador.** O chamador serializa as operações sobre o mesmo pedido: o módulo altera o pedido em memória e não expõe uma trava, e o dono do backend ainda precisa verificar essa serialização. Se ela não existir, um pagamento concorrente pode cobrar um pedido cancelado.
 ```
 
 - Agrupe numa premissa só os defaults que o usuário aceitaria ou recusaria juntos, como os estados de uma tela. Decisões que ele pode responder de forma diferente ficam em premissas separadas.
 - Ordene as premissas pelo impacto de estarem erradas: primeiro a que inviabilizaria a mudança, depois as que custariam dinheiro, dado ou conformidade, depois as demais.
-- Para citar uma premissa em outra seção, use o texto em negrito dela. Em outro artefato, acrescente o nome do artefato, como "da spec".
+- Para citar uma premissa em outra seção, use o título dela. Em outro artefato, acrescente o nome do artefato, como "da spec". Preserve o título ao editar a premissa, para não romper as citações.
 
 ### Quando a premissa for resolvida
 
@@ -173,7 +173,7 @@ Retire a premissa de Assumptions quando houver evidência ou decisão suficiente
 
 - Registre as lacunas numa tabela Gap, Affects, Owner: o que falta, os IDs ou o comportamento que ficam indefinidos e quem decide.
 - Use `?` em Owner quando ninguém for conhecido.
-- Para citar uma lacuna em outra seção, use o texto da coluna Gap dela.
+- Para citar uma lacuna em outra seção, use o texto da coluna Gap dela e preserve esse texto ao editar a lacuna.
 - Quando regras, fontes ou paráfrases se contradisserem, ou quando uma correção depender de decisão de negócio, registre a lacuna com os IDs afetados e conclua o restante. Não escolha uma das versões em silêncio.
 
 ## Corrigir na origem

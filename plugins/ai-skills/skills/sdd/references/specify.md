@@ -43,7 +43,7 @@ Em uma spec nova, registre as decisões pertinentes em Requirements, Context, As
 | --- | --- |
 | Requisito | ID quando a ligação esclarece uma interação entre superfícies ou condições |
 | Garantia existente no código | Arquivo, símbolo e o resultado garantido |
-| Premissa | Texto em negrito da premissa |
+| Premissa | Título da premissa |
 | Lacuna | Texto da coluna Gap |
 
 - Ao mudar a spec, percorra as superfícies que a mudança expõe e todas as dimensões, e atualize as linhas que a mudança atinge.
