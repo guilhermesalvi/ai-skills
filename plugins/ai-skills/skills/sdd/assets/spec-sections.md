@@ -38,7 +38,7 @@ Copie apenas o bloco necessário para o artefato e preencha os campos. Insira-o 
 
 ## Divergences
 
-- {{Diferença entre a implementação e a intenção documentada, com arquivo:linha; apague a seção quando nenhuma divergência for identificada}}
+- {{Diferença entre a implementação e a intenção documentada, com arquivo e símbolo; apague a seção quando nenhuma divergência for identificada}}
 
 ## References
 

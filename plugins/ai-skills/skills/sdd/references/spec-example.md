@@ -17,9 +17,9 @@ Use este exemplo para reconhecer um comportamento completo: da solicitação de 
 
 O cliente solicita o cancelamento de um pedido e precisa receber a confirmação, ou distinguir a recusa por propriedade ou estado. O resultado encerra o fluxo quando o cliente conhece a resposta e o estado final do pedido.
 
-O contrato vem do pedido do produto: o dono pode cancelar um pedido ainda não pago. O módulo fictício em `orders/orders.py:28-69` mantém estado e histórico; o pagamento só cobra em `PENDING`. Este recorte usa esses contratos existentes sem redefinir pagamento, envio ou entrega.
+O contrato vem do pedido do produto: o dono pode cancelar um pedido ainda não pago. A classe fictícia `Order`, em `orders/orders.py`, mantém estado e histórico; `Order.pay` só cobra em `PENDING`. Este recorte usa esses contratos existentes sem redefinir pagamento, envio ou entrega.
 
-O chamador entrega identidade autenticada, conforme o contrato em `api/session.py:12`, e serializa operações do mesmo pedido, conforme `api/orders.py:30`.
+O chamador entrega identidade autenticada, conforme `current_customer` em `api/session.py`, e serializa operações do mesmo pedido com `order_lock`, em `api/orders.py`.
 
 ## Assumptions
 
@@ -37,6 +37,6 @@ O chamador entrega identidade autenticada, conforme o contrato em `api/session.p
 - **CAN-02** — SE outro cliente solicitar o cancelamento, ENTÃO o sistema DEVE recusar com erro de propriedade distinto de erro de estado e preservar o pedido.
 - **CAN-03** — SE o dono solicitar o cancelamento de um pedido em `PAID`, `SHIPPED` ou `DELIVERED`, ENTÃO o sistema DEVE recusar com erro de estado e preservar o pedido.
 - **CAN-04** — QUANDO o dono repetir o cancelamento de um pedido em `CANCELLED`, ENTÃO o sistema DEVE confirmar o estado vigente sem acrescentar outro registro ao histórico.
-- **CAN-05** — O cancelamento NÃO DEVE gerar cobrança; a tentativa de pagar um pedido já cancelado DEVE ser recusada antes da cobrança pela guarda do pagamento (`orders/orders.py:52-54`).
+- **CAN-05** — O cancelamento NÃO DEVE gerar cobrança; a tentativa de pagar um pedido já cancelado DEVE ser recusada antes da cobrança pela guarda de estado de `Order.pay`, em `orders/orders.py`.
 
 ````

@@ -11,8 +11,8 @@ Conteúdo: Comportamento e arquivo · Origem do contrato · Observable Decisions
 - Por exemplo, cancelar um pedido vai da solicitação do cliente à confirmação ou recusa, com o estado final e os efeitos definidos. Gestão de pedidos pode agrupar cancelamento, pagamento e entrega, sem reunir seus contratos numa spec nova e abrangente.
 - Reutilize e edite a spec que já define o comportamento. Uma mudança ou ticket novo não cria um contrato concorrente. Preserve specs abrangentes existentes; divida-as apenas quando o pedido ou a manutenção justificar a divisão, conforme [alterar artefato](change.md).
 - Quando o pedido abranger resultados independentes, separe-os em specs de comportamentos completos. Não fragmente condições, recusas ou regras necessárias ao mesmo resultado, nem amplie o produto para preencher o agrupamento.
-- Mantenha cada regra compartilhada numa única fonte vigente: cite a spec, o contrato ou o ADR que a define. Inclua o comportamento existente de que a mudança depende quando ele ainda não tiver fonte, com `arquivo:linha`; não reconstrua todo o ciclo do domínio.
-- Nomeie em Affected Capabilities os agrupamentos cujo resultado a mudança altera, quando essa identificação ajudar o leitor. Cite os contratos dos comportamentos afetados sem redefini-los.
+- Mantenha cada regra compartilhada numa única fonte vigente: cite a spec, o contrato ou o ADR que a define. Inclua o comportamento existente de que a mudança depende quando ele ainda não tiver fonte, citando o código que o garante; não reconstrua todo o ciclo do domínio.
+- Nomeie em Affected Capabilities os agrupamentos cujo resultado este comportamento altera, quando essa identificação ajudar o leitor. O campo descreve uma relação do contrato, válida enquanto o comportamento existir; o que uma mudança em curso atinge pertence ao plano. Cite os contratos dos comportamentos afetados sem redefini-los.
 - Uma dependência ainda não confirmada vai para Gaps. Cite IDs de outra spec apenas quando consumir a definição, a entrada ou o evento correspondente.
 - Quando um comportamento dependente não tiver spec e estiver fora do pedido, defina apenas o que o comportamento em escopo entrega a ele ou exige dele.
 
@@ -22,9 +22,10 @@ Conteúdo: Comportamento e arquivo · Origem do contrato · Observable Decisions
 | --- | --- |
 | Pedido direto | Registre o comportamento, o consumidor e o resultado informados. Um pedido descrito como tela, microserviço ou CRUD tem por trás um problema do consumidor e uma decisão de negócio: identifique-os. Preserve a interface quando ela for escolha explícita do usuário |
 | Documento de produto, ata ou ticket | Pese cada afirmação pela autoridade: decisão registrada, observação e sugestão pesam diferente. Cite a origem com seção ou página e sintetize em vez de reformatar |
-| Código existente | Descreva o comportamento observado com `arquivo:linha` e as divergências com a intenção documentada. A intenção inferida vai para Assumptions, com a evidência. A justificativa ausente e as intenções concorrentes vão para Gaps. Não reescreva o comportamento para concordar com uma intenção inferida |
+| Código existente | Descreva o comportamento observado, citando o código, e as divergências com a intenção documentada. A intenção inferida vai para Assumptions, com a evidência. A justificativa ausente e as intenções concorrentes vão para Gaps. Não reescreva o comportamento para concordar com uma intenção inferida |
 
 - Antes de perguntar, leia a spec existente, os ADRs pertinentes, os contratos e o código atingido.
+- Na spec, cite código pelo arquivo e pelo símbolo, como função, classe, constante ou teste, e não por número de linha: a spec é editada no lugar, e a linha muda com qualquer edição do arquivo. Plano e relatório de verificação registram um momento e podem usar `arquivo:linha`.
 - Registre na spec como premissa ou lacuna as políticas provisórias e as condições ainda não confirmadas que determinam se o resultado pode ser garantido, inclusive identidade autenticada, autoridade do solicitante e exclusão de operações concorrentes. Uma exigência ao chamador faz parte do contrato; o mecanismo que a cumpre pertence ao plano.
 - Não trate a presença de um campo, estado ou relação no código como prova de uma regra nova. Uma política inferida, como quem pode agir sobre um registro, segue [premissas e lacunas](workflow.md#premissas-e-lacunas), em vez de aparecer como decisão tomada.
 - Um domínio amplo ou várias iniciativas pedem um recorte com resultado identificável. Um recorte que muda o escopo materialmente é decisão do usuário.
@@ -41,13 +42,13 @@ Em uma spec nova, registre as decisões pertinentes em Requirements, Context, As
 | Registro | Citação em Landing |
 | --- | --- |
 | Requisito | ID quando a ligação esclarece uma interação entre superfícies ou condições |
-| Garantia existente no código | `arquivo:linha` e o resultado garantido |
+| Garantia existente no código | Arquivo, símbolo e o resultado garantido |
 | Premissa | Texto em negrito da premissa |
 | Lacuna | Texto da coluna Gap |
 
 - Ao mudar a spec, percorra as superfícies que a mudança expõe e todas as dimensões, e atualize as linhas que a mudança atinge.
 - Cite em cada linha apenas requisitos que observam aquela dimensão. Reuse um requisito em várias linhas quando ele observar cada uma delas.
-- Use apenas IDs ou nomes de premissas e lacunas em Landing quando esses registros já contiverem a decisão. Descreva somente a garantia externa que não está nesses registros, com `arquivo:linha` quando vier do código.
+- Use apenas IDs ou nomes de premissas e lacunas em Landing quando esses registros já contiverem a decisão. Descreva somente a garantia externa que não está nesses registros, com arquivo e símbolo quando vier do código.
 - Vincule a uma premissa ou lacuna a dimensão aplicável que ainda não tiver requisito.
 - Inclua apenas linhas que acrescentem uma ligação ou garantia necessária para entender o contrato. Remova a linha que só indexa um requisito, premissa ou lacuna já claros; não mantenha essas linhas só porque outra linha da seção é útil. Sem informação adicional, omita a seção.
 - Omita dimensões inaplicáveis. Preserve uma linha `n/a` existente quando seu motivo ainda for útil, no formato `<Dimension>: <motivo>`, separando entradas por ponto e vírgula; não a crie para completar uma lista.
@@ -133,7 +134,7 @@ O formato de erro costuma ser reutilizado por outros handlers, e o estado vazio 
 - **Uma execução decide o requisito.** Percentil, média, taxa de erro e disponibilidade são alvos de serviço, que nenhuma execução isolada satisfaz ou reprova. Mantenha o comportamento no requisito e registre o alvo na dimensão Observability.
 - **NFR pelo que ele permite verificar.** Um atributo de qualidade com resultado verificável vira requisito. Um atributo usado para comparar soluções vira critério das decisões técnicas do plano, com a origem registrada.
 - **Conjunto nomeado.** Um requisito que quantifica sobre um conjunto nomeia os membros ou a fonte que os enumera. Sem isso, uma prova sobre dois membros satisfaz a frase inteira.
-- **Garantia negativa.** Para exigir que algo não aconteça, como uma segunda cobrança, cite no requisito o mecanismo que o código já oferece, com `arquivo:linha`. Não aponte para o plano, que envelhece quando outra mudança troca o mecanismo.
+- **Garantia negativa.** Para exigir que algo não aconteça, como uma segunda cobrança, cite no requisito o mecanismo que o código já oferece, pelo arquivo e pelo símbolo. Não aponte para o plano, que envelhece quando outra mudança troca o mecanismo.
 - **Garantia negativa nova.** Quando o mecanismo ainda não existe no código, o requisito descreve só o resultado, e o plano registra o mecanismo que o sustenta.
 - **Opção fora da condição.** Uma opção aplicável só em determinada condição define também o resultado de recebê-la fora dela. Rejeitar e ignorar são escolhas de negócio distintas.
 

@@ -3,11 +3,11 @@
 | | |
 | --- | --- |
 | **Requirement Prefix** | `{{PREFIXO}}` |
-| **Affected Capabilities** | {{Capabilities cujo resultado a mudança altera; apague a linha quando não houver}} |
+| **Affected Capabilities** | {{Capabilities cujo resultado este comportamento altera; apague a linha quando não houver}} |
 
 ## Context
 
-{{Problema, gatilho, consumidor e resultado que encerra o comportamento; origem do contrato; código pertinente com arquivo:linha}}
+{{Problema, gatilho, consumidor e resultado que encerra o comportamento; origem do contrato; código pertinente, por arquivo e símbolo}}
 
 ## Assumptions
 
