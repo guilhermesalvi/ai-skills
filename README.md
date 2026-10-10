@@ -2,7 +2,7 @@
 
 Skills para uso pessoal no Claude Code, empacotadas como plugin.
 
-O pacote está em beta, na versão `0.1.0-beta.3`, definida em [plugin.json](plugins/ai-skills/.claude-plugin/plugin.json). A skill `sdd` acompanha a versão do pacote. Os contratos podem mudar durante o beta, sem compromisso de retrocompatibilidade.
+O pacote está em beta, na versão `0.1.0-beta.4`, definida em [plugin.json](plugins/ai-skills/.claude-plugin/plugin.json). A skill `sdd` acompanha a versão do pacote. Os contratos podem mudar durante o beta, sem compromisso de retrocompatibilidade.
 
 | Skill | Finalidade |
 | --- | --- |
