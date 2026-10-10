@@ -176,7 +176,7 @@ Um item pode citar vários checks, e o mesmo check pode observar vários itens. 
 
 | Decision | Choice | Rejected alternatives | Cost | Reversible |
 | --- | --- | --- | --- | --- |
-| Ordenação de solicitações | Sequência por livro, com unicidade em `(book_id, sequence)` | Instante informado pelo cliente: não distingue registros com o mesmo horário | Concorrência sobre a geração da sequência | Não: esquema persistido |
+| Ordenação de solicitações | Sequência por livro, única em `(book_id, sequence)` | Instante do cliente: empata no mesmo horário | Disputa ao gerar a sequência | Não: esquema persistido |
 
 ## Checks
 

@@ -22,6 +22,7 @@ Escreva para quem vai decidir ou implementar a partir do artefato. Inclua o que 
 | Agrupamentos que o leitor procura pelo nome | Subtítulos |
 
 - Separe parágrafos, listas, tabelas e blocos de código com linhas em branco. Nas tabelas de registros, use cabeçalhos que expliquem as colunas; na tabela de metadados do artefato, preserve os rótulos de campo do schema.
+- Escreva cada célula de tabela como uma expressão curta, legível no Markdown sem renderização e no diff. Uma justificativa que não cabe numa expressão vai num parágrafo logo abaixo da tabela, citando a linha pelo nome.
 - Não fragmente um raciocínio em itens apenas para encurtá-lo.
 - Não transforme uma entrada curta em formulário, com subtítulo e um campo em negrito por parágrafo.
 
