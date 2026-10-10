@@ -1,0 +1,19 @@
+{
+  "name": "ai-skills",
+  "owner": {
+    "name": "Guilherme Salvi",
+    "url": "https://github.com/guilhermesalvi"
+  },
+  "metadata": {
+    "description": "Skills de desenvolvimento orientado por especificações."
+  },
+  "plugins": [
+    {
+      "name": "ai-skills",
+      "source": "./plugins/ai-skills",
+      "description": "Desenvolvimento orientado por especificações.",
+      "category": "productivity",
+      "keywords": ["sdd", "spec-driven-development", "ears", "adr"]
+    }
+  ]
+}

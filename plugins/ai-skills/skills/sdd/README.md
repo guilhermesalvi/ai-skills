@@ -1,15 +1,15 @@
 # sdd — Desenvolvimento por especificação
 
-Use a skill `sdd` para especificar comportamentos completos, preparar uma mudança, implementar e verificar requisitos rastreáveis ou registrar uma decisão arquitetural em ADR. Ela continua sendo uma skill: o Codex executa o trabalho autorizado usando suas instruções. Este guia apresenta os pedidos e as entregas; as instruções do agente ficam em [SKILL.md](SKILL.md).
+Use a skill `sdd` para especificar comportamentos completos, preparar uma mudança, implementar e verificar requisitos rastreáveis ou registrar uma decisão arquitetural em ADR. Ela continua sendo uma skill: o Claude Code executa o trabalho autorizado usando suas instruções. Este guia apresenta os pedidos e as entregas; as instruções do agente ficam em [SKILL.md](SKILL.md).
 
 Cada spec nova descreve o menor fluxo que vai de um gatilho a um resultado observável pelo consumidor, com as regras e alternativas necessárias. Cancelar um pedido inclui confirmar ou recusar a solicitação e definir o estado final; gestão de pedidos pode agrupar esse comportamento com pagamento e entrega. Capability é um agrupamento opcional, e contratos existentes continuam como fontes vivas, sem uma spec nova por ticket.
 
 ## Começar
 
-Com a skill instalada, inclua `$sdd` no pedido feito na conversa do projeto consumidor. Descreva o resultado desejado e indique os documentos ou caminhos que servem de entrada.
+Com o plugin instalado, comece o pedido com `/ai-skills:sdd` na sessão do projeto consumidor; numa cópia avulsa da skill, use `/sdd`. O Claude Code também carrega a skill quando o pedido corresponde à descrição dela. Descreva o resultado desejado e indique os documentos ou caminhos que servem de entrada.
 
 ```text
-$sdd Especifique o cancelamento de pedidos com base em
+/ai-skills:sdd Especifique o cancelamento de pedidos com base em
 docs/product/orders.md e no comportamento existente em src/orders.
 ```
 
@@ -55,20 +55,20 @@ Adapte os caminhos ao projeto. Os exemplos abaixo usam o comportamento `cancel-o
 ### Criar ou revisar uma spec
 
 ```text
-$sdd Especifique o cancelamento de pedido, da solicitação do cliente
+/ai-skills:sdd Especifique o cancelamento de pedido, da solicitação do cliente
 à confirmação ou recusa com o estado final. Use docs/product/orders.md
 e src/orders como fontes.
 ```
 
 ```text
-$sdd Atualize docs/specs/cancel-order/spec.md para permitir
+/ai-skills:sdd Atualize docs/specs/cancel-order/spec.md para permitir
 o cancelamento de pedidos ainda não pagos. Preserve os demais contratos.
 ```
 
 Para descrever o sistema atual a partir do código:
 
 ```text
-$sdd Especifique o comportamento existente de cancelamento de pedido
+/ai-skills:sdd Especifique o comportamento existente de cancelamento de pedido
 a partir de src/orders e dos testes em tests/orders.
 ```
 
@@ -77,7 +77,7 @@ Consulte [especificação](references/specify.md) para os critérios do contrato
 ### Criar um plano
 
 ```text
-$sdd Planeje a implementação do cancelamento definido em
+/ai-skills:sdd Planeje a implementação do cancelamento definido em
 docs/specs/cancel-order/spec.md. Considere src/orders e os ADRs
 vigentes. Produza apenas o plano.
 ```
@@ -85,7 +85,7 @@ vigentes. Produza apenas o plano.
 O plano registra as escolhas da solução e as provas que devem passar. Para uma mudança simples, pode bastar o cabeçalho e Checks. Quando houver dependências ou passagem de trabalho, Execution organiza resultados implementáveis, contexto e referência às provas. Consulte [plano](references/plan.md) e [preparação](references/prepare.md).
 
 ```text
-$sdd Prepare apenas o plano para implementar docs/specs/cancel-order/spec.md
+/ai-skills:sdd Prepare apenas o plano para implementar docs/specs/cancel-order/spec.md
 em outra sessão. Confirme os contratos pertinentes e explicite as dependências
 e o contexto necessário por item, sem implementar ainda.
 ```
@@ -93,7 +93,7 @@ e o contexto necessário por item, sem implementar ainda.
 ### Implementar e verificar
 
 ```text
-$sdd Implemente o cancelamento conforme
+/ai-skills:sdd Implemente o cancelamento conforme
 docs/specs/cancel-order/spec.md e
 docs/specs/cancel-order/0001-customer-cancellation.md.
 ```
@@ -119,7 +119,7 @@ Quando uma decisão ou uma restrição impedir a conclusão de parte do escopo, 
 ### Retomar uma mudança
 
 ```text
-$sdd Retome a implementação de
+/ai-skills:sdd Retome a implementação de
 docs/specs/cancel-order/0001-customer-cancellation.md. Confira a spec
 atual e o diff existente e conclua os checks pendentes do escopo.
 ```
@@ -129,7 +129,7 @@ Indique os artefatos da mudança para que a retomada use o contrato, as decisõe
 ### Verificar uma implementação
 
 ```text
-$sdd Verifique a implementação contra
+/ai-skills:sdd Verifique a implementação contra
 docs/specs/cancel-order/spec.md e
 docs/specs/cancel-order/0001-customer-cancellation.md.
 Entregue os achados e as evidências, sem aplicar correções.
@@ -140,7 +140,7 @@ O relatório normalmente aparece na resposta. Peça um arquivo quando precisar c
 ### Registrar uma decisão em ADR
 
 ```text
-$sdd Registre em ADR a decisão já adotada de publicar eventos
+/ai-skills:sdd Registre em ADR a decisão já adotada de publicar eventos
 de domínio por outbox. Use src/messaging, os testes e o histórico
 do Git para identificar a escolha e as evidências disponíveis.
 ```

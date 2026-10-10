@@ -1,8 +1,8 @@
 # ai-skills
 
-Skills para uso pessoal no Codex, empacotadas como plugin no formato portátil Agent Plugins.
+Skills para uso pessoal no Claude Code, empacotadas como plugin.
 
-O pacote está em beta, na versão `0.1.0-beta.2`, definida em [plugin.json](plugins/ai-skills/plugin.json). A skill `sdd` acompanha a versão do pacote. Os contratos podem mudar durante o beta, sem compromisso de retrocompatibilidade.
+O pacote está em beta, na versão `0.1.0-beta.3`, definida em [plugin.json](plugins/ai-skills/.claude-plugin/plugin.json). A skill `sdd` acompanha a versão do pacote. Os contratos podem mudar durante o beta, sem compromisso de retrocompatibilidade.
 
 | Skill | Finalidade |
 | --- | --- |
@@ -14,53 +14,47 @@ Consulte o [guia de uso da sdd](plugins/ai-skills/skills/sdd/README.md) para exe
 
 ## Instalação
 
-Com uma CLI do Codex que oferece `codex plugin add`, na raiz deste checkout:
+Na raiz deste checkout:
 
 ```bash
-codex plugin marketplace add ./
-codex plugin add ai-skills@ai-skills
-codex plugin list --marketplace ai-skills --json
+claude plugin marketplace add ./
+claude plugin install ai-skills@ai-skills
+claude plugin list --json
 ```
 
-No aplicativo, `.agents/plugins/marketplace.json` expõe o catálogo do projeto. Abra o diretório de plugins, selecione o marketplace **AI Skills** e instale **AI Skills**. Reinicie o aplicativo se o catálogo ainda não aparecer. Em projetos confiáveis, `.codex/config.toml` habilita `ai-skills@ai-skills`.
-
-Em uma nova sessão, invoque `$sdd` ou selecione a skill com `/skills`. A descrição também permite seleção automática. O pacote não precisa de MCP nem fixa um modelo. `check_spec.py` exige Python 3.10+ e Git.
+Em uma nova sessão, invoque `/ai-skills:sdd`. O Claude Code também carrega a skill quando o pedido corresponde à descrição dela. O pacote não precisa de MCP nem fixa um modelo. `check_spec.py` exige Python 3.10+ e Git.
 
 Para instalar a versão publicada no Git:
 
 ```bash
-codex plugin marketplace add guilhermesalvi/ai-skills
-codex plugin add ai-skills@ai-skills
+claude plugin marketplace add guilhermesalvi/ai-skills
+claude plugin install ai-skills@ai-skills
 ```
 
-Use uma origem por marketplace. Para trocar entre checkout local e Git, remova o registro anterior com `codex plugin marketplace remove ai-skills` antes de adicionar a nova origem. A origem Git instala a versão publicada; mudanças locais chegam a ela após publicação.
+Use uma origem por marketplace. Para trocar entre checkout local e Git, remova o registro anterior com `claude plugin marketplace remove ai-skills` antes de adicionar a nova origem. A origem Git instala a versão publicada; mudanças locais chegam a ela após publicação.
+
+A partir de um checkout, a instalação copia a pasta inteira do plugin, inclusive os resultados de evals em `plugins/ai-skills/evals/results/`, que ficam fora do Git. Apague esses resultados antes de instalar ou grave-os em outro lugar, conforme [Evals](#evals).
 
 ### Skill avulsa
 
-Copie a pasta inteira `plugins/ai-skills/skills/sdd` para `.agents/skills/sdd` de um projeto consumidor ou `~/.agents/skills/sdd` para uso pessoal. Invoque com `$sdd`. Escolha o plugin ou a cópia avulsa para evitar duas skills com o mesmo nome no seletor.
+Copie a pasta inteira `plugins/ai-skills/skills/sdd` para `.claude/skills/sdd` de um projeto consumidor ou `~/.claude/skills/sdd` para uso pessoal. Invoque com `/sdd`. Escolha o plugin ou a cópia avulsa para não carregar a mesma skill duas vezes.
 
-Os recursos seguem o padrão aberto [Agent Skills](https://agentskills.io/specification). `agents/openai.yaml` acrescenta os metadados de interface do Codex, sem criar dependências de ferramentas.
+Os recursos seguem o padrão aberto [Agent Skills](https://agentskills.io/specification). No `SKILL.md`, `${CLAUDE_SKILL_DIR}` é uma substituição do Claude Code; em outro agente, informe o caminho absoluto da pasta da skill.
 
 ## Atualização
 
-Incremente o sufixo beta, como de `0.1.0-beta.1` para `0.1.0-beta.2`, ao disponibilizar uma nova revisão para seus projetos. Mantenha a versão em `plugins/ai-skills/plugin.json`. Para atualizar o snapshot de uma origem Git:
+Incremente o sufixo beta, como de `0.1.0-beta.2` para `0.1.0-beta.3`, ao disponibilizar uma nova revisão para seus projetos. Mantenha a versão em `plugins/ai-skills/.claude-plugin/plugin.json`: o Claude Code fixa a instalação nessa versão e nomeia a cópia em cache por ela. Para atualizar uma instalação:
 
 ```bash
-codex plugin marketplace upgrade ai-skills
+claude plugin marketplace update ai-skills
+claude plugin update ai-skills@ai-skills
 ```
 
-Para recarregar o pacote da origem configurada, reinstale pelo aplicativo ou pela CLI:
-
-```bash
-codex plugin remove ai-skills@ai-skills
-codex plugin add ai-skills@ai-skills
-```
-
-Instalações locais usam uma cópia em cache: editar o checkout não altera essa cópia. Reinstale e abra uma nova sessão. Cópias avulsas precisam ser copiadas novamente. Para desenvolver sem alterar sua instalação pessoal, use a validação isolada abaixo.
+Abra uma nova sessão depois de atualizar. Cópias avulsas precisam ser copiadas novamente. Para exercitar uma alteração sem instalar, abra a sessão com `claude --plugin-dir ./plugins/ai-skills`.
 
 ## Convenções
 
-- O pedido prevalece sobre os defaults das skills. Aplique `AGENTS.md` e `AGENTS.override.md` pertinentes do consumidor, respeitando o escopo de diretório do Codex.
+- O pedido prevalece sobre os defaults das skills. Aplique `CLAUDE.md`, `CLAUDE.local.md` e `AGENTS.md` pertinentes do consumidor, respeitando o escopo de diretório do Claude Code.
 - Instruções e textos de interface ficam em português. A prosa dos artefatos segue o pedido ou a convenção do consumidor; sem definição, segue o idioma do pedido. O schema permanece em inglês.
 - As skills continuam o trabalho autorizado até a validação e perguntam sobre decisões ausentes que afetem escopo ou correção. Commit e push exigem autorização do usuário.
 - A verificação SDD usa revisor separado quando disponível e autorizado; sem ele, informa que autor e revisor são o mesmo. O pacote não escolhe modelos para o usuário.
@@ -70,7 +64,7 @@ Instalações locais usam uma cópia em cache: editar o checkout não altera ess
 
 ### Escrita e organização
 
-As orientações oficiais recomendam instruções imperativas, entradas e resultados explícitos e leitura progressiva dos recursos. O entrypoint apresenta propósito e encaminhamento; cada referência detalha uma etapa quando ela for necessária. Consulte [criação de skills](https://learn.chatgpt.com/docs/build-skills) e [revisão de skills e prompts](https://developers.openai.com/blog/rethinking-skills-and-prompts-for-gpt-6-astra).
+As instruções são imperativas, com entradas e resultados explícitos, e os recursos são lidos de forma progressiva. O entrypoint apresenta propósito e encaminhamento; cada referência detalha uma etapa quando ela for necessária. Consulte a documentação de [skills](https://code.claude.com/docs/en/skills) do Claude Code.
 
 | Conteúdo | Organização |
 | --- | --- |
@@ -80,7 +74,7 @@ As orientações oficiais recomendam instruções imperativas, entradas e result
 | Dependência real de ordem | Passos numerados |
 | Detalhe de uma etapa | Referência indicada no ponto de uso |
 
-EARS, os schemas em inglês, a numeração e os checks rastreáveis são contratos desta skill. Eles não são exigências da OpenAI para toda skill. Mantenha uma fonte por regra e revise instruções conflitantes antes de acrescentar mais orientações.
+EARS, os schemas em inglês, a numeração e os checks rastreáveis são contratos desta skill, não exigências do formato de skills. Mantenha uma fonte por regra e revise instruções conflitantes antes de acrescentar mais orientações.
 
 Os modelos de spec e plano começam pelas partes centrais e pelas pendências. Os blocos opcionais ficam em `assets/spec-sections.md` e `assets/plan-sections.md`; inclua apenas os que acrescentarem informação ao contrato ou à solução.
 
@@ -91,10 +85,12 @@ Assumptions reúne apenas fatos ainda não verificados e escolhas provisórias, 
 ```bash
 python scripts/validate_repo.py
 python -m unittest discover -s tests -v
+claude plugin validate . --strict
+claude plugin validate plugins/ai-skills --strict
 git diff --check
 ```
 
-No Windows, `py -3` pode substituir `python`. O validador confere o catálogo, os campos usados pelo manifesto portátil, o frontmatter e os links dos recursos. É específico deste repositório e não substitui a revisão de publicação da OpenAI.
+No Windows, `py -3` pode substituir `python`. O validador do repositório confere o catálogo, o manifesto, a versão semântica, o frontmatter e os links dos recursos da skill. Os comandos `claude plugin validate` conferem o marketplace, o manifesto e as skills pelo validador da CLI. Os testes também semeiam cada fixture das evals e executam os testes dela; `resume-contract-conflict` inclui uma regressão local deliberada, que o teste espera ver falhar.
 
 Para verificar a instalação sem modificar sua configuração pessoal:
 
@@ -102,81 +98,57 @@ Para verificar a instalação sem modificar sua configuração pessoal:
 python scripts/validate_repo.py --install
 ```
 
-Esse comando cria um `CODEX_HOME` temporário apenas nos processos filhos, registra o checkout, instala o plugin, inspeciona o inventário e compara os recursos instalados com o pacote. Não precisa de login e apaga o diretório temporário ao terminar. Foi verificado com Codex CLI `0.149.1`.
+Esse comando usa um `CLAUDE_CONFIG_DIR` temporário apenas nos processos filhos, registra o checkout, instala o plugin, confere versão e habilitação no inventário e compara os recursos instalados com o pacote. Não precisa de login e apaga o diretório temporário ao terminar. Foi verificado com Claude Code `2.1.270`.
 
 ### Evals
 
-Os casos em `plugins/ai-skills/evals/` usam um runner próprio com `codex exec --json`, conforme a [orientação oficial para avaliar skills](https://developers.openai.com/blog/eval-skills).
+Os casos em `plugins/ai-skills/evals/` usam [`claude plugin eval`](https://code.claude.com/docs/en/plugin-evals): cada caso tem `prompt.md`, graders em `graders/` e, quando monta um repositório, `case.yaml` com o scaffold.
 
 | Caso | O que confere |
 | --- | --- |
 | `cancel-orders-spec` | Comportamento completo com recorte de cancelamento, autorização e concorrência, pedido pago como lacuna, premissas, escopo, concisão e entrega |
-| `prepare-dependent-change` | Plano transferível, contexto confirmado, dependências reais, provas da integração e pendência limitada à parte afetada |
+| `prepare-dependent-change` | Plano transferível, contexto confirmado, dependências reais, provas da integração, pendência limitada à parte afetada e código intacto |
 | `adr-from-code` | ADR derivado do código e histórico, sem inventar participantes, alternativas ou motivos |
 | `implement-and-verify` | Implementação, testes nomeados nas provas, execução bem-sucedida, checks marcados e relatório |
 | `resume-contract-conflict` | Retomada com diff divergente, preservação da spec e nova execução dos checks afetados |
 | `ignores-code-review` | Resposta sobre divisão por zero sem carregar a SDD |
 
-Liste os casos ou confira os scaffolds sem chamar um modelo:
+Os scaffolds criam arquivos e repositórios Git como você, fora do sandbox, e só rodam com `--scaffold`. Cada `scaffold.sh` chama `seed.sh`, que executa o `scaffold.py` do caso com Python 3.10+; os mesmos scripts semeiam as fixtures dos testes. No Windows, o scaffold roda no Git Bash, e `seed.sh` restaura `LOCALAPPDATA`, que o harness remove, para que o gerenciador de instalações do Python encontre o interpretador existente.
+
+Os casos escrevem arquivos, então conceda `Write` e `Edit`. `implement-and-verify` e `resume-contract-conflict`, marcados com `needs-bash`, executam testes e precisam de `Bash`. Conceder `Bash` exige o sandbox do sistema, que o Windows nativo não tem: nele, o Claude Code recusa a execução. No Windows nativo, rode os demais casos sem `Bash`:
 
 ```bash
-python scripts/run_evals.py --list
-python scripts/run_evals.py --fixtures-only
+claude plugin eval plugins/ai-skills --scaffold --allow-tools Write Edit --tag spec plan adr trigger --no-publish
 ```
 
-Fixtures normalmente têm testes verdes na origem. `resume-contract-conflict` inclui uma regressão local deliberada; seu `fixture_test_exit_code` declara a falha esperada na conferência offline. A avaliação com o modelo só passa depois da correção e dos testes verdes.
-
-Execute com a autenticação existente do Codex:
+No Linux, no macOS ou no WSL2, rode todos os casos:
 
 ```bash
-python scripts/run_evals.py --judge
-python scripts/run_evals.py --case cancel-orders-spec --judge
+claude plugin eval plugins/ai-skills --scaffold --allow-tools Write Edit Bash --no-publish
+claude plugin eval plugins/ai-skills --case cancel-orders-spec --scaffold --allow-tools Write Edit Bash --no-publish
 ```
 
-O runner cria cada fixture Git fora deste repositório, instala o plugin em uma configuração temporária e captura eventos JSONL, resposta e arquivos gerados. A instalação vem de uma cópia temporária dos recursos de runtime, sem a pasta `evals`, para não expor prompts e rubricas ao executor. Marca como confiável apenas o workspace que acabou de gerar, mantendo o sandbox do caso.
+Coloque o caminho do plugin antes das opções que recebem listas. Cada caso roda três vezes em cada braço, com e sem o plugin; `--runs 1` serve para uma conferência rápida. Para avaliar um modelo escolhido por você, passe `--model <modelo>`; os graders `llm` usam o modelo de `--judge-model`. Repita nos modelos que você usa, sem tratar um deles como piso. Cada execução consome o uso normal da sua conta.
 
-Reutiliza apenas `auth.json`, quando existente, numa cópia temporária removida ao terminar; variáveis de autenticação por API também podem ser usadas. Não copia sua configuração, instruções ou plugins pessoais. Os scaffolds são Python e funcionam no Windows, macOS e Linux.
+Os graders `regex`, `tool_used` e os de rubrica (`llm`) cobrem artefatos, resposta e trace. Com o braço sem plugin, os graders `tool_used` da skill indicam a ativação sem entrar no score; `skill-not-fired` usa `arm: both` e conta nos dois braços. O `claude plugin eval` não tem grader de exit code: `tests-passed` e `suite-passed` julgam pelo trace se a suíte executou testes e terminou com sucesso.
 
-Os casos selecionam os perfis de permissões `:workspace`, ou `:read-only` para code review; o julgamento das rubricas também usa `:read-only`. Esses perfis exigem uma CLI atual. O runner não pede aprovação interativa nem remove o sandbox. Falhas de autenticação, acesso ao workspace ou timeout são erros de execução.
-
-No Windows, a configuração temporária usa o sandbox nativo `unelevated`, com token restrito, para dispensar setup administrativo na execução isolada. O runner ajusta as ACLs apenas da pasta descartável: permite leitura dos recursos do plugin e edição do fixture, sem propagar essas permissões para `auth.json`. A instalação pessoal mantém sua configuração.
-
-Checks determinísticos examinam artefatos e eventos `command_execution`. Uma leitura de `sdd/SKILL.md` com exit code `0` e o campo `name: sdd` na saída é o sinal observável de ativação, uma aproximação pelo trace. Isso evita contar um pipeline que termina com sucesso após falhar na leitura. Rubricas de conteúdo usam uma segunda execução com `--output-schema` quando `--judge` é passado. Sem essa opção, ficam pendentes e a execução termina com código `2`.
-
-Adicione `--compare` para registrar uma execução independente sem o plugin. O baseline serve para comparação; somente o resultado com plugin decide aprovação. Para avaliar um modelo escolhido por você, passe `--model <modelo>`; sem a opção, vale o default da CLI na configuração temporária. Cada execução consome o uso normal do Codex.
-
-Use `--reasoning-effort <esforço>` para escolher o mesmo esforço na geração e no julgamento. Sem essa opção, vale o default do modelo na CLI isolada, que pode diferir da sua configuração pessoal. O relatório registra modelo e esforço explícitos; níveis disponíveis dependem do modelo e do cliente, conforme a [referência de configuração](https://learn.chatgpt.com/docs/config-file/config-reference).
-
-Para comparar os modelos escolhidos neste projeto, execute os mesmos casos e rubricas em cada um:
-
-```bash
-python scripts/run_evals.py --model gpt-5.6-luna --judge
-python scripts/run_evals.py --model gpt-6-astra --judge
-```
-
-Esses comandos não alteram o modelo do consumidor. Aprovação nos casos exercitados mostra evidência para esses pedidos; não garante desempenho igual em toda tarefa. Compare também os artefatos e os motivos do julgamento, além dos checks determinísticos.
-
-O runner usa a CLI encontrada no `PATH`. Se ela não reconhecer o modelo escolhido, passe `--codex <caminho-do-executável>` para usar outra instalação, sem alterar o `PATH` ou a configuração pessoal.
-
-Resultados ficam em `plugins/ai-skills/evals/results/`, fora do Git. Saídas: `0` para aprovação, `1` para check reprovado e `2` para erro de execução ou rubrica pendente. Revise evidências e motivos das rubricas antes de interpretar mudanças de score.
+Por padrão, os resultados ficam em `plugins/ai-skills/evals/results/`, fora do Git. Para gravá-los fora da pasta do plugin, passe `--output-dir <pasta>` e `--report <arquivo.html>`. A saída `0` indica todos os casos no limiar, `1` indica caso abaixo do limiar ou erro de carga, e `2` indica execução parcial, por limite de custo ou falha de autenticação. Revise os motivos dos graders antes de interpretar mudanças de score.
 
 ## Estrutura
 
 ```text
-.agents/plugins/marketplace.json    catálogo Codex deste repositório
-.codex/config.toml                 habilitação no projeto confiável
-AGENTS.md                          orientações para editar o repositório
+.claude-plugin/marketplace.json    catálogo deste repositório
+CLAUDE.md                          orientações para editar o repositório
 plugins/ai-skills/
-  plugin.json                      manifesto portátil e interface OpenAI
+  .claude-plugin/plugin.json       manifesto do plugin
   skills/sdd/
     SKILL.md                       descoberta e encaminhamento
-    agents/openai.yaml             interface da skill no Codex
     references/                    procedimentos por etapa
     assets/                        modelos dos artefatos
     scripts/check_spec.py          conferência dos artefatos SDD
-  evals/                           prompts, case.json, scaffolds e rubricas
-scripts/                           validação do pacote e runner Codex
-tests/                             testes dos scripts e fixtures
+  evals/                           casos de claude plugin eval, scaffolds e seed.sh
+scripts/validate_repo.py           validação do pacote e da instalação
+tests/                             testes dos scripts e das fixtures
 ```
 
-O formato segue as orientações oficiais de [skills](https://learn.chatgpt.com/docs/build-skills), [empacotamento e marketplaces](https://developers.openai.com/plugins/build/plugins) e [revisão de instruções](https://developers.openai.com/blog/rethinking-skills-and-prompts-for-gpt-6-astra), consultadas em 2026-10-04. Para configuração e execução, consulte [AGENTS.md](https://learn.chatgpt.com/docs/agent-configuration/agents-md) e [modo não interativo](https://learn.chatgpt.com/docs/non-interactive-mode). A OpenAI recomenda `plugin.json` portátil para novos pacotes; `.codex-plugin/plugin.json` permanece uma opção de compatibilidade, sem necessidade de duplicar manifestos neste projeto.
+O formato segue a documentação oficial do Claude Code sobre [plugins](https://code.claude.com/docs/en/plugins), [manifesto](https://code.claude.com/docs/en/plugins/manifest-reference), [marketplaces](https://code.claude.com/docs/en/plugins/marketplace-reference), [skills](https://code.claude.com/docs/en/skills), [evals de plugins](https://code.claude.com/docs/en/plugin-evals) e [CLAUDE.md](https://code.claude.com/docs/en/memory), consultada em 2026-10-09.

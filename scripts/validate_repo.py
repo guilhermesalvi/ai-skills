@@ -1,4 +1,4 @@
-"""Validate this repository's portable plugin, marketplace and skill resources."""
+"""Validate this repository's Claude Code marketplace, plugin manifest and skill resources."""
 
 import argparse
 import json
@@ -12,6 +12,7 @@ from urllib.parse import unquote, urlsplit
 
 
 ROOT = Path(__file__).resolve().parents[1]
+PLUGIN_ID = "ai-skills@ai-skills"
 
 
 def valid_version(value):
@@ -69,9 +70,9 @@ def frontmatter(path):
 
 
 def validate(root=ROOT):
-    catalog = json.loads((root / ".agents/plugins/marketplace.json").read_text(encoding="utf-8"))
-    if not catalog.get("name") or not catalog.get("plugins"):
-        raise ValueError("marketplace needs a name and plugins")
+    catalog = json.loads((root / ".claude-plugin/marketplace.json").read_text(encoding="utf-8"))
+    if not catalog.get("name") or not catalog.get("owner", {}).get("name") or not catalog.get("plugins"):
+        raise ValueError("marketplace needs a name, an owner name and plugins")
     names = set()
     skills = []
     for entry in catalog["plugins"]:
@@ -79,25 +80,17 @@ def validate(root=ROOT):
         if name in names:
             raise ValueError(f"duplicate marketplace plugin: {name}")
         names.add(name)
-        if entry["source"]["source"] != "local":
-            raise ValueError(f"{name}: this validator expects a local source")
-        if entry["policy"]["installation"] not in {"AVAILABLE", "INSTALLED_BY_DEFAULT", "NOT_AVAILABLE"}:
-            raise ValueError(f"{name}: invalid installation policy")
-        if entry["policy"]["authentication"] not in {"ON_INSTALL", "ON_USE"}:
-            raise ValueError(f"{name}: invalid authentication policy")
-        if not entry.get("category"):
-            raise ValueError(f"{name}: missing category")
-        package = local_path(root, entry["source"]["path"])
-        manifest = json.loads((package / "plugin.json").read_text(encoding="utf-8"))
-        if manifest.get("$schema") != "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json":
-            raise ValueError(f"{name}: missing portable plugin schema")
+        if not isinstance(entry["source"], str):
+            raise ValueError(f"{name}: this validator expects a relative source in this repository")
+        package = local_path(root, entry["source"])
+        manifest = json.loads((package / ".claude-plugin/plugin.json").read_text(encoding="utf-8"))
         if manifest.get("name") != name or not re.fullmatch(r"[a-z0-9]+(?:-[a-z0-9]+)*", name):
             raise ValueError(f"{name}: invalid plugin identity")
+        # The installed copy is cached by version, so every release needs one.
         if not valid_version(manifest.get("version")):
             raise ValueError(f"{name}: invalid semantic version")
-        interface = manifest["extensions"]["com.openai"]["interface"]
-        if not all(interface.get(key) for key in ("displayName", "shortDescription", "defaultPrompt")):
-            raise ValueError(f"{name}: incomplete OpenAI interface")
+        if "version" in entry and entry["version"] != manifest["version"]:
+            raise ValueError(f"{name}: marketplace and manifest versions differ")
         package_skills = sorted((package / "skills").glob("*/SKILL.md"))
         if not package_skills:
             raise ValueError(f"{name}: no packaged skills")
@@ -116,31 +109,36 @@ def validate(root=ROOT):
 
 
 def install_smoke(root=ROOT):
-    """Exercise the real CLI in a temporary Codex home; no login is needed."""
-    executable = shutil.which("codex")
+    """Exercise the real CLI in a temporary Claude Code config; no login is needed."""
+    executable = shutil.which("claude")
     if not executable:
-        raise ValueError("Codex CLI is not on PATH")
+        raise ValueError("Claude Code CLI is not on PATH")
+    version = json.loads((root / "plugins/ai-skills/.claude-plugin/plugin.json").read_text(encoding="utf-8"))["version"]
     with TemporaryDirectory(prefix="ai-skills-install-") as temporary:
-        env = dict(os.environ, CODEX_HOME=temporary)
+        config, cwd = Path(temporary) / "config", Path(temporary) / "cwd"
+        config.mkdir()
+        cwd.mkdir()
+        # A temporary working directory keeps project settings out of the installation.
+        env = dict(os.environ, CLAUDE_CONFIG_DIR=str(config))
         for arguments in (
-            ["plugin", "marketplace", "add", str(root), "--json"],
-            ["plugin", "add", "ai-skills@ai-skills", "--json"],
-            ["plugin", "list", "--marketplace", "ai-skills", "--json"],
+            ["plugin", "marketplace", "add", str(root)],
+            ["plugin", "install", PLUGIN_ID],
+            ["plugin", "list", "--json"],
         ):
-            result = subprocess.run([executable, *arguments], cwd=root, env=env, capture_output=True,
+            result = subprocess.run([executable, *arguments], cwd=cwd, env=env, capture_output=True,
                                     text=True, encoding="utf-8", timeout=90)
             if result.returncode:
-                raise ValueError(f"codex {' '.join(arguments)} failed: {result.stderr or result.stdout}")
-            inventory = json.loads(result.stdout)
-        active = [entry for entry in inventory.get("installed", [])
-                  if entry.get("pluginId") == "ai-skills@ai-skills" and entry.get("enabled") is True]
+                raise ValueError(f"claude {' '.join(arguments)} failed: {result.stderr or result.stdout}")
+        inventory = json.loads(result.stdout)
+        active = [entry for entry in inventory if entry.get("id") == PLUGIN_ID and entry.get("enabled") is True]
         if not active:
             raise ValueError("installed inventory does not show ai-skills enabled")
-        cached_skills = list((Path(temporary) / "plugins/cache").rglob("skills/sdd/SKILL.md"))
-        if not cached_skills:
-            raise ValueError("installed cache does not contain the sdd skill")
+        if active[0].get("version") != version:
+            raise ValueError(f"installed version {active[0].get('version')} differs from manifest {version}")
+        installed = Path(active[0]["installPath"]) / "skills/sdd"
+        if not installed.resolve().is_relative_to(config.resolve()):
+            raise ValueError("installed plugin is outside the temporary configuration")
         expected = root / "plugins/ai-skills/skills/sdd"
-        installed = cached_skills[0].parent
         for resource in expected.rglob("*"):
             if resource.is_file() and "__pycache__" not in resource.parts:
                 cached = installed / resource.relative_to(expected)

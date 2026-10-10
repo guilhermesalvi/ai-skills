@@ -5,7 +5,7 @@ Usage: python check_spec.py [<specs folder>]   (default: docs/specs)
 Reads spec.md recursively and NNNN-<change>.md plans beside each spec.
 This accepts both <behavior>/ and optional <capability>/<behavior>/ layouts.
 Other Markdown files under a spec folder are checked only for cited IDs;
-files outside spec folders, such as AGENTS.md, are not read.
+files outside spec folders, such as CLAUDE.md, are not read.
 
 IDs: a requirement is defined by a list item that starts with a bold ID, such
 as "- **DOC-01** ...". A prefix belongs to the spec that defines it and must

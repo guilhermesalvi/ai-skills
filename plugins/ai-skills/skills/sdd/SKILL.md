@@ -32,5 +32,5 @@ Leia o [fluxo comum](references/workflow.md) ao iniciar o trabalho com a skill. 
 
 ## Recursos e limites
 
-- Resolva os caminhos a partir da pasta deste `SKILL.md`. `<skill-dir>` representa esse caminho absoluto. Os modelos ficam em `assets/`; a conferência determinística usa `scripts/check_spec.py`, com Python 3.10+ e Git, a partir do projeto consumidor.
+- Resolva os caminhos a partir da pasta deste `SKILL.md`: `${CLAUDE_SKILL_DIR}`. Nas referências, `<skill-dir>` representa esse caminho absoluto. Os modelos ficam em `assets/`; a conferência determinística usa `scripts/check_spec.py`, com Python 3.10+ e Git, a partir do projeto consumidor.
 - Trate os exemplos como ilustrações de formato. Use os fatos, interfaces e comandos do projeto ao produzir o artefato.

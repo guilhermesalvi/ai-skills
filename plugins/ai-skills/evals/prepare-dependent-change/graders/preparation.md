@@ -1,3 +1,8 @@
+---
+type: llm
+focus: { source: file, path: eval-out/plan.md }
+---
+
 PASS se o plano permite que outra sessão implemente o resultado sem inventar interfaces, decisões ou fontes. Context e os itens de Execution identificam os contratos pertinentes de `app/orders.py`, `app/api.py` e README; as escolhas preservam autenticação por token, store compartilhado, chamadas serializadas e propagação dos erros existentes. A forma literal do adaptador proposto e seus parâmetros necessários estão definidos no plano quando constituírem novo contrato público.
 
 Os itens têm resultados verificáveis, contexto pertinente e dependências que correspondem à integração real. Pode haver um só item se ele reunir a integração necessária sem impor uma divisão artificial; se houver vários, os itens dependentes citam seus pré-requisitos e os independentes não recebem dependências inventadas. Checks podem ser citados por ID ou nome; comandos e resultados pertencem à seção Checks.

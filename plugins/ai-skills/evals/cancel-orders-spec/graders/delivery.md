@@ -1,2 +1,7 @@
+---
+type: llm
+focus: last_message
+---
+
 PASS se a resposta final lista as premissas abertas que sustentam o escopo entregue, com os IDs afetados, e faz ao usuário uma pergunta sobre cancelar pedido pago ou reembolso, com opções e uma recomendação. Para uma premissa exclusivamente técnica sem dependência direta de requisito, pode citar a decisão ou o check afetado em vez de forçar um ID.
 FAIL se a resposta só anuncia os arquivos, omite uma premissa aberta ou sua dependência, não pede a decisão com opções e recomendação ou apresenta escolhas provisórias como decisões já tomadas.

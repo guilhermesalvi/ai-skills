@@ -117,7 +117,7 @@ class SpecChecks(unittest.TestCase):
         self.assertEqual([], check(self.folder))
 
     def test_instructions_outside_capabilities_are_not_read(self):
-        (self.folder / "AGENTS.md").write_text("# Instruções\nReferência: REQ-99\n", encoding="utf-8")
+        (self.folder / "CLAUDE.md").write_text("# Instruções\nReferência: REQ-99\n", encoding="utf-8")
         self.assertEqual([], check(self.folder))
 
     def test_plan_citations_are_checked(self):
@@ -385,7 +385,7 @@ class GroupedBehaviors(unittest.TestCase):
                              encoding="utf-8")
             (first.parent / "0001-change.md").write_text(PLAN, encoding="utf-8")
             (second.parent / "0001-change.md").write_text(PLAN.replace("REQ-100", "ENG-01"), encoding="utf-8")
-            (folder / "orders/AGENTS.md").write_text("Regras: REQ-99", encoding="utf-8")
+            (folder / "orders/CLAUDE.md").write_text("Regras: REQ-99", encoding="utf-8")
             self.assertEqual([], check(folder))
             second.write_text(ENGLISH.replace("ENG-01", "ENG-03"), encoding="utf-8")
             self.assertTrue(any("cancel-order/spec.md: citation ENG-01 has no definition" in f for f in check(folder)))

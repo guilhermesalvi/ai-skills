@@ -102,7 +102,7 @@ python "<skill-dir>/scripts/check_spec.py" docs/specs
 ## Precedência
 
 - O pedido da sessão prevalece sobre as convenções do repositório, e ambos prevalecem sobre os defaults desta skill e do `check_spec.py`.
-- Convenção é a regra escrita no `AGENTS.md`, no `AGENTS.override.md` ou em outra instrução aplicável do repositório.
+- Convenção é a regra escrita no `CLAUDE.md`, no `CLAUDE.local.md`, no `AGENTS.md` ou em outra instrução aplicável do repositório.
 - Um padrão apenas observado em arquivos existentes não obriga, mas preserve-o ao editar esses arquivos.
 - Trate um ADR vigente como restrição técnica. Quando o pedido autorizar sua substituição, registre-a conforme [ADR](adr.md). Quando o conflito não estiver resolvido, registre a lacuna e continue o trabalho independente; não use o ADR para anular uma escolha explícita do usuário.
 - Se uma regra local parecer impedir o trabalho, informe o arquivo, a regra e a ação afetada.
