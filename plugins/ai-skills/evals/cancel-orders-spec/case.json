@@ -1,0 +1,96 @@
+{
+  "name": "cancel-orders-spec",
+  "description": "Pedido vago de funcionalidade num módulo sem spec, com uma decisão de negócio que envolve dinheiro.",
+  "tags": [
+    "spec",
+    "plan"
+  ],
+  "expected_outcome": "Spec do comportamento completo de cancelamento, com autorização e concorrência decididas ou registradas, pedido pago como lacuna e plano com Requirements in Scope.",
+  "sandbox": "workspace-write",
+  "timeout_seconds": 1500,
+  "checks": [
+    {
+      "id": "assumptions",
+      "type": "rubric",
+      "source": {
+        "path": "eval-out/spec.md"
+      },
+      "rubric": "graders/assumptions.md"
+    },
+    {
+      "id": "behavior-folder",
+      "type": "regex",
+      "target": "files",
+      "pattern": "docs[\\\\/]specs[\\\\/][^\\n]*cancel[^\\n]*[\\\\/]spec\\.md"
+    },
+    {
+      "id": "behavior",
+      "type": "rubric",
+      "source": {
+        "path": "eval-out/spec.md"
+      },
+      "rubric": "graders/behavior.md"
+    },
+    {
+      "id": "concise-plan",
+      "type": "rubric",
+      "source": {
+        "path": "eval-out/plan.md"
+      },
+      "rubric": "graders/concise-plan.md"
+    },
+    {
+      "id": "concise-spec",
+      "type": "rubric",
+      "source": {
+        "path": "eval-out/spec.md"
+      },
+      "rubric": "graders/concise-spec.md"
+    },
+    {
+      "id": "delivery",
+      "type": "rubric",
+      "source": "last_message",
+      "rubric": "graders/delivery.md"
+    },
+    {
+      "id": "paid-cancel-gap",
+      "type": "rubric",
+      "source": {
+        "path": "eval-out/spec.md"
+      },
+      "rubric": "graders/paid-cancel-gap.md"
+    },
+    {
+      "id": "plan-file",
+      "type": "regex",
+      "target": "files",
+      "pattern": "docs[\\/]specs[\\/][^\\/\\n]+[\\/]0001-[^\\/\\n]+\\.md"
+    },
+    {
+      "id": "portuguese-prose",
+      "type": "regex",
+      "target": {
+        "path": "eval-out/spec.md"
+      },
+      "pattern": "\\b(pedidos?|clientes?)\\b",
+      "flags": "i"
+    },
+    {
+      "id": "scope-header",
+      "type": "regex",
+      "target": {
+        "path": "eval-out/plan.md"
+      },
+      "pattern": "\\*\\*Requirements in Scope\\*\\*\\s*\\|\\s*\\S"
+    },
+    {
+      "id": "skill-fired",
+      "type": "skill_read",
+      "skill": "sdd",
+      "expected": true,
+      "arm": "plugin"
+    }
+  ],
+  "scaffold": "scaffold.py"
+}

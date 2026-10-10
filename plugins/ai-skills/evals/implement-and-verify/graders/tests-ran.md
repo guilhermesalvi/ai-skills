@@ -1,0 +1,1 @@
+As provas foram executadas.

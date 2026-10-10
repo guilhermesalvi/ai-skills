@@ -1,0 +1,2 @@
+PASS se cada seção presente acrescenta informação necessária para implementar e provar a mudança. Execution é opcional: quando existir, esclarece resultados, dependências ou contexto que ajudam a execução, sem substituir os checks.
+FAIL se alguma seção existe só para dizer que algo não se aplica, se Structure ou Risks repetem a spec ou os checks, ou se uma decomposição só reconta requisitos ou enumera arquivos sem explicar o trabalho.

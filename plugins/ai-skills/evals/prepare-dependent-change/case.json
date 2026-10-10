@@ -1,0 +1,63 @@
+{
+  "name": "prepare-dependent-change",
+  "description": "Preparação de uma mudança para outra sessão, com integração entre contratos existentes e uma política futura ainda ausente.",
+  "tags": [
+    "plan",
+    "prepare",
+    "handoff"
+  ],
+  "expected_outcome": "Plano transferível com dependências e contexto confirmado, checks de integração e recusa atual de pedido pago preservada, sem implementar código.",
+  "sandbox": "workspace-write",
+  "timeout_seconds": 1800,
+  "checks": [
+    {
+      "id": "execution-context",
+      "type": "regex",
+      "target": {
+        "path": "eval-out/plan.md"
+      },
+      "pattern": "^\\|\\s*Item\\s*\\|\\s*Outcome\\s*\\|\\s*Depends on\\s*\\|\\s*Context\\s*\\|\\s*Checks\\s*\\|",
+      "flags": "m"
+    },
+    {
+      "id": "no-code-edit",
+      "type": "unchanged",
+      "paths": [
+        "app",
+        "tests"
+      ]
+    },
+    {
+      "id": "no-code-write",
+      "type": "unchanged",
+      "paths": [
+        "app",
+        "tests"
+      ]
+    },
+    {
+      "id": "preparation",
+      "type": "rubric",
+      "source": {
+        "path": "eval-out/plan.md"
+      },
+      "rubric": "graders/preparation.md"
+    },
+    {
+      "id": "proofs-and-scope",
+      "type": "rubric",
+      "source": {
+        "path": "eval-out/plan.md"
+      },
+      "rubric": "graders/proofs-and-scope.md"
+    },
+    {
+      "id": "skill-fired",
+      "type": "skill_read",
+      "skill": "sdd",
+      "expected": true,
+      "arm": "plugin"
+    }
+  ],
+  "scaffold": "scaffold.py"
+}

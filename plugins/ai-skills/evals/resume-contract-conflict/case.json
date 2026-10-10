@@ -1,0 +1,52 @@
+{
+  "name": "resume-contract-conflict",
+  "description": "Retomada com diff que viola o contrato e checks marcados antes da alteração local.",
+  "tags": [
+    "execute",
+    "verify",
+    "resume",
+    "tests"
+  ],
+  "expected_outcome": "Correção do código conforme a spec, preservação do resultado de zero unidades e nova execução dos checks afetados.",
+  "sandbox": "workspace-write",
+  "timeout_seconds": 1200,
+  "checks": [
+    {
+      "id": "contract",
+      "type": "rubric",
+      "source": {
+        "path": "docs/specs/unit-validation/spec.md"
+      },
+      "rubric": "graders/contract.md"
+    },
+    {
+      "id": "implementation",
+      "type": "rubric",
+      "source": {
+        "path": "units/validation.py"
+      },
+      "rubric": "graders/implementation.md"
+    },
+    {
+      "id": "skill-fired",
+      "type": "skill_read",
+      "skill": "sdd",
+      "expected": true,
+      "arm": "plugin"
+    },
+    {
+      "id": "suite-passed",
+      "type": "rubric",
+      "source": "trace",
+      "rubric": "graders/suite-passed.md"
+    },
+    {
+      "id": "suite-ran",
+      "type": "command",
+      "pattern": "unittest discover -s tests",
+      "exit_code": 0
+    }
+  ],
+  "scaffold": "scaffold.py",
+  "fixture_test_exit_code": 1
+}

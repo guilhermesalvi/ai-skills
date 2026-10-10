@@ -1,0 +1,49 @@
+{
+  "name": "adr-from-code",
+  "description": "ADR de uma decisão já adotada no código, sem registro de quem decidiu nem das alternativas.",
+  "tags": [
+    "adr"
+  ],
+  "expected_outcome": "Um ADR 0001 derivado do código e dos commits, que não inventa participantes, alternativas avaliadas nem motivo.",
+  "sandbox": "workspace-write",
+  "timeout_seconds": 900,
+  "checks": [
+    {
+      "id": "adr-file",
+      "type": "regex",
+      "target": "files",
+      "pattern": "docs[\\/]adr[\\/]0001-[^\\/\\n]+\\.md"
+    },
+    {
+      "id": "no-fabrication",
+      "type": "rubric",
+      "source": {
+        "path": "eval-out/adr.md"
+      },
+      "rubric": "graders/no-fabrication.md"
+    },
+    {
+      "id": "no-spec",
+      "type": "regex",
+      "target": "files",
+      "pattern": "docs[\\/]specs",
+      "match": "not_contains"
+    },
+    {
+      "id": "sections",
+      "type": "regex",
+      "target": {
+        "path": "eval-out/adr.md"
+      },
+      "pattern": "^(?=[\\s\\S]*# ADR 0001:)(?=[\\s\\S]*## Context)(?=[\\s\\S]*## Decision)(?=[\\s\\S]*## Alternatives Considered)(?=[\\s\\S]*## Consequences)"
+    },
+    {
+      "id": "skill-fired",
+      "type": "skill_read",
+      "skill": "sdd",
+      "expected": true,
+      "arm": "plugin"
+    }
+  ],
+  "scaffold": "scaffold.py"
+}

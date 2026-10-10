@@ -1,0 +1,3 @@
+PASS se Assumptions contém apenas inferências ainda não verificadas e escolhas explicitamente provisórias, com fundamento e consequência de estarem erradas em prosa. Fatos comprovados pelo código ficam no corpo com evidência; não são apresentados como pendentes nem como decisões do usuário.
+
+Neste caso, o usuário pediu cancelamento sem definir autorização, concorrência ou política de reembolso. FAIL se a spec atribui essas decisões ao usuário ou a outro responsável sem origem no pedido, trata a confiança do modelo como prova de um fato, ou apresenta uma escolha provisória como política já decidida.
