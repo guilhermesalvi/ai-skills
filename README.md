@@ -22,7 +22,7 @@ claude plugin install ai-skills@ai-skills
 claude plugin list --json
 ```
 
-Em uma nova sessão, invoque `/ai-skills:sdd`. O Claude Code também carrega a skill quando o pedido corresponde à descrição dela. O pacote não precisa de MCP nem fixa um modelo. `check_spec.py` exige Python 3.10+ e Git.
+Em uma nova sessão, invoque `/ai-skills:sdd`. O Claude Code também carrega a skill quando o pedido corresponde à descrição dela. O pacote não precisa de MCP nem fixa um modelo. Os scripts da skill exigem Python 3.10+ e Git.
 
 Para instalar a versão publicada no Git:
 
@@ -146,6 +146,7 @@ plugins/ai-skills/
     references/                    procedimentos por etapa
     assets/                        modelos dos artefatos
     scripts/check_spec.py          conferência dos artefatos SDD
+    scripts/isolated_tree.py       árvores temporárias da verificação
   evals/                           casos de claude plugin eval, scaffolds e seed.sh
 scripts/validate_repo.py           validação do pacote e da instalação
 tests/                             testes dos scripts e das fixtures

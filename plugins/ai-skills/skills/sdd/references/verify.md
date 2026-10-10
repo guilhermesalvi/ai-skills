@@ -64,14 +64,14 @@ Conteúdo: Base e leitura crítica · Revisor separado · Conformidade com a spe
 
 ## Falha preexistente
 
-Para confirmar que uma falha já existia, compare com evidência equivalente da base ou execute o mesmo check na base, numa worktree temporária que não toca o checkout do usuário:
+Para confirmar que uma falha já existia, compare com evidência equivalente da base ou execute o mesmo check na base, numa árvore temporária que não toca o checkout do usuário:
 
-1. `git worktree add <dir> <base>`, com `<dir>` inexistente e fora da árvore do repositório.
-2. Execute o check dentro de `<dir>`.
-3. Remova com `git worktree remove --force <dir>`. O `--force` descarta os artefatos de build que o passo 2 deixou; o diretório só contém o que os passos 1 e 2 criaram.
+1. `python "<skill-dir>/scripts/isolated_tree.py" create --base <base>` cria a árvore fora do repositório e imprime o caminho.
+2. Execute o check dentro desse caminho.
+3. `python "<skill-dir>/scripts/isolated_tree.py" remove <caminho>` remove a árvore, com os artefatos de build que o passo 2 deixou, e confere que o checkout não mudou.
 
 - Sem essa confirmação, reporte a origem da falha como incerta. Ela continua impedindo declarar a mudança verificada.
-- Se apenas a remoção da worktree falhar, o resultado na base continua valendo. Informe o diretório que ficou.
+- Se apenas a remoção falhar, o resultado na base continua valendo. Informe o caminho que ficou.
 
 ## Conformidade com o plano
 
@@ -95,8 +95,8 @@ Uma suíte verde prova que os testes executam, não que detectariam uma regress�
 - Injete uma falha por superfície de asserção, como inverter uma condição, trocar um valor retornado, deslocar um limite ou remover um efeito exigido, e confirme que a prova mais estreita daquele requisito falha.
 - Pare quando cada prova escolhida tiver falhado uma vez.
 - Quando o projeto já tiver ferramenta de mutação configurada, use-a e registre comando e escopo, salvo proibição no pedido, nas instruções ou nas permissões aplicáveis.
-- Injete a falha numa árvore isolada com o conteúdo atual da mudança. Use uma worktree temporária sobre `HEAD`, conforme Falha preexistente, e copie os arquivos alterados e novos ainda sem commit. Quando Git ou as permissões impedirem a worktree, use uma cópia temporária dos arquivos necessários às mesmas provas e informe essa alternativa no relatório.
-- Confira que o `git status --porcelain` da árvore real continua igual ao de antes.
+- Injete a falha numa árvore isolada com o conteúdo atual da mudança: crie-a com `isolated_tree.py create --current`, que parte de `HEAD` e copia os arquivos alterados, novos e removidos ainda sem commit, e remova-a com `remove`, como em Falha preexistente.
+- Quando Git ou as permissões impedirem a árvore, use uma cópia temporária dos arquivos necessários às mesmas provas, confira que o `git status --porcelain` do checkout continua igual ao de antes e informe essa alternativa no relatório.
 - Não use `git stash` para isolar a falha: desempilhar não a desfaz, e numa árvore limpa o stash nem cria entrada.
 - Um mutante sobrevivente é achado: a asserção passaria sob uma implementação errada, salvo se a análise mostrar equivalência de comportamento.
 - Numa mudança não trivial, o relatório diz se houve injeção e, se não houve, por quê.
