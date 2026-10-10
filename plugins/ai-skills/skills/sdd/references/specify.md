@@ -116,7 +116,7 @@ O formato de erro costuma ser reutilizado por outros handlers, e o estado vazio 
 
 ### Verificabilidade
 
-- **Uma execução decide o requisito.** Percentil, média, taxa de erro e disponibilidade são alvos de serviço, que nenhuma execução isolada satisfaz ou reprova. Mantenha o comportamento no requisito e registre o alvo na dimensão Observability.
+- **Uma execução decide o requisito.** Percentil, média, taxa de erro e disponibilidade são alvos de serviço, que nenhuma execução isolada satisfaz ou reprova. Mantenha o comportamento no requisito e registre o alvo de serviço em Context, com a origem, ou em Gaps, quando ninguém o decidiu. Numa spec com Observable Decisions, a linha Observability aponta para esse registro.
 - **NFR pelo que ele permite verificar.** Um atributo de qualidade com resultado verificável vira requisito. Um atributo usado para comparar soluções vira critério das decisões técnicas do plano, com a origem registrada.
 - **Conjunto nomeado.** Um requisito que quantifica sobre um conjunto nomeia os membros ou a fonte que os enumera. Sem isso, uma prova sobre dois membros satisfaz a frase inteira.
 - **Garantia negativa.** Para exigir que algo não aconteça, como uma segunda cobrança, cite no requisito o mecanismo que o código já oferece, pelo arquivo e pelo símbolo. Não aponte para o plano, que envelhece quando outra mudança troca o mecanismo.
