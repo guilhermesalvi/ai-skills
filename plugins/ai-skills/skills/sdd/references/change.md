@@ -15,6 +15,36 @@ Altere e revise specs, planos e ADRs preservando a identidade dos requisitos e o
 - O documento não guarda lista de IDs retirados: o histórico do Git registra o que cada ID significava.
 - Um ID retirado não volta a ser usado, e os demais não são renumerados para fechar buracos na sequência.
 
+## Resolver uma premissa
+
+Retire a premissa de Assumptions quando houver evidência ou decisão suficiente e registre o resultado no lugar correspondente:
+
+| Resolução | Destino e origem |
+| --- | --- |
+| Fato verificado | Context ou a seção que usa o fato, com a evidência que o comprova |
+| Escolha decidida pelo usuário, inclusive por delegação | Requirements na spec ou Technical Decisions no plano, com a origem da decisão; registre quem decidiu e a data quando conhecidos |
+
+- Aceitar uma inferência não comprova um fato. Mantenha a premissa aberta até verificar a afirmação.
+- Atualize os requisitos e as citações que dependiam da premissa. Se ela atendia uma lacuna, resolva também o registro em Gaps. Apague Assumptions quando a seção ficar vazia.
+
+## Observable Decisions
+
+Siga esta seção quando a spec já tiver Observable Decisions ou o pedido exigir um mapa de decisões. O mapa localiza decisões já registradas, sem criar uma segunda definição:
+
+| Registro | Citação em Landing |
+| --- | --- |
+| Requisito | ID, quando a ligação esclarece uma interação entre superfícies ou condições |
+| Garantia existente no código | Arquivo, símbolo e o resultado garantido |
+| Premissa | Título da premissa |
+| Lacuna | Texto da coluna Gap |
+
+- Ao alterar a spec, percorra as superfícies e as [dimensões](specify.md#dimensões) que a mudança expõe e atualize as linhas que ela atinge.
+- Cite em cada linha apenas requisitos que observam aquela dimensão; um requisito pode aparecer em várias linhas.
+- Em Landing, cite apenas o ID ou o nome do registro que já contém a decisão. Descreva somente a garantia externa que não está em outro registro.
+- Vincule a uma premissa ou lacuna a dimensão aplicável que ainda não tiver requisito.
+- Mantenha só as linhas que acrescentam uma ligação ou garantia necessária para entender o contrato; remova a que apenas indexa um registro já claro. Sem linha útil, remova a seção.
+- Preserve uma linha `n/a` existente enquanto o motivo for útil, no formato `<Dimension>: <motivo>`, com entradas separadas por ponto e vírgula; não a crie para completar a lista. O motivo não cita requisito: se um requisito observa a dimensão, ela se aplica e tem linha própria.
+
 ## Dividir uma spec abrangente
 
 Quando a manutenção ou o pedido justificar a divisão, identifique comportamentos completos e os consumidores dos requisitos antes de mover o contrato. Mova cada definição para uma única fonte, preserve seu ID e atualize os links e as citações dos consumidores em andamento. Não mantenha cópias da regra nas specs de origem e destino.

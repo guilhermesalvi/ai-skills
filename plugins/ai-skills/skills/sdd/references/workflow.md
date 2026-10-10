@@ -36,7 +36,7 @@ Um pedido de cópia para entrega não muda a localização dos artefatos origina
 
 Trate PRDs e designs existentes como fontes de comportamento e de decisões técnicas. Não os converta nem os remova sem pedido.
 
-Na implementação por esta skill, mantenha um plano em arquivo para preservar checks e evidências entre sessões. Ajuste o tamanho ao risco: uma mudança pequena pode precisar apenas do cabeçalho e de Checks.
+Na implementação por esta skill, mantenha um plano em arquivo para preservar checks e evidências entre sessões, com a profundidade definida em [plano](plan.md#profundidade).
 
 ## Numeração
 
@@ -157,17 +157,7 @@ Exemplo de inferência ainda aberta:
 - Ordene as premissas pelo impacto de estarem erradas: primeiro a que inviabilizaria a mudança, depois as que custariam dinheiro, dado ou conformidade, depois as demais.
 - Para citar uma premissa em outra seção, use o título dela. Em outro artefato, acrescente o nome do artefato, como "da spec". Preserve o título ao editar a premissa, para não romper as citações.
 
-### Quando a premissa for resolvida
-
-Retire a premissa de Assumptions quando houver evidência ou decisão suficiente e registre o resultado no lugar correspondente:
-
-| Resolução | Destino e origem |
-| --- | --- |
-| Fato verificado | Context ou a seção que usa o fato, com a evidência que o comprova |
-| Escolha decidida pelo usuário, inclusive por delegação | Requirements na spec ou Technical Decisions no plano, com a origem da decisão; registre quem decidiu e a data quando conhecidos |
-
-- Aceitar uma inferência não comprova um fato. Mantenha a premissa aberta até verificar a afirmação.
-- Atualize os requisitos e as citações que dependiam da premissa. Se ela atendia uma lacuna, resolva também o registro em Gaps. Apague Assumptions quando a seção ficar vazia.
+Para resolver uma premissa já registrada, siga [alterar artefato](change.md#resolver-uma-premissa).
 
 ### Formato da lacuna
 

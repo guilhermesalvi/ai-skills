@@ -2,7 +2,7 @@
 
 Defina o menor comportamento completo, das regras de negócio ao resultado que o consumidor observa. A spec é o contrato vivo que o plano e a verificação usam.
 
-Conteúdo: Comportamento e arquivo · Origem do contrato · Observable Decisions · Glossário e nomes · Requisitos · Prefixo, IDs e identificadores · Eventos de domínio · Diagramas · Cenários de aceitação · Trade-offs · Estrutura do documento
+Conteúdo: Comportamento e arquivo · Origem do contrato · Riscos do recorte · Glossário e nomes · Requisitos · Prefixo, IDs e identificadores · Eventos de domínio · Diagramas · Cenários de aceitação · Trade-offs · Estrutura do documento
 
 ## Comportamento e arquivo
 
@@ -33,31 +33,16 @@ Conteúdo: Comportamento e arquivo · Origem do contrato · Observable Decisions
 - Num assunto regulado, distinga o que a norma diz, a interpretação adotada e a regra do sistema. A interpretação do modelo não comprova conformidade.
 - Sem jurisdição conhecida, a norma aplicável é lacuna. Não afirme o conteúdo de uma norma que você não verificou.
 
-## Observable Decisions
+## Riscos do recorte
 
-### O que a seção registra
-
-Em uma spec nova, registre as decisões pertinentes em Requirements, Context, Assumptions ou Gaps. Crie Observable Decisions somente quando o pedido exigir um mapa de decisões; preserve e atualize a seção nas specs existentes que a usem. O mapa localiza a decisão, sem criar uma segunda definição:
-
-| Registro | Citação em Landing |
-| --- | --- |
-| Requisito | ID quando a ligação esclarece uma interação entre superfícies ou condições |
-| Garantia existente no código | Arquivo, símbolo e o resultado garantido |
-| Premissa | Título da premissa |
-| Lacuna | Texto da coluna Gap |
-
-- Ao mudar a spec, percorra as superfícies que a mudança expõe e todas as dimensões, e atualize as linhas que a mudança atinge.
-- Cite em cada linha apenas requisitos que observam aquela dimensão. Reuse um requisito em várias linhas quando ele observar cada uma delas.
-- Use apenas IDs ou nomes de premissas e lacunas em Landing quando esses registros já contiverem a decisão. Descreva somente a garantia externa que não está nesses registros, com arquivo e símbolo quando vier do código.
-- Vincule a uma premissa ou lacuna a dimensão aplicável que ainda não tiver requisito.
-- Inclua apenas linhas que acrescentem uma ligação ou garantia necessária para entender o contrato. Remova a linha que só indexa um requisito, premissa ou lacuna já claros; não mantenha essas linhas só porque outra linha da seção é útil. Sem informação adicional, omita a seção.
-- Omita dimensões inaplicáveis. Preserve uma linha `n/a` existente quando seu motivo ainda for útil, no formato `<Dimension>: <motivo>`, separando entradas por ponto e vírgula; não a crie para completar uma lista.
-- O motivo de um `n/a` não cita requisito: se um requisito observa a dimensão, ela se aplica e tem linha própria.
+- Percorra as dimensões e as superfícies que o recorte expõe para encontrar as decisões que faltam.
+- Registre cada decisão encontrada em Requirements, Context, Assumptions ou Gaps. Nenhuma dimensão exige registro só para completar o documento.
 - Inclua apenas os requisitos justificados pela mudança, sem ampliar o produto preventivamente.
+- Uma spec nova não ganha a seção Observable Decisions sem pedido de um mapa de decisões. Numa spec que já a usa, ou quando o pedido exigir o mapa, siga [alterar artefato](change.md#observable-decisions).
 
 ### Dimensões
 
-Use estas dimensões para analisar os riscos que o recorte expõe. Seus identificadores fazem parte do schema quando a seção estiver presente; nenhuma dimensão exige uma linha apenas para completar o documento.
+Os identificadores fazem parte do schema de Observable Decisions.
 
 | Identifier | O que decidir |
 | --- | --- |

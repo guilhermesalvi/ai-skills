@@ -9,7 +9,7 @@ Conteúdo: Profundidade · Contexto pertinente · Escopo · Decisões técnicas 
 ## Profundidade
 
 - Registre decisões e provas na profundidade que outro executor precisa. Um plano curto pode conter apenas o cabeçalho e Checks.
-- Antes de incluir Execution ou avaliar a prontidão para implementar, leia [preparação](prepare.md). Para uma mudança cuja execução já possa ser deduzida das decisões e dos checks, omita Execution; registre somente as dependências ou o contexto adicionais que a preparação identificar.
+- Antes de incluir Execution ou avaliar a prontidão para implementar, leia [preparação](prepare.md), que define quando a seção se justifica.
 
 Uma lista de passos ou arquivos não substitui decisões e provas. Não decomponha o trabalho apenas para repetir a spec ou os checks.
 
@@ -92,17 +92,17 @@ Uma lista de passos ou arquivos não substitui decisões e provas. Não decompon
 
 ## Execution
 
-Quando a [preparação](prepare.md#organizar-o-trabalho) exigir organização explícita da execução, use uma tabela com estas colunas:
+Quando a [preparação](prepare.md#organizar-o-trabalho) justificar a seção, use uma tabela com estas colunas:
 
 | Column | Conteúdo |
 | --- | --- |
-| Item | Nome local em inglês e kebab-case, único no plano |
-| Outcome | Resultado implementável e verificável que o item entrega |
-| Depends on | Nomes de itens que precisam estar integrados antes deste, separados por vírgula, ou `none` |
-| Context | Fontes, contratos e restrições necessários, com links ou citações pertinentes |
-| Checks | IDs de requisitos, nomes de decisões técnicas ou `Gate` que localizam as provas existentes |
+| Item | Nome local em inglês e kebab-case, único no plano; não é ID de requisito |
+| Outcome | Resultado integrado cuja prova permite considerar o item concluído; escrever o código ou passar uma parte isolada não basta |
+| Depends on | Itens que precisam estar integrados antes deste, separados por vírgula, ou `none`; sem ciclos nem dependência criada só para impor uma sequência preferida |
+| Context | Fontes, contratos, convenções, premissas e lacunas de que o item precisa, com o motivo de cada um; um catálogo de arquivos não prepara o executor |
+| Checks | IDs de requisitos, nomes de decisões técnicas ou `Gate` dos checks existentes, sem copiar comandos nem resultados esperados |
 
-O `check_spec.py` confere a tabela, os nomes e o grafo de dependências. A suficiência do contexto e das provas exige revisão de conteúdo.
+Um item pode citar vários checks, e o mesmo check pode observar vários itens. O `check_spec.py` confere a tabela, os nomes e o grafo de dependências; a suficiência do contexto e das provas exige revisão de conteúdo.
 
 ## Checks
 

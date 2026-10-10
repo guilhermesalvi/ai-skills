@@ -20,9 +20,9 @@ Leia o [fluxo comum](references/workflow.md) ao iniciar o trabalho com a skill. 
 | Referência | Quando ler |
 | --- | --- |
 | [Prosa](references/prose.md) | Ao escrever, alterar ou revisar qualquer artefato |
-| [Alterar artefato](references/change.md) | Ao alterar ou retirar requisitos ou cenários existentes, resolver colisões de numeração entre branches ou revisar uma spec, um plano ou um ADR |
+| [Alterar artefato](references/change.md) | Ao alterar ou retirar requisitos ou cenários existentes, resolver premissas, manter Observable Decisions, resolver colisões de numeração entre branches ou revisar uma spec, um plano ou um ADR |
 | [Especificação](references/specify.md) | Ao criar, alterar ou revisar uma spec, inclusive a partir de produto ou código |
-| [Exemplo de spec](references/spec-example.md) | Quando houver dúvida sobre a aplicação do schema ou o nível de detalhe de uma spec nova |
+| [Exemplo de spec](references/spec-example.md) | Ao criar uma spec, para calibrar o recorte, o schema e o nível de detalhe |
 | [Plano](references/plan.md) | Ao criar, alterar ou revisar um plano de solução |
 | [Preparação](references/prepare.md) | Ao avaliar se uma mudança pode ser implementada ou preparar sua passagem para outro executor |
 | [Execução](references/execute.md) | Ao implementar ou retomar uma mudança, com ou sem spec e plano existentes |

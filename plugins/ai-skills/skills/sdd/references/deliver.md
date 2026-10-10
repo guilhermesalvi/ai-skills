@@ -10,9 +10,9 @@ O `check_spec.py` não julga conteúdo. Antes de responder, confira os itens apl
 - [ ] As regras novas têm origem identificável ou estão registradas como escolhas provisórias. As condições ainda não confirmadas necessárias para garantir o resultado estão na spec, mesmo quando o mecanismo que as atende pertence ao plano.
 - [ ] A prosa, inclusive as palavras-chave EARS, está no idioma do pedido ou da convenção.
 - [ ] Cada decisão ainda ausente cujo erro custaria dinheiro, dado, conformidade ou um contrato publicado está em Gaps; quando houver comportamento provisório seguro, ele está identificado como escolha provisória em Assumptions.
-- [ ] Nenhuma dimensão que se aplica ficou na linha `n/a`.
+- [ ] Em Observable Decisions, quando presente, nenhuma dimensão que se aplica ficou na linha `n/a`.
 - [ ] Assumptions contém apenas premissas abertas; fatos verificados e escolhas decididas foram registrados no corpo com evidência ou origem, e as citações afetadas foram atualizadas.
-- [ ] Depois dos últimos ajustes, Assumptions foi relida nos arquivos atuais da spec e do plano e comparada com a resposta: cada premissa ainda aberta que sustenta o escopo entregue está na resposta com os IDs afetados ou, numa premissa apenas técnica, a decisão ou o check que depende dela.
+- [ ] Depois dos últimos ajustes, Assumptions foi relida nos arquivos atuais da spec e do plano, e a resposta traz as premissas abertas conforme Resposta.
 - [ ] Os checks provam o que a spec exige, não o que o código já faz.
 - [ ] Cada seção opcional presente acrescenta informação necessária; nenhuma apenas declara ausência nem repete outra seção.
 - [ ] Execution, quando presente, permite localizar contexto, dependências e provas de cada item; a integração foi verificada sobre o escopo completo, ou sua pendência e impacto estão na entrega.

@@ -16,7 +16,7 @@ Copie apenas o bloco necessário para o artefato e preencha os campos. Insira-o 
 
 | Item | Outcome | Depends on | Context | Checks |
 | --- | --- | --- | --- | --- |
-| {{Nome local em inglês e kebab-case}} | {{Resultado implementável e verificável}} | {{Itens necessários antes deste, separados por vírgula, ou none}} | {{Fontes, contratos e restrições pertinentes}} | {{IDs, nomes de decisões técnicas ou Gate dos checks existentes; apague a seção quando a decomposição não acrescentar informação}} |
+| {{Nome em kebab-case}} | {{Resultado integrado e verificável}} | {{Itens anteriores, separados por vírgula, ou none}} | {{Fontes e contratos, com o motivo}} | {{IDs, decisões ou Gate; apague a seção quando a preparação não a justificar}} |
 
 ## Progress
 
