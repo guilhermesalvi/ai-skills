@@ -20,7 +20,7 @@ Copie apenas o bloco necessário para o artefato e preencha os campos. Insira-o 
 
 ## Progress
 
-- {{Fronteira alcançada, decisões do usuário durante a implementação e o que foi tentado e descartado; apague a seção quando ninguém for continuar a mudança}}
+- {{Fronteira alcançada, decisões do usuário durante a implementação e o que foi tentado e descartado; apague a seção quando a sessão terminar sem checks pendentes e o pedido não previr outro executor}}
 
 ## References
 

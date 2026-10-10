@@ -31,4 +31,4 @@ O schema de Execution e seu modelo estão no [plano](plan.md#execution). A tabel
 
 Quando uma descoberta alterar uma dependência, decisão ou prova, atualize os registros afetados antes de continuar o trabalho que usa essa informação. Preserve os itens e as evidências ainda válidos. Corrija o contrato na origem, conforme o fluxo comum, sem redefinir o resultado de negócio por conta própria.
 
-Na passagem para outra sessão, confira Execution, quando presente, e registre em Progress a fronteira alcançada e a evidência que sustenta o próximo trabalho. A retomada segue [execução](execute.md#retomar-uma-mudança).
+Na passagem para outra sessão, confira Execution, quando presente, e registre Progress conforme [passar a mudança adiante](execute.md#passar-a-mudança-adiante). A retomada segue [execução](execute.md#retomar-uma-mudança).

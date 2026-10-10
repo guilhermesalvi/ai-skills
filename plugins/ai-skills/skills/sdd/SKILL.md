@@ -19,15 +19,15 @@ Leia o [fluxo comum](references/workflow.md) ao iniciar o trabalho com a skill. 
 
 | Referência | Quando ler |
 | --- | --- |
-| [Prosa](references/prose.md) | Ao escrever ou revisar qualquer artefato |
-| [Alterar artefato](references/change.md) | Ao alterar requisitos ou cenários existentes, resolver colisões de numeração entre branches ou revisar uma spec, um plano ou um ADR |
-| [Especificação](references/specify.md) | Ao criar ou revisar uma spec, inclusive a partir de produto ou código |
+| [Prosa](references/prose.md) | Ao escrever, alterar ou revisar qualquer artefato |
+| [Alterar artefato](references/change.md) | Ao alterar ou retirar requisitos ou cenários existentes, resolver colisões de numeração entre branches ou revisar uma spec, um plano ou um ADR |
+| [Especificação](references/specify.md) | Ao criar, alterar ou revisar uma spec, inclusive a partir de produto ou código |
 | [Exemplo de spec](references/spec-example.md) | Quando houver dúvida sobre a aplicação do schema ou o nível de detalhe de uma spec nova |
-| [Plano](references/plan.md) | Ao criar ou revisar um plano de solução |
+| [Plano](references/plan.md) | Ao criar, alterar ou revisar um plano de solução |
 | [Preparação](references/prepare.md) | Ao avaliar se uma mudança pode ser implementada ou preparar sua passagem para outro executor |
 | [Execução](references/execute.md) | Ao implementar ou retomar uma mudança, com ou sem spec e plano existentes |
 | [Verificação](references/verify.md) | Ao verificar a implementação contra a spec e o plano |
-| [ADR](references/adr.md) | Ao registrar ou revisar uma decisão pedida como ADR ou encaminhada pelo plano |
+| [ADR](references/adr.md) | Ao registrar, substituir ou revisar uma decisão pedida como ADR ou encaminhada pelo plano |
 | [Entrega](references/deliver.md) | Ao conferir os artefatos e preparar a resposta final, em qualquer modo |
 
 ## Recursos e limites

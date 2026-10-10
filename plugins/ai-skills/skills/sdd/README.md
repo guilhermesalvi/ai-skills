@@ -52,7 +52,7 @@ flowchart LR
 
 Adapte os caminhos ao projeto. Os exemplos abaixo usam o comportamento `cancel-order` e a mudança `customer-cancellation`. O layout pode agrupar esse comportamento em `docs/specs/order-management/cancel-order/`, sem ampliar a spec.
 
-### Criar ou revisar uma spec
+### Criar ou alterar uma spec
 
 ```text
 /ai-skills:sdd Especifique o cancelamento de pedido, da solicitação do cliente

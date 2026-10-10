@@ -141,9 +141,8 @@ O `check_spec.py` confere a tabela, os nomes e o grafo de dependências. A sufic
   - [ ] Gate: <o que passa> — `<comando>`
   ```
 
-- O comando do gate vem da configuração do projeto, da CI ou da documentação de build, e é executado na base antes da mudança.
+- Confirme o comando do gate na configuração do projeto, na CI ou na documentação de build. Planejar não exige executá-lo; a execução na base acontece antes de implementar, conforme [execução](execute.md#antes-de-alterar).
 - Sem comando confirmável, registre o comando provável em Assumptions. O gate entra em Checks quando for confirmado.
-- Quando for necessário para distinguir regressões, registre em Context o resultado do gate e dos checks existentes na base de comparação.
 
 ## Estrutura do documento
 

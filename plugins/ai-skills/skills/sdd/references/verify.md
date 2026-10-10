@@ -17,7 +17,7 @@ Conteúdo: Base e leitura crítica · Revisor separado · Conformidade com a spe
 
 ## Revisor separado
 
-- Numa mudança não trivial, verifique em contexto separado de quem implementou quando houver subagente disponível e a delegação estiver autorizada pelas instruções aplicáveis, porque o autor tende a reaplicar o raciocínio que produziu a falha.
+- Numa mudança não trivial, verifique em contexto separado de quem implementou sempre que houver subagente disponível, porque o autor tende a reaplicar o raciocínio que produziu a falha. Só deixe de delegar quando o pedido ou as instruções aplicáveis proibirem.
 - Passe ao subagente os caminhos da spec e do plano, a base, os comandos de verificação e todos os requisitos de Requirements in Scope, não só a última fatia implementada.
 - Com subagente, a entrega espera o resultado dele: sem esse resultado, a mudança não está verificada.
 - Sem subagente, verifique mesmo assim e declare no relatório que autor e revisor são o mesmo.
@@ -94,7 +94,7 @@ Uma suíte verde prova que os testes executam, não que detectariam uma regress�
 - Numa mudança não trivial, injete falhas nas provas dos requisitos cujo erro custaria dinheiro, dado, conformidade ou um contrato publicado, e sempre que o pedido ou a regra do projeto pedir.
 - Injete uma falha por superfície de asserção, como inverter uma condição, trocar um valor retornado, deslocar um limite ou remover um efeito exigido, e confirme que a prova mais estreita daquele requisito falha.
 - Pare quando cada prova escolhida tiver falhado uma vez.
-- Com ferramenta de mutação disponível e uso permitido pelas instruções e permissões aplicáveis, use-a e registre comando e escopo.
+- Quando o projeto já tiver ferramenta de mutação configurada, use-a e registre comando e escopo, salvo proibição no pedido, nas instruções ou nas permissões aplicáveis.
 - Injete a falha numa árvore isolada com o conteúdo atual da mudança. Use uma worktree temporária sobre `HEAD`, conforme Falha preexistente, e copie os arquivos alterados e novos ainda sem commit. Quando Git ou as permissões impedirem a worktree, use uma cópia temporária dos arquivos necessários às mesmas provas e informe essa alternativa no relatório.
 - Confira que o `git status --porcelain` da árvore real continua igual ao de antes.
 - Não use `git stash` para isolar a falha: desempilhar não a desfaz, e numa árvore limpa o stash nem cria entrada.

@@ -10,6 +10,7 @@ Implemente o escopo pedido e verifique o contrato. Conclua quando cada check do 
 - Para criar ou ajustar o plano, leia [plano](plan.md). Sem plano da mudança, escreva-o antes de implementar.
 - Sem uma branch própria para a mudança, registre em Context do plano a base de comparação, a saída de `git rev-parse HEAD`, antes de implementar.
 - Leia [preparação](prepare.md) e resolva o que faltar para a parte que será implementada. Reutilize as decisões, dependências e fontes já confirmadas nos artefatos.
+- Antes da primeira alteração, execute o gate na base. Se ele falhar, registre em Context do plano o comando, o resultado e os testes que falham, para distinguir falhas preexistentes de regressões.
 
 Use como base de comparação o commit contra o qual o diff será medido: o `HEAD` registrado antes da mudança ou, para uma branch própria, `git merge-base HEAD <branch principal>`.
 
@@ -55,8 +56,8 @@ Depois de integrar uma fatia, execute também os checks anteriores que a mudanç
 
 ## Passar a mudança adiante
 
-Quando outro executor ou outra sessão for continuar, registre em Progress do plano:
+Quando a sessão terminar com checks pendentes, ou quando o pedido disser que outro executor vai continuar, registre em Progress do plano:
 
-- a fronteira alcançada;
+- a fronteira alcançada e a evidência que sustenta o próximo trabalho;
 - as decisões do usuário durante a implementação;
 - o que foi tentado e descartado, com o motivo.

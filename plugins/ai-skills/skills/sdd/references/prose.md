@@ -41,9 +41,9 @@ Escreva para quem vai decidir ou implementar a partir do artefato. Inclua o que 
 - Releia o artefato como quem não participou do trabalho.
 - Corte repetição, cerimônia e texto que não muda decisão nem trabalho.
 
-## Revisão editorial
+## Reescrita editorial
 
-Numa revisão apenas editorial:
+Num pedido para reescrever apenas a redação:
 
 - Preserve regras, fórmulas, limites, atores, resultados esperados, pendências, termos, IDs, unidades, negações, comparadores e exceções.
 - Nos artefatos técnicos, preserve também APIs, tipos, erros, eventos e caminhos.

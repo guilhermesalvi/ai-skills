@@ -12,6 +12,7 @@ Conteúdo: Termos comuns · Artefatos e layout · Numeração · Documentos vivo
 | Capability | Agrupamento de comportamentos relacionados, usado quando ajuda a organizar o domínio |
 | Consumidor | Pessoa, sistema ou código que observa o resultado do comportamento |
 | Mudança não trivial | Alteração de comportamento observável, dados persistidos ou contrato consumido por outro componente |
+| Revisar | Conferir um artefato ou uma implementação e relatar achados. Alterar o conteúdo exige pedido de alteração ou de correção |
 
 ## Artefatos e layout
 
@@ -40,7 +41,7 @@ Na implementação por esta skill, mantenha um plano em arquivo para preservar c
 ## Numeração
 
 - Numere os planos na pasta da spec e os ADRs na pasta de ADRs. Cada pasta tem sua própria sequência: `NNNN` tem quatro dígitos; numa pasta sem itens numerados, use `0001`; nos demais casos, use o número seguinte ao maior presente naquela pasta.
-- Dentro da mesma pasta, cada número pertence a um só item e não muda quando ele é revisado.
+- Dentro da mesma pasta, cada número pertence a um só item e não muda quando ele é alterado.
 
 ## Documentos vivos
 
@@ -93,8 +94,8 @@ python "<skill-dir>/scripts/check_spec.py" docs/specs
 
 - Decida por conta própria as escolhas técnicas e editoriais reversíveis dentro do escopo.
 - Procure os fatos no código e nas fontes antes de perguntar.
-- Pergunte as decisões de negócio e as informações que o contexto não resolve, com opções concretas e a sua recomendação.
-- Continue o trabalho independente da resposta e construa o artefato sobre premissas e lacunas. Na implementação, deixe pendente a parte que exige uma decisão ainda ausente e informe o impacto na entrega.
+- Pergunte as decisões de negócio e as informações que o contexto não resolve, com opções concretas e a sua recomendação. Reúna essas perguntas na resposta final, conforme [entrega](deliver.md#resposta), sem interromper o trabalho para fazê-las.
+- Construa o artefato sobre premissas e lacunas enquanto a resposta não vem. Na implementação, deixe pendente a parte que exige uma decisão ainda ausente e informe o impacto na entrega.
 - Exceção: quando a resposta decidiria qual comportamento especificar ou se o pedido faz sentido, pergunte antes de escrever. Uma lacuna dentro do comportamento não é motivo para parar o trabalho independente.
 - Corrija o que a sua mudança quebrar e os problemas preexistentes do trecho alterado que tenham o mesmo motivo da mudança. Os demais entram como sugestão no fim, sem alteração.
 - Não acrescente complexidade sem necessidade concreta, como uma opção ou abstração sem consumidor.
@@ -129,9 +130,9 @@ Classifique pela decisão em jogo, não pelo default que você escolheria. A pri
 | Situação | Registro |
 | --- | --- |
 | Inferência sobre um fato, como o que o código ou o ambiente faz, e não uma decisão | Premissa, mesmo quando a falsidade custa caro; nomeie quem a verifica |
-| Decisão sem default defensável | Lacuna |
 | Decisão cuja resposta errada custaria dinheiro, dado, conformidade ou um contrato publicado, mesmo que o default pareça seguro | Lacuna |
 | Decisão com default reversível e de impacto contido, como um estado vazio, uma ordenação ou a regra mais comum do domínio | Premissa com a escolha, e o trabalho segue |
+| Qualquer outra decisão, como uma sem default defensável ou com efeito que não se desfaz | Lacuna |
 
 Motivo: inventar um valor para uma decisão que ninguém tomou só torna a frase aparentemente verificável.
 
@@ -186,7 +187,7 @@ Retire a premissa de Assumptions quando houver evidência ou decisão suficiente
 
 - A prosa de um artefato novo segue o idioma fixado pelo pedido ou pela convenção do repositório.
 - Sem essa definição, use o idioma em que o usuário escreveu o pedido. O idioma do código, dos identificadores e da documentação técnica não muda essa escolha.
-- O título do artefato e os nomes de exibição, como a coluna State de uma tabela de estados, seguem o idioma da prosa. Slugs de arquivo ficam em inglês.
+- O título do artefato e os valores de exibição, como os nomes listados na coluna State de uma tabela de estados, seguem o idioma da prosa. O cabeçalho da coluna e os slugs de arquivo ficam em inglês.
 - Ao editar um artefato existente, preserve o idioma e os títulos dele e não o traduza sem pedido.
 - Títulos de seção, rótulos do cabeçalho, colunas de tabela, rótulos de campo e dimensões formam o schema e ficam em inglês, com os nomes das referências, em qualquer idioma de prosa. Leitores e o `check_spec.py` localizam as partes pelo nome, e um schema único dispensa tradução.
 - Não traduza nomes de APIs, tipos, paths e identificadores, nem termos canônicos como capability, EARS, NFR, trade-off e gate.

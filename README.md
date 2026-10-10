@@ -57,7 +57,7 @@ Abra uma nova sessão depois de atualizar. Cópias avulsas precisam ser copiadas
 - O pedido prevalece sobre os defaults das skills. Aplique `CLAUDE.md`, `CLAUDE.local.md` e `AGENTS.md` pertinentes do consumidor, respeitando o escopo de diretório do Claude Code.
 - Instruções e textos de interface ficam em português. A prosa dos artefatos segue o pedido ou a convenção do consumidor; sem definição, segue o idioma do pedido. O schema permanece em inglês.
 - As skills continuam o trabalho autorizado até a validação e perguntam sobre decisões ausentes que afetem escopo ou correção. Commit e push exigem autorização do usuário.
-- A verificação SDD usa revisor separado quando disponível e autorizado; sem ele, informa que autor e revisor são o mesmo. O pacote não escolhe modelos para o usuário.
+- A verificação SDD usa revisor separado sempre que houver subagente disponível, salvo proibição no pedido ou nas instruções; sem ele, informa que autor e revisor são o mesmo. O pacote não escolhe modelos para o usuário.
 - Os scripts usam somente a biblioteca padrão. Substitua `<skill-dir>` pela pasta absoluta do `SKILL.md` carregado e execute a partir do projeto consumidor.
 
 ## Desenvolvimento
