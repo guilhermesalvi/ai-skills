@@ -1,0 +1,36 @@
+---
+name: sdd
+description: Especifique comportamentos completos, prepare, implemente e verifique mudanças com requisitos rastreáveis. Use para specs a partir de produto ou código, planos técnicos, implementação por spec e ADRs. Não use para code review sem spec, documentação geral ou ajustes mecânicos.
+---
+
+# Desenvolvimento por especificação
+
+Converta o pedido, o material de produto ou o código existente em um contrato verificável. Entregue os artefatos e as etapas que o pedido autoriza.
+
+| Artefato | Resultado |
+| --- | --- |
+| Spec | Contrato vivo de um comportamento completo, do gatilho ao resultado observável, com requisitos estáveis |
+| Plano | Decisões técnicas, checks e, quando necessário, organização da execução |
+| ADR | Decisão arquitetural e seus custos, aplicável a múltiplos comportamentos ou pedida como registro avulso |
+
+## Escolher as referências
+
+Leia o [fluxo comum](references/workflow.md) ao iniciar o trabalho com a skill. Depois, escolha as referências pelo resultado pedido. Reutilize as que já estiverem no contexto; uma correção localizada exige apenas o trecho pertinente e suas dependências.
+
+| Referência | Quando ler |
+| --- | --- |
+| [Prosa](references/prose.md) | Ao escrever, alterar ou revisar qualquer artefato |
+| [Alterar artefato](references/change.md) | Ao alterar ou retirar requisitos ou cenários existentes, resolver premissas, manter Observable Decisions, resolver colisões de numeração entre branches ou revisar uma spec, um plano ou um ADR |
+| [Especificação](references/specify.md) | Ao criar, alterar ou revisar uma spec, inclusive a partir de produto ou código |
+| [Exemplo de spec](references/spec-example.md) | Ao criar uma spec, para calibrar o recorte, o schema e o nível de detalhe |
+| [Plano](references/plan.md) | Ao criar, alterar ou revisar um plano de solução |
+| [Preparação](references/prepare.md) | Ao avaliar se uma mudança pode ser implementada ou preparar sua passagem para outro executor |
+| [Execução](references/execute.md) | Ao implementar ou retomar uma mudança, com ou sem spec e plano existentes |
+| [Verificação](references/verify.md) | Ao verificar a implementação contra a spec e o plano |
+| [ADR](references/adr.md) | Ao registrar, substituir ou revisar uma decisão pedida como ADR ou encaminhada pelo plano |
+| [Entrega](references/deliver.md) | Ao conferir os artefatos e preparar a resposta final, em qualquer modo |
+
+## Recursos e limites
+
+- Resolva os caminhos a partir do caminho absoluto da pasta deste `SKILL.md` carregado. Nas referências, `<skill-dir>` representa esse caminho absoluto. Os modelos ficam em `assets/`. A conferência determinística usa `scripts/check_spec.py`, e as árvores temporárias da verificação usam `scripts/isolated_tree.py`; ambos exigem Python 3.10+ e Git e rodam a partir do projeto consumidor.
+- Trate os exemplos como ilustrações de formato. Use os fatos, interfaces e comandos do projeto ao produzir o artefato.
