@@ -199,6 +199,14 @@ class TraceGrading(unittest.TestCase):
         event["item"]["aggregated_output"] = "Get-Content: Access denied\nPath\n----\nC:/workspace\n"
         self.assertFalse(evals.evaluate(check, self.workspace, [event], ""))
 
+    def test_later_search_failure_does_not_hide_a_successful_skill_read(self):
+        check = {"type": "skill_read", "skill": "sdd", "expected": True}
+        event = self.command("Get-Content 'sdd/SKILL.md'; rg --files -g AGENTS.md", 1)
+        event["item"]["aggregated_output"] = "---\nname: sdd\ndescription: Specify features\n---\n"
+        self.assertTrue(evals.evaluate(check, self.workspace, [event], ""))
+        event["type"] = "item.started"
+        self.assertFalse(evals.evaluate(check, self.workspace, [event], ""))
+
     def test_qualitative_checks_stay_pending(self):
         self.assertIsNone(evals.evaluate({"type": "rubric"}, self.workspace, [], ""))
 

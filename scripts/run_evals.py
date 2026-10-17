@@ -126,9 +126,10 @@ def evaluate(check, workspace, events, answer, before=None):
             raise ValueError("unchanged checks require a pre-run snapshot")
         return before == file_snapshot(workspace, check["paths"])
     if check["type"] == "skill_read":
-        # Reading SKILL.md is the observable Codex activation signal, not a Skill tool.
-        reads = [item for item in completed_commands(events) if item.get("exit_code") == 0
-                 and re.search(r"(?:Get-Content|cat|sed|type|read_text)", item.get("command", ""), re.I)
+        # The matching frontmatter proves the read; a later command in the same
+        # shell invocation can fail after SKILL.md was successfully printed.
+        reads = [item for item in completed_commands(events)
+                 if re.search(r"(?:Get-Content|cat|sed|type|read_text)", item.get("command", ""), re.I)
                  and re.search(rf"{re.escape(check['skill'])}[/\\]+SKILL\.md", item.get("command", ""), re.I)
                  and re.search(rf"^name:\s*['\"]?{re.escape(check['skill'])}['\"]?\s*$",
                                item.get("aggregated_output", ""), re.M)]
