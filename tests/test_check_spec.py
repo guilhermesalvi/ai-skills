@@ -90,8 +90,8 @@ def commit_all(folder):
     git(folder, "-c", "user.name=test", "-c", "user.email=test@example.com", "commit", "-qm", "base")
 
 
-def write_spec(folder, capability, text):
-    path = Path(folder) / capability / "spec.md"
+def write_spec(folder, feature, text):
+    path = Path(folder) / feature / "spec.md"
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(text, encoding="utf-8")
     return path
@@ -116,7 +116,7 @@ class SpecChecks(unittest.TestCase):
         self.document.write_text(example[1], encoding="utf-8")
         self.assertEqual([], check(self.folder))
 
-    def test_instructions_outside_capabilities_are_not_read(self):
+    def test_instructions_outside_features_are_not_read(self):
         (self.folder / "AGENTS.override.md").write_text("# Instruções\nReferência: REQ-99\n", encoding="utf-8")
         self.assertEqual([], check(self.folder))
 
@@ -157,7 +157,7 @@ class SpecChecks(unittest.TestCase):
         self.assertTrue(any("prefix: REQ belongs to several specs" in f for f in check(self.folder)))
 
     def test_several_prefixes_in_one_spec_are_reported(self):
-        self.document.write_text(DOCUMENT + "- **ALT-01** — Outra capability.\n", encoding="utf-8")
+        self.document.write_text(DOCUMENT + "- **ALT-01** — Outra feature.\n", encoding="utf-8")
         self.assertTrue(any("definitions use several prefixes: ALT, REQ" in f for f in check(self.folder)))
 
     def test_header_prefix_must_match_definitions(self):
@@ -253,6 +253,18 @@ class NewArtifacts(unittest.TestCase):
         self.document.write_text(document({"Observable Decisions": table}), encoding="utf-8")
         self.assertEqual([], check(self.folder))
 
+    def test_cross_feature_and_legacy_dimension_reasons_are_validated(self):
+        for dimension in ("Cross-feature consistency", "Cross-capability consistency"):
+            with self.subTest(dimension=dimension):
+                table = ("| Surface or dimension | Landing |\n| --- | --- |\n"
+                         f"| `n/a` | {dimension}: sem atualização de outra feature |")
+                self.document.write_text(document({"Observable Decisions": table}), encoding="utf-8")
+                self.assertEqual([], check(self.folder))
+                self.document.write_text(document({"Observable Decisions": table.replace(
+                    f"{dimension}: sem atualização de outra feature", dimension)}), encoding="utf-8")
+                self.assertEqual([f"requests-lifecycle/spec.md: n/a entry needs a dimension and reason: {dimension}"],
+                                 check(self.folder))
+
     def test_legacy_not_applicable_entry_still_needs_a_reason(self):
         table = SPEC_SECTIONS["Observable Decisions"].replace("Authorization: fora do módulo", "Authorization")
         self.document.write_text(document({"Observable Decisions": table}), encoding="utf-8")
@@ -274,9 +286,9 @@ class NewArtifacts(unittest.TestCase):
                           "move it to the single n/a row"], check(self.folder))
 
     def test_empty_header_row_is_reported(self):
-        self.document.write_text(document(header="| **Requirement Prefix** | `REQ` |\n| **Affected Capabilities** | |\n"),
+        self.document.write_text(document(header="| **Requirement Prefix** | `REQ` |\n| **Related Contract** | |\n"),
                                  encoding="utf-8")
-        self.assertEqual(["requests-lifecycle/spec.md: header row Affected Capabilities is empty; "
+        self.assertEqual(["requests-lifecycle/spec.md: header row Related Contract is empty; "
                           "delete the row when it does not apply"], check(self.folder))
 
     def test_assumptions_accept_natural_prose_in_either_language(self):
@@ -375,8 +387,8 @@ class Plans(unittest.TestCase):
         self.assertEqual(["requests-lifecycle: plan number 0001 used by 0001-limit.md, 0001-retry.md"], check(self.folder))
 
 
-class GroupedBehaviors(unittest.TestCase):
-    def test_nested_specs_resolve_cross_behavior_ids_and_links(self):
+class GroupedFeatures(unittest.TestCase):
+    def test_nested_specs_resolve_cross_feature_ids_and_links(self):
         with TemporaryDirectory() as temp:
             folder = Path(temp)
             first = write_spec(folder, "orders/cancel-order", document(drop=("Observable Decisions",)))
@@ -390,7 +402,7 @@ class GroupedBehaviors(unittest.TestCase):
             second.write_text(ENGLISH.replace("ENG-01", "ENG-03"), encoding="utf-8")
             self.assertTrue(any("cancel-order/spec.md: citation ENG-01 has no definition" in f for f in check(folder)))
 
-    def test_same_behavior_name_in_distinct_groups_has_its_own_plan_sequence(self):
+    def test_same_feature_name_in_distinct_capabilities_has_its_own_plan_sequence(self):
         with TemporaryDirectory() as temp:
             folder = Path(temp)
             for grouping, prefix in (("orders", "REQ"), ("invoices", "INV")):

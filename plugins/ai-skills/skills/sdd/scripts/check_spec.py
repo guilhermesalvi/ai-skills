@@ -3,7 +3,8 @@
 Usage: python check_spec.py [<specs folder>]   (default: docs/specs)
 
 Reads spec.md recursively and NNNN-<change>.md plans beside each spec.
-This accepts both <behavior>/ and optional <capability>/<behavior>/ layouts.
+This accepts <feature>/ and monorepo <capability>/<feature>/ layouts, as well
+as existing consumer layouts; it does not infer whether a project is a monorepo.
 Other Markdown files under a spec folder are checked only for cited IDs;
 files outside spec folders, such as AGENTS.md, are not read.
 
@@ -66,7 +67,9 @@ SPEC_BASE = ("Context", "Requirements")
 PLAN_BASE = ("Checks",)
 DIMENSIONS = ("Validation and limits", "Failure and partial failure", "Idempotency and duplication",
               "Authorization", "Rate limiting", "Concurrency and ordering", "Data lifecycle",
-              "External dependency failure", "State transitions", "Observability", "Cross-capability consistency")
+              "External dependency failure", "State transitions", "Observability", "Cross-feature consistency")
+# Existing decision maps retain their schema label when maintained in place.
+LEGACY_DIMENSIONS = ("Cross-capability consistency",)
 FULL_TABLES = ("Gaps", "Observable Decisions", "Trade-offs", "Technical Decisions", "Execution")
 EXECUTION_COLUMNS = ("Item", "Outcome", "Depends on", "Context", "Checks")
 ITEM_NAME = re.compile(r"[a-z][a-z0-9]*(?:-[a-z0-9]+)*$")
@@ -178,7 +181,8 @@ def check_dimensions(name, lines):
     not_applicable = " ".join(row[1] for row in rows if len(row) > 1 and marker(row[0]) == "n/a")
     findings = []
     for entry in filter(None, (entry.strip() for entry in not_applicable.split(";"))):
-        if not any(re.match(re.escape(dimension) + r"\s*:\s*\S", entry, re.I) for dimension in DIMENSIONS):
+        if not any(re.match(re.escape(dimension) + r"\s*:\s*\S", entry, re.I)
+                   for dimension in DIMENSIONS + LEGACY_DIMENSIONS):
             findings.append(f"{name}: n/a entry needs a dimension and reason: {entry[:60]}")
     for row in rows:
         if len(row) > 1 and marker(row[0]) != "n/a" and marker(row[1]).startswith("n/a"):
@@ -343,9 +347,9 @@ def check(folder):
     numbers = defaultdict(list)
     for path in plans:
         numbers[(path.parent.relative_to(folder).as_posix(), PLAN_NAME.match(path.name)[1])].append(path.name)
-    for (behavior, number), files in sorted(numbers.items()):
+    for (feature, number), files in sorted(numbers.items()):
         if len(files) > 1:
-            findings.append(f"{behavior}: plan number {number} used by {', '.join(files)}")
+            findings.append(f"{feature}: plan number {number} used by {', '.join(files)}")
 
     for path in consumers:
         name = path.relative_to(folder).as_posix()

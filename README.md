@@ -8,7 +8,7 @@ O pacote está em beta, na versão `0.1.0-beta.6`, definida em [plugin.json](plu
 | --- | --- |
 | `sdd` | Especificar, preparar, implementar e verificar mudanças com requisitos rastreáveis; registrar decisões em ADRs |
 
-A spec define o menor comportamento completo, do gatilho ao resultado para o consumidor, com suas regras e alternativas. Capability é um agrupamento opcional. O plano registra decisões técnicas, checks com prova e, quando necessário, itens executáveis com contexto e dependências. Modelos e um validador mantêm IDs, links, schema e rastreabilidade coerentes.
+A spec define uma feature, do gatilho ao resultado para o consumidor, com suas regras e alternativas. Em monorepos, as pastas de capabilities agrupam as features; nos demais projetos, as features ficam diretamente em `docs/specs/`. O plano registra decisões técnicas, checks com prova e, quando necessário, itens executáveis com contexto e dependências. Modelos e um validador mantêm IDs, links, schema e rastreabilidade coerentes.
 
 Consulte o [guia de uso da sdd](plugins/ai-skills/skills/sdd/README.md) para exemplos de pedidos, entradas e entregas de cada modo.
 
@@ -106,6 +106,7 @@ Cada caso em `plugins/ai-skills/evals/` contém `case.json`, `prompt.md`, crité
 | Caso | O que confere |
 | --- | --- |
 | `cancel-orders-spec` | Cancelamento completo, autorização e concorrência, pedido pago como lacuna, premissas, escopo, concisão e entrega |
+| `monorepo-feature-specs` | Features independentes em pastas próprias sob a capability, contratos completos, concisão e fontes preservadas |
 | `prepare-dependent-change` | Plano transferível, contexto confirmado, dependências reais, provas da integração, pendência limitada à parte afetada e código intacto |
 | `adr-from-code` | ADR derivado do código e histórico, sem inventar participantes, alternativas ou motivos |
 | `implement-and-verify` | Implementação, testes nomeados nas provas, execução bem-sucedida, checks marcados e relatório |

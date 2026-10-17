@@ -1,6 +1,6 @@
 # Exemplo de spec
 
-Use este exemplo para reconhecer um comportamento completo: da solicitação de cancelamento à confirmação ou recusa observável. O cenário e as evidências são fictícios; use as fontes do projeto nos artefatos reais.
+Use este exemplo para reconhecer uma feature: da solicitação de cancelamento à confirmação ou recusa observável. O cenário e as evidências são fictícios; use as fontes do projeto nos artefatos reais.
 
 - O recorte inclui efeitos e recusas necessários ao cancelamento, sem reconstruir pagamento, envio ou entrega.
 - Assumptions registra uma escolha provisória que atende uma lacuna; a decisão continua aberta.

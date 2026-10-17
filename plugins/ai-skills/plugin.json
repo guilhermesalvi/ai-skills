@@ -20,7 +20,7 @@
       "interface": {
         "displayName": "AI Skills",
         "shortDescription": "Desenvolvimento orientado por especificações",
-        "longDescription": "Especifique comportamentos completos, prepare e execute mudanças com requisitos rastreáveis, checks com prova e ADRs.",
+        "longDescription": "Especifique features, prepare e execute mudanças com requisitos rastreáveis, checks com prova e ADRs.",
         "developerName": "Guilherme Salvi",
         "category": "Productivity",
         "capabilities": [

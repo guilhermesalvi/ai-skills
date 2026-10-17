@@ -1,9 +1,8 @@
-# {{Nome do comportamento completo}}
+# {{Nome da feature}}
 
 | | |
 | --- | --- |
 | **Requirement Prefix** | `{{PREFIXO}}` |
-| **Affected Capabilities** | {{Capabilities cujo resultado este comportamento altera; apague a linha quando não houver}} |
 
 ## Context
 

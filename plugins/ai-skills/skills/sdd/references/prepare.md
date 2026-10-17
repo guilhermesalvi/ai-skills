@@ -16,7 +16,7 @@ Uma lacuna bloqueia apenas o trabalho que depende dela. Cite o registro existent
 ## Organizar o trabalho
 
 - Use Execution no plano somente quando o pedido pedir decomposição, ou quando dependências entre partes, entrega em etapas ou passagem a outro executor exigirem contexto ou ordem que as decisões e os checks não deixem claros. Sem isso, use as decisões e os checks diretamente; implementar e depois rodar o gate não justifica a seção.
-- Organize cada item por resultado implementável e verificável. Separar código e testes do mesmo resultado em itens sequenciais não prepara uma entrega integrada. Uma etapa intermediária pode ser necessária para integrar o comportamento completo; não a transforme numa spec isolada.
+- Organize cada item por resultado implementável e verificável. Separar código e testes do mesmo resultado em itens sequenciais não prepara uma entrega integrada. Uma etapa intermediária pode ser necessária para integrar a feature; não a transforme numa spec isolada.
 - Preencha a tabela conforme o [schema de Execution](plan.md#execution). Ela orienta dependências e passagem de contexto; não obriga agentes adicionais, execução paralela nem uma quantidade fixa de itens.
 
 ## Ajustar com novas evidências

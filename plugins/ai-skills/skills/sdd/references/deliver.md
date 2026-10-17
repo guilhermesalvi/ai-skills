@@ -6,7 +6,7 @@ Confira os artefatos e prepare uma resposta que mostre o resultado, a prova e as
 
 O `check_spec.py` não julga conteúdo. Antes de responder, confira os itens aplicáveis aos artefatos e à resposta final; corrija o texto quando um falhar:
 
-- [ ] Uma spec nova descreve o menor comportamento completo, com gatilho e resultado para o consumidor; contratos existentes não foram duplicados nem fragmentados por tarefa.
+- [ ] Cada spec nova descreve uma feature com objetivo, gatilho e resultado para o consumidor; resultados independentes foram separados, e as regras necessárias ao mesmo resultado ficaram juntas, sem duplicar contratos existentes nem fragmentá-los por tarefa.
 - [ ] As regras novas têm origem identificável ou estão registradas como escolhas provisórias. As condições ainda não confirmadas necessárias para garantir o resultado estão na spec, mesmo quando o mecanismo que as atende pertence ao plano.
 - [ ] A prosa, inclusive as palavras-chave EARS, está no idioma do pedido ou da convenção.
 - [ ] Cada decisão ainda ausente cujo erro custaria dinheiro, dado, conformidade ou um contrato publicado está em Gaps; quando houver comportamento provisório seguro, ele está identificado como escolha provisória em Assumptions.

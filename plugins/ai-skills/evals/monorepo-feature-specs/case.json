@@ -1,0 +1,55 @@
+{
+  "name": "monorepo-feature-specs",
+  "description": "Duas funcionalidades de pedidos num monorepo, com resultados independentes e sem convenção prévia de specs.",
+  "tags": ["spec", "monorepo"],
+  "expected_outcome": "Specs separadas de cancelamento e consulta de histórico sob a capability orders, com regras pertinentes a cada resultado, sem ampliar o domínio nem criar planos.",
+  "sandbox": "workspace-write",
+  "timeout_seconds": 1500,
+  "scaffold": "scaffold.py",
+  "checks": [
+    {
+      "id": "skill-fired",
+      "type": "skill_read",
+      "skill": "sdd",
+      "expected": true,
+      "arm": "plugin"
+    },
+    {
+      "id": "feature-layout",
+      "type": "rubric",
+      "source": "trace",
+      "rubric": "graders/feature-layout.md"
+    },
+    {
+      "id": "feature-scope",
+      "type": "rubric",
+      "source": "trace",
+      "rubric": "graders/feature-scope.md"
+    },
+    {
+      "id": "concise-specs",
+      "type": "rubric",
+      "source": "trace",
+      "rubric": "graders/concise-specs.md"
+    },
+    {
+      "id": "spec-check",
+      "type": "command",
+      "pattern": "check_spec\\.py",
+      "exit_code": 0
+    },
+    {
+      "id": "source-unchanged",
+      "type": "unchanged",
+      "paths": ["apps", "docs/product"]
+    },
+    {
+      "id": "no-plans",
+      "type": "regex",
+      "target": "files",
+      "pattern": "^docs/specs/[^\\n]*/[0-9]{4}-[^/\\n]+\\.md$",
+      "flags": "m",
+      "match": "not_contains"
+    }
+  ]
+}

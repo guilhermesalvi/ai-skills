@@ -1,0 +1,1 @@
+Quero que o cliente consiga cancelar os próprios pedidos ainda não pagos e consultar o histórico de um pedido. Escreva as specs com base em `docs/product/orders.md` e no código existente. Não implemente nem produza planos.

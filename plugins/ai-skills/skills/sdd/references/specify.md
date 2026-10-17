@@ -1,18 +1,17 @@
 # Especificação
 
-Defina o menor comportamento completo, das regras de negócio ao resultado que o consumidor observa. A spec é o contrato vivo que o plano e a verificação usam.
+Defina uma feature por spec, das regras de negócio ao resultado que o consumidor observa. A spec é o contrato vivo que o plano e a verificação usam.
 
-Conteúdo: Comportamento e arquivo · Origem do contrato · Riscos do recorte · Glossário e nomes · Requisitos · Prefixo, IDs e identificadores · Eventos de domínio · Diagramas · Cenários de aceitação · Trade-offs · Estrutura do documento
+Conteúdo: Feature e arquivo · Origem do contrato · Riscos do recorte · Glossário e nomes · Requisitos · Prefixo, IDs e identificadores · Eventos de domínio · Diagramas · Cenários de aceitação · Trade-offs · Estrutura do documento
 
-## Comportamento e arquivo
+## Feature e arquivo
 
-- Use por default uma spec para o menor comportamento completo: identifique o gatilho, o consumidor e o resultado que encerra o fluxo. Inclua regras, alternativas e dependências necessárias para que esse resultado seja verificável.
-- Um endpoint, uma tela, uma camada ou uma tarefa não bastam como recorte quando só entregam uma etapa intermediária. O comportamento pode atravessar componentes sem exigir uma spec para cada um.
-- Por exemplo, cancelar um pedido vai da solicitação do cliente à confirmação ou recusa, com o estado final e os efeitos definidos. Gestão de pedidos pode agrupar cancelamento, pagamento e entrega, sem reunir seus contratos numa spec nova e abrangente.
-- Reutilize e edite a spec que já define o comportamento. Uma mudança ou ticket novo não cria um contrato concorrente. Preserve specs abrangentes existentes; divida-as apenas quando o pedido ou a manutenção justificar a divisão, conforme [alterar artefato](change.md).
-- Quando o pedido abranger resultados independentes, separe-os em specs de comportamentos completos. Não fragmente condições, recusas ou regras necessárias ao mesmo resultado, nem amplie o produto para preencher o agrupamento.
+- Use uma spec por feature, conforme a definição do [fluxo comum](workflow.md#termos-comuns). Identifique o objetivo, o gatilho, o consumidor e o resultado que encerra o fluxo; inclua apenas regras, alternativas e dependências necessárias para verificar esse resultado.
+- Um endpoint, uma tela, uma camada ou uma tarefa não bastam como recorte quando só entregam uma etapa intermediária. A feature pode atravessar componentes sem exigir uma spec para cada um.
+- Por exemplo, cancelar pedido, consultar histórico e solicitar devolução têm resultados independentes e podem ter specs próprias. Permissão, recusas, repetição e estado final do cancelamento pertencem à mesma feature. Gestão de pedidos pode agrupar essas features na organização definida em [artefatos e layout](workflow.md#artefatos-e-layout).
+- Reutilize e edite a spec que já define a feature. Uma mudança ou ticket novo evolui o contrato existente. Preserve specs abrangentes existentes; divida-as apenas quando o pedido ou a manutenção justificar a divisão, conforme [alterar artefato](change.md).
+- Quando o pedido abranger resultados independentes, separe-os em specs de features, mesmo que pertençam à mesma capability. Não fragmente condições, recusas ou regras necessárias ao mesmo resultado, nem amplie o produto para preencher o agrupamento.
 - Mantenha cada regra compartilhada numa única fonte vigente: cite a spec, o contrato ou o ADR que a define. Inclua o comportamento existente de que a mudança depende quando ele ainda não tiver fonte, citando o código que o garante; não reconstrua todo o ciclo do domínio.
-- Nomeie em Affected Capabilities os agrupamentos cujo resultado este comportamento altera, quando essa identificação ajudar o leitor. O campo descreve uma relação do contrato, válida enquanto o comportamento existir; o que uma mudança em curso atinge pertence ao plano. Cite os contratos dos comportamentos afetados sem redefini-los.
 - Uma dependência ainda não confirmada vai para Gaps. Cite IDs de outra spec apenas quando consumir a definição, a entrada ou o evento correspondente.
 - Quando um comportamento dependente não tiver spec e estiver fora do pedido, defina apenas o que o comportamento em escopo entrega a ele ou exige dele.
 
@@ -56,7 +55,9 @@ Os identificadores fazem parte do schema de Observable Decisions.
 | External dependency failure | O resultado quando um serviço externo falha ou demora |
 | State transitions | Os estados, as transições permitidas e as recusas |
 | Observability | Registros, métricas e alvos de serviço que alguém consulta |
-| Cross-capability consistency | O que outras capabilities veem da mudança e quando |
+| Cross-feature consistency | O que outras features veem da mudança e quando |
+
+Ao manter um mapa existente, preserve o identificador legado `Cross-capability consistency` quando ele já estiver em uso.
 
 ### Superfícies
 
@@ -76,7 +77,7 @@ O formato de erro costuma ser reutilizado por outros handlers, e o estado vazio 
 - Fixe conceitos, relações e restrições antes de escolher os nomes.
 - Use os termos da comunidade de especialistas no idioma da spec, com um termo canônico por conceito e os sinônimos no glossário.
 - Quando o código usar outro idioma, registre o identificador equivalente. Sem código, o identificador proposto segue a convenção do projeto.
-- Quando o mesmo termo tiver regras diferentes em outra capability, cada spec define o seu significado. Vocabulário comum, sozinho, não prova que duas capabilities são uma.
+- Quando o mesmo termo tiver regras diferentes em outra feature, cada spec define o seu significado. Vocabulário comum, sozinho, não prova que duas features são uma.
 
 ## Requisitos
 
@@ -90,7 +91,7 @@ O formato de erro costuma ser reutilizado por outros handlers, e o estado vazio 
 | --- | --- |
 | Fila de auditoria | Toda mudança registra quem a realizou e quando |
 | Modal de confirmação | Excluir um registro ativo exige confirmação explícita |
-| Evento em um broker | Outras capabilities recebem a mudança de estado conforme o contrato do evento |
+| Evento em um broker | Outras features recebem a mudança de estado conforme o contrato do evento |
 
 ### Formato
 
@@ -125,9 +126,9 @@ O formato de erro costuma ser reutilizado por outros handlers, e o estado vazio 
 
 ## Prefixo, IDs e identificadores
 
-- O título nomeia o comportamento completo. Logo abaixo, a tabela de cabeçalho do modelo traz Requirement Prefix e, quando houver, Affected Capabilities.
-- Um prefixo novo abrevia o comportamento em letras maiúsculas e dígitos, começando por letra, como `CAN` para Cancelamento de pedido.
-- Não abrevie apenas o agrupamento ou a área, porque outro comportamento pode precisar de prefixo próprio.
+- O título nomeia a feature. Logo abaixo, a tabela de cabeçalho do modelo traz Requirement Prefix.
+- Um prefixo novo abrevia a feature em letras maiúsculas e dígitos, começando por letra, como `CAN` para Cancelamento de pedido.
+- Não abrevie apenas o agrupamento ou a área, porque outra feature pode precisar de prefixo próprio.
 - Evite nomes genéricos como `REQ`, que não indicam o dono, e não use `FR` nem `NFR`.
 - Escolha um prefixo que nenhuma outra spec use, e preserve o existente ao editar. Semelhança de letras, por si só, não exige renomeação.
 - Estados, motivos e outras enumerações que o código ou os contratos referenciam ficam numa tabela com a coluna Identifier ao lado do nome de exibição.

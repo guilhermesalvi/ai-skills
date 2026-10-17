@@ -1,8 +1,10 @@
 # sdd — Desenvolvimento por especificação
 
-Use a skill `sdd` para especificar comportamentos completos, preparar uma mudança, implementar e verificar requisitos rastreáveis ou registrar uma decisão arquitetural em ADR. Este guia apresenta os pedidos e as entregas; as instruções do agente ficam em [SKILL.md](SKILL.md).
+Use a skill `sdd` para especificar features, preparar uma mudança, implementar e verificar requisitos rastreáveis ou registrar uma decisão arquitetural em ADR. Este guia apresenta os pedidos e as entregas; as instruções do agente ficam em [SKILL.md](SKILL.md).
 
-Cada spec nova descreve o menor fluxo que vai de um gatilho a um resultado observável pelo consumidor, com as regras e alternativas necessárias. Cancelar um pedido inclui confirmar ou recusar a solicitação e definir o estado final; gestão de pedidos pode agrupar esse comportamento com pagamento e entrega. Capability é um agrupamento opcional, e contratos existentes continuam como fontes vivas, sem uma spec nova por ticket.
+Cada spec descreve uma feature com objetivo claro e resultado verificável para o consumidor. Cancelar pedido, consultar histórico e solicitar devolução podem ter specs próprias; permissão, recusas e repetição do cancelamento pertencem à mesma feature. O contrato continua vivo e evolui com as mudanças, sem uma spec nova por ticket.
+
+O layout padrão é `docs/specs/<feature-lower-kebab>/spec.md`. Em monorepos, a capability agrupa as features: `docs/specs/<capability-lower-kebab>/<feature-lower-kebab>/spec.md`. Os planos ficam ao lado da spec; consulte [artefatos e layout](references/workflow.md#artefatos-e-layout) para as convenções e os exemplos.
 
 ## Começar
 

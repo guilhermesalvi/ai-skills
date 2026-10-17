@@ -47,9 +47,9 @@ Siga esta seção quando a spec já tiver Observable Decisions ou o pedido exigi
 
 ## Dividir uma spec abrangente
 
-Quando a manutenção ou o pedido justificar a divisão, identifique comportamentos completos e os consumidores dos requisitos antes de mover o contrato. Mova cada definição para uma única fonte, preserve seu ID e atualize os links e as citações dos consumidores em andamento. Não mantenha cópias da regra nas specs de origem e destino.
+Quando a manutenção ou o pedido justificar a divisão, identifique features com resultados independentes e os consumidores dos requisitos antes de mover o contrato. Mova cada definição para uma única fonte, preserve seu ID e atualize os links e as citações dos consumidores em andamento. Não mantenha cópias da regra nas specs de origem e destino.
 
-Preserve os prefixos e os IDs existentes: cada spec tem um prefixo e cada prefixo pertence a uma única spec. Se a divisão exigir distribuir o mesmo prefixo entre arquivos, mantenha o contrato existente como fonte e referencie suas regras nos novos comportamentos. Uma migração de IDs precisa de escopo explícito e atualização dos consumidores; não renumere por conveniência.
+Preserve os prefixos e os IDs existentes: cada spec tem um prefixo e cada prefixo pertence a uma única spec. Se a divisão exigir distribuir o mesmo prefixo entre arquivos, mantenha o contrato existente como fonte e referencie suas regras nas novas features. Uma migração de IDs precisa de escopo explícito e atualização dos consumidores; não renumere por conveniência.
 
 ## Número repetido entre branches
 

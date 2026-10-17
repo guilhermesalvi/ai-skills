@@ -5,7 +5,7 @@
     "spec",
     "plan"
   ],
-  "expected_outcome": "Spec do comportamento completo de cancelamento, com autorização e concorrência decididas ou registradas, pedido pago como lacuna e plano com Requirements in Scope.",
+  "expected_outcome": "Spec da feature de cancelamento diretamente em docs/specs, com autorização e concorrência decididas ou registradas, pedido pago como lacuna e plano com Requirements in Scope.",
   "sandbox": "workspace-write",
   "timeout_seconds": 1500,
   "checks": [
@@ -18,10 +18,11 @@
       "rubric": "graders/assumptions.md"
     },
     {
-      "id": "behavior-folder",
+      "id": "feature-folder",
       "type": "regex",
       "target": "files",
-      "pattern": "docs[\\\\/]specs[\\\\/][^\\n]*cancel[^\\n]*[\\\\/]spec\\.md"
+      "pattern": "^docs[\\/]specs[\\/][a-z0-9-]*cancel[a-z0-9-]*[\\/]spec\\.md$",
+      "flags": "m"
     },
     {
       "id": "behavior",

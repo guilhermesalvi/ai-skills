@@ -1,6 +1,6 @@
 ---
 name: sdd
-description: Especifique comportamentos completos, prepare, implemente e verifique mudanças com requisitos rastreáveis. Use para specs a partir de produto ou código, planos técnicos, implementação por spec e ADRs. Não use para code review sem spec, documentação geral ou ajustes mecânicos.
+description: Especifique features, prepare, implemente e verifique mudanças com requisitos rastreáveis. Use para specs a partir de produto ou código, planos técnicos, implementação por spec e ADRs. Não use para code review sem spec, documentação geral ou ajustes mecânicos.
 ---
 
 # Desenvolvimento por especificação
@@ -9,9 +9,9 @@ Converta o pedido, o material de produto ou o código existente em um contrato v
 
 | Artefato | Resultado |
 | --- | --- |
-| Spec | Contrato vivo de um comportamento completo, do gatilho ao resultado observável, com requisitos estáveis |
+| Spec | Contrato vivo de uma feature, do gatilho ao resultado observável, com requisitos estáveis |
 | Plano | Decisões técnicas, checks e, quando necessário, organização da execução |
-| ADR | Decisão arquitetural e seus custos, aplicável a múltiplos comportamentos ou pedida como registro avulso |
+| ADR | Decisão arquitetural e seus custos, aplicável a múltiplas features ou pedida como registro avulso |
 
 ## Escolher as referências
 

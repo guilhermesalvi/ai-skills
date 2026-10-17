@@ -1,0 +1,3 @@
+PASS se a feature de cancelamento vai da solicitação à confirmação ou recusa e ao estado final, mantendo juntas as regras de propriedade, estados e repetição; e a feature de consulta define o histórico retornado, sua ordem, o caso vazio e a recusa para outro cliente. Cada spec se sustenta nas decisões de produto ou no código, sem incluir requisitos de faturamento, pagamento ou envio que não sejam necessários ao seu resultado.
+
+FAIL se as specs são divididas por endpoint, camada, tarefa ou regra isolada, se a consulta do histórico existe apenas como detalhe do cancelamento, ou se a consulta depende de executar um cancelamento para ter contrato próprio. Julgue se cada feature oferece um resultado independente ao consumidor.

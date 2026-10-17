@@ -8,8 +8,8 @@ Conteúdo: Termos comuns · Artefatos e layout · Numeração · Documentos vivo
 
 | Termo | Significado |
 | --- | --- |
-| Comportamento completo | Recorte com gatilho identificável e resultado observável para um consumidor, incluindo as regras e alternativas necessárias para chegar a esse resultado |
-| Capability | Agrupamento de comportamentos relacionados, usado quando ajuda a organizar o domínio |
+| Feature | Funcionalidade coesa com objetivo claro, gatilho identificável e resultado verificável para um consumidor, incluindo as regras e alternativas necessárias para chegar a esse resultado |
+| Capability | Agrupamento de features relacionadas, representado por uma pasta em monorepos |
 | Consumidor | Pessoa, sistema ou código que observa o resultado do comportamento |
 | Mudança não trivial | Alteração de comportamento observável, dados persistidos ou contrato consumido por outro componente |
 | Revisar | Conferir um artefato ou uma implementação e relatar achados. Alterar o conteúdo exige pedido de alteração ou de correção |
@@ -20,17 +20,19 @@ Conteúdo: Termos comuns · Artefatos e layout · Numeração · Documentos vivo
 - Comece cada artefato novo pelo modelo correspondente de `<skill-dir>/assets/`: `spec.md`, `plan.md` ou `adr.md`. Para ADRs, preserve o formato existente no consumidor. Os modelos fixam o schema; os campos `{{...}}` indicam o que preencher.
 - Preencha os campos necessários e remova as linhas e seções opcionais sem conteúdo. Não entregue arquivos vazios nem instruções do modelo.
 
-Sem convenção do repositório, use este layout, com slugs em inglês e em kebab-case:
+Sem convenção do repositório, use este layout em projetos que não sejam monorepos, com slugs em inglês, em minúsculas e kebab-case:
 
 ```text
 docs/specs/
-  <behavior>/
-    spec.md                 contrato vivo do comportamento, editado no lugar
+  <feature-lower-kebab>/
+    spec.md                 contrato vivo da feature, editado no lugar
     NNNN-<change>.md         plano da mudança
 docs/adr/NNNN-<decision>.md
 ```
 
-Reúna a spec e os planos na pasta do comportamento. Quando um agrupamento facilitar a navegação, use `docs/specs/<capability>/<behavior>/` com os mesmos arquivos. Mantenha ADRs fora dessas pastas, pois suas decisões podem alcançar múltiplos comportamentos. Preserve outra organização estabelecida pelo consumidor; não reorganize specs existentes apenas para adotar este default.
+Em monorepos, acrescente a pasta da capability: `docs/specs/<capability-lower-kebab>/<feature-lower-kebab>/spec.md`, com os planos ao lado da spec. Escolha a capability pelo domínio da feature; uma aplicação, serviço ou pacote não exige uma spec própria.
+
+Reúna a spec e os planos na pasta da feature. A capability organiza as pastas, sem uma spec agregadora nem um campo de metadados em cada feature. Mantenha ADRs fora dessas pastas, pois suas decisões podem alcançar múltiplas features. Preserve outra organização estabelecida pelo consumidor; não reorganize specs existentes apenas para adotar este default.
 
 Um pedido de cópia para entrega não muda a localização dos artefatos originais. Salve-os no layout do projeto antes de copiar.
 
@@ -180,5 +182,5 @@ Para resolver uma premissa já registrada, siga [alterar artefato](change.md#res
 - O título do artefato e os valores de exibição, como os nomes listados na coluna State de uma tabela de estados, seguem o idioma da prosa. O cabeçalho da coluna e os slugs de arquivo ficam em inglês.
 - Ao editar um artefato existente, preserve o idioma e os títulos dele e não o traduza sem pedido.
 - Títulos de seção, rótulos do cabeçalho, colunas de tabela, rótulos de campo e dimensões formam o schema e ficam em inglês, com os nomes das referências, em qualquer idioma de prosa. Leitores e o `check_spec.py` localizam as partes pelo nome, e um schema único dispensa tradução.
-- Não traduza nomes de APIs, tipos, paths e identificadores, nem termos canônicos como capability, EARS, NFR, trade-off e gate.
+- Não traduza nomes de APIs, tipos, paths e identificadores, nem termos canônicos como feature, capability, EARS, NFR, trade-off e gate.
 - Outros termos técnicos estabelecidos podem ficar em inglês quando a tradução perder precisão. A permissão vale para termos, não para expressões: em vez de escrever `works as expected` no meio da prosa, descreva o resultado.
